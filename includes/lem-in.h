@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/28 15:48:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/04/28 17:24:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,9 @@ typedef struct	s_map
 }				t_map;
 
 int		read_input(t_map *map);
-int					get_next_line(const int fd, char **line);
-char				*ft_strdup(const char *s1);
+int		get_next_line(const int fd, char **line);
+char	*ft_strdup(const char *s1);
+ssize_t	*setup_room(t_room **dest);
+ssize_t	*purge_room(t_room **room);
 
 #endif
