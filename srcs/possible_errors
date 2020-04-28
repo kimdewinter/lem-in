@@ -1,0 +1,7 @@
+Input reading
+1. First line has to be number of ants?
+	Is there a limit to the number of ants? (like an int or something)
+	Nothing after digits;
+2. # means comment
+3. ## means command --> check if valid command
+4. No empty lines allowed (not even after info, check if gnl checks this)
