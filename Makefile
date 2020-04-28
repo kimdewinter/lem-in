@@ -6,13 +6,13 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/04/28 15:41:36 by lravier       ########   odam.nl          #
+#    Updated: 2020/04/28 17:27:14 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
-IFLAGS= -Wall -Wextra -Werror
+IFLAGS= #-Wall -Wextra -Werror
 RAW=main read_input
 SRCS=$(addprefix srcs/,$(addsuffix .c,$(RAW)))
 OBJS=$(patsubst srcs/%.c,obj/%.o,$(SRCS))

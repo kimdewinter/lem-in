@@ -1,3 +1,4 @@
+
 #include "../includes/lem-in.h"
 
 /*ssize_t	*setup_room(t_room *dest)
@@ -19,9 +20,11 @@ ssize_t	setup_map(t_map *dest)
 int main()
 {
 	t_map	map;
+	char	**input;
 
 	// map.antmount = 0;
 	// map.start = NULL;
 	//map.routes = iets;
-	read_input(&map);
+	if (read_input(&map, input) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 }

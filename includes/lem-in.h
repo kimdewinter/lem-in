@@ -6,13 +6,16 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/28 17:24:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/28 17:55:46 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
 # include "../libftprintf/includes/libftprintf.h"
+# include "../libftprintf/libft/libft.h"
+# include "../libftprintf/libft/get_next_line.h"
+# include <limits.h>
 
 typedef struct	s_room
 {
@@ -32,8 +35,9 @@ typedef struct	s_map
 	void	*routes;//type to be determined
 }				t_map;
 
-int		read_input(t_map *map);
+int		read_input(t_map *map, char **input);
 int		get_next_line(const int fd, char **line);
+int		parse_antmount(char *line, t_map *map);
 char	*ft_strdup(const char *s1);
 ssize_t	*setup_room(t_room **dest);
 ssize_t	*purge_room(t_room **room);

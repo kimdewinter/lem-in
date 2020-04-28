@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/13 13:13:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/28 16:03:30 by lravier       ########   odam.nl         */
+/*   Updated: 2020/04/28 17:25:31 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,20 @@ int		ft_managerest(t_params *p, void **read)
 int		ft_read(t_params *p)
 {
 	void	*eol;
-	char	buffer[BUFF_SIZE];
+	char	buffer[BUFF_SZ];
 	t_list	*node;
 	void	*fullread;
 
 	eol = ft_memchr(((t_list *)*p->buff)->content, '\n', *p->len);
 	while (!eol && p->nbr != 0)
 	{
-		p->nbr = read(p->fd, &buffer, BUFF_SIZE);
+		p->nbr = read(p->fd, &buffer, BUFF_SZ);
 		if (p->nbr < 0)
 			return (-1);
 		eol = ft_memchr(buffer, '\n', p->nbr);
 		node = ft_lstnew(buffer, p->nbr);
 		ft_lstadd(p->buff, node);
-		ft_bzero(buffer, BUFF_SIZE);
+		ft_bzero(buffer, BUFF_SZ);
 		*p->len += p->nbr;
 	}
 	ft_lsttoarr(p->buff, &fullread, *p->len);
@@ -121,7 +121,7 @@ int		get_next_line(const int fd, char **line)
 	t_list			*buff;
 	size_t			len;
 
-	if (BUFF_SIZE <= 0 || !line || fd < 0)
+	if (BUFF_SZ <= 0 || !line || fd < 0)
 		return (-1);
 	*line = NULL;
 	len = 0;

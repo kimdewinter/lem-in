@@ -1,13 +1,19 @@
-#include "libftprintf/libft/get_next_line.h"
+// #include "libftprintf/libft/get_next_line.h"
 #include <stdio.h>
-
+#include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
 int main()
 {
-	char line[100];
+	char c;
+	int	last_read;
 
-	while (read(1, line, 1))
+	// last_read = 1;
+	while (read(STDIN_FILENO, &c, 1) > 0)
 	{
-		printf("%s\n", line);
+		// last_read = read(1, line, 1);
+		// exit (0);
+		printf("%c\n", c);
 	}
 	// while (get_next_line(1, &line))
 	// {

@@ -5,3 +5,5 @@ Input reading
 2. # means comment
 3. ## means command --> check if valid command
 4. No empty lines allowed (not even after info, check if gnl checks this)
+5. Can there be spaces at the end of a line? Excess information?
+6. Don't mix up the lines (first no ants, then rooms, then links)
