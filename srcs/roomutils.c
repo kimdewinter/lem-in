@@ -20,13 +20,31 @@ ssize_t	*setup_room(t_room **dest)
 	t_room	*room;
 
 	room = (t_room *)malloc(sizeof(t_room));
-	if (room == NULL)
-		return (EXIT_FAILURE);
-	room->name = NULL;
-	room->xpos = -1;
-	room->ypos = -1;
-	room->links = NULL;
-	room->ant = -1;
-	*dest = room;
-	return (EXIT_SUCCESS);
+	if (room != NULL)
+	{
+		room->name = NULL;
+		room->xpos = -1;
+		room->ypos = -1;
+		room->links = NULL;
+		room->ant = -1;
+		*dest = room;
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
+}
+
+ssize_t	*purge_room(t_room **room)
+{
+	if (*room != NULL)
+	{
+		(*room)->name = NULL;
+		(*room)->xpos = -1;
+		(*room)->ypos = -1;
+		(*room)->links = NULL;
+		(*room)->ant = -1;
+		free(*room);
+		*room = NULL;
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }
