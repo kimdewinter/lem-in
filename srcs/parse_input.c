@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:33:44 by kim           #+#    #+#                 */
-/*   Updated: 2020/04/28 18:44:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/29 14:37:20 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,44 +37,62 @@ static size_t	is_antmount(char *line)
 
 static size_t	is_room(char *line)
 {
-	if (ft_isalnum(*line) == 1 && *line != ' ')//does ft_isalnum return 0 when faced with a '\0'?
+	if (ft_isalnum(*line) == 1 && *line != ' ' && *line != '\n'
+			&& *line != 'L' && *line != '#')
 	{
-		line++;
-		while (ft_isalnum(*line == 1))
-		{
-			line++;
-			if (*line == ' ')
-			{
-				line++;
-				break;
-			}
-		}
-		while (ft_isdigit(*line == 1))
-		{
-			line++;
-			if (*line == ' ')
-			{
-				line++;
-				break;
-			}
-		}
-		while (ft_isdigit(*line == 1))
-		{
-			line++;
-			if (*line == '\n')
-			{
-				line++;
-				return (1);
-			}
-		}
+		while (ft_isalnum(*line) == 1 && *line != ' ' && *line != '\n')
+			line++;//stepping through room-name
+
+		if (*line == ' ')
+			line++;//step over the space
+		else
+			return (0);
+
+		while (ft_isdigit(*line) == 1 && *line != ' ')
+			line++;//step through x-coordinate
+
+		if (*line == ' ')
+			line++;//step over the space
+		else
+			return (0);
+		
+		while (ft_isdigit(*line) == 1)
+			line++;//step through y-coordinate
+		
+		if (*line == '\n' || *line == '\0')
+			return (1);//1 is only returned if a lot of conditions have been met
 	}
-	return (0);
-}//I'll improve this tomorrow
+	return (0);//default return is always 0; safer
+}
 
 static size_t	is_tube(char *line)
 {
+	int		i;
+	char	**words;
+	int		dash;
 
-}//LAURE: if you're bored, can you make an is_tube? returns 1 if its a tube, 0 if not
+	/* Free words! */
+	i = 0;
+	dash = 0;
+	while(line[i])
+	{
+		if (line[i] == '-')
+			dash += 1;
+		i++;
+	}
+	i = 0;
+	if (dash != 1)
+		return (0);
+	words = ft_strsplit(line, '-');
+	while (words[i] != NULL)
+		i++;
+	if (i != 2)
+		return (0);
+	if (ft_strcmp(words[0], words[1]) == 0)
+		return (0);
+	/* Check whether room name exists in collection of rooms */
+	return (1);
+}
 
 static size_t	is_comment(char *line)
 {
@@ -83,7 +101,7 @@ static size_t	is_comment(char *line)
 	return (0);
 }
 
-static size_t	is_command(char *line)
+size_t	is_command(char *line)
 {
 	if (*line == '#' && line[1] == '#')
 		return (1);
@@ -92,24 +110,24 @@ static size_t	is_command(char *line)
 
 ssize_t	parse_input(char **input, t_map *map)
 {
+	find_start(input, map);
+	find_end(input, map);
 /*
 ROUGH PSEUDO-CODE:
-
-IF (IS_ANTMOUNT(*input[i]))
+while (SOMETHING)
 {
-	GOOD SHIT!
+	if (line == tube)
+		tube();
+	else if (line == room)
+		room();
+	else if (line == comment)
+		comment();
+	else if (line == antmount)
+		antmount();
+	else
+		return (EXIT_FAILURE);
+	line++;
 }
-ELSE
-	OH NOES!
-
-WHILE (IS_ROOM(*input[i]))
-{
-	MAKE SOME ROOM!
-}
-
-WHILE (IS_TUBE(*input[i]))
-{
-	TUBIN' IT UP!
-}
+Check if room already exists
 */
 }

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/28 17:55:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/29 16:19:55 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,12 @@ int		read_input(t_map *map, char **input);
 int		get_next_line(const int fd, char **line);
 int		parse_antmount(char *line, t_map *map);
 char	*ft_strdup(const char *s1);
-ssize_t	*setup_room(t_room **dest);
-ssize_t	*purge_room(t_room **room);
+ssize_t	setup_room(t_room **dest,
+					const char *name,
+					const ssize_t xpos,
+					const ssize_t ypos);
+ssize_t	purge_room(t_room **room);
+ssize_t	link_rooms(t_room *alpha, t_room *omega);
+size_t	is_command(char *line);
 
 #endif

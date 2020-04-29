@@ -7,3 +7,5 @@ Input reading
 4. No empty lines allowed (not even after info, check if gnl checks this)
 5. Can there be spaces at the end of a line? Excess information?
 6. Don't mix up the lines (first no ants, then rooms, then links)
+7. More than one start or end point
+8. Can room names contain non-alphanumeric chars?

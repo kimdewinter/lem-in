@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/28 18:34:09 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/29 13:29:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static int			copy_input(char **input)
 	int		i;
 	char	*line;
 
+/* how many lines? Make sure ends with NULL*/
 	input = (char **)malloc(sizeof(char **) * 10);
 	if (!input)
 		return (ft_error("Error allocating memory\n", 0));
@@ -27,7 +28,7 @@ static int			copy_input(char **input)
 	line = 0;
 	while (read > 0)
 	{
-		read = get_next_line(0, &line)
+		read = get_next_line(0, &line);
 		input[i] = ft_strdup(line);
 		if (line)
 			free(line);
