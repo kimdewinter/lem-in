@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/29 16:19:55 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/29 17:04:27 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef struct	s_room
 	char			*name;
 	ssize_t			xpos;
 	ssize_t			ypos;
-	struct t_room	*links;
+	size_t			links_len;
+	struct t_room	**links;
 	ssize_t	ant;//-1 means room is empty
 }				t_room;
 
@@ -42,7 +43,8 @@ char	*ft_strdup(const char *s1);
 ssize_t	setup_room(t_room **dest,
 					const char *name,
 					const ssize_t xpos,
-					const ssize_t ypos);
+					const ssize_t ypos,
+					const size_t links);
 ssize_t	purge_room(t_room **room);
 ssize_t	link_rooms(t_room *alpha, t_room *omega);
 size_t	is_command(char *line);
