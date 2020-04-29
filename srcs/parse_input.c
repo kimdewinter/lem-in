@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:33:44 by kim           #+#    #+#                 */
-/*   Updated: 2020/04/29 14:37:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/29 16:30:27 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,28 +41,23 @@ static size_t	is_room(char *line)
 			&& *line != 'L' && *line != '#')
 	{
 		while (ft_isalnum(*line) == 1 && *line != ' ' && *line != '\n')
-			line++;//stepping through room-name
-
+			line++;
 		if (*line == ' ')
-			line++;//step over the space
+			line++;
 		else
 			return (0);
-
 		while (ft_isdigit(*line) == 1 && *line != ' ')
-			line++;//step through x-coordinate
-
+			line++;
 		if (*line == ' ')
-			line++;//step over the space
+			line++;
 		else
 			return (0);
-		
 		while (ft_isdigit(*line) == 1)
-			line++;//step through y-coordinate
-		
+			line++;
 		if (*line == '\n' || *line == '\0')
-			return (1);//1 is only returned if a lot of conditions have been met
+			return (1);
 	}
-	return (0);//default return is always 0; safer
+	return (0);
 }
 
 static size_t	is_tube(char *line)
