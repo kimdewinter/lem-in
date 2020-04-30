@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/29 17:04:27 by kim           ########   odam.nl         */
+/*   Updated: 2020/04/30 13:31:43 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ typedef struct	s_room
 	ssize_t			xpos;
 	ssize_t			ypos;
 	size_t			links_len;
-	struct t_room	**links;
+	char			**links;
 	ssize_t	ant;//-1 means room is empty
 }				t_room;
 
