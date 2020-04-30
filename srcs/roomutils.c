@@ -26,13 +26,16 @@ ssize_t			setup_room(t_room **dest,
 	if (room != NULL)
 	{
 		room->name = ft_strdup(name);
-		room->xpos = xpos;
-		room->ypos = ypos;
-		room->neighbours_len = 0;
-		room->neighbours = NULL;
-		room->ant = -1;
-		*dest = room;
-		return (EXIT_SUCCESS);
+		if (room->name != NULL)
+		{
+			room->xpos = xpos;
+			room->ypos = ypos;
+			room->neighbours_len = 0;
+			room->neighbours = NULL;
+			room->ant = -1;
+			*dest = room;
+			return (EXIT_SUCCESS);
+		}
 	}
 	return (EXIT_FAILURE);
 }

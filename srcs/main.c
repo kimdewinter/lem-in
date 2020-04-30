@@ -20,11 +20,12 @@ ssize_t	setup_map(t_map *dest)
 int main()
 {
 	t_map	map;
-	char	**input;
+	t_input_reader	input;
 
 	// map.antmount = 0;
 	// map.start = NULL;
 	//map.routes = iets;
-	if (read_input(&map, input) == EXIT_FAILURE)
+	if (read_input(&map, &input) == EXIT_FAILURE
+		|| parse_input(&input) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 }
