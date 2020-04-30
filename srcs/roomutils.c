@@ -15,11 +15,10 @@
 # include "../libftprintf/libft/libft.h"
 # include "../libftprintf/libft/get_next_line.h"
 
-ssize_t	setup_room(t_room **dest,
+ssize_t			setup_room(t_room **dest,
 					const char *name,
 					const ssize_t xpos,
-					const ssize_t ypos,
-					const size_t links)
+					const ssize_t ypos)
 {
 	t_room	*room;
 
@@ -29,8 +28,8 @@ ssize_t	setup_room(t_room **dest,
 		room->name = ft_strdup(name);
 		room->xpos = xpos;
 		room->ypos = ypos;
-		room->links_len = links;
-		room->links = (t_room **)malloc(sizeof(t_room *) * room->links_len);
+		room->neighbours_len = 0;
+		room->neighbours = NULL;
 		room->ant = -1;
 		*dest = room;
 		return (EXIT_SUCCESS);
@@ -38,31 +37,95 @@ ssize_t	setup_room(t_room **dest,
 	return (EXIT_FAILURE);
 }
 
-ssize_t	purge_room(t_room **room)
+static ssize_t	add_neighbour_new(t_room *room)
 {
+	if (room != NULL && room->neighbours_len == 0 && room->neighbours == NULL)
+	{
+		room->neighbours = (char **)malloc(sizeof(char *) * 1);
+		if (room->neighbours != NULL)
+		{
+			room->neighbours[0] = NULL;
+			room->neighbours_len++;
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
+}//creates a new room->neighbours char** array of 1 cell
+
+static ssize_t	add_neighbour_grow(t_room *room)
+{
+	char	**new_neighbours;
 	size_t	i;
 
+	new_neighbours = NULL;
 	i = 0;
-	if (*room != NULL)
+	if (room != NULL && room->neighbours_len > 0 && room->neighbours != NULL)
 	{
-		(*room)->name = NULL;
-		(*room)->xpos = -1;
-		(*room)->ypos = -1;
-		if ((*room)->links_len > 0 && (*room)->links != NULL)
+		new_neighbours = (char **)malloc(sizeof(char *)
+			* (room->neighbours_len + 1));
+		if (new_neighbours != NULL)
 		{
-			while (i < (*room)->links_len)
+			while (i < room->neighbours_len)
 			{
-				(*room)->links[i] = NULL;
+				new_neighbours[i] = room->neighbours[i];
 				i++;
 			}
-			(*room)->links = NULL;
-			free((*room)->links);
-			(*room)->links_len = 0;
-		}//cleans up all links to other rooms
+			new_neighbours[i] = NULL;
+			free(room->neighbours);
+			room->neighbours = new_neighbours;
+			room->neighbours_len++;
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
+}//expands the room->neighbours char** array by 1
+
+ssize_t	add_neighbour(t_room *room, const char *neighbour)
+{
+	if (room != NULL && neighbour != NULL)
+	{
+		if (room->neighbours_len == 0 && room->neighbours == NULL && add_neighbour_new(room) == EXIT_SUCCESS)
+		{
+			room->neighbours[room->neighbours_len - 1] = ft_strdup(neighbour);
+			if (room->neighbours[room->neighbours_len - 1] != NULL)
+				return (EXIT_SUCCESS);
+			else
+				free(room->neighbours)
+		}//handles when room->neighbours char** array is yet to be made
+		else if (room->neighbours_len > 0 && room->neighbours != NULL && add_neighbour_grow(room) == EXIT_SUCCESS)
+		{
+			room->neighbours[room->neighbours_len - 1] = ft_strdup(neighbour);
+			if (room->neighbours[room->neighbours_len - 1] != NULL)
+				return (EXIT_SUCCESS);
+		}//handles when room->neighbours char** array needs to grow by 1
+	}
+	return (EXIT_FAILURE);
+}
+
+ssize_t	purge_room(t_room **room)
+{
+	if (*room != NULL)
+	{
+		if ((*room)->name != NULL)
+		{
+			free((*room)->name);
+			(*room)->name = NULL;
+		}
+		(*room)->xpos = -1;
+		(*room)->ypos = -1;
+		while ((*room)->neighbours_len > 0)
+		{
+			(*room)->neighbours_len--;
+			if ((*room)->neighbours[(*room)->neighbours_len] != NULL)
+			{
+				free((*room)->neighbours[(*room)->neighbours_len]);
+				(*room)->neighbours[(*room)->neighbours_len] = NULL;
+			}
+		}
 		(*room)->ant = -1;
 		free(*room);
 		*room = NULL;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
-}
+}//resets a room's variables to their default states, frees all underlying allocated space(s), and finally the room itself
