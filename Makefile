@@ -6,41 +6,61 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/04/28 17:27:14 by kim           ########   odam.nl          #
+#    Updated: 2020/05/06 14:21:33 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
-IFLAGS= #-Wall -Wextra -Werror
-RAW=main read_input
-SRCS=$(addprefix srcs/,$(addsuffix .c,$(RAW)))
-OBJS=$(patsubst srcs/%.c,obj/%.o,$(SRCS))
+IFLAGS= -Wall -Wextra -Werror
+RAW=					find_end \
+						find_start \
+						link_rooms \
+						main \
+						parse_antmount \
+						parse_input \
+						parse_nants \
+						read_input \
+						roomutils
+OBJ_DIR=obj/
+SRC_DIR=srcs/
+SRCS=$(addprefix $(SRC_DIR),$(addsuffix .c,$(RAW)))
+OBJS=$(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
 HEADER=./includes/lem-in.h
-LIB=libftprintf/libftprintf.a
+
+# LIBRARIES #
+LIB_NAME=libftprintf.a
+LIB_DIR=lib/
+LIB=$(LIB_DIR)$(LIB_NAME)
 
 .PHONY: all clean fclean re
 
 all:$(NAME)
-	make -C libftprintf
-	$(CC) $(IFLAGS) -o $(NAME) $(OBJS) $(HEADER) $(LIB)
+	echo "Compiling $(LIB_NAME)"
+	@make -s -C $(LIB_DIR)
+	echo "Compiling $^ executable"
+	@$(CC) $(IFLAGS) -o $(NAME) $(OBJS) $(HEADER) $(LIB)
 
 $(NAME):$(OBJS)
 
-obj:
-	mkdir $@
+$(OBJ_DIR):
+	@mkdir $@
 
-obj/%.o: srcs/%.c $(HEADER) | obj
-	$(CC) $(IFLAGS) -o $@ -c $<
+$(OBJ_DIR)%.o: $(SRC_DIR)/%.c $(HEADER) | $(OBJ_DIR)
+	@$(CC) $(IFLAGS) -o $@ -c $<
 
 clean_obj:
-	if [ -d obj ]; then rm -rf obj; fi
+	@if [ -d obj ]; then rm -rf obj; fi
 
 clean: clean_obj
-	make clean -C libftprintf
+	echo "Cleaning repository"
+	echo "Cleaning repository $(LIB_DIR)"
+	@make clean -s -C lib
 
 fclean: clean
-	make fclean -C libftprintf
-	rm -f $(NAME)
+	echo "Removing $(NAME)"
+	echo "Removing $(LIB)"
+	@make fclean -s -C lib
+	@rm -f $(NAME)
 
 re: fclean all

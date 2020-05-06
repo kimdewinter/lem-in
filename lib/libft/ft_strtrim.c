@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/03/25 07:48:16 by lravier        #+#    #+#                */
-/*   Updated: 2020/02/14 14:20:07 by lravier       ########   odam.nl         */
+/*   Created: 2019/03/25 07:48:16 by lravier       #+#    #+#                 */
+/*   Updated: 2020/05/05 15:28:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ char		*ft_strtrim(char const *s)
 
 	i = 0;
 	j = (int)ft_strlen(s) - 1;
-	while (s[i] == ' ' || s[i] == '\n' || s[i] == '\t')
+	while (ft_isspace(s[i]))
 		i++;
-	while (s[j] == ' ' || s[j] == '\n' || s[j] == '\t')
+	while (ft_isspace(s[j]))
 		j--;
 	j++;
 	if (j < i)

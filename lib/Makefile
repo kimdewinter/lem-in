@@ -1,6 +1,6 @@
 NAME = libftprintf.a
 CC = gcc
-IFLAGS= -Wall -Wextra -Werror
+IFLAGS= #-Wall -Wextra -Werror
 RAW_FILES=ft_vdprintf ft_parse_format ft_is_of_type ft_create_argument \
 ft_add_arg_parts ft_pf_lst ft_adj_flags_precision \
 ft_get_size_of_datatype ft_set_data ft_set_data_type ft_set_def_prec \
@@ -37,26 +37,39 @@ ft_memtrunc ft_lsteremove ft_lsttoarr ft_lstedel
 LIBFT_SRC=$(addsuffix .c,$(addprefix libft/,$(LIBFT_RAW)))
 LIBFT_OBJ=$(patsubst libft/%.c,libft/obj/%.o,$(LIBFT_SRC))
 LIBFT_HEADER=libft/libft.h
+LIBFT_OBJ_DIR=libft/obj
 FLOATS_RAW=ft_frexp ft_get_string float_utilities ft_create_bigint \
 ft_mult_bigint ft_div_bigint ft_round_bigint ft_create_string ft_fill_str \
 ft_scale_bigint ft_create_string_e ft_get_len_zero_excep ft_zero_str \
 ft_fill_string_e ft_string_exceptions ft_conv_g ft_round_e ft_shift_left \
 ft_create_output ft_get_length ft_get_max_index
 FLOATS_SRC=$(addsuffix .c,$(addprefix floats/,$(FLOATS_RAW)))
-FLOATS_OBJ=$(patsubst floats/%.c,floats/%.o,$(FLOATS_SRC))
+FLOATS_OBJ=$(patsubst floats/%.c,floats/obj/%.o,$(FLOATS_SRC))
 FLOATS_HEADER=floats/includes/floats.h
+FLOATS_OBJ_DIR=floats/obj
+HASH_RAW=delete hash insert new_item new_table prime resize_table pow_ll \
+search
+HASH_SRC=$(addsuffix .c,$(addprefix hash/srcs/,$(HASH_RAW)))
+HASH_OBJ=$(patsubst hash/srcs/%.c,hash/obj/%.o,$(HASH_SRC))
+HASH_HEADER=hash/includes/hashing.h
+HASH_OBJ_DIR=hash/obj
 OBJ_DIR=obj
-LIBFT_OBJ_DIR=libft/obj
 
 all: $(NAME)
 
-$(NAME): $(OBJ_FILES) $(LIBFT_OBJ) $(FLOATS_OBJ) $(GNL_OBJ)
+$(NAME): $(OBJ_FILES) $(LIBFT_OBJ) $(FLOATS_OBJ) $(GNL_OBJ) $(HASH_OBJ)
 	ar rcs $@ $^
 
-libft/obj:
+$(OBJ_DIR):
 	mkdir $@
 
-obj:
+$(LIBFT_OBJ_DIR):
+	mkdir $@
+
+$(FLOATS_OBJ_DIR):
+	mkdir $@
+
+$(HASH_OBJ_DIR):
 	mkdir $@
 
 obj/%.o: srcs/%.c $(HEADER) | $(OBJ_DIR)
@@ -68,7 +81,10 @@ libft/obj/%.o: libft/%.c $(LIBFT_HEADER) | $(LIBFT_OBJ_DIR)
 libft/obj/get_next_line.o: libft/get_next_line.c $(GNL_HEADER) | $(LIBFT_OBJ_DIR)
 	$(CC) $(IFLAGS) -o $@ -c $<
 
-floats/%.o: floats/%.c $(FLOATS_HEADER)
+floats/obj/%.o: floats/%.c $(FLOATS_HEADER) | $(FLOATS_OBJ_DIR)
+	$(CC) $(IFLAGS) -o $@ -c $<
+
+hash/obj/%.o: hash/srcs/%.c $(HASH_HEADER) | $(HASH_OBJ_DIR)
 	$(CC) $(IFLAGS) -o $@ -c $<
 
 clean_obj:
@@ -77,11 +93,13 @@ clean_obj:
 clean: clean_obj
 	make clean -C libft
 	make clean -C floats
+	make clean -C hash
 	rm -f includes/libftprintf.h.gch
 
 fclean: clean
 	make fclean -C libft
 	make fclean -C floats
+	make fclean -C hash
 	rm -f $(NAME)
 
 re: fclean all
