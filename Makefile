@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/04/28 17:27:14 by kim           ########   odam.nl          #
+#    Updated: 2020/05/06 13:42:30 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ RAW=main read_input
 SRCS=$(addprefix srcs/,$(addsuffix .c,$(RAW)))
 OBJS=$(patsubst srcs/%.c,obj/%.o,$(SRCS))
 HEADER=./includes/lem-in.h
-LIB=libftprintf/libftprintf.a
+LIB=lib/libftprintf.a
 
 .PHONY: all clean fclean re
 
