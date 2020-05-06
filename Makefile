@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/05/06 13:42:30 by lravier       ########   odam.nl          #
+#    Updated: 2020/05/06 13:54:26 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ LIB=lib/libftprintf.a
 .PHONY: all clean fclean re
 
 all:$(NAME)
-	make -C libftprintf
+	make -C lib
 	$(CC) $(IFLAGS) -o $(NAME) $(OBJS) $(HEADER) $(LIB)
 
 $(NAME):$(OBJS)
@@ -37,10 +37,9 @@ clean_obj:
 	if [ -d obj ]; then rm -rf obj; fi
 
 clean: clean_obj
-	make clean -C libftprintf
-
+	make clean -C lib
 fclean: clean
-	make fclean -C libftprintf
+	make fclean -C lib
 	rm -f $(NAME)
 
 re: fclean all
