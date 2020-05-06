@@ -1,4 +1,4 @@
-// #include "libftprintf/libft/get_next_line.h"
+// #include "lib/libft/get_next_line.h"
 #include <stdio.h>
 #include <stdlib.h>
 # include <unistd.h>
@@ -9,7 +9,7 @@ int main()
 	int	last_read;
 
 	// last_read = 1;
-	while (read(STDIN_FILENO, &c, 1) > 0)
+	while (get_next_line(STDIN_FILENO, 1) > 0)
 	{
 		// last_read = read(1, line, 1);
 		// exit (0);

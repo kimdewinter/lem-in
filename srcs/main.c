@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
+/*   Updated: 2020/05/06 14:06:51 by kim           ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
@@ -22,7 +33,7 @@ int main()
 	t_map	map;
 	t_input_reader	input;
 
-	// map.antmount = 0;
+	// map.antmount = -1;
 	// map.start = NULL;
 	//map.routes = iets;
 	if (read_input(&map, &input) == EXIT_FAILURE

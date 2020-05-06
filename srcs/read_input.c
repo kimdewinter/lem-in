@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/30 17:43:23 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/06 15:14:06 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ static int			copy_input(t_input_reader *input)
 			if (!input)
 				return (ft_error("Error allocating memory\n", EXIT_FAILURE));
 		}
-		read = get_next_line(stdin, &line);
+		read = get_next_line(STDIN_FILENO, &line);
+		/* check whether line && reading success */
+		if (read < 0)
+			return (ft_error("Error reading input\n", 0));
 		input->lines[input->num_lines] = ft_strdup(line);
 		input->num_lines++;
 		if (line)

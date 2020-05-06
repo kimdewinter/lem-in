@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/30 17:43:10 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/06 15:13:57 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ typedef struct	s_room
 
 typedef struct	s_map
 {
-	size_t	antmount;//amount of ants
+	ssize_t	antmount;//amount of ants
 	char	*start;
 	char	*end;
 	t_table	*rooms;
@@ -48,7 +48,7 @@ typedef struct	s_input_reader
 
 int		read_input(t_map *map, t_input_reader *input);
 int		get_next_line(const int fd, char **line);
-int		parse_antmount(char *line, t_map *map);
+ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i);
 char	*ft_strdup(const char *s1);
 ssize_t	setup_room(t_room **dest,
 					const char *name,
@@ -62,5 +62,9 @@ t_entry *new_entry(char *key, char *value);
 ssize_t	insert_ht(t_table *table, char *key, void *value);
 void	*search_ht(t_table *table, char *key);
 ssize_t	delete_ht(t_table *table);
+size_t	is_comment(char *line);
+size_t	is_tube(char *line);
+size_t	is_room(char *line);
+size_t	is_antmount(char *line);
 
 #endif
