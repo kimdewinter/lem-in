@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/06 15:25:40 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/06 17:47:37 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct	s_input_reader
 
 int		read_input(t_map *map, t_input_reader *input);
 int		get_next_line(const int fd, char **line);
-ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i);
+ssize_t	parse_antmount(t_input_reader *input, t_map *map, size_t *i);
+ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i);
 // char	*ft_strdup(const char *s1);
 ssize_t	setup_room(t_room **dest,
 					const char *name,

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parse_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: lravier <lravier@student.codam.nl>           +#+                     */
+/*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/05/06 14:28:19 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/06 15:14:06 by kim           ########   odam.nl         */
+/*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
+/*   Updated: 2020/05/06 17:46:28 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ size_t	is_tube(char *line)
 		i++;
 	if (i != 2)
 		return (0);
+	/* None of this checks for spaces! */
 	if (ft_strcmp(words[0], words[1]) == 0)
 		return (0);
 	/* Check whether room name exists in collection of rooms */

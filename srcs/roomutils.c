@@ -23,19 +23,16 @@ ssize_t			setup_room(t_room **dest,
 	t_room	*room;
 
 	room = (t_room *)malloc(sizeof(t_room));
-	if (room != NULL)
+	if (room != NULL && name != NULL)
 	{
-		room->name = ft_strdup(name);
-		if (room->name != NULL)
-		{
-			room->xpos = xpos;
-			room->ypos = ypos;
-			room->neighbours_len = 0;
-			room->neighbours = NULL;
-			room->ant = -1;
-			*dest = room;
-			return (EXIT_SUCCESS);
-		}
+		room->name = name;
+		room->xpos = xpos;
+		room->ypos = ypos;
+		room->neighbours_len = 0;
+		room->neighbours = NULL;
+		room->ant = -1;
+		*dest = room;
+		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }
