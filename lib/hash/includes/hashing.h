@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 19:51:36 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/30 17:05:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/07 15:08:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 
 typedef struct	s_room
 {
-	char			*r_name;
+	char			*name;
 	ssize_t			xpos;
 	ssize_t			ypos;
 	size_t			neighbours_len;

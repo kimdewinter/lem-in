@@ -11,9 +11,6 @@
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
-# include "../libftprintf/includes/libftprintf.h"
-# include "../libftprintf/libft/libft.h"
-# include "../libftprintf/libft/get_next_line.h"
 
 ssize_t			setup_room(t_room **dest,
 					const char *name,
@@ -25,7 +22,7 @@ ssize_t			setup_room(t_room **dest,
 	room = (t_room *)malloc(sizeof(t_room));
 	if (room != NULL && name != NULL)
 	{
-		room->name = name;
+		room->name = (char *)name;
 		room->xpos = xpos;
 		room->ypos = ypos;
 		room->neighbours_len = 0;
@@ -90,7 +87,7 @@ ssize_t	add_neighbour(t_room *room, const char *neighbour)
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
 			else
-				free(room->neighbours)
+				free(room->neighbours);
 		}//handles when room->neighbours char** array is yet to be made
 		else if (room->neighbours_len > 0 && room->neighbours != NULL && add_neighbour_grow(room) == EXIT_SUCCESS)
 		{

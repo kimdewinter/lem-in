@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/06 15:14:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/07 14:46:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 unsigned long long		ft_atoi_ll(char *line, size_t *overflow)
 {
 	int			i;
-	int			polar;
 	long long	result;
 	long long	prev_result;
 
 	result = 0;
 	i = 0;
-	polar = 1;
 	while (line[i])
 	{
 		prev_result = result;

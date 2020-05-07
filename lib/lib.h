@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 17:08:12 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/06 12:37:56 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/07 14:46:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 # include <stdio.h>
 # include <stdarg.h>
 # include <unistd.h>
+# include "libft/get_next_line.h"
+# include "libft/libft.h"
+# include "hash/includes/hashing.h"
 # define BASE_SIZE 50
 # define PRIME_A 151
 # define PRIME_B 163
@@ -42,12 +45,12 @@ int					ft_vsprintf(char *str, const char *format, va_list ap);
 int					get_next_line(const int fd, char **line);
 
 /* libft */
-typedef struct		s_list
-{
-	void			*content;
-	size_t			content_size;
-	struct s_list	*next;
-}					t_list;
+// typedef struct		s_list
+// {
+// 	void			*content;
+// 	size_t			content_size;
+// 	struct s_list	*next;
+// }					t_list;
 
 void				ft_del(void *content, size_t size);
 void				ft_putchar(int c);
@@ -135,29 +138,29 @@ void				ft_lstedel(t_list **alst);
 int					ft_memrealloc(void **ptr, size_t prev_size, size_t size);
 
 /* hash */
-typedef struct 	s_entry
-{
-	char *key;
-	void *val;
-}				t_entry;
+// typedef struct 	s_entry
+// {
+// 	char *key;
+// 	void *val;
+// }				t_entry;
 
-typedef struct	s_room
-{
-	char			*r_name;
-	ssize_t			xpos;
-	ssize_t			ypos;
-	size_t			neighbours_len;
-	char			**neighbours;
-	ssize_t	ant;//-1 means room is empty
-}				t_room;
+// typedef struct	s_room
+// {
+// 	char			*r_name;
+// 	ssize_t			xpos;
+// 	ssize_t			ypos;
+// 	size_t			neighbours_len;
+// 	char			**neighbours;
+// 	ssize_t	ant;//-1 means room is empty
+// }				t_room;
 
-typedef struct	s_table
-{
-	int					base_size;
-	int					size;
-	int 				count;
-	struct s_entry		**entries;
-}				t_table;
+// typedef struct	s_table
+// {
+// 	int					base_size;
+// 	int					size;
+// 	int 				count;
+// 	struct s_entry		**entries;
+// }				t_table;
 
 t_table				*create_ht(size_t size);
 void				delete_ht(t_table *ht, void (*del_ptr)(void *));

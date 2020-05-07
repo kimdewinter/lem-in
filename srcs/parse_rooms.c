@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/07 14:01:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/07 15:02:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static ssize_t	get_coords(char *wordx, char *wordy, size_t *posx, size_t *posy)
 	return (EXIT_FAILURE);
 }
 
-static ssize_t	add_room_special(t_input_reader *input, t_map *map, size_t *i)
+static ssize_t	add_special_room(t_input_reader *input, t_map *map, size_t *i)
 {
 	char	**words;
 	t_room	*room;
@@ -39,14 +39,14 @@ static ssize_t	add_room_special(t_input_reader *input, t_map *map, size_t *i)
 		words = ft_strsplit(input->lines[*i + 1], ' ');
 		if (words[0] != NULL && words[1] != NULL && words[2] != NULL)
 			if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
-				if (setup_room(&room, words[0], words[1], words[2]) == EXIT_SUCCESS)
+				if (setup_room(&room, words[0], posx, posy) == EXIT_SUCCESS)
 					if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
 					{
 						if (is_comment(input->lines[*i]) == 2)
 							map->start = ft_strdup(room->name);
-						else if (is_comment(input->lines[*i] == 3))
+						else if (is_comment(input->lines[*i]) == 3)
 							map->end = ft_strdup(room->name);
-						*i++;
+						(*i)++;
 						return (EXIT_SUCCESS);
 					}
 	}
@@ -73,22 +73,28 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 {
 	if (input != NULL && map != NULL)
 	{
-		while (i < input->num_lines && input->lines[*i] != NULL)
+		while (*i < input->num_lines && input->lines[*i] != NULL)
 		{
-			if (is_tube(input->lines[*i] == 1))
+			if (is_tube(input->lines[*i]) == 1)
 				return (EXIT_SUCCESS);
 			else if (is_room(input->lines[*i]) == 1)
+			{
 				if (add_room(input->lines[*i], map) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
-			else if (is_comment(input->lines[*i] == 3))
+			}
+			else if (is_comment(input->lines[*i]) == 3)
+			{
 				if (add_special_room(input, map, i) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
-			else if (is_comment(input->lines[*i] == 2))
+			}
+			else if (is_comment(input->lines[*i]) == 2)
+			{
 				if (add_special_room(input, map, i) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
-			else if (is_comment(input->lines[*i] != 1))
+			}
+			else if (is_comment(input->lines[*i]) != 1)
 				return (EXIT_FAILURE);
-			*i++;
+			(*i)++;
 		}
 	}
 	return (EXIT_FAILURE);

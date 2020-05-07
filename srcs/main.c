@@ -36,8 +36,8 @@ int main(void)
 	// map.antmount = -1;
 	// map.start = NULL;
 	//map.routes = iets;
-	if (read_input(&map, &input) == EXIT_SUCCESS
-		&& parse_input(&input) == EXIT_SUCCESS)
+	if (read_input(&input) == EXIT_SUCCESS
+		&& parse_input(&map, &input) == EXIT_SUCCESS)
 		return (EXIT_SUCCESS);
 	return (EXIT_FAILURE);
 }

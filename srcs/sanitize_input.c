@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/06 16:59:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/07 15:06:45 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		sanitize_input(t_map *map)
 {
 	t_room *tmp;
 
-	if (map->rooms = NULL)
+	if (map->rooms == NULL)
 		return (ft_error("No rooms provided\n", EXIT_FAILURE));
 	if (map->start == NULL)
 		return (ft_error("No start room provided\n", EXIT_FAILURE));
@@ -33,4 +33,5 @@ int		sanitize_input(t_map *map)
 	tmp = (t_room *)search_ht(map->rooms, map->end);
 	if (tmp->neighbours == NULL)
 		return (ft_error("No path from end room\n", EXIT_FAILURE));
+	return (EXIT_SUCCESS);
 }

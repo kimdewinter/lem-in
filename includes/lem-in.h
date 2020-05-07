@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 14:27:09 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/07 15:08:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,6 @@
 # include <limits.h>
 # include "../lib/lib.h"
 # define LINE_BUFF_SIZE 10000
-
-typedef struct	s_room
-{
-	char			*name;
-	ssize_t			xpos;
-	ssize_t			ypos;
-	size_t			neighbours_len;
-	char			**neighbours;
-	ssize_t	ant;//-1 means room is empty
-}				t_room;
 
 typedef struct	s_map
 {
@@ -43,12 +33,12 @@ typedef struct	s_input_reader
 }				t_input_reader;
 
 
-int		read_input(t_map *map, t_input_reader *input);
+ssize_t	read_input(t_input_reader *input);
 int		get_next_line(const int fd, char **line);
-ssize_t	parse_input(t_input_reader *input, t_map *map);
+ssize_t	parse_input(t_map *map, t_input_reader *input);
 ssize_t	parse_antmount(t_input_reader *input, t_map *map, size_t *i);
 ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i);
-// char	*ft_strdup(const char *s1);
+ssize_t	parse_tubes(t_input_reader *input, t_map *map, size_t *i);
 ssize_t	setup_room(t_room **dest,
 					const char *name,
 					const ssize_t xpos,
