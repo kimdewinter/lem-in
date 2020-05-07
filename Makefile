@@ -6,13 +6,14 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/05/07 15:09:50 by kim           ########   odam.nl          #
+#    Updated: 2020/05/07 15:59:17 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
-IFLAGS= -Wall -Wextra -Werror
+EXTRA=
+IFLAGS= -Wall -Wextra -Werror $(EXTRA)
 RAW=					main \
 						parse_antmount \
 						parse_input \
@@ -64,3 +65,6 @@ fclean: clean
 	@rm -f $(NAME)
 
 re: fclean all
+
+debug: all
+	@$(CC) $(IFLAGS) -g -o $(NAME) $(SRCS) $(HEADER) $(LIB)
