@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/06 15:14:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/07 14:10:38 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static t_input_reader	*resize_buffer(t_input_reader *input)
 	return (new_buff);
 }
 
-static int			copy_input(t_input_reader *input)
+static ssize_t		copy_input(t_input_reader *input)
 {
 	int				read;
 	int				i;
@@ -53,7 +53,7 @@ static int			copy_input(t_input_reader *input)
 		read = get_next_line(STDIN_FILENO, &line);
 		/* check whether line && reading success */
 		if (read < 0)
-			return (ft_error("Error reading input\n", 0));
+			return (ft_error("Error reading input\n", EXIT_FAILURE));
 		input->lines[input->num_lines] = ft_strdup(line);
 		input->num_lines++;
 		if (line)
@@ -64,22 +64,23 @@ static int			copy_input(t_input_reader *input)
 	}
 	if (read < 0)
 		return (ft_error("Error reading input\n", EXIT_FAILURE));
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
-static int		setup_input(t_input_reader *input)
+static ssize_t	setup_input(t_input_reader *input)
 {
 	input->lines = (char **)malloc(sizeof(char *) * LINE_BUFF_SIZE);
 	if (!input->lines)
 		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
 	input->num_lines = 0;
 	input->size = LINE_BUFF_SIZE;
+	return (EXIT_SUCCESS);
 }
 
-int				read_input(t_map *map, t_input_reader *input)
+ssize_t			read_input(t_map *map, t_input_reader *input)
 {
 	setup_input(input);
 	if (!copy_input(input))
-		return (0);
+		return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
-
