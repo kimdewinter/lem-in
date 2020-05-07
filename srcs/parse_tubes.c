@@ -6,20 +6,20 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/06 16:55:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/07 14:26:40 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-int		add_tube(t_room *room, char *key)
+static ssize_t		add_tube(t_room *room, char *key)
 {
 	if (!add_neighbour(room, key))
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 
-int		add_tubes(t_map *map, char **rooms)
+static ssize_t		add_tubes(t_map *map, char **rooms)
 {
 	t_room *room1;
 	t_room *room2;
@@ -35,7 +35,7 @@ int		add_tubes(t_map *map, char **rooms)
 	return (EXIT_SUCCESS);
 }
 
-int		parse_tube(char *line, t_map *map, int *tubes)
+static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
 {
 	char 	**rooms;
 	int		dash;
@@ -54,15 +54,15 @@ int		parse_tube(char *line, t_map *map, int *tubes)
 		EXIT_FAILURE));
 	rooms = ft_strsplit(line, '-');
 	if (!rooms)
-		return (ft_error("Error allocating memory\n", 0));
+		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
 	if (!add_tubes(map, rooms))
-		return (ft_error("Error adding link\n", 0));
+		return (ft_error("Error adding link\n", EXIT_FAILURE));
 	/* free rooms */
 	(*tubes)++;
 	return (EXIT_SUCCESS);
 }
 
-int		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
+ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 {
 	int	tubes;
 
