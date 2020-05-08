@@ -27,7 +27,7 @@ ssize_t			setup_room(t_room **dest,
 		room->ypos = ypos;
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
-		room->ant = -1;
+		room->ant = 0;
 		*dest = room;
 		return (EXIT_SUCCESS);
 	}

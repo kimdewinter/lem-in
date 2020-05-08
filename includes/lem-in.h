@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 15:30:19 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:37:41 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,27 @@
 # define LEMIN_H
 # include <limits.h>
 # include "../lib/lib.h"
+# define HT_SIZE 50
 # define LINE_BUFF_SIZE 10000
 
-typedef struct	s_map
+typedef struct	s_room
 {
-	ssize_t	antmount;//amount of ants
-	char	*start;
-	char	*end;
-	t_table	*rooms;
-	void	*routes;//type to be determined
-}				t_map;
+	char			*name;
+	ssize_t			xpos;
+	ssize_t			ypos;
+	size_t			neighbours_len;
+	char			**neighbours;
+	size_t	ant;//-1 means room is empty
+}				t_room;
+
+typedef struct		s_map
+{
+	ssize_t			antmount;//amount of ants
+	char			*start;
+	char			*end;
+	struct s_table	*rooms;
+	void			*routes;//type to be determined
+}					t_map;
 
 typedef struct	s_input_reader
 {

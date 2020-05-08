@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parse_utils.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/06 17:46:28 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:15:00 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ size_t	is_antmount(char *line)
 		while (*line != '\0' && ft_isdigit(*line) == 1)
 			line++;
 		/* Does GNL return including linebreak? */
-		if (*line != '\0' && *line == '\n')
+		if (*line == '\0' || *line == '\n')
 			return (1);
 	}
 	return (0);

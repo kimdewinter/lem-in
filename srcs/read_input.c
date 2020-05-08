@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 16:13:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:15:00 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,13 @@ static ssize_t		copy_input(t_input_reader *input)
 		/* check whether line && reading success */
 		if (read < 0)
 			return (ft_error("Error reading input\n", EXIT_FAILURE));
-		input->lines[input->num_lines] = ft_strdup(line);
-		input->num_lines++;
+		if (read > 0)
+		{
+			input->lines[input->num_lines] = line;
+			input->num_lines++;
+		}
 		if (line)
-			free(line);
+			line = NULL;
 	}
 	if (read < 0)
 		return (ft_error("Error reading input\n", EXIT_FAILURE));
@@ -73,8 +76,7 @@ static ssize_t	setup_input(t_input_reader *input)
 
 ssize_t			read_input(t_input_reader *input)
 {
-	setup_input(input);
-	if (!copy_input(input))
+	if (setup_input(input) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (copy_input(input));
 }

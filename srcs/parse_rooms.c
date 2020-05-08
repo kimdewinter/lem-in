@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/07 15:02:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:36:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static ssize_t	add_special_room(t_input_reader *input, t_map *map, size_t *i)
 	size_t	posx;
 	size_t	posy;
 
-	if (is_room(input->lines[*i + 1]) == 1)
+	if (is_room(input->lines[*i + 1]) == 1)//NOTE: this does not allow comments between ##start and the room-line that comes after; correct?
 	{
 		words = ft_strsplit(input->lines[*i + 1], ' ');
 		if (words[0] != NULL && words[1] != NULL && words[2] != NULL)

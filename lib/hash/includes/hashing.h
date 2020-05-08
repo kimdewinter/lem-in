@@ -6,32 +6,24 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 19:51:36 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 15:30:19 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:36:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef HASHING_H
 # define HASHING_H
 # define BASE_SIZE 50
+// # define BASE_SIZE 50
 # define PRIME_A 151
 # define PRIME_B 163
-# define VAL_T t_room *
+// # define VAL_T t_room *
 # define KEY r_name
 # include <stdlib.h>
 # include <string.h>
 # include <stdio.h>
 # include "../../libft/libft.h"
 # include "../../libft/get_next_line.h"
-
-typedef struct	s_room
-{
-	char			*name;
-	ssize_t			xpos;
-	ssize_t			ypos;
-	size_t			neighbours_len;
-	char			**neighbours;
-	ssize_t	ant;//-1 means room is empty
-}				t_room;
+# include "../../../includes/lem-in.h"
 
 typedef struct 	s_entry
 {
@@ -44,7 +36,7 @@ typedef struct	s_table
 	int					base_size;
 	int					size;
 	int 				count;
-	void				**entries;
+	t_entry				**entries;
 }				t_table;
 
 t_table				*create_ht(size_t size);

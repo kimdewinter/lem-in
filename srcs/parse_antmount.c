@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 14:46:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:15:00 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 	size_t				overflow;
 
 	/* Checks whether skippable lines */
-	while (is_comment(input->lines[*i]) < 2)
+	while (is_comment(input->lines[*i]) == 1)
 		(*i)++;
 	if (is_antmount(input->lines[*i]))
 	{
@@ -52,6 +52,7 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 		if (antmount == 0)
 			return (ft_error("No ants found\n", EXIT_FAILURE));
 		map->antmount = antmount;
+		(*i)++;
 		return (EXIT_SUCCESS);
 	}
 	/* Could be anything wrong */

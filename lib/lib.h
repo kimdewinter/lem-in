@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 17:08:12 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 14:46:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:36:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # include "libft/get_next_line.h"
 # include "libft/libft.h"
 # include "hash/includes/hashing.h"
-# define BASE_SIZE 50
-# define PRIME_A 151
-# define PRIME_B 163
+// # define BASE_SIZE 50
+// # define PRIME_A 151
+// # define PRIME_B 163
 /* printf */
 int					ft_vfprintf(FILE *stream, const char *format, va_list ap);
 int					ft_fprintf(FILE *stream, const char *format, ...);
@@ -70,8 +70,6 @@ int					ft_isdigit(int c);
 int					ft_isalnum(int c);
 int					ft_isascii(int c);
 int					ft_isprint(int c);
-int					ft_toupper(int c);
-int					ft_tolower(int c);
 int					ft_isspace(int c);
 int					ft_atoi(const char *str);
 char				*ft_strcpy(char *dst, const char *src);
@@ -162,15 +160,15 @@ int					ft_memrealloc(void **ptr, size_t prev_size, size_t size);
 // 	struct s_entry		**entries;
 // }				t_table;
 
-t_table				*create_ht(size_t size);
-void				delete_ht(t_table *ht, void (*del_ptr)(void *));
-int					next_prime(int n);
-// long long unsigned	ft_pow_ll(int base, int pow);
-// unsigned			get_hash(char *key, t_table *ht, int attempt);
-// unsigned			rehash(char *key, t_table *new_table);
-int					insert_ht(t_table *ht, char *key, void *value);
-// int					resize_up(t_table **ht);
-// int					resize_down(t_table **ht);
-// t_entry				*new_entry(char *key, void *value);
-void				*search_ht(t_table *ht, char *key);
+// t_table				*create_ht(size_t size);
+// void				delete_ht(t_table *ht, void (*del_ptr)(void *));
+// int					next_prime(int n);
+// // long long unsigned	ft_pow_ll(int base, int pow);
+// // unsigned			get_hash(char *key, t_table *ht, int attempt);
+// // unsigned			rehash(char *key, t_table *new_table);
+// int					insert_ht(t_table *ht, char *key, void *value);
+// // int					resize_up(t_table **ht);
+// // int					resize_down(t_table **ht);
+// // t_entry				*new_entry(char *key, void *value);
+// void				*search_ht(t_table *ht, char *key);
 #endif

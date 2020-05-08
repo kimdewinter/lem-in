@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 20:44:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/30 14:57:08 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/08 14:15:00 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ t_table		*create_ht(size_t size)
 		ht->base_size = size;
 		ht->size = next_prime(size);
 		ht->count = 0;
-		ht->entries = malloc(sizeof(VAL_T) * ht->size);
+		ht->entries = malloc(sizeof(t_entry) * ht->size);
 		if (ht->entries)
-			memset(ht->entries, 0, ht->size * sizeof(VAL_T));
+			memset(ht->entries, 0, ht->size * sizeof(t_entry));
 	}
 	return (ht);
 }
