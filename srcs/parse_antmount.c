@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 14:15:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 14:45:05 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,9 @@ unsigned long long		ft_atoi_ll(char *line, size_t *overflow)
 
 ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 {
-	size_t				antmount;
-	size_t				overflow;
+	size_t	antmount;
+	size_t	overflow;
 
-	/* Checks whether skippable lines */
 	while (is_comment(input->lines[*i]) == 1)
 		(*i)++;
 	if (is_antmount(input->lines[*i]))
@@ -56,18 +55,6 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 		return (EXIT_SUCCESS);
 	}
 	/* Could be anything wrong */
-	return (EXIT_FAILURE);
+	return (EXIT_FAILURE);//TODO: make return more descriptive
 	/* What is the biggest number of ants that is still legal?? */
 }
-
-		// while (i < input->num_lines && input->lines[i] != NULL)
-		// {			
-		// 	if (is_antmount(input->lines[i] == 1))
-		// 		parse_antmount(input->lines[i], map);
-		// 	else if (is_comment(input->lines[i] == 1))
-		// 		continue;
-		// 	else if (map->antmount != -1)
-		// 		break;
-		// 	else
-		// 		return (EXIT_FAILURE);
-		// }

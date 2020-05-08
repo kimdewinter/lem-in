@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 14:15:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 15:41:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static ssize_t	resize_buffer(t_input_reader *input)
 {
-	char			**new_lines;
-	size_t			i;
+	char		**new_lines;
+	size_t		i;
 
 	i = 0;
 	input->size = input->size * 2;
@@ -34,10 +34,9 @@ static ssize_t	resize_buffer(t_input_reader *input)
 
 static ssize_t		copy_input(t_input_reader *input)
 {
-	int				read;
-	char			*line;
+	int		read;
+	char	*line;
 
-/* how many lines? Make sure ends with NULL */
 	read = 1;
 	line = NULL;
 	while (read > 0)
@@ -48,7 +47,6 @@ static ssize_t		copy_input(t_input_reader *input)
 				return (EXIT_FAILURE);
 		}
 		read = get_next_line(STDIN_FILENO, &line);
-		/* check whether line && reading success */
 		if (read < 0)
 			return (ft_error("Error reading input\n", EXIT_FAILURE));
 		if (read > 0)
@@ -76,7 +74,8 @@ static ssize_t	setup_input(t_input_reader *input)
 
 ssize_t			read_input(t_input_reader *input)
 {
-	if (setup_input(input) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (copy_input(input));
+	if (setup_input(input) == EXIT_SUCCESS &&
+		copy_input(input) == EXIT_SUCCESS)
+		return (EXIT_SUCCESS);
+	return (EXIT_FAILURE);
 }

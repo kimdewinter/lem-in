@@ -1,30 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   new_table.c                                        :+:    :+:            */
+/*   debug.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/04/28 20:44:50 by lravier       #+#    #+#                 */
+/*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
 /*   Updated: 2020/05/08 15:41:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/hashing.h"
+#include "../includes/lem-in.h"
 
-t_table		*create_ht(size_t size)
+void	debug(t_map *map)
 {
-	t_table *ht;
+	t_table *table;
 
-	ht = (t_table *)malloc(sizeof(t_table));
-	if (ht)
+	table = map->rooms;
+	ft_printf("\nPRINT MAP\n\n");
+	if (map->start)
+		ft_printf("START: %s\n", map->start);
+	if (map->end)
+		ft_printf("END: %s\n", map->end);
+	for (int i = 0; i < table->size; i++)
 	{
-		ht->base_size = size;
-		ht->size = next_prime(size);
-		ht->count = 0;
-		ht->entries = malloc(sizeof(t_entry) * ht->size);
-		if (ht->entries)
-			memset(ht->entries, 0, ht->size * sizeof(t_entry));
+		if (table->entries[i] != NULL)
+		{
+			ft_printf("KEY: %s\n", table->entries[i]->key);
+		}
 	}
-	return (ht);
 }

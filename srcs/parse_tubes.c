@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/07 14:46:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 15:41:46 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 static ssize_t		add_tube(t_room *room, char *key)
 {
-	if (!add_neighbour(room, key))
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	return (add_neighbour(room, key));
 }
 
 static ssize_t		add_tubes(t_map *map, char **rooms)
@@ -28,9 +26,9 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	room2 = (t_room *)search_ht(map->rooms, rooms[1]);
 	if (room1 == NULL || room2 == NULL)
 		return (EXIT_FAILURE);
-	if (!add_tube(room1, rooms[1]))
+	if (add_tube(room1, rooms[1]) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (!add_tube(room2, rooms[0]))
+	if (add_tube(room2, rooms[0]) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -55,7 +53,7 @@ static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
 	rooms = ft_strsplit(line, '-');
 	if (!rooms)
 		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
-	if (!add_tubes(map, rooms))
+	if (add_tubes(map, rooms) == EXIT_FAILURE)
 		return (ft_error("Error adding link\n", EXIT_FAILURE));
 	/* free rooms */
 	(*tubes)++;
@@ -69,9 +67,9 @@ ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 	tubes = 0;
 	while (*i < input->num_lines)
 	{
-		if (!is_comment(input->lines[*i]))
+		if (is_comment(input->lines[*i]) == 0)
 		{
-			if (!parse_tube(input->lines[*i], map, &tubes))
+			if (parse_tube(input->lines[*i], map, &tubes) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
 		(*i)++;

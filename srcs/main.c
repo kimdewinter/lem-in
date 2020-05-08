@@ -40,6 +40,9 @@ int main(void)
 	map.rooms = create_ht(50);
 	if (read_input(&input) == EXIT_SUCCESS
 		&& parse_input(&map, &input) == EXIT_SUCCESS)
-		return (EXIT_SUCCESS);
+		{
+			debug(&map);
+			return (EXIT_SUCCESS);
+		}
 	return (EXIT_FAILURE);
 }

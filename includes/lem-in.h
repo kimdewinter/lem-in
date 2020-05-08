@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 14:37:41 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 15:41:46 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,4 +63,8 @@ size_t	is_tube(char *line);
 size_t	is_room(char *line);
 size_t	is_antmount(char *line);
 unsigned long long		ft_atoi_ll(char *line, size_t *overflow);
+
+//the following are merely functions for debugging:
+void	debug(t_map *map);
+
 #endif
