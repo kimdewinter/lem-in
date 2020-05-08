@@ -3,4 +3,7 @@
 hello 1 4
 ##end
 doei 2 7
+bye 5 9
 hello-doei
+hello-bye
+bye-doei
