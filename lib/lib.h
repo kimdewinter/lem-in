@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 17:08:12 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 15:41:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 15:55:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,7 @@
 # include "libft/get_next_line.h"
 # include "libft/libft.h"
 # include "hash/includes/hashing.h"
-// # define BASE_SIZE 50
-// # define PRIME_A 151
-// # define PRIME_B 163
-/* printf */
+
 int					ft_vfprintf(FILE *stream, const char *format, va_list ap);
 int					ft_fprintf(FILE *stream, const char *format, ...);
 
@@ -35,22 +32,13 @@ int					ft_vasprintf(char **ret, const char *format, va_list ap);
 int					ft_asprintf(char **ret, const char *format, ...);
 
 int					ft_vsnprintf(char *str, size_t size, const char *format,
-va_list ap);
+						va_list ap);
 int					ft_sprintf(char *str, const char *format, ...);
 int					ft_snprintf(char *str, size_t size,
-const char *format, ...);
+						const char *format, ...);
 int					ft_vsprintf(char *str, const char *format, va_list ap);
 
-/* get next line */
 int					get_next_line(const int fd, char **line);
-
-/* libft */
-// typedef struct		s_list
-// {
-// 	void			*content;
-// 	size_t			content_size;
-// 	struct s_list	*next;
-// }					t_list;
 
 void				ft_del(void *content, size_t size);
 void				ft_putchar(int c);
@@ -82,7 +70,7 @@ char				*ft_strstr(const char *haystack, const char *needle);
 char				*ft_strchr(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
 char				*ft_strnstr(const char *haystack, const char *needle,
-size_t len);
+						size_t len);
 char				*ft_strdup(const char *s1);
 void				*ft_memalloc(size_t size);
 void				ft_memdel(void **ap);
@@ -135,40 +123,4 @@ int					ft_lsttoarr(t_list **lst, void **arr, size_t arrlen);
 void				ft_lstedel(t_list **alst);
 int					ft_memrealloc(void **ptr, size_t prev_size, size_t size);
 
-/* hash */
-// typedef struct 	s_entry
-// {
-// 	char *key;
-// 	void *val;
-// }				t_entry;
-
-// typedef struct	s_room
-// {
-// 	char			*r_name;
-// 	ssize_t			xpos;
-// 	ssize_t			ypos;
-// 	size_t			neighbours_len;
-// 	char			**neighbours;
-// 	ssize_t	ant;//-1 means room is empty
-// }				t_room;
-
-// typedef struct	s_table
-// {
-// 	int					base_size;
-// 	int					size;
-// 	int 				count;
-// 	struct s_entry		**entries;
-// }				t_table;
-
-// t_table				*create_ht(size_t size);
-// void				delete_ht(t_table *ht, void (*del_ptr)(void *));
-// int					next_prime(int n);
-// // long long unsigned	ft_pow_ll(int base, int pow);
-// // unsigned			get_hash(char *key, t_table *ht, int attempt);
-// // unsigned			rehash(char *key, t_table *new_table);
-// int					insert_ht(t_table *ht, char *key, void *value);
-// // int					resize_up(t_table **ht);
-// // int					resize_down(t_table **ht);
-// // t_entry				*new_entry(char *key, void *value);
-// void				*search_ht(t_table *ht, char *key);
 #endif

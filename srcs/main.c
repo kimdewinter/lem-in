@@ -12,33 +12,28 @@
 
 #include "../includes/lem-in.h"
 
-/*ssize_t	*setup_room(t_room *dest)
+static ssize_t	setup_map(t_map *map)
 {
-	
-	return (EXIT_SUCCESS);
+	if (map != NULL)
+	{
+		map->antmount = -1;
+		map->start = NULL;
+		map->end = NULL;
+		map->routes = NULL;
+		map->rooms = create_ht(50);
+		if (map->rooms != NULL)
+			return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }
-
-ssize_t	setup_map(t_map *dest)
-{
-	t_map	map;
-
-	map.antmount = 0;
-	if (setup_room(&map.start) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
-}*/
 
 int main(void)
 {
 	t_map	map;
 	t_input_reader	input;
 
-	// input = (t_input_reader *)malloc(sizeof(t_input_reader));
-	// map.antmount = -1;
-	// map.start = NULL;
-	//map.routes = iets;
-	map.rooms = create_ht(50);
-	if (read_input(&input) == EXIT_SUCCESS
+	if (setup_map(&map) == EXIT_SUCCESS
+		&& read_input(&input) == EXIT_SUCCESS
 		&& parse_input(&map, &input) == EXIT_SUCCESS)
 		{
 			debug(&map);
