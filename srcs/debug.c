@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 15:55:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/08 16:11:31 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	debug(t_map *map)
 {
 	t_table *table;
+	t_room *tmp;
 
 	table = map->rooms;
 	ft_printf("\nPRINT MAP\n\n");
@@ -27,6 +28,9 @@ void	debug(t_map *map)
 		if (table->entries[i] != NULL)
 		{
 			ft_printf("KEY: %s\n", table->entries[i]->key);
+			tmp = (t_room *)table->entries[i]->val;
+			for (size_t j = 0; j < tmp->neighbours_len; j++)
+				ft_printf("NEIGHBOUR: %d %s\n", j, tmp->neighbours[j]);
 		}
 	}
 }
