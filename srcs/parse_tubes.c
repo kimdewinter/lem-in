@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 16:14:25 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/13 15:46:34 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	room2 = (t_room *)search_ht(map->rooms, rooms[1]);
 	if (room1 == NULL || room2 == NULL)
 		return (EXIT_FAILURE);
-	if (add_neighbour(room1, rooms[1]) == EXIT_FAILURE)
+	if (add_neighbour(map->rooms, room1, rooms[1]) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (add_neighbour(room2, rooms[0]) == EXIT_FAILURE)
+	if (add_neighbour(map->rooms, room2, rooms[0]) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
