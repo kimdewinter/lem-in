@@ -34,7 +34,8 @@ int main(void)
 
 	if (setup_map(&map) == EXIT_SUCCESS
 		&& read_input(&input) == EXIT_SUCCESS
-		&& parse_input(&map, &input) == EXIT_SUCCESS)
+		&& parse_input(&map, &input) == EXIT_SUCCESS
+		&& route_new(&map) == EXIT_SUCCESS)
 		{
 			debug(&map);
 			return (EXIT_SUCCESS);

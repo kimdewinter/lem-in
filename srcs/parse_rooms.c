@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/08 15:55:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/15 15:37:03 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ static ssize_t	add_special_room(t_input_reader *input, t_map *map, size_t *i)
 					if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
 					{
 						if (is_comment(input->lines[*i]) == 2)
-							map->start = ft_strdup(room->name);
+							map->start = search_ht(map->rooms, room->name);
 						else if (is_comment(input->lines[*i]) == 3)
-							map->end = ft_strdup(room->name);
+							map->end = search_ht(map->rooms, room->name);
 						(*i)++;
 						return (EXIT_SUCCESS);
 					}

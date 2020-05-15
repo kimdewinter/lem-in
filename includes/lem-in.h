@@ -6,25 +6,17 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/13 15:48:44 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/15 14:31:34 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
 # define LINE_BUFF_SIZE 10000
+# define INIT_ROUTE_PERC 25
+# define ROUTE_LEN_INCR_MULT 2
 # include <limits.h>
 # include "../lib/lib.h"
-/*
-typedef struct		s_room
-{
-	char			*name;
-	ssize_t			xpos;
-	ssize_t			ypos;
-	size_t			neighbours_len;
-	char			**neighbours;
-}					t_room;
-*/
 
 struct s_route;
 
@@ -43,15 +35,15 @@ typedef struct		s_room
 
 typedef struct		s_route
 {
-	struct s_room			**route;
+	struct s_room	**route;
 	size_t			len;
 }					t_route;
 
 typedef struct		s_map
 {
 	ssize_t			antmount;
-	char			*start;
-	char			*end;
+	t_room			*start;
+	t_room			*end;
 	struct s_table	*rooms;
 	void			*routes;//type to be determined
 }					t_map;
@@ -83,6 +75,7 @@ size_t				is_tube(char *line);
 size_t				is_room(char *line);
 size_t				is_antmount(char *line);
 unsigned long long	ft_atoi_ll(char *line, size_t *overflow);
+ssize_t				route_new(t_map *map);
 
 //the following are merely functions for debugging:
 void	debug(t_map *map);
