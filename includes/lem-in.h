@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/15 14:31:34 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/20 16:59:45 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 # define LINE_BUFF_SIZE 10000
 # define INIT_ROUTE_PERC 25
 # define ROUTE_LEN_INCR_MULT 2
-# include <limits.h>
+# define BITFIELD_TYPE uint64_t
+# define BITFIELD_SIZE 64
 # include "../lib/lib.h"
+# include <limits.h>
+# include <stdint.h>
 
 struct s_route;
 
@@ -31,6 +34,7 @@ typedef struct		s_room
 	struct s_route	**routes;//array of t_routes that lead to the exit
 	size_t			routes_len;
 	size_t			*this_i;//array of the current t_room's index-position in each of the t_routes
+	uint64_t		*bitroom;//TO DO: make this initialize to NULL
 }					t_room;
 
 typedef struct		s_route
@@ -76,6 +80,9 @@ size_t				is_room(char *line);
 size_t				is_antmount(char *line);
 unsigned long long	ft_atoi_ll(char *line, size_t *overflow);
 ssize_t				route_new(t_map *map);
+ssize_t				bite_room(t_room *room,
+						const size_t rooms_amount,
+						const size_t room_index);
 
 //the following are merely functions for debugging:
 void	debug(t_map *map);
