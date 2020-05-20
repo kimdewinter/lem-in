@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 16:11:31 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/13 15:39:10 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	debug(t_map *map)
 			ft_printf("KEY: %s\n", table->entries[i]->key);
 			tmp = (t_room *)table->entries[i]->val;
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
-				ft_printf("NEIGHBOUR: %d %s\n", j, tmp->neighbours[j]);
+				ft_printf("NEIGHBOUR: %d %s\n", j, tmp->neighbours[j]->name);
 		}
 	}
 }

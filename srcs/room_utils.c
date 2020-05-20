@@ -28,6 +28,9 @@ ssize_t			setup_room(t_room **dest,
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
 		room->ant = 0;
+		room->routes = NULL;
+		room->routes_len = 0;
+		room->this_i = 0;
 		*dest = room;
 		return (EXIT_SUCCESS);
 	}
@@ -38,7 +41,7 @@ static ssize_t	add_neighbour_new(t_room *room)
 {
 	if (room != NULL && room->neighbours_len == 0 && room->neighbours == NULL)
 	{
-		room->neighbours = (char **)malloc(sizeof(char *) * 1);
+		room->neighbours = (t_room **)malloc(sizeof(t_room *) * 1);
 		if (room->neighbours != NULL)
 		{
 			room->neighbours[0] = NULL;
@@ -51,14 +54,14 @@ static ssize_t	add_neighbour_new(t_room *room)
 
 static ssize_t	add_neighbour_grow(t_room *room)
 {
-	char	**new_neighbours;
+	t_room	**new_neighbours;
 	size_t	i;
 
 	new_neighbours = NULL;
 	i = 0;
 	if (room != NULL && room->neighbours_len > 0 && room->neighbours != NULL)
 	{
-		new_neighbours = (char **)malloc(sizeof(char *)
+		new_neighbours = (t_room **)malloc(sizeof(t_room *)
 			* (room->neighbours_len + 1));
 		if (new_neighbours != NULL)
 		{
@@ -77,21 +80,19 @@ static ssize_t	add_neighbour_grow(t_room *room)
 	return (EXIT_FAILURE);
 }//expands the room->neighbours char** array by 1
 
-ssize_t	add_neighbour(t_room *room, const char *neighbour)
+ssize_t	add_neighbour(t_table *table, t_room *room, char *neighbour)
 {
 	if (room != NULL && neighbour != NULL)
 	{
 		if (room->neighbours_len == 0 && room->neighbours == NULL && add_neighbour_new(room) == EXIT_SUCCESS)
 		{
-			room->neighbours[room->neighbours_len - 1] = ft_strdup(neighbour);
+			room->neighbours[room->neighbours_len - 1] = (t_room *)search_ht(table, neighbour);
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
-			else
-				free(room->neighbours);
 		}//handles when room->neighbours char** array is yet to be made
 		else if (room->neighbours_len > 0 && room->neighbours != NULL && add_neighbour_grow(room) == EXIT_SUCCESS)
 		{
-			room->neighbours[room->neighbours_len - 1] = ft_strdup(neighbour);
+			room->neighbours[room->neighbours_len - 1] = (t_room *)search_ht(table, neighbour);
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
 		}//handles when room->neighbours char** array needs to grow by 1

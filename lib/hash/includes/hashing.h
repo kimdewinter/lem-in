@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 19:51:36 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 15:55:05 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/13 15:44:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct	s_table
 }				t_table;
 
 t_table				*create_ht(size_t size);
-void				delete_ht(t_table *ht, void (*del_ptr)(void *));
 int					next_prime(int n);
 long long unsigned	ft_pow_ll(int base, int pow);
 unsigned			get_hash(char *key, t_table *ht, int attempt);

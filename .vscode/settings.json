@@ -1,6 +1,7 @@
 {
 	"files.associations": {
 		"unistd.h": "c",
-		"lem-in.h": "c"
+		"lem-in.h": "c",
+		"lib.h": "c"
 	}
 }
