@@ -6,25 +6,25 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/21 16:15:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/21 16:43:42 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-static ssize_t	bite_alloc(BITFIELD_TYPE **dest, const size_t bitfield_len)
+static ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 {
 	size_t	i;
 
-	if (*dest == NULL)
+	if (*dst == NULL)
 	{
-		*dest = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * bitfield_len);
-		if (*dest != NULL)
+		*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+		if (*dst != NULL)
 		{
 			i = 0;
-			while (i < bitfield_len)
+			while (i < map->bitfield_len)
 			{
-				dest[i] = (BITFIELD_TYPE)0;
+				dst[i] = (BITFIELD_TYPE)0;
 				i++;
 			}
 			return (EXIT_SUCCESS);
@@ -72,7 +72,7 @@ inline void		bite_route_add_room(t_route *route, const t_room *room)
 ** it will not return success or failure so use with care
 */
 
-ssize_t			bite_route_new(t_route *route, const t_map *map)
+ssize_t			bite_route_convert(t_route *route, const t_map *map)
 {
 	size_t	i;
 
@@ -92,4 +92,31 @@ ssize_t			bite_route_new(t_route *route, const t_map *map)
 }
 /*
 ** takes the route->route array and stores it in bitfield-form in route->bitroute
+*/
+
+ssize_t			bite_route_copy(t_route *dst,
+								const t_route *src,
+								const t_map *map)
+{
+	size_t	i;
+
+	if (dst == NULL && src != NULL && src->bitroute != NULL)
+	{
+		dst->bitroute = 
+			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+		if (dst->bitroute != NULL)
+		{
+			i = 0;
+			while (i < map->bitfield_len)
+			{
+				dst->bitroute[i] = src->bitroute[i];
+				i++;
+			}
+			return (EXIT_SUCCESS);
+		}
+	}
+	return (EXIT_FAILURE);
+}
+/*
+** copies one route's bitfield-form route into another's
 */
