@@ -1,0 +1,37 @@
+for rooms n1.....nx (where x is number of rooms)
+
+A, len = 3
+B, len = 4
+C, len = 5
+
+Number of ants = 24
+
+add lengths of rooms together and divide by number of paths
+3 + 4 + 5 = 12 / 3 = 4
+
+For each path, calculate the difference between it's length and the average length
+
+for A: -1
+for B: 0
+for C: +1
+
+... and add it to the number of ants each room would normally get:
+Normal amount of ants: 24 / 3 = 8
+So A gets 8 - -1 = 9 ants
+B gets 8 - 0 = 8 ants
+C gets 8 - 1 = 7 ants
+
+For our previous example:
+Len B = 4
+Len C = 8
+nants = 20
+
+4 + 8 = 12 / 2 rooms = 6 average length of paths
+
+diff B: -2
+diff C: +2
+
+amount of ants on average: 20 / 2 = 10
+B gets 10 - -2 = 12 ants
+C gets 10 - 2 = 8 ants
+

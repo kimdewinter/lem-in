@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   ft_strsplit.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: lravier <marvin@codam.nl>                    +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/25 11:43:51 by lravier       #+#    #+#                 */
-/*   Updated: 2019/03/28 10:29:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/20 20:34:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ char		**ft_strsplit(char const *s, char c)
 	j = 0;
 	i = 0;
 	numw = ft_numwords(s, c);
-	result = (char **)malloc(sizeof(char *) * numw + 1);
+	result = (char **)malloc(sizeof(char *) * (numw + 1));
 	if (!result)
 		return (NULL);
 	result[numw] = NULL;

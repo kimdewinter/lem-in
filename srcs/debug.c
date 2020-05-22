@@ -6,11 +6,35 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/13 15:39:10 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/21 12:08:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
+
+void	print_routes(t_map *map)
+{
+	t_route **tmp;
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	tmp = map->routes;
+	printf("NUM ROUTES %lu\n", map->num_routes);
+	while (i < map->num_routes)
+	{
+		printf("ROUTE %ld DEAD %d SOLVED %d\nLEN %lu\n", i, tmp[i]->dead, tmp[i]->solved, tmp[i]->len);
+		j = 0;
+		while (j < tmp[i]->len)
+		{
+			printf("%s ", tmp[i]->route[j]->name);
+			j++;
+		}
+		printf("\n\n");
+		i++;
+	}
+}
 
 void	debug(t_map *map)
 {
@@ -20,9 +44,9 @@ void	debug(t_map *map)
 	table = map->rooms;
 	ft_printf("\nPRINT MAP\n\n");
 	if (map->start)
-		ft_printf("START: %s\n", map->start);
+		ft_printf("START: %s\n", map->start->name);
 	if (map->end)
-		ft_printf("END: %s\n", map->end);
+		ft_printf("END: %s\n", map->end->name);
 	for (int i = 0; i < table->size; i++)
 	{
 		if (table->entries[i] != NULL)

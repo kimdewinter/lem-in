@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/15 14:31:34 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/21 14:51:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,17 @@ typedef struct		s_room
 	size_t			ant;//might become depecrated
 	struct s_room	**neighbours;
 	size_t			neighbours_len;
-	struct s_route	**routes;//array of t_routes that lead to the exit
-	size_t			routes_len;
+	// struct s_route	**routes;//array of t_routes that lead to the exit
+	// size_t			routes_len;
 	size_t			*this_i;//array of the current t_room's index-position in each of the t_routes
 }					t_room;
 
 typedef struct		s_route
 {
+	int				solved;
+	int				dead;
 	struct s_room	**route;
+	size_t			size;
 	size_t			len;
 }					t_route;
 
@@ -45,7 +48,9 @@ typedef struct		s_map
 	t_room			*start;
 	t_room			*end;
 	struct s_table	*rooms;
-	void			*routes;//type to be determined
+	struct s_route	**routes;//type to be determined
+	size_t			num_routes;
+	size_t			active_routes;
 }					t_map;
 
 typedef struct	s_input_reader
@@ -75,9 +80,13 @@ size_t				is_tube(char *line);
 size_t				is_room(char *line);
 size_t				is_antmount(char *line);
 unsigned long long	ft_atoi_ll(char *line, size_t *overflow);
-ssize_t				route_new(t_map *map);
-
+size_t				find_routes(t_map *);
+size_t		init_routes(t_map *map);
+size_t		add_to_route(t_route **curr_route, t_room *room);
+size_t		add_route(t_map *map, t_route *route);
 //the following are merely functions for debugging:
 void	debug(t_map *map);
-
+void	copy_route(t_route **src, t_route **dst);
+t_route		*setup_route(size_t size);
+void	print_routes(t_map *map);
 #endif
