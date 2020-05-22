@@ -21,6 +21,8 @@ static ssize_t	setup_map(t_map *map)
 		map->end = NULL;
 		map->routes = NULL;
 		map->rooms = create_ht(50);
+		map->num_routes = 0;
+		map->active_routes = 0;
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
 	}
@@ -35,7 +37,7 @@ int main(void)
 	if (setup_map(&map) == EXIT_SUCCESS
 		&& read_input(&input) == EXIT_SUCCESS
 		&& parse_input(&map, &input) == EXIT_SUCCESS
-		&& route_new(&map) == EXIT_SUCCESS)
+		&& find_routes(&map) == EXIT_SUCCESS)
 		{
 			debug(&map);
 			return (EXIT_SUCCESS);

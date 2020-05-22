@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/15 15:37:03 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/21 13:15:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 				return (EXIT_FAILURE);
 			(*i)++;
 		}
+		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }
