@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/21 16:47:29 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/22 16:09:42 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ typedef struct		s_room
 	size_t			neighbours_len;
 	// struct s_route	**routes;//array of t_routes that lead to the exit
 	// size_t			routes_len;
-	size_t			*this_i;//array of the current t_room's index-position in each of the t_routes
-	uint64_t		*bitroom;//TO DO: make this initialize to NULL
-	size_t			room_i;//TO DO: make this initialize to the order in which the rooms were input
+	size_t			*this_i;//deprecated ? array of the current t_room's index-position in each of the t_routes
+	uint64_t		*bitroom;
+	size_t			room_i;
 }					t_room;
 
 typedef struct		s_route
@@ -54,12 +54,10 @@ typedef struct		s_map
 	t_room			*start;
 	t_room			*end;
 	struct s_table	*rooms;
-	struct s_route	**routes;//type to be determined
+	struct s_route	**routes;
 	size_t			num_routes;
 	size_t			active_routes;
-	void			*routes;//type to be determined
-	size_t			bitfield_len;//TO DO: make this initialize (rooms_amount / BITFIELD_SIZE + 1)
-
+	size_t			bitfield_len;
 }					t_map;
 
 typedef struct	s_input_reader
@@ -79,7 +77,8 @@ ssize_t				parse_tubes(t_input_reader *input, t_map *map, size_t *i);
 ssize_t				setup_room(t_room **dest,
 						const char *name,
 						const ssize_t xpos,
-						const ssize_t ypos);
+						const ssize_t ypos, 
+						size_t *num_room);
 ssize_t				add_neighbour(struct s_table *table, t_room *room, char *neighbour);
 ssize_t				purge_room(t_room **room);
 ssize_t				link_rooms(t_room *alpha, t_room *omega);
@@ -102,13 +101,14 @@ ssize_t				route_new(t_map *map);
 
 // BITFIELD-TOOLKIT:
 ssize_t				bite_room_new(t_room *room, const t_map *map);//takes a room and stores it's bitfield-form in room->bitroom
-inline void			bite_route_add_room(t_route *route, const t_room *room);//takes a bitfield-form route and flips on a room's bit in it(WARNING: no success/failure return)
+// inline void			bite_route_add_room(t_route *route, const t_room *room);//takes a bitfield-form route and flips on a room's bit in it(WARNING: no success/failure return)
 ssize_t				bite_route_convert(t_route *route, const t_map *map);//takes the route->route array and stores it in bitfield-form in route->bitroute
 ssize_t				bite_route_copy(t_route *dst,
 						const t_route *src,
 						const t_map *map);//copies one t_route's bitfield-form route into another's
-
+ssize_t				bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 //the following are merely functions for debugging:
 void				debug(t_map *map);
+ssize_t				combinatron(const size_t n);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/21 15:27:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/22 16:02:59 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_route		*setup_route(size_t size)
 			free(route);
 			return (NULL);
 		}
-		/* route->bitroute = NULL; */
+		// bite_alloc()
 		route->len = 0;
 		route->size = size;
 		route->solved = 0;
@@ -135,7 +135,7 @@ size_t		init_routes(t_map *map)
 	size = map->rooms->count / (100 / INIT_ROUTE_PERC);
 	if (size == 0)
 		size = map->rooms->count;
-	map->routes = (t_route **)malloc(sizeof(t_route *) * map->end->neighbours_len);
+	map->routes = (t_route **)malloc(sizeof(t_route *));
 	if (map->routes)
 	{
 		map->num_routes = 1;

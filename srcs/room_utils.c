@@ -15,7 +15,8 @@
 ssize_t			setup_room(t_room **dest,
 					const char *name,
 					const ssize_t xpos,
-					const ssize_t ypos)
+					const ssize_t ypos, 
+					size_t *num_room)
 {
 	t_room	*room;
 
@@ -28,6 +29,8 @@ ssize_t			setup_room(t_room **dest,
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
 		room->ant = 0;
+		room->room_i = *num_room;
+		room->bitroom = NULL;
 		// room->routes = NULL;
 		// room->routes_len = 0;
 		room->this_i = 0;

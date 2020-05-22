@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:39 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/21 13:18:51 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/22 15:20:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ ssize_t	parse_input(t_map *map, t_input_reader *input)
 			parse_tubes(input, map, &i) == EXIT_SUCCESS)//add later: check error-meuk zoals heeft startroom links
 			{
 				printf("after parse input\n");
+				map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
 				return (EXIT_SUCCESS);
 			}
 	}

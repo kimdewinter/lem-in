@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   biter.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/21 16:43:42 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/22 16:09:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-static ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
+ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 {
 	size_t	i;
 
@@ -38,13 +38,13 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 	size_t	i;
 
 	if (room != NULL && room->bitroom == NULL &&
-		alloc_bitfield(&(room->bitroom), map->bitfield_len) == EXIT_SUCCESS)
+		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
 	{
 		i = 0;
 		while (i < map->bitfield_len)
 		{
 			room->bitroom[i] = (i == room->room_i / BITFIELD_SIZE) ?
-				(BITFIELD_TYPE)1 << 63 - room->room_i % BITFIELD_SIZE:
+				(BITFIELD_TYPE)1 << (63 - room->room_i % BITFIELD_SIZE):
 				(BITFIELD_TYPE)0;
 			i++;
 		}
@@ -56,7 +56,7 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 ** takes a room and stores it's bitfield-form in room->bitroom
 */
 
-inline void		bite_route_add_room(t_route *route, const t_room *room)
+static inline void		bite_route_add_room(t_route *route, const t_room *room)
 {
 	if (route != NULL && route->bitroute != NULL &&
 		room != NULL && room->bitroom != NULL)
@@ -77,7 +77,7 @@ ssize_t			bite_route_convert(t_route *route, const t_map *map)
 	size_t	i;
 
 	if (route != NULL && route->route != NULL && route->bitroute == NULL &&
-		bite_alloc(&(route->bitroute), map->bitfield_len) == EXIT_SUCCESS)
+		bite_alloc(&(route->bitroute), map) == EXIT_SUCCESS)
 	{
 		i = 0;
 		while (i < route->len)
