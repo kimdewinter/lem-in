@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/08 15:55:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/21 13:26:23 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,18 @@
 
 size_t	is_antmount(char *line)
 {
+	printf("%s\n", line);
 	if (*line != '\0' && ft_isdigit(*line) == 1)
 	{
 		while (*line != '\0' && ft_isdigit(*line) == 1)
 			line++;
+		printf("%d %d %d\n", *line, '\0', '\n');
 		/* Does GNL return including linebreak? */
 		if (*line == '\0' || *line == '\n')
+		{
+			printf("Is antmount\n");
 			return (1);
+		}
 	}
 	return (0);
 }
