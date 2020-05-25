@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/21 16:47:29 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/25 15:27:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,13 @@ typedef struct		s_route
 	uint64_t		*bitroute;
 }					t_route;
 
+typedef struct		s_combi
+{
+	struct s_route	**routes;
+	size_t			num_routes;
+	size_t			turns;
+}					t_combi;
+
 typedef struct		s_map
 {
 	ssize_t			antmount;
@@ -59,7 +66,9 @@ typedef struct		s_map
 	size_t			active_routes;
 	void			*routes;//type to be determined
 	size_t			bitfield_len;//TO DO: make this initialize (rooms_amount / BITFIELD_SIZE + 1)
-
+	struct s_combi	**valid_combis;
+	size_t			valid_combis_len;
+	size_t			valid_combis_last_i;
 }					t_map;
 
 typedef struct	s_input_reader
@@ -107,6 +116,10 @@ ssize_t				bite_route_convert(t_route *route, const t_map *map);//takes the rout
 ssize_t				bite_route_copy(t_route *dst,
 						const t_route *src,
 						const t_map *map);//copies one t_route's bitfield-form route into another's
+ssize_t				bite_bitroute_copy(BITFIELD_TYPE *dst,
+						const BITFIELD_TYPE *src,
+						const t_map *map);
+ssize_t				bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map);
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);
