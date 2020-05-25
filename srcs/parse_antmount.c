@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/21 13:19:57 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/25 15:15:32 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,8 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 
 	while (is_comment(input->lines[*i]) == 1)
 		(*i)++;
-	printf("before parse antmount\n");
 	if (is_antmount(input->lines[*i]))
 	{
-		printf("Is antmount\n");
 		overflow = 0;
 		antmount = ft_atoi_ll(input->lines[*i], &overflow);
 		if (overflow)
@@ -54,7 +52,6 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 			return (ft_error("No ants found\n", EXIT_FAILURE));
 		map->antmount = antmount;
 		(*i)++;
-		printf("after parse antmount\n");
 		return (EXIT_SUCCESS);
 	}
 	/* Could be anything wrong */

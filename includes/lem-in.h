@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/22 16:09:42 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/25 15:17:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,14 +89,14 @@ size_t				is_room(char *line);
 size_t				is_antmount(char *line);
 unsigned long long	ft_atoi_ll(char *line, size_t *overflow);
 size_t				find_routes(t_map *);
-size_t		init_routes(t_map *map);
-size_t		add_to_route(t_route **curr_route, t_room *room);
-size_t		add_route(t_map *map, t_route *route);
+size_t				init_routes(t_map *map);
+size_t				add_to_route(t_route **curr_route, t_room *room, t_map *map);
+size_t				add_route(t_map *map, t_route *route);
 //the following are merely functions for debugging:
-void	debug(t_map *map);
-void	copy_route(t_route **src, t_route **dst);
-t_route		*setup_route(size_t size);
-void	print_routes(t_map *map);
+void				debug(t_map *map);
+size_t				copy_route(t_route **src, t_route **dst, t_map *map);
+t_route				*setup_route(size_t size);
+void				print_routes(t_map *map);
 ssize_t				route_new(t_map *map);
 
 // BITFIELD-TOOLKIT:
@@ -110,5 +110,6 @@ ssize_t				bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 //the following are merely functions for debugging:
 void				debug(t_map *map);
 ssize_t				combinatron(const size_t n);
-
+void	print_bitroute(t_map *map);
+void	print_bitroom(t_map *map, t_room *room);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/22 16:09:27 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/25 15:11:47 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 			i = 0;
 			while (i < map->bitfield_len)
 			{
-				dst[i] = (BITFIELD_TYPE)0;
+				*dst[i] = (BITFIELD_TYPE)0;
 				i++;
 			}
 			return (EXIT_SUCCESS);
@@ -100,7 +100,7 @@ ssize_t			bite_route_copy(t_route *dst,
 {
 	size_t	i;
 
-	if (dst == NULL && src != NULL && src->bitroute != NULL)
+	if (dst != NULL && src != NULL && src->bitroute != NULL)
 	{
 		dst->bitroute = 
 			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);

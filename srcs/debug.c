@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/22 15:12:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/25 13:27:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,37 @@ void	print_routes(t_map *map)
 		printf("\n\n");
 		i++;
 	}
+}
+
+void	print_bitroom(t_map *map, t_room *room)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		printf("%lu\n", room->bitroom[i]);
+		i++;
+	}
+}
+
+void	print_bitroute(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	while (i < map->num_routes)
+	{
+		j = 0;
+		while (j < map->bitfield_len)
+		{
+			printf("%lu\n", map->routes[i]->bitroute[j]);
+			j++;
+		}
+		i++;
+	}
+	
 }
 
 void	debug(t_map *map)
