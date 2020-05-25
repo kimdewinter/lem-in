@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/25 15:11:47 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/25 15:25:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,12 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 {
 	size_t	i;
 
+	i = room->room_i / BITFIELD_SIZE;
 	if (room != NULL && room->bitroom == NULL &&
 		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
 	{
-		i = 0;
-		while (i < map->bitfield_len)
-		{
-			room->bitroom[i] = (i == room->room_i / BITFIELD_SIZE) ?
-				(BITFIELD_TYPE)1 << (63 - room->room_i % BITFIELD_SIZE):
-				(BITFIELD_TYPE)0;
-			i++;
-		}
+		room->bitroom[i] = (BITFIELD_TYPE)1 <<
+		(63 - room->room_i % BITFIELD_SIZE);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
