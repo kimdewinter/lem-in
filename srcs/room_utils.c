@@ -15,21 +15,22 @@
 ssize_t			setup_room(t_room **dest,
 					const char *name,
 					const ssize_t xpos,
-					const ssize_t ypos)
+					const ssize_t ypos, 
+					size_t *num_room)
 {
 	t_room	*room;
 
 	room = (t_room *)malloc(sizeof(t_room));
 	if (room != NULL && name != NULL)
 	{
+		room->room_i = *num_room;
+		room->bitroom = NULL;
 		room->name = (char *)name;
 		room->xpos = xpos;
 		room->ypos = ypos;
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
 		room->ant = 0;
-		// room->routes = NULL;
-		// room->routes_len = 0;
 		room->this_i = 0;
 		*dest = room;
 		return (EXIT_SUCCESS);

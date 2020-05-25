@@ -3,7 +3,7 @@
 /*                                                        ::::::::            */
 /*   biter.c                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
 /*   Updated: 2020/05/25 14:37:38 by kim           ########   odam.nl         */
@@ -12,7 +12,7 @@
 
 #include "../includes/lem-in.h"
 
-static ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
+ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 {
 	size_t	i;
 
@@ -24,7 +24,7 @@ static ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 			i = 0;
 			while (i < map->bitfield_len)
 			{
-				dst[i] = (BITFIELD_TYPE)0;
+				*dst[i] = (BITFIELD_TYPE)0;
 				i++;
 			}
 			return (EXIT_SUCCESS);
@@ -37,17 +37,12 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 {
 	size_t	i;
 
+	i = room->room_i / BITFIELD_SIZE;
 	if (room != NULL && room->bitroom == NULL &&
-		alloc_bitfield(&(room->bitroom), map->bitfield_len) == EXIT_SUCCESS)
+		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
 	{
-		i = 0;
-		while (i < map->bitfield_len)
-		{
-			room->bitroom[i] = (i == room->room_i / BITFIELD_SIZE) ?
-				(BITFIELD_TYPE)1 << 63 - room->room_i % BITFIELD_SIZE:
-				(BITFIELD_TYPE)0;
-			i++;
-		}
+		room->bitroom[i] = (BITFIELD_TYPE)1 <<
+		(63 - room->room_i % BITFIELD_SIZE);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
@@ -56,7 +51,7 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 ** takes a room and stores it's bitfield-form in room->bitroom
 */
 
-inline void		bite_route_add_room(t_route *route, const t_room *room)
+static inline void		bite_route_add_room(t_route *route, const t_room *room)
 {
 	if (route != NULL && route->bitroute != NULL &&
 		room != NULL && room->bitroom != NULL)
@@ -77,7 +72,7 @@ ssize_t			bite_route_convert(t_route *route, const t_map *map)
 	size_t	i;
 
 	if (route != NULL && route->route != NULL && route->bitroute == NULL &&
-		bite_alloc(&(route->bitroute), map->bitfield_len) == EXIT_SUCCESS)
+		bite_alloc(&(route->bitroute), map) == EXIT_SUCCESS)
 	{
 		i = 0;
 		while (i < route->len)
@@ -100,7 +95,7 @@ ssize_t			bite_route_copy(t_route *dst,
 {
 	size_t	i;
 
-	if (dst == NULL && src != NULL && src->bitroute != NULL)
+	if (dst != NULL && src != NULL && src->bitroute != NULL)
 	{
 		dst->bitroute = 
 			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);

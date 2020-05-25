@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/21 15:40:02 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/25 15:18:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,12 @@
 
 size_t		is_in_path(t_map *map, size_t i, t_room *room)
 {
-	size_t	j;
-	t_route	*route;
+	t_route			*route;
 
 	route = map->routes[i];
-	if (room == map->end)
+	if (route->bitroute[room->room_i / BITFIELD_SIZE] &
+	room->bitroom[room->room_i / BITFIELD_SIZE])
 		return (EXIT_SUCCESS);
-	j = route->len - 1;
-	while (j > 0)
-	{
-		if (route->route[j] == room)
-			return (EXIT_SUCCESS);
-		j--;
-	}
 	return (EXIT_FAILURE);
 }
 
@@ -39,9 +32,11 @@ size_t		duplicate_route(t_map *map, size_t i)
 	new = setup_route(curr->size);
 	if (new)
 	{
-		copy_route(&curr, &new);
-		if (add_route(map, new) == EXIT_SUCCESS)
-			return (EXIT_SUCCESS);
+		if (copy_route(&curr, &new, map) == EXIT_SUCCESS)
+		{
+			if (add_route(map, new) == EXIT_SUCCESS)
+				return (EXIT_SUCCESS);
+		}
 	}
 	return (EXIT_FAILURE);
 }
@@ -52,7 +47,7 @@ size_t j, size_t i)
 	if (duplicate_route(map, i) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (add_to_route(&map->routes[map->num_routes - 1],
-	last->neighbours[j]) == EXIT_FAILURE)
+	last->neighbours[j], map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (last->neighbours[j] == map->start)
 		map->routes[map->num_routes - 1]->solved = 1;
@@ -64,7 +59,7 @@ size_t j, size_t i)
 size_t		add_neighbour_orig_path(t_room *add_to_orig,
 t_map *map, size_t i)
 {
-	if (add_to_route(&map->routes[i], add_to_orig) == EXIT_FAILURE)
+	if (add_to_route(&map->routes[i], add_to_orig, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (add_to_orig == map->start)
 	{

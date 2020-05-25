@@ -1,30 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_input.c                                      :+:    :+:            */
+/*   combinatron.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/05/06 14:06:39 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/25 15:15:38 by lravier       ########   odam.nl         */
+/*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
+/*   Updated: 2020/05/22 16:12:56 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-ssize_t	parse_input(t_map *map, t_input_reader *input)
+static size_t		ft_factorial(size_t	n)
 {
+	if (n == 0)
+		return (1);
+	return (n * ft_factorial(n - 1));
+}
+
+ssize_t		combinatron(const size_t n)
+{
+	// (n!) / (r!(n-r)!);
+	size_t	result;
 	size_t	i;
 
-	i = 0;
-	if (input != NULL && map != NULL)
+	result = n;
+	i = 1;
+	while (i < n)
 	{
-		if (parse_antmount(input, map, &i) == EXIT_SUCCESS &&
-			parse_rooms(input, map, &i) == EXIT_SUCCESS &&
-			parse_tubes(input, map, &i) == EXIT_SUCCESS)//add later: check error-meuk zoals heeft startroom links
-			{
-				return (EXIT_SUCCESS);
-			}
+		result += ft_factorial(n - i) /
+		(ft_factorial(i) * ft_factorial(n - i));
+		i++;
 	}
-	return (EXIT_FAILURE);
+	return (result);
 }

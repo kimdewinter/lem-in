@@ -34,6 +34,7 @@ int main(void)
 	t_map	map;
 	t_input_reader	input;
 
+	// printf("%lu\n", combinatron(6));
 	if (setup_map(&map) == EXIT_SUCCESS
 		&& read_input(&input) == EXIT_SUCCESS
 		&& parse_input(&map, &input) == EXIT_SUCCESS
