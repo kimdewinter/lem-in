@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/26 14:23:58 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/26 15:53:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static ssize_t	combinatron_setup_begin(t_map *map,
 		if (bite_alloc(&(child->bitroutes), map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		child->i = 0;
+		child->num_routes = 0;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);	
@@ -46,7 +47,7 @@ static ssize_t	combinatron_setup(t_map *map,
 	{
 		if (parent == NULL)
 			return (combinatron_setup_begin(map, child, rtes_to_combi));
-		child->i = parent->i + 1;
+		child->i = parent->i;
 		if (child->i >= map->num_routes)
 			return (EXIT_FAILURE);
 		if (bite_alloc_noval(&(child->bitroutes), map) == EXIT_FAILURE)
@@ -57,9 +58,77 @@ static ssize_t	combinatron_setup(t_map *map,
 		if (copy_routes(parent->routes, child->routes, rtes_to_combi) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
+		child->num_routes = parent->num_routes + 1;
+		child->routes[child->num_routes] = map->routes[child->i];
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);	
+}
+
+static size_t	is_valid_combi(t_map *map,
+								BITFIELD_TYPE *rte1,
+								BITFIELD_TYPE *rte2)
+{
+	size_t	i;
+	if (map != NULL && rte1 != NULL && rte2 != NULL)
+	{
+		i = 0;
+		while (i < map->bitfield_len)
+		{
+			if (rte1[i] & rte2[i] != (BITFIELD_TYPE)0)
+				return (0);
+			i++;
+		}
+		return (1);
+	}
+	return (0);
+}
+
+static ssize_t	combinatron_cleanup(t_map *map, t_combi *combi, ssize_t ret_val)
+{
+	if (map != NULL && combi != NULL)
+	{
+		if (combi->routes != NULL)
+		{
+			free(combi->routes);
+			combi->routes = NULL;
+		}
+		if (combi->bitroutes != NULL)
+		{
+			free(combi->bitroutes);
+			combi->bitroutes = NULL;
+		}
+		return (ret_val);
+	}
+	return (EXIT_FAILURE);
+}
+
+static ssize_t	combinatron_commit_combi(t_map *map, t_poscom *combi)
+{
+	t_combi	*new;
+
+	if (map != NULL && combi != NULL && combi->routes != NULL &&
+		combi->bitroutes != NULL &&
+		map->valid_combis_last_i < map->valid_combis_len)
+	{
+		new = &(map->valid_combis[map->valid_combis_last_i]);
+		new = (t_combi *)malloc(sizeof(t_combi) * 1);
+		if (new == NULL)
+			return (EXIT_FAILURE);
+		new->routes =
+			(t_route **)malloc(sizeof(t_route *) * combi->num_routes);
+		if (new->routes == NULL || copy_routes(
+			combi->routes, new->routes, combi->num_routes) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (bite_alloc_noval(new->bitroutes, map) == EXIT_FAILURE ||
+			bite_bitroute_copy(new->bitroutes, combi->bitroutes, map) ==
+			EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		new->turns = 0;
+		map->valid_combis_last_i++;
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }
 
 static ssize_t	combinatron(t_map *map,
@@ -68,12 +137,27 @@ static ssize_t	combinatron(t_map *map,
 {
 	t_poscom	child;
 
-	if (map != NULL && rtes_to_combi > 0 && combinatron_setup(
-		map, parent, &child, rtes_to_combi) == EXIT_SUCCESS)
+	if (map != NULL && rtes_to_combi > 0 &&
+		combinatron_setup(map, parent, &child, rtes_to_combi) == EXIT_SUCCESS)
 	{
-
+		if (child.num_routes == rtes_to_combi)
+		{
+			if (combinatron_commit_combi(map, &child) == EXIT_FAILURE)
+				return (combinatron_cleanup(map, &child, EXIT_FAILURE));
+		}
+		else
+		{
+			while (child.i < map->num_routes - (rtes_to_combi - child.num_routes))
+			{
+				if (is_valid_combi(map, child.bitroutes, map->routes[child.i]) == 1)
+					if (combinatron(map, &child, rtes_to_combi) == EXIT_FAILURE)
+						return (combinatron_cleanup(map, &child, EXIT_FAILURE));
+				child.i++;
+			}
+		}
+		return (combinatron_cleanup(map, &child, EXIT_SUCCESS));
 	}
-	return (EXIT_FAILURE);
+	return (combinatron_cleanup(map, &child, EXIT_FAILURE));
 }
 
 ssize_t			parallelize(t_map *map)

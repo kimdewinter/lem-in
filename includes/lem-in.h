@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/26 13:33:14 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/26 14:52:46 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ typedef struct		s_route
 typedef struct		s_poscom
 {
 	struct s_route	**routes;
+	size_t			num_routes;
 	BITFIELD_TYPE	*bitroutes;
-	size_t			i;
+	size_t			i;//this is where in map->routes it is, it only ever moves forward
 }					t_poscom;
 
 typedef struct		s_combi
