@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/25 15:27:22 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 13:13:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ ssize_t				bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);
-ssize_t				combinatron(const size_t n);
+ssize_t				calc_combinations(const size_t n, size_t r);
 void	print_bitroute(t_map *map);
 void	print_bitroom(t_map *map, t_room *room);
 #endif
