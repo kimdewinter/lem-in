@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/26 16:32:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 14:03:02 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,23 @@ static ssize_t	combinatron_setup_begin(t_map *map,
 	return (EXIT_FAILURE);	
 }
 
+static ssize_t	copy_n_routes(t_route **dst, t_route **src, const size_t n)
+{
+	size_t	i;
+
+	if (*src != NULL)
+	{
+		i = 0;
+		while (i < n)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
+}
+
 static ssize_t	combinatron_setup(t_map *map,
 									const t_poscom *parent,
 									t_poscom *child,
@@ -52,10 +69,10 @@ static ssize_t	combinatron_setup(t_map *map,
 			return (EXIT_FAILURE);
 		if (bite_alloc_noval(&(child->bitroutes), map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (bite_bitroute_merge(&(child->bitroutes), parent->bitroutes,
+		if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
 			map->routes[parent->i]->bitroute, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (copy_routes(parent->routes, child->routes, rtes_to_combi) ==
+		if (copy_n_routes(parent->routes, child->routes, rtes_to_combi) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		child->num_routes = parent->num_routes + 1;
@@ -75,7 +92,7 @@ static size_t	is_valid_combi(t_map *map,
 		i = 0;
 		while (i < map->bitfield_len)
 		{
-			if (rte1[i] & rte2[i] != (BITFIELD_TYPE)0)
+			if ((rte1[i] & rte2[i]) != (BITFIELD_TYPE)0)
 				return (0);
 			i++;
 		}
@@ -84,7 +101,7 @@ static size_t	is_valid_combi(t_map *map,
 	return (0);
 }
 
-static ssize_t	combinatron_cleanup(t_map *map, t_combi *combi, ssize_t ret_val)
+static ssize_t	combinatron_cleanup(t_map *map, t_poscom *combi, ssize_t ret_val)
 {
 	if (map != NULL && combi != NULL)
 	{
@@ -118,10 +135,10 @@ static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *combi)
 			return (EXIT_FAILURE);
 		new->routes =
 			(t_route **)malloc(sizeof(t_route *) * combi->num_routes);
-		if (new->routes == NULL || copy_routes(
+		if (new->routes == NULL || copy_n_routes(
 			combi->routes, new->routes, combi->num_routes) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (bite_alloc_noval(new->bitroutes, map) == EXIT_FAILURE ||
+		if (bite_alloc_noval(&(new->bitroutes), map) == EXIT_FAILURE ||
 			bite_bitroute_copy(new->bitroutes, combi->bitroutes, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -150,7 +167,7 @@ static ssize_t	combinatron(t_map *map,
 		{
 			while (child.i < map->num_routes - (rtes_to_combi - child.num_routes))
 			{
-				if (is_valid_combi(map, child.bitroutes, map->routes[child.i]) == 1)
+				if (is_valid_combi(map, child.bitroutes, map->routes[child.i]->bitroute) == 1)
 					if (combinatron(map, &child, rtes_to_combi) == EXIT_FAILURE)
 						return (combinatron_cleanup(map, &child, EXIT_FAILURE));
 				child.i++;

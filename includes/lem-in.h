@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/26 14:52:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 13:42:45 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,6 @@ ssize_t				bite_bitroute_merge(BITFIELD_TYPE *dst,
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);
-ssize_t				combinatron(const size_t n);
 void	print_bitroute(t_map *map);
 void	print_bitroom(t_map *map, t_room *room);
 #endif
