@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/27 14:03:02 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 14:22:11 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,8 @@ ssize_t			parallelize(t_map *map)
 
 	if (map != NULL)
 	{
-		num_to_combi = 0;//TO DO: function that calculates this
-		map->valid_combis_len = 0;//TO DO: function that calculates this
+		num_to_combi = max_parallels(map);
+		map->valid_combis_len = calc_combinations(map->num_routes, num_to_combi);
 		map->valid_combis = 
 			(t_combi **)malloc(sizeof(t_combi) * map->valid_combis_len);
 		if (map->valid_combis == NULL)

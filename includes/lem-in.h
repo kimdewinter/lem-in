@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/27 13:13:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/27 14:21:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ size_t				copy_route(t_route **src, t_route **dst, t_map *map);
 t_route				*setup_route(size_t size);
 void				print_routes(t_map *map);
 ssize_t				route_new(t_map *map);
+size_t				max_parallels(t_map *map);
 
 // BITFIELD-TOOLKIT:
 ssize_t				bite_room_new(t_room *room, const t_map *map);//takes a room and stores it's bitfield-form in room->bitroom
