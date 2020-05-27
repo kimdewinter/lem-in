@@ -27,7 +27,9 @@ RAW=					main \
 						route_utils	\
 						route_finder	\
 						biter	\
-						calc_combinations
+						calc_combinations \
+						parallelizer
+
 OBJ_DIR=obj/
 SRC_DIR=srcs/
 SRCS=$(addprefix $(SRC_DIR),$(addsuffix .c,$(RAW)))
