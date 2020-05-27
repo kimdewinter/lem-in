@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/05/22 16:10:00 by lravier       ########   odam.nl          #
+#    Updated: 2020/05/27 13:24:37 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ RAW=					main \
 						route_utils	\
 						route_finder	\
 						biter	\
+						parallelizer \
 						combinatron
 OBJ_DIR=obj/
 SRC_DIR=srcs/

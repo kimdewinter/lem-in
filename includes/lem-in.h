@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/25 15:27:22 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 13:42:45 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,18 @@ typedef struct		s_route
 	uint64_t		*bitroute;
 }					t_route;
 
+typedef struct		s_poscom
+{
+	struct s_route	**routes;
+	size_t			num_routes;
+	BITFIELD_TYPE	*bitroutes;
+	size_t			i;//this is where in map->routes it is, it only ever moves forward
+}					t_poscom;
+
 typedef struct		s_combi
 {
 	struct s_route	**routes;
+	BITFIELD_TYPE	*bitroutes;
 	size_t			num_routes;
 	size_t			turns;
 }					t_combi;
@@ -116,15 +125,19 @@ ssize_t				bite_route_convert(t_route *route, const t_map *map);//takes the rout
 ssize_t				bite_route_copy(t_route *dst,
 						const t_route *src,
 						const t_map *map);//copies one t_route's bitfield-form route into another's
+ssize_t				bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
+ssize_t				bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
+ssize_t				bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map);
 ssize_t				bite_bitroute_copy(BITFIELD_TYPE *dst,
 						const BITFIELD_TYPE *src,
 						const t_map *map);
-ssize_t				bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map);
-ssize_t				bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
+ssize_t				bite_bitroute_merge(BITFIELD_TYPE *dst,
+						const BITFIELD_TYPE *src1,
+						const BITFIELD_TYPE *src2,
+						const t_map *map);
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);
-ssize_t				combinatron(const size_t n);
 void	print_bitroute(t_map *map);
 void	print_bitroom(t_map *map, t_room *room);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/25 14:37:38 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 13:27:06 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,17 @@ ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 			}
 			return (EXIT_SUCCESS);
 		}
+	}
+	return (EXIT_FAILURE);
+}
+
+ssize_t	bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map)
+{
+	if (*dst == NULL)
+	{
+		*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+		if (*dst != NULL)
+			return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }
@@ -140,6 +151,29 @@ ssize_t			bite_bitroute_copy(BITFIELD_TYPE *dst,
 ** copies a bitfield-form route
 */
 
+ssize_t			bite_bitroute_merge(BITFIELD_TYPE *dst,
+									const BITFIELD_TYPE *src1,
+									const BITFIELD_TYPE *src2,
+									const t_map *map)
+{
+	size_t	i;
+
+	if (map != NULL && dst != NULL && src1 != NULL && src2 != NULL)
+	{
+		i = 0;
+		while (i < map->bitfield_len)
+		{
+			dst[i] = src1[i] | src2[i];
+			i++;
+		}
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
+}
+/*
+** copies a bitfield-form route
+*/
+
 ssize_t			bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map)
 {
 	size_t	i;
@@ -149,8 +183,6 @@ ssize_t			bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map)
 		i = 0;
 		while (i < map->bitfield_len)
 		{
-			if (bitroute[i] == NULL)
-				return (EXIT_FAILURE);
 			bitroute[i] = (BITFIELD_TYPE)0;
 			i++;
 		}
