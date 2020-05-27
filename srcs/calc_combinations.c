@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/27 13:25:43 by lravier       ########   odam.nl         */
+/*   Updated: 2020/05/27 14:11:34 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ size_t		max_parallels(t_map *map)
 	lowest = map->start->neighbours_len;
 	if (map->end->neighbours_len < lowest)
 		lowest = map->end->neighbours_len;
-	if (map->antmount < lowest)
+	if ((size_t)map->antmount < lowest)
 		lowest = map->antmount;
 	if (map->num_routes < lowest)
 		lowest = map->num_routes;
