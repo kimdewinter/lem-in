@@ -5,7 +5,7 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"name": "(gdb) Launch-Laure",
+			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
 			"program": "${workspaceFolder}/lem-in",
@@ -15,7 +15,6 @@
 			"environment": [],
 			"externalConsole": false,
 			"MIMode": "gdb",
-			"miDebuggerPath": "gdb.exe",
 			"setupCommands": [
 				{
 					"description": "Enable pretty-printing for gdb",
@@ -25,7 +24,7 @@
 			]
 		}
 		// {
-		// 	"name": "(gdb) Launch",
+		// 	"name": "(gdb) Launch-Laure",
 		// 	"type": "cppdbg",
 		// 	"request": "launch",
 		// 	"program": "${workspaceFolder}/lem-in",
@@ -35,6 +34,7 @@
 		// 	"environment": [],
 		// 	"externalConsole": false,
 		// 	"MIMode": "gdb",
+		// 	"miDebuggerPath": "gdb.exe",
 		// 	"setupCommands": [
 		// 		{
 		// 			"description": "Enable pretty-printing for gdb",

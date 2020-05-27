@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parallelizer.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/27 14:22:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 15:46:45 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ static ssize_t	copy_n_routes(t_route **dst, t_route **src, const size_t n)
 {
 	size_t	i;
 
-	if (*src != NULL)
+	if (src != NULL)
 	{
+		dst = (t_route **)malloc(sizeof(t_route *) * n);
+		if (dst == NULL)
+			return (EXIT_FAILURE);
 		i = 0;
 		while (i < n)
 		{
@@ -72,11 +75,11 @@ static ssize_t	combinatron_setup(t_map *map,
 		if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
 			map->routes[parent->i]->bitroute, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (copy_n_routes(parent->routes, child->routes, rtes_to_combi) ==
+		if (copy_n_routes(child->routes, parent->routes, rtes_to_combi) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
+		child->routes[parent->num_routes] = map->routes[child->i];
 		child->num_routes = parent->num_routes + 1;
-		child->routes[child->num_routes] = map->routes[child->i];
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);	
@@ -136,13 +139,12 @@ static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *combi)
 		new->routes =
 			(t_route **)malloc(sizeof(t_route *) * combi->num_routes);
 		if (new->routes == NULL || copy_n_routes(
-			combi->routes, new->routes, combi->num_routes) == EXIT_FAILURE)
+			new->routes, combi->routes, combi->num_routes) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (bite_alloc_noval(&(new->bitroutes), map) == EXIT_FAILURE ||
 			bite_bitroute_copy(new->bitroutes, combi->bitroutes, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		new->turns = 0;
 		map->valid_combis_last_i++;
 		return (EXIT_SUCCESS);
 	}

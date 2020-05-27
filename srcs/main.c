@@ -34,10 +34,11 @@ int main(void)
 	t_map	map;
 	t_input_reader	input;
 
-	if (setup_map(&map) == EXIT_SUCCESS
-		&& read_input(&input) == EXIT_SUCCESS
-		&& parse_input(&map, &input) == EXIT_SUCCESS
-		&& find_routes(&map) == EXIT_SUCCESS)
+	if (setup_map(&map) == EXIT_SUCCESS &&
+		read_input(&input) == EXIT_SUCCESS &&
+		parse_input(&map, &input) == EXIT_SUCCESS &&
+		find_routes(&map) == EXIT_SUCCESS &&
+		parallelize(&map) == EXIT_SUCCESS)
 		{
 			debug(&map);
 			return (EXIT_SUCCESS);
