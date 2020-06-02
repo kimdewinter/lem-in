@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/27 13:27:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 15:28:50 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 {
 	size_t	i;
 
-	if (*dst == NULL)
+	if (map != NULL)
 	{
 		*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
 		if (*dst != NULL)
@@ -35,7 +35,7 @@ ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 
 ssize_t	bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map)
 {
-	if (*dst == NULL)
+	if (map != NULL)
 	{
 		*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
 		if (*dst != NULL)

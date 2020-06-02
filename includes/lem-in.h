@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/27 13:42:45 by kim           ########   odam.nl         */
+/*   Updated: 2020/05/27 14:25:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,8 @@ size_t				copy_route(t_route **src, t_route **dst, t_map *map);
 t_route				*setup_route(size_t size);
 void				print_routes(t_map *map);
 ssize_t				route_new(t_map *map);
+size_t				max_parallels(t_map *map);
+ssize_t				parallelize(t_map *map);
 
 // BITFIELD-TOOLKIT:
 ssize_t				bite_room_new(t_room *room, const t_map *map);//takes a room and stores it's bitfield-form in room->bitroom
@@ -138,6 +140,7 @@ ssize_t				bite_bitroute_merge(BITFIELD_TYPE *dst,
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);
+ssize_t				calc_combinations(const size_t n, size_t r);
 void	print_bitroute(t_map *map);
 void	print_bitroom(t_map *map, t_room *room);
 #endif

@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/05/27 13:24:37 by kim           ########   odam.nl          #
+#    Updated: 2020/05/27 13:22:57 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,9 @@ RAW=					main \
 						route_utils	\
 						route_finder	\
 						biter	\
-						parallelizer \
-						combinatron
+						calc_combinations \
+						parallelizer
+
 OBJ_DIR=obj/
 SRC_DIR=srcs/
 SRCS=$(addprefix $(SRC_DIR),$(addsuffix .c,$(RAW)))
