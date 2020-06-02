@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/02 14:18:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/02 14:37:59 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,8 @@ ssize_t			parallelize(t_map *map)
 {
 	size_t	numtocombi;
 
-	if (map != NULL)
+	if (map != NULL && parallelize_setup(map, &numtocombi) == EXIT_SUCCESS)
 	{
-		if (parallelize_setup(map, &numtocombi) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
 		while (numtocombi > 0)
 		{
 			if (combinatron(map, NULL, numtocombi) == EXIT_FAILURE)
