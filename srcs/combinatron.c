@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/02 14:21:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/02 16:53:26 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,9 +96,6 @@ static ssize_t	combinatron_setup(t_map *map,
 	{
 		if (parent == NULL)
 			return (combinatron_setup_begin(map, child, rtes_to_combi));
-		child->i = parent->i;
-		if (child->i >= map->num_routes)
-			return (EXIT_FAILURE);
 		if (bite_alloc_noval(&(child->bitroutes), map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
@@ -107,8 +104,9 @@ static ssize_t	combinatron_setup(t_map *map,
 		if (copy_n_routes(&(child->routes), parent->routes, rtes_to_combi) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		child->routes[parent->num_routes] = map->routes[child->i];
+		child->routes[parent->num_routes] = map->routes[parent->i];
 		child->num_routes = parent->num_routes + 1;
+		child->i = parent->i + 1;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
