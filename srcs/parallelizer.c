@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/03 16:13:23 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/03 16:36:02 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
 		i++;
 	}
 	map->best_combi_used = 0;
+	map->best_combi_turns = 0;
 	return (EXIT_SUCCESS);
 }
 
