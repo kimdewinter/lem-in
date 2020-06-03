@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/02 14:21:42 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/03 15:05:43 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,8 @@ size_t				is_valid_combi(t_map *map,
 ssize_t				copy_n_routes(t_route ***dst,
 						t_route **src,
 						const size_t n);
+ssize_t				handle_err_para(size_t err_code, const char *line);
+ssize_t				handle_err_comtron(size_t err_code, const char *line);
 
 // BITFIELD-TOOLKIT:
 ssize_t				bite_room_new(t_room *room, const t_map *map);//takes a room and stores it's bitfield-form in room->bitroom

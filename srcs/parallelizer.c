@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/02 16:45:44 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/03 15:01:35 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,44 +54,35 @@ size_t			is_valid_combi(t_map *map,
 
 static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
 {
-	if (map != NULL && numtocombi != NULL)
+	*numtocombi = max_parallels(map);
+	map->valid_combis_len = calc_combinations(map->num_routes, *numtocombi);
+	map->valid_combis =
+		(t_combi **)malloc(sizeof(t_combi) * map->valid_combis_len);
+	if (map->valid_combis == NULL)
+		return (EXIT_FAILURE);
+	map->valid_combis_last_i = 0;
+	while (map->valid_combis_last_i < map->valid_combis_len)
 	{
-		*numtocombi = max_parallels(map);
-		map->valid_combis_len = calc_combinations(map->num_routes, *numtocombi);
-		map->valid_combis =
-			(t_combi **)malloc(sizeof(t_combi) * map->valid_combis_len);
-		if (map->valid_combis == NULL)
-			return (EXIT_FAILURE);
-		map->valid_combis_last_i = 0;
-		while (map->valid_combis_last_i < map->valid_combis_len)
-		{
-			map->valid_combis[map->valid_combis_last_i] = NULL;
-			map->valid_combis_last_i++;
-		}
-		map->valid_combis_last_i = 0;
-		return (EXIT_SUCCESS);
+		map->valid_combis[map->valid_combis_last_i] = NULL;
+		map->valid_combis_last_i++;
 	}
-	return (EXIT_FAILURE);
+	map->valid_combis_last_i = 0;
+	return (EXIT_SUCCESS);
 }
 
 ssize_t			parallelize(t_map *map)
 {
 	size_t	numtocombi;
 
-	if (map != NULL && parallelize_setup(map, &numtocombi) == EXIT_SUCCESS)
+	if (map == NULL)
+		return (handle_err_para(1, NULL));
+	if (parallelize_setup(map, &numtocombi) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	while (numtocombi > 0)
 	{
-		while (numtocombi > 0)
-		{
-			if (combinatron(map, NULL, numtocombi) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			numtocombi--;
-		}
-		return (EXIT_SUCCESS);
+		if (combinatron(map, NULL, numtocombi) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		numtocombi--;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
-/*
-** the combinatron function and it's children could be safer,
-** but it'd cost performance
-** should we obsessively check parameters like Kim usually does, or not?
-*/
