@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/03 15:05:43 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/03 16:03:01 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ typedef struct		s_map
 	size_t			num_routes;
 	size_t			active_routes;
 	size_t			bitfield_len;
+	struct s_route	**best_combi;
+	size_t			best_combi_used;
+	size_t			best_combi_len;
 	struct s_combi	**valid_combis;
 	size_t			valid_combis_len;
 	size_t			valid_combis_last_i;
