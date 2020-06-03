@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/27 14:11:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/03 14:43:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static size_t		ft_factorial(size_t	n)
 {
 	if (n == 0)
 		return (1);
+	printf("N: %lu\n", n);
 	return (n * ft_factorial(n - 1));
 }
 
@@ -24,17 +25,19 @@ ssize_t		calc_combinations(const size_t n, size_t r)
 {
 	// (n!) / (r!(n-r)!);
 	size_t	result;
+	size_t	fact_n;
 	size_t	i;
 
 	result = 0;
 	i = r;
+	fact_n = ft_factorial(n);
 	while (i > 0)
 	{
-		result += (ft_factorial(n) /
-		(ft_factorial(i) * ft_factorial(n - i)));
-		printf("result %lu\n", result);
+		result += (fact_n / (ft_factorial(i) * ft_factorial(n - i)));
 		i--;
 	}
+	if (result == 0);
+		result = INTMAX_MAX;
 	return (result);
 }
 
