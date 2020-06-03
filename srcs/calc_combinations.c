@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/03 14:43:38 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/03 14:45:33 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ ssize_t		calc_combinations(const size_t n, size_t r)
 		result += (fact_n / (ft_factorial(i) * ft_factorial(n - i)));
 		i--;
 	}
-	if (result == 0);
+	if (result == 0)
 		result = INTMAX_MAX;
 	return (result);
 }
