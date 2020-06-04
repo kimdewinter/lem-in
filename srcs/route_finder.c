@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/25 15:18:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 14:00:49 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ size_t		duplicate_route(t_map *map, size_t i)
 }
 
 size_t		add_neighbour_new_path(t_room *last, t_map *map,
-size_t j, size_t i)
+									size_t j, size_t i)
 {
 	if (duplicate_route(map, i) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -57,7 +57,7 @@ size_t j, size_t i)
 }
 
 size_t		add_neighbour_orig_path(t_room *add_to_orig,
-t_map *map, size_t i)
+									t_map *map, size_t i)
 {
 	if (add_to_route(&map->routes[i], add_to_orig, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -76,7 +76,7 @@ void		kill_path(t_map *map, size_t i)
 }
 
 size_t		add_path_to_neighbours(t_map *map, size_t i, size_t *found,
-t_room *last)
+									t_room *last)
 {
 	size_t	j;
 	size_t	splits;
