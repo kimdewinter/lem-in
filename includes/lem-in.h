@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/03 17:08:25 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 13:29:31 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,7 @@ ssize_t				bite_bitroute_merge(BITFIELD_TYPE *dst,
 						const BITFIELD_TYPE *src1,
 						const BITFIELD_TYPE *src2,
 						const t_map *map);
-size_t				calc_cost(ssize_t ants, const t_poscom *routes);
+size_t				calc_cost(size_t ants, const t_poscom *routes);
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);

@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/03 15:05:16 by kim           ########   odam.nl          #
+#    Updated: 2020/06/04 13:28:59 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ RAW=					main \
 						route_utils	\
 						route_finder	\
 						biter	\
+						calc_cost	\
 						calc_combinations \
 						parallelizer \
 						combinatron \
