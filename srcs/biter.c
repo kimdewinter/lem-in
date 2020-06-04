@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/27 15:28:50 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 16:46:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,33 +44,33 @@ ssize_t	bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map)
 	return (EXIT_FAILURE);
 }
 
-ssize_t			bite_room_new(t_room *room, const t_map *map)
-{
-	size_t	i;
+// ssize_t			bite_room_new(t_room *room, const t_map *map)
+// {
+// 	size_t	i;
 
-	i = room->room_i / BITFIELD_SIZE;
-	if (room != NULL && room->bitroom == NULL &&
-		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
-	{
-		room->bitroom[i] = (BITFIELD_TYPE)1 <<
-		(63 - room->room_i % BITFIELD_SIZE);
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
-}
+// 	i = room->room_i / BITFIELD_SIZE;
+// 	if (room != NULL && room->bitconj == NULL &&
+// 		bite_alloc(&(room->bitconj), map) == EXIT_SUCCESS)
+// 	{
+// 		room->bitconj[i] = (BITFIELD_TYPE)1 <<
+// 		(63 - room->room_i % BITFIELD_SIZE);
+// 		return (EXIT_SUCCESS);
+// 	}
+// 	return (EXIT_FAILURE);
+// }
 /*
 ** takes a room and stores it's bitfield-form in room->bitroom
 */
 
-static inline void		bite_route_add_room(t_route *route, const t_room *room)
-{
-	if (route != NULL && route->bitroute != NULL &&
-		room != NULL && room->bitroom != NULL)
-	{
-		route->bitroute[room->room_i / BITFIELD_SIZE] |=
-			room->bitroom[room->room_i / BITFIELD_SIZE];
-	}
-}
+// static inline void		bite_route_add_room(t_route *route, const t_room *room)
+// {
+// 	if (route != NULL && route->bitroute != NULL &&
+// 		room != NULL && room->bitroom != NULL)
+// 	{
+// 		route->bitroute[room->room_i / BITFIELD_SIZE] |=
+// 			room->bitroom[room->room_i / BITFIELD_SIZE];
+// 	}
+// }
 /*
 ** takes a bitfield-form route and flips on a room's bit in it
 ** WARNING: this is an inline void fn for performance reasons
@@ -78,54 +78,71 @@ static inline void		bite_route_add_room(t_route *route, const t_room *room)
 ** it will not return success or failure so use with care
 */
 
-ssize_t			bite_route_convert(t_route *route, const t_map *map)
+// ssize_t			bite_route_convert(t_route *route, const t_map *map)
+// {
+// 	size_t	i;
+
+// 	if (route != NULL && route->route != NULL && route->bitroute == NULL &&
+// 		bite_alloc(&(route->bitroute), map) == EXIT_SUCCESS)
+// 	{
+// 		i = 0;
+// 		while (i < route->len)
+// 		{
+// 			if (route->route[i] != NULL)
+// 				bite_route_add_room(route, route->route[i]);
+// 			i++;
+// 		}
+// 		return (EXIT_SUCCESS);
+// 	}
+// 	return (EXIT_FAILURE);
+// }
+/*
+** takes the route->route array and stores it in bitfield-form in route->bitroute
+*/
+
+// ssize_t			bite_route_copy(t_route *dst,
+// 								const t_route *src,
+// 								const t_map *map)
+// {
+// 	size_t	i;
+
+// 	if (dst != NULL && src != NULL && src->bitconj != NULL)
+// 	{
+// 		dst->bitconj = 
+// 			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+// 		if (dst->bitconj != NULL)
+// 		{
+// 			i = 0;
+// 			while (i < map->bitfield_len)
+// 			{
+// 				dst->bitconj[i] = src->bitconj[i];
+// 				i++;
+// 			}
+// 			return (EXIT_SUCCESS);
+// 		}
+// 	}
+// 	return (EXIT_FAILURE);
+// }
+/*
+** copies one route's bitfield-form route into another's
+*/
+size_t			copy_bitconj(BITFIELD_TYPE **dst, BITFIELD_TYPE *src,
+t_map *map)
 {
 	size_t	i;
 
-	if (route != NULL && route->route != NULL && route->bitroute == NULL &&
-		bite_alloc(&(route->bitroute), map) == EXIT_SUCCESS)
+	i = 0;
+	if (bite_alloc(dst, map) == EXIT_SUCCESS)
 	{
-		i = 0;
-		while (i < route->len)
+		while (i < map->bitfield_len)
 		{
-			if (route->route[i] != NULL)
-				bite_route_add_room(route, route->route[i]);
+			(*dst)[i] = src[i];
 			i++;
 		}
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }
-/*
-** takes the route->route array and stores it in bitfield-form in route->bitroute
-*/
-
-ssize_t			bite_route_copy(t_route *dst,
-								const t_route *src,
-								const t_map *map)
-{
-	size_t	i;
-
-	if (dst != NULL && src != NULL && src->bitroute != NULL)
-	{
-		dst->bitroute = 
-			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
-		if (dst->bitroute != NULL)
-		{
-			i = 0;
-			while (i < map->bitfield_len)
-			{
-				dst->bitroute[i] = src->bitroute[i];
-				i++;
-			}
-			return (EXIT_SUCCESS);
-		}
-	}
-	return (EXIT_FAILURE);
-}
-/*
-** copies one route's bitfield-form route into another's
-*/
 
 ssize_t			bite_bitroute_copy(BITFIELD_TYPE *dst,
 									const BITFIELD_TYPE *src,

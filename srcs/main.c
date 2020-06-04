@@ -22,7 +22,6 @@ static ssize_t	setup_map(t_map *map)
 		map->routes = NULL;
 		map->rooms = create_ht(50);
 		map->num_routes = 0;
-		map->active_routes = 0;
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
 	}
@@ -40,7 +39,7 @@ int main(void)
 		find_routes(&map) == EXIT_SUCCESS &&
 		parallelize(&map) == EXIT_SUCCESS)
 		{
-			debug(&map);
+			// debug(&map);
 			return (EXIT_SUCCESS);
 		}
 	return (EXIT_FAILURE);

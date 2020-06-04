@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/05/27 13:22:57 by lravier       ########   odam.nl          #
+#    Updated: 2020/06/04 16:25:39 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,11 +24,17 @@ RAW=					main \
 						room_utils	\
 						sanitize_input \
 						debug	\
-						route_utils	\
+						route_adding	\
+						route_setup	\
 						route_finder	\
+						route_finder_helper \
+						queue_utils	\
+						adjust_queue	\
 						biter	\
 						calc_combinations \
-						parallelizer
+						parallelizer	\
+						build_paths_utils	\
+						build_paths
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

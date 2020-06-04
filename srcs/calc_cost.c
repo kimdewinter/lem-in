@@ -6,13 +6,12 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/25 15:56:01 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 14:30:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-/* KEEP TRACK OF OVERFLOW!!! */
 static size_t			ft_round_rest(long double rest)
 {
 	size_t		fact;
@@ -65,7 +64,6 @@ avg_paths, t_combi *combi)
 		path_diff = (long double)tmp->len - avg_paths;
 		ants_diff = avg_ants - path_diff;
 		rounds = (long double)tmp->len + ants_diff - 1.0;
-		/* CHECK THIS */
 		if ((rounds - (size_t)rounds) > 0)
 			*rest += (rounds - (size_t)rounds);
 		i++;
@@ -73,7 +71,7 @@ avg_paths, t_combi *combi)
 	return (rounds + ft_round_rest(*rest));
 }
 
-size_t		calc_cost(ssize_t ants, t_combi *routes)
+size_t		calc_cost(size_t ants, t_combi *routes)
 {
 	long double avg_ants;
 	long double	avg_paths;
