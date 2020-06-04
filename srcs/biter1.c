@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   biter.c                                            :+:    :+:            */
+/*   biter1.c                                           :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 15:53:50 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 16:49:41 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ ssize_t	bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map)
 {
 	*dst =
 		(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
-	if (*dst != NULL)
+	if (*dst == NULL)
 		return (handle_err_biter(1, "bite_alloc_noval\n"));
 	return (EXIT_SUCCESS);
 }
@@ -43,11 +43,12 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 	size_t	i;
 
 	i = room->room_i / BITFIELD_SIZE;
-	if (room != NULL && room->bitroom == NULL &&
-		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
+	if (bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
 	{
-		if (room == map->start || room == map->end)
-			return (EXIT_SUCCESS);
+		if (room == map->start || room == map->end)//TEMP FIX:
+			return (EXIT_SUCCESS);//to avoid bitroutes colliding
+			//(being seen as incompatible combinations) due to both having
+			//the start and end room in it
 		room->bitroom[i] = (BITFIELD_TYPE)1 <<
 		(63 - room->room_i % BITFIELD_SIZE);
 		return (EXIT_SUCCESS);
@@ -60,12 +61,8 @@ ssize_t			bite_room_new(t_room *room, const t_map *map)
 
 static inline void		bite_route_add_room(t_route *route, const t_room *room)
 {
-	if (route != NULL && route->bitroute != NULL &&
-		room != NULL && room->bitroom != NULL)
-	{
-		route->bitroute[room->room_i / BITFIELD_SIZE] |=
-			room->bitroom[room->room_i / BITFIELD_SIZE];
-	}
+	route->bitroute[room->room_i / BITFIELD_SIZE] |=
+		room->bitroom[room->room_i / BITFIELD_SIZE];
 }
 /*
 ** takes a bitfield-form route and flips on a room's bit in it
@@ -78,19 +75,16 @@ ssize_t			bite_route_convert(t_route *route, const t_map *map)
 {
 	size_t	i;
 
-	if (route != NULL && route->route != NULL && route->bitroute == NULL &&
-		bite_alloc(&(route->bitroute), map) == EXIT_SUCCESS)
+	if (bite_alloc(&(route->bitroute), map) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < route->len)
 	{
-		i = 0;
-		while (i < route->len)
-		{
-			if (route->route[i] != NULL)
-				bite_route_add_room(route, route->route[i]);
-			i++;
-		}
-		return (EXIT_SUCCESS);
+		if (route->route[i] != NULL)
+			bite_route_add_room(route, route->route[i]);
+		i++;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 /*
 ** takes the route->route array and stores it in bitfield-form in route->bitroute
@@ -102,87 +96,18 @@ ssize_t			bite_route_copy(t_route *dst,
 {
 	size_t	i;
 
-	if (dst != NULL && src != NULL && src->bitroute != NULL)
+	dst->bitroute = 
+		(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+	if (dst->bitroute == NULL)
+		return (handle_err_biter(1, "bite_route_copy\n"));
+	i = 0;
+	while (i < map->bitfield_len)
 	{
-		dst->bitroute = 
-			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
-		if (dst->bitroute != NULL)
-		{
-			i = 0;
-			while (i < map->bitfield_len)
-			{
-				dst->bitroute[i] = src->bitroute[i];
-				i++;
-			}
-			return (EXIT_SUCCESS);
-		}
+		dst->bitroute[i] = src->bitroute[i];
+		i++;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 /*
 ** copies one route's bitfield-form route into another's
 */
-
-ssize_t			bite_bitroute_copy(BITFIELD_TYPE *dst,
-									const BITFIELD_TYPE *src,
-									const t_map *map)
-{
-	size_t	i;
-
-	if (map != NULL)
-	{
-		i = 0;
-		while (i < map->bitfield_len)
-		{
-			if (dst == NULL || src == NULL)
-				return (EXIT_FAILURE);
-			dst[i] = src[i];
-			i++;
-		}
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
-}
-/*
-** copies a bitfield-form route
-*/
-
-ssize_t			bite_bitroute_merge(BITFIELD_TYPE *dst,
-									const BITFIELD_TYPE *src1,
-									const BITFIELD_TYPE *src2,
-									const t_map *map)
-{
-	size_t	i;
-
-	if (map != NULL && dst != NULL && src1 != NULL && src2 != NULL)
-	{
-		i = 0;
-		while (i < map->bitfield_len)
-		{
-			dst[i] = src1[i] | src2[i];
-			i++;
-		}
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
-}
-/*
-** copies a bitfield-form route
-*/
-
-ssize_t			bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map)
-{
-	size_t	i;
-
-	if (map != NULL)
-	{
-		i = 0;
-		while (i < map->bitfield_len)
-		{
-			bitroute[i] = (BITFIELD_TYPE)0;
-			i++;
-		}
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
-}

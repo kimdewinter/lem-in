@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 13:56:47 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 16:44:16 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,8 @@ static size_t		increase_route_size(t_route **route, t_map *map)
 
 static inline void		bite_route_add_room(t_route *route, const t_room *room)
 {
-	if (route != NULL && route->bitroute != NULL &&
-		room != NULL && room->bitroom != NULL)
-	{
-		route->bitroute[room->room_i / BITFIELD_SIZE] |=
-			room->bitroom[room->room_i / BITFIELD_SIZE];
-	}
+	route->bitroute[room->room_i / BITFIELD_SIZE] |=
+		room->bitroom[room->room_i / BITFIELD_SIZE];
 }
 
 size_t		add_to_route(t_route **curr_route, t_room *room, t_map *map)
