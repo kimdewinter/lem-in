@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/02 11:59:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 19:12:42 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,12 @@ static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
 			dash += 1;
 	}
 	if (dash != 1)
-		return (ft_error("Invalid number of dashes in link line\n",
-		EXIT_FAILURE));
+		return (parse_error(4));
 	rooms = ft_strsplit(line, '-');
 	if (!rooms)
-		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
+		return (parse_error(5));
 	if (add_tubes(map, rooms) == EXIT_FAILURE)
-		return (ft_error("Error adding link\n", EXIT_FAILURE));
-	/* free rooms */
+		return (parse_error(6));
 	(*tubes)++;
 	return (EXIT_SUCCESS);
 }
@@ -83,6 +81,6 @@ ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 		(*i)++;
 	}
 	if (tubes == 0)
-		return (ft_error("No links provided\n", EXIT_FAILURE));
+		return (parse_error(7));
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 16:44:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 19:04:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,4 +186,6 @@ void				print_queue(t_list **queue);
 void				print_path(t_subpath *pt);
 void				print_bitconj(BITFIELD_TYPE *arr, size_t len);
 void				print_troute(t_routes_wrapper *wroutes);
+
+size_t				parse_error(size_t err_code);
 #endif

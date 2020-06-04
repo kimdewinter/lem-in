@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 16:52:12 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 19:19:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,13 @@ size_t			add_paths_to_start(t_map *map)
 				map->start->neighbours[i]) == EXIT_FAILURE)
 						return (EXIT_FAILURE);
 			}
-			else
-			{
-				if (map->start->neighbours[i]->num_options != 0 &&
-				add_to_conj_path(map->start, map->start->neighbours[i],
-				map->start->neighbours[i]->routes[0]) == EXIT_FAILURE)
-					return (EXIT_FAILURE);
-			}
+		}
+		else
+		{
+			if (map->start->neighbours[i]->num_options != 0 &&
+			add_to_conj_path(map->start, map->start->neighbours[i],
+			map->start->neighbours[i]->routes[0]) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 		}
 		i++;
 	}
@@ -77,6 +77,7 @@ size_t			execute_queue(t_qwrap *queue, t_map *map)
 				curr = (t_queue *)(iter->content);
 		}
 	}
+	free (queue);
 	return (add_paths_to_start(map));
 }
 
