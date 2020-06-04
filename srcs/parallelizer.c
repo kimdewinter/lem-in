@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/03 16:36:02 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 15:55:52 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,20 +16,16 @@ ssize_t			copy_n_routes(t_route ***dst, t_route **src, const size_t n)
 {
 	size_t	i;
 
-	if (src != NULL)
+	*dst = (t_route **)malloc(sizeof(t_route *) * n);
+	if (*dst == NULL)
+		return (handle_err_para(1, "copy_n_routes\n"));
+	i = 0;
+	while (i < n)
 	{
-		*dst = (t_route **)malloc(sizeof(t_route *) * n);
-		if (*dst == NULL)
-			return (EXIT_FAILURE);
-		i = 0;
-		while (i < n)
-		{
-			*dst[i] = src[i];
-			i++;
-		}
-		return (EXIT_SUCCESS);
+		*dst[i] = src[i];
+		i++;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 size_t			is_valid_combi(t_map *map,

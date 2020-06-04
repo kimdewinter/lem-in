@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 14:22:10 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 15:53:50 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,32 +16,26 @@ ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 {
 	size_t	i;
 
-	if (map != NULL)
+	*dst =
+		(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+	if (*dst == NULL)
+		return (handle_err_biter(1, "bite_alloc\n"));
+	i = 0;
+	while (i < map->bitfield_len)
 	{
-		*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
-		if (*dst != NULL)
-		{
-			i = 0;
-			while (i < map->bitfield_len)
-			{
-				*dst[i] = (BITFIELD_TYPE)0;
-				i++;
-			}
-			return (EXIT_SUCCESS);
-		}
+		*dst[i] = (BITFIELD_TYPE)0;
+		i++;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 ssize_t	bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map)
 {
-	if (map != NULL)
-	{
-		*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
-		if (*dst != NULL)
-			return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
+	*dst =
+		(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
+	if (*dst != NULL)
+		return (handle_err_biter(1, "bite_alloc_noval\n"));
+	return (EXIT_SUCCESS);
 }
 
 ssize_t			bite_room_new(t_room *room, const t_map *map)

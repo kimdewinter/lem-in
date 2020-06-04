@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/03 17:07:58 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/04 15:54:47 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static ssize_t	combinatron_setup_begin(t_map *map,
 
 	child->routes = (t_route **)malloc(sizeof(t_route *) * rtes_to_combi);
 	if (child->routes == NULL)
-		return (EXIT_FAILURE);
+		return (handle_err_comtron(1, "combinatron_setup_begin\n"));
 	i = 0;
 	while (i < rtes_to_combi)
 	{
@@ -95,7 +95,7 @@ static ssize_t	combinatron_setup(t_map *map,
 		return (EXIT_FAILURE);
 	if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
 		map->routes[parent->i]->bitroute, map) != EXIT_SUCCESS)
-		return (EXIT_FAILURE);
+		return (handle_err_comtron(0, "combinatron_setup\n"));
 	if (copy_n_routes(
 		&(child->routes), parent->routes, rtes_to_combi) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);

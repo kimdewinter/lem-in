@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   err_paracom.c                                      :+:    :+:            */
+/*   err_biter.c                                        :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
@@ -12,28 +12,12 @@
 
 #include "../includes/lem-in.h"
 
-ssize_t		handle_err_para(size_t err_code, const char *line)
+ssize_t		handle_err_biter(size_t err_code, const char *line)
 {
 	if (err_code == 0)
-		perror("Error: unspecified error in parallelizer.c function ");
+		perror("Error: unspecified error in biter.c\n");
 	else if (err_code == 1)
-		perror("Error: misallocation in parallelizer.c function ");
-	else if (err_code == 2)
-		perror("Erorr: parallelizer.c function parallelize received a\
-				NULL-pointer to map\n");
-	if (line != NULL)
-		perror(line);
-	return (EXIT_FAILURE);
-}
-
-ssize_t		handle_err_comtron(size_t err_code, const char *line)
-{
-	if (err_code == 0)
-		perror("Error: unspecified error in combinatron.c\n");
-	else if (err_code == 1)
-		perror("Error: misallocation in combinatron.c function ");
-	else if (err_code == 2)
-		perror("Error: out of array scope in combinatron.c function ");
+		perror("Error: misallocation in biter.c function ");
 	if (line != NULL)
 		perror(line);
 	return (EXIT_FAILURE);
