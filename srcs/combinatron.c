@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/02 16:53:26 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/03 17:07:58 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,33 @@ static ssize_t	combinatron_cleanup(t_map *map,
 	return (EXIT_FAILURE);
 }
 
-static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *combi)
+static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *candidate)
 {
-	t_combi	*new;
+	size_t	i;
+	size_t	candidate_turns;
 
-	if (map != NULL && combi != NULL && combi->routes != NULL &&
-		combi->bitroutes != NULL &&
-		map->valid_combis_last_i < map->valid_combis_len)
+	i = 0;
+	candidate_turns = calc_cost(map->antmount, candidate);
+	if (candidate_turns < map->best_combi_turns || map->best_combi_used == 0)
 	{
-		map->valid_combis[map->valid_combis_last_i] =
-			(t_combi *)malloc(sizeof(t_combi) * 1);
-		new = map->valid_combis[map->valid_combis_last_i];
-		if (new == NULL)
-			return (EXIT_FAILURE);
-		new->routes =
-			(t_route **)malloc(sizeof(t_route *) * combi->num_routes);
-		if (new->routes == NULL || copy_n_routes(
-			&(new->routes), combi->routes, combi->num_routes) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (bite_alloc_noval(&(new->bitroutes), map) == EXIT_FAILURE ||
-			bite_bitroute_copy(new->bitroutes, combi->bitroutes, map) ==
-			EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		map->valid_combis_last_i++;
-		return (EXIT_SUCCESS);
+		while (i < candidate->num_routes)
+		{
+			if (i >= map->best_combi_len)
+				return (handle_err_comtron(2, "combinatron_commit_combi\n"));
+			map->best_combi[i] = candidate->routes[i];
+			i++;
+		}
+		while (i < map->best_combi_used)
+		{
+			if (i >= map->best_combi_len)
+				return (handle_err_comtron(2, "combinatron_commit_combi\n"));
+			map->best_combi[i] = NULL;
+			i++;
+		}
+		map->best_combi_used = candidate->num_routes;
+		map->best_combi_turns = candidate_turns;
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }
 
 static ssize_t	combinatron_setup_begin(t_map *map,
@@ -67,24 +68,20 @@ static ssize_t	combinatron_setup_begin(t_map *map,
 {
 	size_t	i;
 
-	if (map != NULL && child != NULL && rtes_to_combi > 0)
+	child->routes = (t_route **)malloc(sizeof(t_route *) * rtes_to_combi);
+	if (child->routes == NULL)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < rtes_to_combi)
 	{
-		child->routes = (t_route **)malloc(sizeof(t_route *) * rtes_to_combi);
-		if (child->routes == NULL)
-			return (EXIT_FAILURE);
-		i = 0;
-		while (i < rtes_to_combi)
-		{
-			child->routes[i] = NULL;
-			i++;
-		}
-		if (bite_alloc(&(child->bitroutes), map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		child->i = 0;
-		child->num_routes = 0;
-		return (EXIT_SUCCESS);
+		child->routes[i] = NULL;
+		i++;
 	}
-	return (EXIT_FAILURE);
+	if (bite_alloc(&(child->bitroutes), map) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	child->i = 0;
+	child->num_routes = 0;
+	return (EXIT_SUCCESS);
 }
 
 static ssize_t	combinatron_setup(t_map *map,
@@ -92,24 +89,20 @@ static ssize_t	combinatron_setup(t_map *map,
 									t_poscom *child,
 									const size_t rtes_to_combi)
 {
-	if (map != NULL && child != NULL && rtes_to_combi > 0)
-	{
-		if (parent == NULL)
-			return (combinatron_setup_begin(map, child, rtes_to_combi));
-		if (bite_alloc_noval(&(child->bitroutes), map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
-			map->routes[parent->i]->bitroute, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (copy_n_routes(&(child->routes), parent->routes, rtes_to_combi) ==
-			EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		child->routes[parent->num_routes] = map->routes[parent->i];
-		child->num_routes = parent->num_routes + 1;
-		child->i = parent->i + 1;
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
+	if (parent == NULL)
+		return (combinatron_setup_begin(map, child, rtes_to_combi));
+	if (bite_alloc_noval(&(child->bitroutes), map) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
+		map->routes[parent->i]->bitroute, map) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (copy_n_routes(
+		&(child->routes), parent->routes, rtes_to_combi) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	child->routes[parent->num_routes] = map->routes[parent->i];
+	child->num_routes = parent->num_routes + 1;
+	child->i = parent->i + 1;
+	return (EXIT_SUCCESS);
 }
 
 ssize_t			combinatron(t_map *map,
@@ -118,27 +111,23 @@ ssize_t			combinatron(t_map *map,
 {
 	t_poscom	child;
 
-	if (map != NULL && rtes_to_combi > 0 &&
-		combinatron_setup(map, parent, &child, rtes_to_combi) == EXIT_SUCCESS)
+	if (combinatron_setup(map, parent, &child, rtes_to_combi) != EXIT_SUCCESS)
+		return (EXIT_FAILURE);
+	if (child.num_routes == rtes_to_combi)
 	{
-		if (child.num_routes == rtes_to_combi)
-		{
-			if (combinatron_commit_combi(map, &child) == EXIT_FAILURE)
-				return (combinatron_cleanup(map, &child, EXIT_FAILURE));
-		}
-		else
-		{
-			while (child.i < map->num_routes -
-					(rtes_to_combi - child.num_routes))
-			{
-				if (is_valid_combi(
-					map, child.bitroutes, map->routes[child.i]->bitroute) == 1)
-					if (combinatron(map, &child, rtes_to_combi) == EXIT_FAILURE)
-						return (combinatron_cleanup(map, &child, EXIT_FAILURE));
-				child.i++;
-			}
-		}
-		return (combinatron_cleanup(map, &child, EXIT_SUCCESS));
+		if (combinatron_commit_combi(map, &child) == EXIT_FAILURE)
+			return (combinatron_cleanup(map, &child, EXIT_FAILURE));
 	}
-	return (combinatron_cleanup(map, &child, EXIT_FAILURE));
+	else
+	{
+		while (child.i < map->num_routes - (rtes_to_combi - child.num_routes))
+		{
+			if (is_valid_combi(
+				map, child.bitroutes, map->routes[child.i]->bitroute) == 1)
+				if (combinatron(map, &child, rtes_to_combi) == EXIT_FAILURE)
+					return (combinatron_cleanup(map, &child, EXIT_FAILURE));
+			child.i++;
+		}
+	}
+	return (combinatron_cleanup(map, &child, EXIT_SUCCESS));
 }

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/02 14:21:42 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/03 17:08:25 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,10 @@ typedef struct		s_map
 	size_t			num_routes;
 	size_t			active_routes;
 	size_t			bitfield_len;
-	struct s_combi	**valid_combis;
-	size_t			valid_combis_len;
-	size_t			valid_combis_last_i;
+	struct s_route	**best_combi;
+	size_t			best_combi_used;
+	size_t			best_combi_len;
+	size_t			best_combi_turns;
 }					t_map;
 
 typedef struct	s_input_reader
@@ -128,6 +129,8 @@ size_t				is_valid_combi(t_map *map,
 ssize_t				copy_n_routes(t_route ***dst,
 						t_route **src,
 						const size_t n);
+ssize_t				handle_err_para(size_t err_code, const char *line);
+ssize_t				handle_err_comtron(size_t err_code, const char *line);
 
 // BITFIELD-TOOLKIT:
 ssize_t				bite_room_new(t_room *room, const t_map *map);//takes a room and stores it's bitfield-form in room->bitroom
@@ -146,6 +149,7 @@ ssize_t				bite_bitroute_merge(BITFIELD_TYPE *dst,
 						const BITFIELD_TYPE *src1,
 						const BITFIELD_TYPE *src2,
 						const t_map *map);
+size_t				calc_cost(ssize_t ants, const t_poscom *routes);
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);

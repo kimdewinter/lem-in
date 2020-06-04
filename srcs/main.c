@@ -25,6 +25,10 @@ static ssize_t	setup_map(t_map *map)
 		map->active_routes = 0;
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
+		map->best_combi_len = 0;
+		map->best_combi = NULL;
+		map->best_combi_used = 0;
+		map->best_combi_turns = 0;
 	}
 	return (EXIT_FAILURE);
 }
