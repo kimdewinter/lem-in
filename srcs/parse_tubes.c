@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 19:12:42 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:18:08 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
+static ssize_t		parse_tube(char *line, t_map *map, size_t *tubes)
 {
 	char 	**rooms;
 	int		dash;
@@ -63,13 +63,15 @@ static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
 	if (add_tubes(map, rooms) == EXIT_FAILURE)
 		return (parse_error(6));
 	(*tubes)++;
+	free_room_names(rooms);
 	return (EXIT_SUCCESS);
 }
 
 ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 {
-	int	tubes;
+	size_t		tubes;
 
+	printf("Parse tube\n");
 	tubes = 0;
 	while (*i < input->num_lines)
 	{

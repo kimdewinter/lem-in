@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:45:15 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/02 17:14:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 19:53:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_room *conj)
 		new->path = new_path(1);
 		if (new->path)
 		{
-			new->path[0] = NULL;
+			(*new->path) = NULL;
 			if (add_subpath(dst, new) == EXIT_SUCCESS)
 				return (EXIT_SUCCESS);
 			free (new->path);

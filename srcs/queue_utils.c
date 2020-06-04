@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 16:35:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:47:35 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,30 +64,44 @@ t_list	*new_queue_item(t_subpath *pt, t_room *dst, t_room *src)
 	return (node);
 }
 
-size_t		setup_queue(t_qwrap **queue, t_map *map)
+size_t		add_nodes(t_qwrap **queue, t_map *map)
 {
-	t_list	*new_node;
 	size_t	i;
+	t_list 	*new_node;
 
 	i = 0;
-	*queue = (t_qwrap *)malloc(sizeof(t_qwrap));
-	if (!*queue)
-		return (EXIT_FAILURE);
-	(*queue)->last = NULL;
-	(*queue)->queue = (t_list **)malloc(sizeof(t_list *));
-	if (!(*queue)->queue)
-		return (EXIT_FAILURE);
-	(*(*queue)->queue) = NULL;
-	if (map->end->sps == 1)
-		return (EXIT_SUCCESS);
 	while (i < map->end->neighbours_len)
 	{
 		new_node = new_queue_item((*map->end->routes),
 		map->end->neighbours[i], map->end);
 		if (!new_node)
+		{
+			free_queue(queue);
 			return (EXIT_FAILURE);
+		}
 		ft_lstaddend_no_alloc(*queue, new_node);
 		i++;
 	}
 	return (EXIT_SUCCESS);
+}
+
+size_t		setup_queue(t_qwrap **queue, t_map *map)
+{
+	*queue = (t_qwrap *)malloc(sizeof(t_qwrap));
+	if (*queue)
+	{
+		(*queue)->last = NULL;
+		(*queue)->queue = (t_list **)malloc(sizeof(t_list *));
+		if ((*queue)->queue)
+		{
+			(*(*queue)->queue) = NULL;
+			if (map->end->sps == 1)
+				return (EXIT_SUCCESS);
+			if (add_nodes(queue, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+			return (EXIT_SUCCESS);
+		}
+		free_queue(queue);
+	}
+	return (EXIT_FAILURE);
 }

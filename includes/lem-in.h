@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 19:04:14 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 21:24:22 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ ssize_t				parse_input(t_map *map, t_input_reader *input);
 ssize_t				parse_antmount(t_input_reader *input, t_map *map,
 						size_t *i);
 ssize_t				parse_rooms(t_input_reader *input, t_map *map, size_t *i);
+size_t				sanitize_input(t_map *map);
 ssize_t				parse_tubes(t_input_reader *input, t_map *map, size_t *i);
 ssize_t				setup_room(t_room **dest,
 						const char *name,
@@ -137,6 +138,8 @@ size_t				is_tube(char *line);
 size_t				is_room(char *line);
 size_t				is_antmount(char *line);
 unsigned long long	ft_atoi_ll(char *line, size_t *overflow);
+void				free_room_names(char **rooms);
+
 size_t				max_parallels(t_map *map);
 ssize_t				parallelize(t_map *map);
 
@@ -174,9 +177,11 @@ int					is_new_conj(t_room *src, t_room *curr, t_subpath *spt);
 
 // Path building
 size_t				setup_routes(t_routes_wrapper **rw, t_map *map);
-size_t				setup_starting_paths(t_routes_wrapper *rw, t_map *map);
+size_t				setup_starting_paths(t_routes_wrapper *rw, t_map *map,
+					size_t *active);
 size_t				increase_routes_capacity(t_routes_wrapper *rw);
 size_t				build_paths(t_map *map);
+void				bite_route_add_conj(t_route *route, const t_room *conj);
 
 //the following are merely functions for debugging:
 void				debug(t_map *map);
@@ -188,4 +193,6 @@ void				print_bitconj(BITFIELD_TYPE *arr, size_t len);
 void				print_troute(t_routes_wrapper *wroutes);
 
 size_t				parse_error(size_t err_code);
+void				free_queue(t_qwrap **rw);
+void				free_queue_item(t_list *curr);
 #endif

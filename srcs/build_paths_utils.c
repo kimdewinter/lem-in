@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:44:28 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 14:56:57 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 21:27:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-static inline void		bite_route_add_conj(t_route *route, const t_room *conj)
+void		bite_route_add_conj(t_route *route, const t_room *conj)
 {
 	route->bitconj[conj->room_i / BITFIELD_SIZE] |=
 		(BITFIELD_TYPE)1 << (63 - conj->room_i % BITFIELD_SIZE);
@@ -39,12 +39,29 @@ size_t	increase_routes_capacity(t_routes_wrapper *rw)
 	return (EXIT_SUCCESS);
 }
 
-t_route			*setup_route(t_subpath *pt, t_map *map)
+void			set_values_route(t_route *new, t_subpath *pt, t_map *map)
 {
-	t_route *new;
 	size_t	i;
 
 	i = 0;
+	if (pt->conj != map->end)
+		bite_route_add_conj(new, pt->conj);
+	new->len = pt->len;
+	new->end = 0;
+	new->last_conj = pt->conj;
+	if (pt->conj == map->end)
+		new->end = 1;
+	while (i < pt->len)
+	{
+		new->route[i] = pt->path[i];
+		i++;
+	}
+}
+
+t_route			*setup_route(t_subpath *pt, t_map *map)
+{
+	t_route *new;
+
 	new = (t_route *)malloc(sizeof(t_route));
 	if (new)
 	{
@@ -53,27 +70,17 @@ t_route			*setup_route(t_subpath *pt, t_map *map)
 		{
 			if (bite_alloc(&(new->bitconj), map) == EXIT_SUCCESS)
 			{
-				if (pt->conj != map->end)
-					bite_route_add_conj(new, pt->conj);
-				new->len = pt->len;
-				new->end = 0;
-				new->last_conj = pt->conj;
-				if (pt->conj == map->end)
-					new->end = 1;
-				while (i < pt->len)
-				{
-					new->route[i] = pt->path[i];
-					i++;
-				}
+				set_values_route(new, pt, map);
 				return (new);
 			}
+			free (new->route);
 		}
 		free (new);
 	}
 	return (NULL);
 }
 
-size_t	setup_starting_paths(t_routes_wrapper *rw, t_map *map)
+size_t	setup_starting_paths(t_routes_wrapper *rw, t_map *map, size_t *active)
 {
 	size_t	i;
 
@@ -84,6 +91,8 @@ size_t	setup_starting_paths(t_routes_wrapper *rw, t_map *map)
 		rw->routes[i] = setup_route(map->start->routes[i], map);
 		if (!rw->routes[i])
 			return (EXIT_FAILURE);
+		if (rw->routes[i]->end == 0)
+			(*active)++;
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -100,6 +109,9 @@ size_t	setup_routes(t_routes_wrapper **rw, t_map *map)
 		(*rw)->size = (map->rooms->size);
 	(*rw)->routes = (t_route **)malloc(sizeof(t_route *) * (*rw)->size);
 	if (!(*rw)->routes)
+	{
+		free (*rw);
 		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

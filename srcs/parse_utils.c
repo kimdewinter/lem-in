@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/25 15:16:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:37:35 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,12 @@ size_t	is_tube(char *line)
 		i++;
 	if (i != 2)
 		return (0);
-	/* None of this checks for spaces! */
 	if (ft_strcmp(words[0], words[1]) == 0)
+	{
+		free_room_names(words);
 		return (0);
-	/* Check whether room name exists in collection of rooms */
+	}
+	free_room_names(words);
 	return (1);
 }
 

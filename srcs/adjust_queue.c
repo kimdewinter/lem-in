@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 16:34:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:50:45 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,7 @@ void			remove_queue_item(t_qwrap *queue)
 	if (last == queue->last)
 		queue->last = NULL;
 	if (last)
-	{
-		free (last->content);
-		free (last);
-	}
+		free_queue_item(last);
 }
 
 static size_t		add_nbs_to_queue(t_map *map, t_qwrap *queue, t_queue *curr,

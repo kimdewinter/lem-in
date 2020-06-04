@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/04 19:13:30 by lravier       ########   odam.nl          #
+#    Updated: 2020/06/04 20:20:36 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ EXTRA=
 IFLAGS= -Wall -Wextra -Werror $(EXTRA)
 RAW=					main \
 						parse_antmount \
+						parse_clean	\
 						parse_input \
 						parse_error	\
 						parse_rooms \
@@ -25,6 +26,7 @@ RAW=					main \
 						room_utils	\
 						sanitize_input \
 						debug	\
+						clean_route_finding	\
 						route_adding	\
 						route_setup	\
 						route_finder	\

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/03 15:12:00 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:36:00 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ static ssize_t	get_coords(char *wordx, char *wordy, size_t *posx, size_t *posy)
 	*posx = ft_atoi_ll(wordx, &overflow);
 	if (overflow == 0)
 	{
+		free (wordx);
 		*posy = ft_atoi_ll(wordy, &overflow);
 		if (overflow == 0)
+		{
+			free (wordy);
 			return (EXIT_SUCCESS);
+		}
 	}
 	return (EXIT_FAILURE);
 }
@@ -49,9 +53,11 @@ size_t *num_room)
 							map->end = search_ht(map->rooms, room->name);
 						(*i)++;
 						(*num_room)++;
+						free (words);
 						return (EXIT_SUCCESS);
 					}
 	}
+	free (words);
 	return (EXIT_FAILURE);
 }
 
@@ -63,14 +69,16 @@ static ssize_t	add_room(const char *line, t_map *map, size_t *num_room)
 	size_t	posy;
 
 	words = ft_strsplit(line, ' ');
-	if (words[0] != NULL && words[1] != NULL && words[2] != NULL)
+	if ( words[0] != NULL && words[1] != NULL && words[2] != NULL)
 		if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
 			if (setup_room(&room, words[0], posx, posy, num_room) == EXIT_SUCCESS)
 				if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
 				{
 					(*num_room)++;
+					free (words);
 					return (EXIT_SUCCESS);
 				}
+	free (words);
 	return (EXIT_FAILURE);
 }
 
@@ -109,7 +117,7 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 				map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
 				if (setup_bitconj_rooms(map) == EXIT_SUCCESS)
 					return (EXIT_SUCCESS);
-				return (EXIT_FAILURE);
+				return (parse_error(14));
 			}
 			else if (is_room(input->lines[*i]) == 1)
 			{
@@ -131,5 +139,5 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 			(*i)++;
 		}
 	}
-	return (EXIT_FAILURE);
+	return (parse_error(7));
 }
