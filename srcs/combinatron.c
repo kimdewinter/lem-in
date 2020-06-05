@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 14:40:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/05 16:44:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,16 +91,16 @@ static ssize_t	combinatron_setup(t_map *map,
 {
 	if (parent == NULL)
 		return (combinatron_setup_begin(map, child, rtes_to_combi));
+	child->num_routes = parent->num_routes + 1;
 	if (bite_alloc_noval(&(child->bitroutes), map) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
 		map->routes[parent->i]->bitroute, map) != EXIT_SUCCESS)
 		return (handle_err_comtron(0, "combinatron_setup\n"));
 	if (copy_n_routes(
-		&(child->routes), parent->routes, rtes_to_combi) != EXIT_SUCCESS)
+		&(child->routes), parent->routes, parent->num_routes) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	child->routes[parent->num_routes] = map->routes[parent->i];
-	child->num_routes = parent->num_routes + 1;
 	child->i = parent->i + 1;
 	return (EXIT_SUCCESS);
 }
@@ -113,6 +113,8 @@ ssize_t			combinatron(t_map *map,
 
 	if (combinatron_setup(map, parent, &child, rtes_to_combi) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
+	if (child.num_routes > 0)
+		print_n_routes((const t_route **)child.routes, child.num_routes);
 	if (child.num_routes == rtes_to_combi)
 	{
 		if (combinatron_commit_combi(map, &child) == EXIT_FAILURE)
