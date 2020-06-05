@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 14:06:53 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/05 14:40:57 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ ssize_t			combinatron(t_map *map,
 	}
 	else
 	{
-		while (child.i < map->num_routes)//double-check and re-implement: while (child.i < map->num_routes - (rtes_to_combi - child.num_routes))
+		while (child.i <= map->num_routes - (rtes_to_combi - child.num_routes))
 		{
 			if (is_valid_combi(
 				map, child.bitroutes, map->routes[child.i]->bitroute) == 1)
