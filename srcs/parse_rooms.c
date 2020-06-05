@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/05/25 15:15:48 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:36:00 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,13 @@ static ssize_t	get_coords(char *wordx, char *wordy, size_t *posx, size_t *posy)
 	*posx = ft_atoi_ll(wordx, &overflow);
 	if (overflow == 0)
 	{
+		free (wordx);
 		*posy = ft_atoi_ll(wordy, &overflow);
 		if (overflow == 0)
+		{
+			free (wordy);
 			return (EXIT_SUCCESS);
+		}
 	}
 	return (EXIT_FAILURE);
 }
@@ -49,9 +53,11 @@ size_t *num_room)
 							map->end = search_ht(map->rooms, room->name);
 						(*i)++;
 						(*num_room)++;
+						free (words);
 						return (EXIT_SUCCESS);
 					}
 	}
+	free (words);
 	return (EXIT_FAILURE);
 }
 
@@ -63,18 +69,20 @@ static ssize_t	add_room(const char *line, t_map *map, size_t *num_room)
 	size_t	posy;
 
 	words = ft_strsplit(line, ' ');
-	if (words[0] != NULL && words[1] != NULL && words[2] != NULL)
+	if ( words[0] != NULL && words[1] != NULL && words[2] != NULL)
 		if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
 			if (setup_room(&room, words[0], posx, posy, num_room) == EXIT_SUCCESS)
 				if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
 				{
 					(*num_room)++;
+					free (words);
 					return (EXIT_SUCCESS);
 				}
+	free (words);
 	return (EXIT_FAILURE);
 }
 
-static size_t	setup_bitrooms(t_map *map)
+static size_t	setup_bitconj_rooms(t_map *map)
 {
 	int		i;
 	t_table	*table;
@@ -87,7 +95,7 @@ static size_t	setup_bitrooms(t_map *map)
 		if (table->entries[i] != NULL)
 		{
 			tmp = (t_room *)table->entries[i]->val;
-			if (bite_room_new(tmp, map) == EXIT_FAILURE)
+			if (bite_alloc(&tmp->bitconj, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
 		i++;
@@ -107,9 +115,9 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 			if (is_tube(input->lines[*i]) == 1)
 			{
 				map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
-				if (setup_bitrooms(map) == EXIT_SUCCESS)
+				if (setup_bitconj_rooms(map) == EXIT_SUCCESS)
 					return (EXIT_SUCCESS);
-				return (EXIT_FAILURE);
+				return (parse_error(14));
 			}
 			else if (is_room(input->lines[*i]) == 1)
 			{
@@ -131,5 +139,5 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 			(*i)++;
 		}
 	}
-	return (EXIT_FAILURE);
+	return (parse_error(7));
 }

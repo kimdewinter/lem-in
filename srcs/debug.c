@@ -6,29 +6,54 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/25 13:27:52 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/03 19:23:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-void	print_routes(t_map *map)
+// void	print_bitroom(t_map *map, t_room *room)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (i < map->bitfield_len)
+// 	{
+// 		printf("%lu\n", room->bitroom[i]);
+// 		i++;
+// 	}
+// }
+void	print_bitconj(uint64_t *arr, size_t len)
 {
-	t_route **tmp;
+	size_t	i;
+
+	i = 0;
+	printf("Bitconj\n");
+	while (i < len)
+	{
+		printf("%lu \n", arr[i]);
+		i++;
+	}
+
+}
+
+void	print_troute(t_routes_wrapper *wroutes)
+{
 	size_t	i;
 	size_t	j;
 
 	i = 0;
-	j = 0;
-	tmp = map->routes;
-	printf("NUM ROUTES %lu\n", map->num_routes);
-	while (i < map->num_routes)
+	printf("Number of routes %lu\n", wroutes->num_paths);
+	while (i < wroutes->num_paths)
 	{
-		printf("ROUTE %ld DEAD %d SOLVED %d\nLEN %lu\n", i, tmp[i]->dead, tmp[i]->solved, tmp[i]->len);
 		j = 0;
-		while (j < tmp[i]->len)
+		printf("Route:\n");
+		printf("Len %lu\nEnd: %d\nConj %s\n", wroutes->routes[i]->len, wroutes->routes[i]->end,
+		wroutes->routes[i]->last_conj->name);
+		print_bitconj(wroutes->routes[i]->bitconj, 1);
+		while (j < wroutes->routes[i]->len)
 		{
-			printf("%s ", tmp[i]->route[j]->name);
+			printf("%s ", wroutes->routes[i]->route[j]->name);
 			j++;
 		}
 		printf("\n\n");
@@ -36,35 +61,57 @@ void	print_routes(t_map *map)
 	}
 }
 
-void	print_bitroom(t_map *map, t_room *room)
+void	print_path(t_subpath *pt)
 {
 	size_t	i;
-
+	
 	i = 0;
-	while (i < map->bitfield_len)
+	if (!pt)
+		return;
+	printf("Len path %ld\n", pt->len);
+	while (i < pt->len)
 	{
-		printf("%lu\n", room->bitroom[i]);
+		printf("%s ", pt->path[i]->name);
 		i++;
+	}
+	printf("\n\n");
+}
+
+void	print_queue(t_list **queue)
+{
+	t_list *item;
+	t_subpath *pt;
+	t_room *dst;
+	t_room *src;
+
+	ft_printf("\nPRINT QUEUE\n\n");
+	item = *queue;
+	while (item)
+	{
+		printf("Item %p %p path %p dst %p\n", item, (t_queue *)item->content,
+		((t_queue *)item->content)->dst, ((t_queue *)item->content)->path);
+		dst = ((t_queue *)item->content)->dst;
+		src = ((t_queue *)item->content)->src;
+		pt = ((t_queue *)item->content)->path;
+		printf("Destination: %s spe %d sps %d\nSource: %s spe %d sps %d\n",
+		dst->name, dst->spe, dst->sps, src->name, src->spe, src->sps);
+		print_path(pt);
+		item = item->next;
 	}
 }
 
-void	print_bitroute(t_map *map)
+void	print_paths(t_room *room)
 {
-	size_t	i;
-	size_t	j;
-
-	i = 0;
-	while (i < map->num_routes)
+	for (size_t i = 0; i < room->num_options; i++)
 	{
-		j = 0;
-		while (j < map->bitfield_len)
+		printf("CONJ: %s\nOPTIONS: %lu\nLEN: %lu\n", room->routes[i]->conj->name, 
+		room->num_options, room->routes[i]->len);
+		for (size_t j = 0; j < room->routes[i]->len; j++)
 		{
-			printf("%lu\n", map->routes[i]->bitroute[j]);
-			j++;
+			if (room->routes[i]->path[j] != NULL)
+				printf("%s ", room->routes[i]->path[j]->name);
 		}
-		i++;
 	}
-	
 }
 
 void	debug(t_map *map)
@@ -86,7 +133,9 @@ void	debug(t_map *map)
 			tmp = (t_room *)table->entries[i]->val;
 			printf("ID: %lu\n", tmp->room_i);
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
-				ft_printf("NEIGHBOUR: %d %s\n", j, tmp->neighbours[j]->name);
+				ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);
+			print_paths(tmp);
+			printf("\n\n");
 		}
 	}
 }

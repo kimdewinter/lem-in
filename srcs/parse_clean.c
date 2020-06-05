@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   parse_input.c                                      :+:    :+:            */
+/*   parse_clean.c                                      :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/05/06 14:06:39 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 19:39:09 by lravier       ########   odam.nl         */
+/*   Created: 2020/06/04 20:18:40 by lravier       #+#    #+#                 */
+/*   Updated: 2020/06/04 20:19:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-ssize_t	parse_input(t_map *map, t_input_reader *input)
+void	free_room_names(char **rooms)
 {
 	size_t	i;
 
 	i = 0;
-	if (input != NULL && map != NULL)
+	while (rooms[i] != NULL)
 	{
-		if (parse_antmount(input, map, &i) == EXIT_SUCCESS &&
-			parse_rooms(input, map, &i) == EXIT_SUCCESS &&
-			parse_tubes(input, map, &i) == EXIT_SUCCESS &&
-			sanitize_input(map) == EXIT_SUCCESS)//add later: check error-meuk zoals heeft startroom links
-			{
-				return (EXIT_SUCCESS);
-			}
+		free (rooms[i]);
+		i++;
 	}
-	return (EXIT_FAILURE);
+	free (rooms);
 }

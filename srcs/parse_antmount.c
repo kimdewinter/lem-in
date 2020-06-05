@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/25 15:15:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 19:07:32 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,16 +45,15 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 	{
 		overflow = 0;
 		antmount = ft_atoi_ll(input->lines[*i], &overflow);
-		if (overflow)
-			return (ft_error("Number of ants too large to be represented\n",
-			EXIT_FAILURE));
+		if (overflow == 1)
+			return (parse_error(1));
 		if (antmount == 0)
-			return (ft_error("No ants found\n", EXIT_FAILURE));
+			return (parse_error(2));
 		map->antmount = antmount;
 		(*i)++;
 		return (EXIT_SUCCESS);
 	}
 	/* Could be anything wrong */
-	return (EXIT_FAILURE);//TODO: make return more descriptive
+	return (parse_error(3));//TODO: make return more descriptive
 	/* What is the biggest number of ants that is still legal?? */
 }

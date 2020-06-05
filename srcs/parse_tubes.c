@@ -6,11 +6,23 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/25 15:15:58 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:18:08 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
+
+static	void		set_spe_sps(t_map *map, t_room *room1, t_room *room2)
+{
+	if (room1 == map->start)
+		room2->sps = 1;
+	if (room1 == map->end)
+		room2->spe = 1;
+	if (room2 == map->start)
+		room1->sps = 1;
+	if (room2 == map->end)
+		room1->spe = 1;
+}
 
 static ssize_t		add_tubes(t_map *map, char **rooms)
 {
@@ -21,14 +33,15 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	room2 = (t_room *)search_ht(map->rooms, rooms[1]);
 	if (room1 == NULL || room2 == NULL)
 		return (EXIT_FAILURE);
-	if (add_neighbour(map->rooms, room1, rooms[1]) == EXIT_FAILURE)
+	if (add_neighbour(room1, room2) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (add_neighbour(map->rooms, room2, rooms[0]) == EXIT_FAILURE)
+	if (add_neighbour(room2, room1) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	set_spe_sps(map, room1, room2);
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
+static ssize_t		parse_tube(char *line, t_map *map, size_t *tubes)
 {
 	char 	**rooms;
 	int		dash;
@@ -43,22 +56,22 @@ static ssize_t		parse_tube(char *line, t_map *map, int *tubes)
 			dash += 1;
 	}
 	if (dash != 1)
-		return (ft_error("Invalid number of dashes in link line\n",
-		EXIT_FAILURE));
+		return (parse_error(4));
 	rooms = ft_strsplit(line, '-');
 	if (!rooms)
-		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
+		return (parse_error(5));
 	if (add_tubes(map, rooms) == EXIT_FAILURE)
-		return (ft_error("Error adding link\n", EXIT_FAILURE));
-	/* free rooms */
+		return (parse_error(6));
 	(*tubes)++;
+	free_room_names(rooms);
 	return (EXIT_SUCCESS);
 }
 
 ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 {
-	int	tubes;
+	size_t		tubes;
 
+	printf("Parse tube\n");
 	tubes = 0;
 	while (*i < input->num_lines)
 	{
@@ -70,6 +83,6 @@ ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 		(*i)++;
 	}
 	if (tubes == 0)
-		return (ft_error("No links provided\n", EXIT_FAILURE));
+		return (parse_error(7));
 	return (EXIT_SUCCESS);
 }

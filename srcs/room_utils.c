@@ -23,15 +23,19 @@ ssize_t			setup_room(t_room **dest,
 	room = (t_room *)malloc(sizeof(t_room));
 	if (room != NULL && name != NULL)
 	{
+		room->sps = 0;
+		room->spe = 0;
 		room->room_i = *num_room;
-		room->bitroom = NULL;
+		room->bitconj = NULL;
 		room->name = (char *)name;
 		room->xpos = xpos;
 		room->ypos = ypos;
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
 		room->ant = 0;
-		room->this_i = 0;
+		room->num_options = 0;
+		room->routes_size = 0;
+		room->routes = NULL;
 		*dest = room;
 		return (EXIT_SUCCESS);
 	}
@@ -81,22 +85,22 @@ static ssize_t	add_neighbour_grow(t_room *room)
 	return (EXIT_FAILURE);
 }//expands the room->neighbours char** array by 1
 
-ssize_t	add_neighbour(t_table *table, t_room *room, char *neighbour)
+ssize_t	add_neighbour(t_room *room, t_room *neighbour)
 {
 	if (room != NULL && neighbour != NULL)
 	{
 		if (room->neighbours_len == 0 && room->neighbours == NULL && add_neighbour_new(room) == EXIT_SUCCESS)
 		{
-			room->neighbours[room->neighbours_len - 1] = (t_room *)search_ht(table, neighbour);
+			room->neighbours[room->neighbours_len - 1] = neighbour;
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
-		}//handles when room->neighbours char** array is yet to be made
+		}//handles when room->neighbours t_room** array is yet to be made
 		else if (room->neighbours_len > 0 && room->neighbours != NULL && add_neighbour_grow(room) == EXIT_SUCCESS)
 		{
-			room->neighbours[room->neighbours_len - 1] = (t_room *)search_ht(table, neighbour);
+			room->neighbours[room->neighbours_len - 1] = neighbour;
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
-		}//handles when room->neighbours char** array needs to grow by 1
+		}//handles when room->neighbours t_room** array needs to grow by 1
 	}
 	return (EXIT_FAILURE);
 }

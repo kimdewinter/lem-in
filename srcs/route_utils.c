@@ -6,12 +6,12 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 16:44:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/05 13:14:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
-
+/*
 void		handle_error(t_map *map)
 {
 	size_t i;
@@ -162,4 +162,4 @@ size_t		init_routes(t_map *map)
 		}
 	}
 	return (EXIT_FAILURE);
-}
+}*/

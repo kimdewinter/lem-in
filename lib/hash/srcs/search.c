@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 20:37:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/30 17:05:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 14:36:07 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	*search_ht(t_table *ht, char *key)
 	t_entry *item;
 	int		i;
 
+	i = 0;
 	index = get_hash(key, ht, 0);
 	item = ht->entries[index];
 	while (item != NULL)
