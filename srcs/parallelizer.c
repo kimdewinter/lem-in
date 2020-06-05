@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 14:25:28 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/05 14:44:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ ssize_t			parallelize(t_map *map)
 {
 	size_t	numtocombi;
 
-	printf("In parallelize\n");
 	if (map == NULL)
 		return (handle_err_para(2, NULL));
 	if (parallelize_setup(map, &numtocombi) != EXIT_SUCCESS)
@@ -83,6 +82,10 @@ ssize_t			parallelize(t_map *map)
 			return (EXIT_FAILURE);
 		numtocombi--;
 	}
+	return (EXIT_SUCCESS);
+}
+
+/*
 	printf("parallelize exit succes\n");
 	for (size_t i = 0; i < map->best_combi_used; i++)
 	{
@@ -90,5 +93,4 @@ ssize_t			parallelize(t_map *map)
 			printf("%s ", map->best_combi[i]->route[j]->name);
 		printf("\n");	
 	}
-	return (EXIT_SUCCESS);
-}
+*/
