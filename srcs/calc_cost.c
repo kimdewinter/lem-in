@@ -6,11 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2020/06/04 14:07:04 by kim           ########   odam.nl         */
-=======
-/*   Updated: 2020/06/04 14:30:21 by lravier       ########   odam.nl         */
->>>>>>> new-pathfinder
+/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 

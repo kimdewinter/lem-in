@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 19:11:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 21:33:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 size_t		path_contains_conj(t_route *route, t_subpath *pt)
 {
-	if (((route->bitconj[pt->conj->room_i / BITFIELD_SIZE]) &
+	if (((route->bitroute[pt->conj->room_i / BITFIELD_SIZE]) &
 	((BITFIELD_TYPE)1 << (63 - pt->conj->room_i % BITFIELD_SIZE))) != 0)
 		return (1);
 	return (0);
@@ -27,7 +27,7 @@ t_route			*create_route(size_t len)
 	new = (t_route *)malloc(sizeof(t_route));
 	if (new)
 	{
-		new->bitconj = NULL;
+		new->bitroute = NULL;
 		new->len = len;
 		new->end = 0;
 		new->route = (t_room **)malloc(sizeof(t_room *) * len);
@@ -65,7 +65,7 @@ t_route			*copy_route(t_route *route, t_subpath *pt, t_map *map)
 	if (new)
 	{
 		new->last_conj = pt->conj;
-		if (copy_bitconj(&(new->bitconj), route->bitconj, map) == EXIT_SUCCESS)
+		if (copy_bitconj(&(new->bitroute), route->bitroute, map) == EXIT_SUCCESS)
 		{
 			if (pt->conj != map->end)
 				bite_route_add_conj(new, pt->conj);
@@ -193,6 +193,8 @@ size_t		build_paths(t_map *map)
 	{
 		solve_paths(rw, map, &active);
 		print_troute(rw);
+		map->routes = rw->routes;
+		map->num_routes = rw->num_paths;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

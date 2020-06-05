@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:44:28 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 21:27:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		bite_route_add_conj(t_route *route, const t_room *conj)
 {
-	route->bitconj[conj->room_i / BITFIELD_SIZE] |=
+	route->bitroute[conj->room_i / BITFIELD_SIZE] |=
 		(BITFIELD_TYPE)1 << (63 - conj->room_i % BITFIELD_SIZE);
 }
 
@@ -68,7 +68,7 @@ t_route			*setup_route(t_subpath *pt, t_map *map)
 		new->route = (t_room **)malloc(sizeof(t_room *) * pt->len);
 		if (new->route)
 		{
-			if (bite_alloc(&(new->bitconj), map) == EXIT_SUCCESS)
+			if (bite_alloc(&(new->bitroute), map) == EXIT_SUCCESS)
 			{
 				set_values_route(new, pt, map);
 				return (new);

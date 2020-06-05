@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/05 13:08:43 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef	struct	s_route
 	int				end;
 	size_t			len;
 	struct s_room	**route;
-	BITFIELD_TYPE	*bitconj;
+	BITFIELD_TYPE	*bitroute;
 }				t_route;
 
 typedef struct	s_routes_wrapper
@@ -62,7 +62,7 @@ typedef struct		s_room
 	size_t			routes_size;
 	t_subpath		**routes;
 	/* has routes to these conjunctions */
-	BITFIELD_TYPE		*bitconj;
+	BITFIELD_TYPE	*bitconj;
 }					t_room;
 
 typedef struct	s_queue

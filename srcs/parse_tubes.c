@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 20:18:08 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 {
 	size_t		tubes;
 
-	printf("Parse tube\n");
 	tubes = 0;
 	while (*i < input->num_lines)
 	{

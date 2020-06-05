@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/05 13:13:40 by kim           ########   odam.nl          #
+#    Updated: 2020/06/05 13:18:39 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,35 +14,35 @@ NAME=lem-in
 CC=gcc
 EXTRA=
 IFLAGS= -Wall -Wextra -Werror $(EXTRA)
-RAW=					main \
-						parse_antmount \
-						parse_clean	\
-						parse_input \
-						parse_error	\
-						parse_rooms \
-						parse_tubes \
-						parse_utils	\
-						read_input \
-						room_utils	\
-						sanitize_input \
-						debug	\
-						clean_route_finding	\
-						route_adding	\
-						route_setup	\
-						route_finder	\
-						biter1	\
-						biter2	\
-						calc_cost	\
-						combinatron \
-						err_paracom \
-						err_biter
-						route_finder_helper \
-						queue_utils	\
-						adjust_queue	\
-						calc_combinations \
-						parallelizer	\
-						build_paths_utils	\
-						build_paths
+RAW=	main\
+		parse_antmount\
+		parse_clean\
+		parse_input\
+		parse_error\
+		parse_rooms\
+		parse_tubes\
+		parse_utils\
+		read_input\
+		room_utils\
+		sanitize_input\
+		debug\
+		clean_route_finding\
+		route_adding\
+		route_setup\
+		route_finder\
+		biter1\
+		biter2\
+		calc_cost\
+		combinatron\
+		err_paracom\
+		err_biter\
+		route_finder_helper\
+		queue_utils\
+		adjust_queue\
+		calc_combinations\
+		parallelizer\
+		build_paths_utils\
+		build_paths
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
