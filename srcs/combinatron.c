@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 16:48:38 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/08 13:56:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ static ssize_t	combinatron_setup(t_map *map,
 		map->routes[parent->i]->bitroute, map) != EXIT_SUCCESS)
 		return (handle_err_comtron(0, "combinatron_setup\n"));
 	if (copy_n_routes(
-		&(child->routes), parent->routes, parent->num_routes) != EXIT_SUCCESS)
+		&(child->routes), parent->routes, parent->num_routes + 1) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	child->routes[parent->num_routes] = map->routes[parent->i];
 	child->i = parent->i + 1;

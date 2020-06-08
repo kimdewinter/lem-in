@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/08 13:38:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static size_t			ft_round_rest(long double rest)
 	rem = rest - fact;
 	if (rem > 0.5)
 	fact += 1;
+	printf("Rest %Lf\n", rest);
 	return (fact);
 }
 
@@ -76,9 +77,22 @@ size_t		calc_cost(size_t ants, const t_poscom *routes)
 	long double avg_ants;
 	long double	avg_paths;
 	long double rest;
+	size_t		result;
 
 	rest = 0.0;
+	printf("\nAnts: %lu\nRoutes:\n", ants);
+	for (size_t i = 0; i < routes->num_routes; i++)
+	{
+		for (size_t j = 0; j < routes->routes[i]->len; j++)
+			printf("%s ", routes->routes[i]->route[j]->name);
+		printf("\n");
+	}
+	printf("\n");
 	avg_ants = calc_ants_avg(ants, routes->num_routes);
 	avg_paths = calc_paths_avg(routes->num_routes, routes);
-	return (calc_rounds(&rest, avg_ants, avg_paths, routes));
+	printf("Ants avg %Lf\nPaths avg %Lf\n", avg_ants, avg_paths);
+	result = calc_rounds(&rest, avg_ants, avg_paths, routes);
+	printf("Result %lu\n", result);
+	printf("\n");
+	return (result);
 }
