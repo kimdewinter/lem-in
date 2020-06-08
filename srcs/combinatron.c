@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/08 13:56:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/08 15:21:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *candidate)
 
 	i = 0;
 	candidate_turns = calc_cost(map->antmount, candidate);
-	if (candidate_turns < map->best_combi_turns || map->best_combi_used == 0)
+	if (candidate_turns < map->best_combi_turns
+	|| (candidate_turns == map->best_combi_turns &&
+	candidate->num_routes < map->best_combi_len)
+	|| map->best_combi_used == 0)
 	{
 		while (i < candidate->num_routes)
 		{

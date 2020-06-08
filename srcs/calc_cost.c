@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/08 13:38:28 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/08 15:17:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,13 @@ static size_t			ft_round_rest(long double rest)
 	size_t		fact;
 	long double	rem;
 
-	fact = (long long)rest;
+	fact = (size_t)rest;
 	rem = rest - fact;
 	if (rem > 0.5)
-	fact += 1;
-	printf("Rest %Lf\n", rest);
-	return (fact);
+		fact += 1;
+	if (fact > 0)
+		return (1);
+	return (0);
 }
 
 static long double		calc_ants_avg(size_t ants, size_t num_paths)
@@ -43,7 +44,7 @@ static	long double		calc_paths_avg(size_t num_paths, const t_poscom *routes)
 	while (i < num_paths)
 	{
 		/* REMOVE - 1, THIS IS TEMPORARY FIX */
-		total += (long double)routes->routes[i]->len - 1;
+		total += (long double)routes->routes[i]->len;
 		i++;
 	}
 	return (total / (long double)num_paths);
@@ -55,18 +56,18 @@ avg_paths, const t_poscom *combi)
 	long double path_diff;
 	long double	ants_diff;
 	long double rounds;
-	t_route		*tmp;
 	size_t		i;
 
 	i = 0;
 	while (i < combi->num_routes)
 	{
-		tmp = combi->routes[i];
-		path_diff = (long double)tmp->len - avg_paths - 1;
+		path_diff = (long double)combi->routes[i]->len - avg_paths;
+		printf("Paths diff %Lf\n", path_diff);
 		ants_diff = avg_ants - path_diff;
-		rounds = (long double)tmp->len + ants_diff - 1.0;
-		if ((rounds - (size_t)rounds) > 0)
-			*rest += (rounds - (size_t)rounds);
+		printf("Ants diff %Lf\n", ants_diff);
+		rounds = (long double)combi->routes[i]->len + ants_diff - 1.0;
+		printf("Rounds %Lf\n\n", rounds);
+		*rest += (rounds - (size_t)rounds);
 		i++;
 	}
 	return (rounds + ft_round_rest(*rest));
