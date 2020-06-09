@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:45:15 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 19:53:02 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 12:37:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_subpath		*new_subpath(t_room *conj)
 	{
 		new->conj = conj;
 		new->len = 0;
+		new->path = NULL;
+		new->bitconj = NULL;
 		return (new);
 	}
 	return (NULL);
@@ -40,7 +42,7 @@ t_room *conj)
 	t_subpath	*new;
 
 	new = new_subpath(conj);
-	if (new != NULL)
+	if (new)
 	{
 		new->path = new_path(1);
 		if (new->path)

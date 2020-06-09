@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 13:13:10 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/09 12:04:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,32 +49,48 @@ size_t			add_paths_to_start(t_map *map)
 	return (EXIT_SUCCESS);
 }
 
+static void		init_values(size_t *len, t_list **iter, t_queue **curr,
+t_qwrap *queue)
+{
+	*curr = NULL;
+	*len = 0;
+	(*iter) = (*queue->queue);
+	if (*iter)
+		(*curr) = (t_queue *)((*iter)->content);
+}
+
+static void		increase_values(size_t *len, t_list **iter, t_queue **curr)
+{
+	*curr = NULL;
+	(*len)++;
+	(*iter) = (*iter)->next;
+	if (*iter)
+		*curr = (t_queue *)((*iter)->content);
+}
+
 size_t			execute_queue(t_qwrap *queue, t_map *map)
 {
 	t_list	*iter;
 	t_queue	*curr;
 	size_t	len;
 
-	iter = (*queue->queue);
-	if (iter)
-		curr = (t_queue *)iter->content;
-	len = 0;
+	init_values(&len, &iter, &curr, queue);
 	while (iter)
 	{
 		if (add_path_to_nb(curr) == EXIT_FAILURE)
+		{
+			free_queue(&queue);
 			return (EXIT_FAILURE);
-		len++;
-		iter = iter->next;
-		if (iter)
-			curr = (t_queue *)(iter->content);
-		else
+		}
+		increase_values(&len, &iter, &curr);
+		if (iter == NULL)
 		{
 			if (adjust_queue(map, queue, len) == EXIT_FAILURE)
+			{
+				free_queue(&queue);
 				return (EXIT_FAILURE);
-			len = 0;
-			iter = (*queue->queue);
-			if (iter)
-				curr = (t_queue *)(iter->content);
+			}
+			init_values(&len, &iter, &curr, queue);
 		}
 	}
 	free_queue(&queue);
