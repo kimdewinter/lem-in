@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:44:28 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/09 12:42:34 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void			set_values_route(t_route *new, t_subpath *pt, t_map *map)
 		bite_route_add_conj(new, pt->conj);
 	new->len = pt->len;
 	new->end = 0;
+	new->ants = 0;
 	new->last_conj = pt->conj;
 	if (pt->conj == map->end)
 		new->end = 1;

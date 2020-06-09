@@ -6,34 +6,38 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:51:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/09 12:46:23 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lem-in.h"
 
-void		free_subpath_path(t_room **path, size_t len)
-{
-	size_t	i;
+// void		free_subpath_path(t_room **path, size_t len)
+// {
+// 	size_t	i;
 
-	i = 0;
-	while (i < len)
-	{
-		free (path[i]);
-		i++;
-	}
-}
+// 	i = 0;
+// 	while (i < len)
+// 	{
+// 		if (path[i])
+// 			free (path[i]);
+// 		i++;
+// 	}
+// }
 
-void		free_subpath(t_subpath *pt)
-{
-	free_subpath_path(pt->path, pt->len);
-	free (pt->bitconj);
-}
+// void		free_subpath(t_subpath **pt)
+// {
+// 	if ((*pt)->bitconj)
+// 		free ((*pt)->bitconj);
+// 	// if ((*pt)->path)
+// 	// 	free_subpath_path((*pt)->path, (*pt)->len);
+// }
 
+/* Doesn't free subpaths because they are assigned to rooms by now */
 void		free_queue_item(t_list *curr)
 {
-	free (curr->content);
-	free (curr);
+	if (curr->content)
+		free ((t_queue *)curr->content);
 }
 
 void		del_queue(t_list **lst)
@@ -46,12 +50,22 @@ void		del_queue(t_list **lst)
 	{
 		prev = curr;
 		curr = curr->next;
-		free_queue_item(prev);
+		if (prev)
+		{
+			if (prev->content)
+				free_queue_item(prev);
+			free (prev);
+		}
 	}
 }
 
 void		free_queue(t_qwrap **rw)
 {
-	del_queue((*rw)->queue);
-	free (*rw);
+	if ((*rw)->queue)
+	{
+		del_queue((*rw)->queue);
+		free ((*rw)->queue);
+	}
+	if (*rw)
+		free (*rw);
 }

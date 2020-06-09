@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 14:44:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/08 13:55:48 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ ssize_t			copy_n_routes(t_route ***dst, t_route **src, const size_t n)
 	if (*dst == NULL)
 		return (handle_err_para(1, "copy_n_routes\n"));
 	i = 0;
-	while (i < n)
+	while (i < n - 1)
 	{
-		*dst[i] = src[i];
+		(*dst)[i] = src[i];
 		i++;
-	}
+	}	
 	return (EXIT_SUCCESS);
 }
 

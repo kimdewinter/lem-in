@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/04 20:47:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 11:57:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,11 +97,10 @@ size_t		setup_queue(t_qwrap **queue, t_map *map)
 			(*(*queue)->queue) = NULL;
 			if (map->end->sps == 1)
 				return (EXIT_SUCCESS);
-			if (add_nodes(queue, map) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			return (EXIT_SUCCESS);
+			if (add_nodes(queue, map) == EXIT_SUCCESS)
+				return (EXIT_SUCCESS);
 		}
-		free_queue(queue);
 	}
+	free_queue(queue);
 	return (EXIT_FAILURE);
 }

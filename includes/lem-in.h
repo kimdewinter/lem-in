@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/05 15:03:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/09 10:53:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ typedef	struct	s_route
 	struct s_room	*last_conj;
 	int				end;
 	size_t			len;
+	size_t			ants;
 	struct s_room	**route;
 	BITFIELD_TYPE	*bitroute;
 }				t_route;
@@ -209,6 +210,7 @@ void				print_queue(t_list **queue);
 void				print_path(t_subpath *pt);
 void				print_bitconj(BITFIELD_TYPE *arr, size_t len);
 void				print_troute(t_routes_wrapper *wroutes);
+void				print_solution(t_map *map);
 
 size_t				parse_error(size_t err_code);
 void				free_queue(t_qwrap **rw);
@@ -216,4 +218,9 @@ void				free_queue_item(t_list *curr);
 void				print_route_rooms(const t_route *rte,
 						const size_t *rte_index);
 void				print_n_routes(const t_route **rtes, const size_t n);
+
+void				calculate_ants_per_path(size_t ants, size_t *left_ants,
+						t_poscom *best);
+long double			calc_paths_avg(size_t num_paths, const t_poscom *routes);
+long double			calc_ants_avg(size_t ants, size_t num_paths);
 #endif
