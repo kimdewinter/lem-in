@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/08 15:12:20 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 10:53:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,4 +218,9 @@ void				free_queue_item(t_list *curr);
 void				print_route_rooms(const t_route *rte,
 						const size_t *rte_index);
 void				print_n_routes(const t_route **rtes, const size_t n);
+
+void				calculate_ants_per_path(size_t ants, size_t *left_ants,
+						t_poscom *best);
+long double			calc_paths_avg(size_t num_paths, const t_poscom *routes);
+long double			calc_ants_avg(size_t ants, size_t num_paths);
 #endif

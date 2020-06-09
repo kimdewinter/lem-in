@@ -43,8 +43,6 @@ int main(void)
 		find_routes(&map) == EXIT_SUCCESS &&
 		parallelize(&map) == EXIT_SUCCESS)
 		{
-			print_solution(&map);
-			debug(&map);
 			return (EXIT_SUCCESS);
 		}
 	return (EXIT_FAILURE);
