@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 13:33:05 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/09 14:06:01 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,14 @@ typedef struct		s_poscom
 ** it is recursively used by the parallelizer to find valid route combinations
 */
 
+typedef struct		s_best
+{
+	struct s_route	**combi;
+	size_t			used;
+	size_t			len;
+	size_t			turns;
+}					t_best;
+
 typedef struct		s_map
 {
 	ssize_t			antmount;
@@ -101,10 +109,7 @@ typedef struct		s_map
 	struct s_route	**routes;
 	size_t			num_routes;
 	size_t			bitfield_len;
-	struct s_route	**best_combi;
-	size_t			best_combi_used;
-	size_t			best_combi_len;
-	size_t			best_combi_turns;
+	struct s_best	solution;
 }					t_map;
 
 typedef struct	s_input_reader
@@ -211,8 +216,6 @@ void				print_route_rooms(const t_route *rte,
 						const size_t *rte_index);
 void				print_n_routes(const t_route **rtes, const size_t n);
 
-void				calculate_ants_per_path(size_t ants, size_t *left_ants,
-						t_poscom *best);
-long double			calc_paths_avg(size_t num_paths, const t_poscom *routes);
-long double			calc_ants_avg(size_t ants, size_t num_paths);
+void				calculate_ants_per_path(size_t ants, t_best *best);
+
 #endif

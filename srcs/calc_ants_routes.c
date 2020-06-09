@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 10:44:07 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 11:44:29 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 14:07:57 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ static size_t			calc_missed_ants(long double rest)
 	return (fact);
 }
 
-static size_t	calc_ants(long double *rest, long double avg_ants, long double
-avg_paths, const t_poscom *combi)
+static size_t	calc_ants(long double *rest,
+							long double avg_ants,
+							long double avg_paths,
+							const t_best *combi)
 {
 	long double path_diff;
 	long double	ants_diff;
@@ -33,28 +35,65 @@ avg_paths, const t_poscom *combi)
 	size_t		i;
 
 	i = 0;
-	while (i < combi->num_routes)
+	while (i < combi->len)
 	{
-		path_diff = (long double)combi->routes[i]->len - avg_paths;
+		path_diff = (long double)combi->combi[i]->len - avg_paths;
 		ants_diff = avg_ants - path_diff;
-		rounds = (long double)combi->routes[i]->len + ants_diff - 1.0;
-		combi->routes[i]->ants = (size_t)ants_diff;
+		rounds = (long double)combi->combi[i]->len + ants_diff - 1.0;
+		combi->combi[i]->ants = (size_t)ants_diff;
 		*rest += (rounds - (size_t)rounds);
 		i++;
 	}
 	return (calc_missed_ants(*rest));
 }
 
-void		calculate_ants_per_path(size_t ants, size_t *ants_left,
-t_poscom *best)
+static void	divide_left_ants(t_best *combi, size_t ants_left)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < ants_left)
+	{
+		combi->combi[i]->ants += 1;
+		i++;
+	}
+}
+
+static long double		calc_ants_avg(size_t ants, size_t num_paths)
+{
+	long double	result;
+
+	result = (long double)ants / (long double)num_paths;
+	return (result);
+}
+
+static long double		calc_paths_avg(size_t num_paths, const t_best *combi)
+{
+	size_t		i;
+	long double total;
+
+	i = 0;
+	total = 0.0;
+	while (i < num_paths)
+	{
+		/* REMOVE - 1, THIS IS TEMPORARY FIX */
+		total += (long double)combi->combi[i]->len;
+		i++;
+	}
+	return (total / (long double)num_paths);
+}
+
+void		calculate_ants_per_path(size_t ants, t_best *best)
 {
 	long double avg_ants;
 	long double avg_paths;
 	long double rest;
+	size_t		ants_left;
 
 	rest = 0.0;
-	avg_paths = calc_paths_avg(best->num_routes, best);
-	avg_ants = calc_ants_avg(ants, best->num_routes);
-	*ants_left = calc_ants(&rest, avg_ants, avg_paths, best);
-	printf("%lu\n", *ants_left);
+	avg_paths = calc_paths_avg(best->len, best);
+	avg_ants = calc_ants_avg(ants, best->len);
+	ants_left = calc_ants(&rest, avg_ants, avg_paths, best);
+	divide_left_ants(best, ants_left);
+	printf("ANTS LEFT %lu\n", ants_left);
 }

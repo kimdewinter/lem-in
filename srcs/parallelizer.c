@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/08 13:55:48 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 14:04:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,18 +53,18 @@ static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
 	size_t	i;
 
 	*numtocombi = max_parallels(map);
-	map->best_combi = (t_route **)malloc(sizeof(t_route *) * map->num_routes);
-	if (map->best_combi == NULL)
+	map->solution.combi = (t_route **)malloc(sizeof(t_route *) * map->num_routes);
+	if (map->solution.combi == NULL)
 		return (handle_err_para(1, "parallelize_setup\n"));
-	map->best_combi_len = map->num_routes;
+	map->solution.len = map->num_routes;
 	i = 0;
 	while (i < map->num_routes)
 	{
-		map->best_combi[i] = NULL;
+		map->solution.combi[i] = NULL;
 		i++;
 	}
-	map->best_combi_used = 0;
-	map->best_combi_turns = 0;
+	map->solution.used = 0;
+	map->solution.turns = 0;
 	return (EXIT_SUCCESS);
 }
 
@@ -87,10 +87,10 @@ ssize_t			parallelize(t_map *map)
 
 /*
 	printf("parallelize exit succes\n");
-	for (size_t i = 0; i < map->best_combi_used; i++)
+	for (size_t i = 0; i < map->solution.used; i++)
 	{
-		for (size_t j = 0; j < map->best_combi[i]->len; j++)
-			printf("%s ", map->best_combi[i]->route[j]->name);
+		for (size_t j = 0; j < map->solution.combi[i]->len; j++)
+			printf("%s ", map->solution.combi[i]->route[j]->name);
 		printf("\n");	
 	}
 */

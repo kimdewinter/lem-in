@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/08 15:18:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 13:42:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,11 +173,11 @@ void		print_solution(t_map *map)
 	size_t	i;
 
 	i = 0;
-	printf("SOLUTION\nrounds: %lu\n", map->best_combi_turns);
-	while (i < map->best_combi_used)
+	printf("SOLUTION\nrounds: %lu\n", map->solution.turns);
+	while (i < map->solution.used)
 	{
-		printf("%lu\n", map->best_combi[i]->ants);
-		print_route_rooms(map->best_combi[i], NULL);
+		printf("%lu\n", map->solution.combi[i]->ants);
+		print_route_rooms(map->solution.combi[i], NULL);
 		i++;
 	}
 }

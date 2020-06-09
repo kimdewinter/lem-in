@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/08 15:21:30 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 13:42:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,27 +40,27 @@ static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *candidate)
 
 	i = 0;
 	candidate_turns = calc_cost(map->antmount, candidate);
-	if (candidate_turns < map->best_combi_turns
-	|| (candidate_turns == map->best_combi_turns &&
-	candidate->num_routes < map->best_combi_len)
-	|| map->best_combi_used == 0)
+	if (candidate_turns < map->solution.turns
+	|| (candidate_turns == map->solution.turns &&
+	candidate->num_routes < map->solution.len)
+	|| map->solution.used == 0)
 	{
 		while (i < candidate->num_routes)
 		{
-			if (i >= map->best_combi_len)
+			if (i >= map->solution.len)
 				return (handle_err_comtron(2, "combinatron_commit_combi\n"));
-			map->best_combi[i] = candidate->routes[i];
+			map->solution.combi[i] = candidate->routes[i];
 			i++;
 		}
-		while (i < map->best_combi_used)
+		while (i < map->solution.used)
 		{
-			if (i >= map->best_combi_len)
+			if (i >= map->solution.len)
 				return (handle_err_comtron(2, "combinatron_commit_combi\n"));
-			map->best_combi[i] = NULL;
+			map->solution.combi[i] = NULL;
 			i++;
 		}
-		map->best_combi_used = candidate->num_routes;
-		map->best_combi_turns = candidate_turns;
+		map->solution.used = candidate->num_routes;
+		map->solution.turns = candidate_turns;
 	}
 	return (EXIT_SUCCESS);
 }

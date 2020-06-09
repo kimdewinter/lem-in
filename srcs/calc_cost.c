@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 11:17:06 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 14:05:51 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static size_t			ft_round_rest(long double rest)
 	return (0);
 }
 
-long double		calc_ants_avg(size_t ants, size_t num_paths)
+static long double		calc_ants_avg(size_t ants, size_t num_paths)
 {
 	long double	result;
 
@@ -35,7 +35,7 @@ long double		calc_ants_avg(size_t ants, size_t num_paths)
 	return (result);
 }
 
-long double		calc_paths_avg(size_t num_paths, const t_poscom *routes)
+static long double		calc_paths_avg(size_t num_paths, const t_poscom *routes)
 {
 	size_t		i;
 	long double total;
