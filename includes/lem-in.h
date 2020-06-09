@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 10:53:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/09 13:33:05 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,14 +91,6 @@ typedef struct		s_poscom
 ** poscom means "possible combination",
 ** it is recursively used by the parallelizer to find valid route combinations
 */
-
-typedef struct		s_combi
-{
-	struct s_route	**routes;
-	BITFIELD_TYPE	*bitroutes;
-	size_t			num_routes;
-	size_t			turns;
-}					t_combi;
 
 typedef struct		s_map
 {
