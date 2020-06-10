@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/09 10:52:47 by lravier       ########   odam.nl          #
+#    Updated: 2020/06/10 12:55:45 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ RAW=	main\
 		parallelizer\
 		build_paths_utils\
 		build_paths	\
-		calc_ants_routes
+		calc_ants_routes \
+		outputter
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

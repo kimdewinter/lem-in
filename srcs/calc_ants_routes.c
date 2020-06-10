@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 10:44:07 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 14:07:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 12:54:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ static long double		calc_paths_avg(size_t num_paths, const t_best *combi)
 	total = 0.0;
 	while (i < num_paths)
 	{
-		/* REMOVE - 1, THIS IS TEMPORARY FIX */
 		total += (long double)combi->combi[i]->len;
 		i++;
 	}

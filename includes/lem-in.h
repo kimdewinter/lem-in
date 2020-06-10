@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 14:06:01 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 12:58:04 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,5 +217,5 @@ void				print_route_rooms(const t_route *rte,
 void				print_n_routes(const t_route **rtes, const size_t n);
 
 void				calculate_ants_per_path(size_t ants, t_best *best);
-
+void				output_result(t_input_reader *input, t_map *map);
 #endif
