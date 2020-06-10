@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 13:54:50 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/10 16:11:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 17:33:30 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,26 +98,41 @@ size_t *curr_ant)
 			}
 			else
 				execute_route(routes[j], 0);
+			if (j + 1 < map->solution.used)
+				ft_printf(" ");
 		}
 		j++;
 	}
-}// this will call roundputter.c once for each route
+}
+
+void		print_input(t_input_reader *input)
+{
+	size_t	i;
+	
+	i = 0;
+	while (i < input->num_lines)
+	{
+		ft_printf("%s\n", input->lines[i]);
+		i++;
+	}
+	ft_printf("\n");
+}
 
 ssize_t		output_result(t_input_reader *input, const t_map *map)
 {
 	t_routeput	**routes;
-	// size_t		next_ant;
 	size_t		i;
 	size_t		curr_ant;
 
-	(void)input;
 	i = 0;
 	curr_ant = 1;
 	calculate_ants_per_path(map->antmount, (t_best *)&(map->solution));
 	if (setup_all_routeputs(&routes, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	print_input(input);
 	while (i < map->solution.turns)
 	{
+		// printf("curr ant %lu\n", curr_ant);
 		execute_round(routes, map, &curr_ant);
 		i++;
 		ft_printf("\n");

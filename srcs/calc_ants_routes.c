@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 10:44:07 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/10 16:10:17 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,4 @@ void		calculate_ants_per_path(size_t ants, t_best *best)
 	avg_ants = calc_ants_avg(ants, best->used);
 	ants_left = calc_ants(&rest, avg_ants, avg_paths, best);
 	divide_left_ants(best, ants_left);
-	printf("ANTS LEFT %lu\n", ants_left);
 }

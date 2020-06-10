@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/05 13:11:03 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ static size_t		ft_factorial(size_t	n)
 {
 	if (n == 0)
 		return (1);
-	printf("N: %lu\n", n);
 	return (n * ft_factorial(n - 1));
 }
 

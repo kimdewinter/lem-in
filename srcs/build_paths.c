@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 19:11:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 12:47:06 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,11 +188,10 @@ size_t		build_paths(t_map *map)
 	size_t				active;
 
 	active = 0;
-	if (setup_routes(&rw, map) == EXIT_SUCCESS
-	&& setup_starting_paths(rw, map, &active) == EXIT_SUCCESS)
+	if (setup_routes(&rw, map) == EXIT_SUCCESS &&
+	setup_starting_paths(rw, map, &active) == EXIT_SUCCESS &&
+	solve_paths(rw, map, &active) == EXIT_SUCCESS)
 	{
-		solve_paths(rw, map, &active);
-		print_troute(rw);
 		map->routes = rw->routes;
 		map->num_routes = rw->num_paths;
 		free (rw);

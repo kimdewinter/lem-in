@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/09 13:42:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,6 @@ ssize_t			combinatron(t_map *map,
 
 	if (combinatron_setup(map, parent, &child, rtes_to_combi) != EXIT_SUCCESS)
 		return (EXIT_FAILURE);
-	if (child.num_routes > 0 && child.num_routes == rtes_to_combi)
-		print_n_routes((const t_route **)child.routes, child.num_routes);//DEBUG: prints valid combinations
 	if (child.num_routes == rtes_to_combi)
 	{
 		if (combinatron_commit_combi(map, &child) == EXIT_FAILURE)
