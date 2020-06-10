@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/10 12:58:04 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/10 16:11:20 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,15 @@ typedef struct	s_input_reader
 	size_t			num_lines;
 }					t_input_reader;
 
+typedef struct	s_routeput
+{
+	char			**rooms;
+	size_t			rooms_len;
+	size_t			*ants;
+	size_t			ants_received;
+	size_t			finished;
+}				t_routeput;
+
 ssize_t				read_input(t_input_reader *input);
 int					get_next_line(const int fd, char **line);
 ssize_t				parse_input(t_map *map, t_input_reader *input);
@@ -199,8 +208,17 @@ size_t				increase_routes_capacity(t_routes_wrapper *rw);
 size_t				build_paths(t_map *map);
 void				bite_route_add_conj(t_route *route, const t_room *conj);
 
+// Outputting
+ssize_t				output_result(t_input_reader *input, const t_map *map);
+void				calculate_ants_per_path(size_t ants, t_best *best);
+size_t				parse_error(size_t err_code);
+void				free_queue(t_qwrap **rw);
+void				free_queue_item(t_list *curr);
+void				execute_route(t_routeput *route, const size_t new_ant);
+
 //the following are merely functions for debugging:
 void				debug(t_map *map);
+void				print_routeput(t_routeput **routes, size_t len);
 void				print_bitroute(t_map *map);
 void				print_bitroom(t_map *map, t_room *room);
 void				print_queue(t_list **queue);
@@ -209,13 +227,9 @@ void				print_bitconj(BITFIELD_TYPE *arr, size_t len);
 void				print_troute(t_routes_wrapper *wroutes);
 void				print_solution(t_map *map);
 
-size_t				parse_error(size_t err_code);
-void				free_queue(t_qwrap **rw);
-void				free_queue_item(t_list *curr);
+
 void				print_route_rooms(const t_route *rte,
 						const size_t *rte_index);
 void				print_n_routes(const t_route **rtes, const size_t n);
 
-void				calculate_ants_per_path(size_t ants, t_best *best);
-void				output_result(t_input_reader *input, t_map *map);
 #endif

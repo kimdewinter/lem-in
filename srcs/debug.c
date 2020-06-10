@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 13:42:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 16:10:17 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,45 @@
 // 		i++;
 // 	}
 // }
+static void	print_names(char **names, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_printf("%s ", names[i]);
+		i++;
+	}
+	printf("\n");
+}
+
+static void	print_ants(size_t *ants, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_printf("%lu ", ants[i]);
+		i++;
+	}
+	printf("\n");	
+}
+
+void	print_routeput(t_routeput **routes, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		print_names(routes[i]->rooms, routes[i]->rooms_len);
+		print_ants(routes[i]->ants, routes[i]->rooms_len);
+		i++;
+	}
+}
+
 void	print_bitconj(uint64_t *arr, size_t len)
 {
 	size_t	i;

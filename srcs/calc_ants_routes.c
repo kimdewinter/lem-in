@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 10:44:07 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/10 12:54:15 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/10 16:10:17 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static size_t	calc_ants(long double *rest,
 	size_t		i;
 
 	i = 0;
-	while (i < combi->len)
+	while (i < combi->used)
 	{
 		path_diff = (long double)combi->combi[i]->len - avg_paths;
 		ants_diff = avg_ants - path_diff;
@@ -90,8 +90,8 @@ void		calculate_ants_per_path(size_t ants, t_best *best)
 	size_t		ants_left;
 
 	rest = 0.0;
-	avg_paths = calc_paths_avg(best->len, best);
-	avg_ants = calc_ants_avg(ants, best->len);
+	avg_paths = calc_paths_avg(best->used, best);
+	avg_ants = calc_ants_avg(ants, best->used);
 	ants_left = calc_ants(&rest, avg_ants, avg_paths, best);
 	divide_left_ants(best, ants_left);
 	printf("ANTS LEFT %lu\n", ants_left);
