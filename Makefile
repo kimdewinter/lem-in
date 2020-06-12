@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl          #
+#    Updated: 2020/06/12 14:50:22 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -64,7 +64,7 @@ all:$(NAME)
 	@echo "Compiling $(LIB_NAME)"
 	@make -s -C $(LIB_DIR)
 	@echo "Compiling $^ executable"
-	@$(CC) $(IFLAGS) -o $(NAME) $(OBJS) $(HEADER) $(LIB)
+	@$(CC) $(IFLAGS) -o $(NAME) $(OBJS) -I $(HEADER) $(LIB)
 
 $(NAME):$(OBJS)
 

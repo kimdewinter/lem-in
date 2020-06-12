@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:44:28 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 12:42:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/12 14:33:24 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ size_t	increase_routes_capacity(t_routes_wrapper *rw)
 	size_t	new_size;
 	size_t	i;
 
+	i = 0;
 	new_size = rw->size * 2;
 	new = (t_route **)malloc(sizeof(t_route *) * new_size);
 	if (!new)

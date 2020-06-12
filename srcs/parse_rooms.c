@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 20:36:00 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/12 14:31:59 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@ size_t *num_room)
 	size_t	posx;
 	size_t	posy;
 
+	words = NULL;
 	if (is_room(input->lines[*i + 1]) == 1)//NOTE: this does not allow comments between ##start and the room-line that comes after; correct?
 	{
 		words = ft_strsplit(input->lines[*i + 1], ' ');

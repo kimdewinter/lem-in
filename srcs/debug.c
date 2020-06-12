@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/12 14:32:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	print_bitconj(uint64_t *arr, size_t len)
 	printf("Bitconj\n");
 	while (i < len)
 	{
-		printf("%lu \n", arr[i]);
+		printf("%llu \n", arr[i]);
 		i++;
 	}
 
