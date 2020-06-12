@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/21 13:16:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/12 13:05:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ static ssize_t	resize_buffer(t_input_reader *input)
 	new_lines = (char **)malloc(sizeof(char *) * input->size);
 	if (!new_lines)
 		return (EXIT_FAILURE);
+	ft_bzero(new_lines, input->size * sizeof(char *));
 	while (i < input->num_lines)
 	{
 		new_lines[i] = input->lines[i];
@@ -35,10 +36,8 @@ static ssize_t	resize_buffer(t_input_reader *input)
 static ssize_t		copy_input(t_input_reader *input)
 {
 	int		read;
-	char	*line;
 
 	read = 1;
-	line = NULL;
 	while (read > 0)
 	{
 		if (input->num_lines == (input->size - 1))
@@ -46,16 +45,11 @@ static ssize_t		copy_input(t_input_reader *input)
 			if (resize_buffer(input) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		read = get_next_line(STDIN_FILENO, &line);
+		read = get_next_line(STDIN_FILENO, &input->lines[input->num_lines]);
 		if (read < 0)
 			return (ft_error("Error reading input\n", EXIT_FAILURE));
 		if (read > 0)
-		{
-			input->lines[input->num_lines] = line;
 			input->num_lines++;
-		}
-		if (line)
-			line = NULL;
 	}
 	if (read < 0)
 		return (ft_error("Error reading input\n", EXIT_FAILURE));
@@ -67,6 +61,7 @@ static ssize_t	setup_input(t_input_reader *input)
 	input->lines = (char **)malloc(sizeof(char *) * LINE_BUFF_SIZE);
 	if (!input->lines)
 		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
+	ft_bzero(input->lines, LINE_BUFF_SIZE * sizeof(char *));
 	input->num_lines = 0;
 	input->size = LINE_BUFF_SIZE;
 	return (EXIT_SUCCESS);
