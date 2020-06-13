@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 20:59:39 by lravier       #+#    #+#                  #
-#    Updated: 2020/04/30 17:01:05 by lravier       ########   odam.nl          #
+#    Updated: 2020/06/12 17:07:44 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,12 +22,14 @@ HEADER = includes/hashing.h
 .PHONY: all clean fclean re
 
 all: $(NAME)
+
+$(NAME):$(OBJS) $(HEADER)
 	@ar rcs $(NAME) $(OSRCS)
 
 obj:
 	mkdir $@
 
-obj/%.o: srcs/%.c $(HEADER) | obj
+obj/%.o: srcs/%.c | obj
 	$(CC) $(IFLAGS) -c $< -o $@
 
 clean_obj:

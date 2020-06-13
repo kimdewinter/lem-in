@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 13:45:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/13 12:51:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ ssize_t	bite_alloc(BITFIELD_TYPE **dst, const t_map *map)
 	i = 0;
 	while (i < map->bitfield_len)
 	{
-		*dst[i] = (BITFIELD_TYPE)0;
+		(*dst)[i] = (BITFIELD_TYPE)0;
 		i++;
 	}
 	return (EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/12 14:31:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/13 13:57:18 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static ssize_t	add_room(const char *line, t_map *map, size_t *num_room)
 
 static size_t	setup_bitconj_rooms(t_map *map)
 {
-	int		i;
+	unsigned long long	i;
 	t_table	*table;
 	t_room	*tmp;
 
@@ -117,7 +117,10 @@ ssize_t	parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 			{
 				map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
 				if (setup_bitconj_rooms(map) == EXIT_SUCCESS)
+				{
+					debug(map);
 					return (EXIT_SUCCESS);
+				}
 				return (parse_error(14));
 			}
 			else if (is_room(input->lines[*i]) == 1)

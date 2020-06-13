@@ -20,14 +20,14 @@ static ssize_t	setup_map(t_map *map)
 		map->start = NULL;
 		map->end = NULL;
 		map->routes = NULL;
-		map->rooms = create_ht(50);
 		map->num_routes = 0;
-		if (map->rooms != NULL)
-			return (EXIT_SUCCESS);
 		map->solution.len = 0;
 		map->solution.combi = NULL;
 		map->solution.used = 0;
 		map->solution.turns = 0;
+		map->rooms = create_ht(50);
+		if (map->rooms != NULL)
+			return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }

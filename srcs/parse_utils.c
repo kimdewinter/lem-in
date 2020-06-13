@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 20:37:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/12 15:17:03 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,11 @@ size_t	is_antmount(char *line)
 
 size_t	is_room(char *line)
 {
-	if (ft_isalnum(*line) == 1 && *line != ' ' && *line != '\n'
-			&& *line != 'L' && *line != '#')
+	// if (ft_isalnum(*line) == 1 && *line != ' ' && *line != '\n'
+	// 		&& *line != 'L' && *line != '#')
+	if (*line != 'L' && *line != '#' && ft_isspace(*line) == 0)
 	{
-		while (ft_isalnum(*line) == 1 && *line != ' ' && *line != '\n')
+		while (*line != 'L' && *line != '#' && ft_isspace(*line) == 0)
 			line++;
 		if (*line == ' ')
 			line++;

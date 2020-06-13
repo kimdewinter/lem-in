@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/12 14:32:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/13 12:53:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	print_bitconj(uint64_t *arr, size_t len)
 	printf("Bitconj\n");
 	while (i < len)
 	{
-		printf("%llu \n", arr[i]);
+		printf("%lu \n", arr[i]);
 		i++;
 	}
 
@@ -164,7 +164,8 @@ void	debug(t_map *map)
 		ft_printf("START: %s\n", map->start->name);
 	if (map->end)
 		ft_printf("END: %s\n", map->end->name);
-	for (int i = 0; i < table->size; i++)
+	printf("table size %lld\n", table->size);
+	for (unsigned long long i = 0; i < table->size; i++)
 	{
 		if (table->entries[i] != NULL)
 		{
