@@ -34,8 +34,8 @@ static ssize_t	setup_map(t_map *map)
 
 int main(void)
 {
-	t_map	map;
 	t_input_reader	input;
+	t_map	map;
 
 	if (setup_map(&map) == EXIT_SUCCESS &&
 		read_input(&input) == EXIT_SUCCESS &&

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/12 14:32:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/23 15:19:42 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	print_bitconj(uint64_t *arr, size_t len)
 	printf("Bitconj\n");
 	while (i < len)
 	{
-		printf("%llu \n", arr[i]);
+		printf("%lu \n", arr[i]);
 		i++;
 	}
 
@@ -87,8 +87,9 @@ void	print_troute(t_routes_wrapper *wroutes)
 	{
 		j = 0;
 		printf("Route:\n");
-		printf("Len %lu\nEnd: %d\nConj %s\nAnts %lu\n", wroutes->routes[i]->len, wroutes->routes[i]->end,
-		wroutes->routes[i]->last_conj->name, wroutes->routes[i]->ants);
+		printf("Len %lu\nEnd: %d\nConj %s\nAnts %lu\n", wroutes->routes[i]->len,
+			wroutes->routes[i]->end, wroutes->routes[i]->last_conj->name,
+			wroutes->routes[i]->ants);
 		print_bitconj(wroutes->routes[i]->bitroute, 1);
 		while (j < wroutes->routes[i]->len)
 		{

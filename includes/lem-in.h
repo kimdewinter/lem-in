@@ -6,127 +6,131 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/10 16:57:45 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/23 15:28:00 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
+
 # define LINE_BUFF_SIZE 10000
 # define INIT_ROUTE_PERC 25
 # define ROUTE_LEN_INCR_MULT 2
 # define BITFIELD_TYPE uint64_t
 # define BITFIELD_SIZE 64
+
 # include "../lib/lib.h"
 # include <limits.h>
 # include <stdint.h>
 
-struct s_room;
+struct					s_room;
 
-typedef struct	s_subpath
+struct					s_route;
+
+typedef struct			s_routeput
 {
+	char				**rooms;
+	size_t				rooms_len;
+	size_t				*ants;
+	size_t				ants_received;
+	size_t				finished;
+}						t_routeput;
+
+typedef struct			s_best
+{
+	struct s_route		**combi;
+	size_t				used;
 	size_t				len;
-	struct s_room		*conj;
-	struct s_room		**path;
-	BITFIELD_TYPE		*bitconj;
-}				t_subpath;
+	size_t				turns;
+}						t_best;
 
-typedef	struct	s_route
+typedef struct			s_poscom
 {
-	struct s_room	*last_conj;
-	int				end;
-	size_t			len;
-	size_t			ants;
-	struct s_room	**route;
-	BITFIELD_TYPE	*bitroute;
-}				t_route;
+	struct s_route		**routes;
+	size_t				num_routes;
+	BITFIELD_TYPE		*bitroutes;
+	size_t				i;
+}						t_poscom;
+/*
+** "poscom" means "possible combination",
+** it is recursively used by the parallelizer to find valid route combinations
+** "i" indexes where in map->routes it is, only ever moves forward
+*/
 
-typedef struct	s_routes_wrapper
+typedef	struct			s_route
 {
-	size_t			size;
-	size_t			num_paths;
-	struct s_route	**routes;
-}				t_routes_wrapper;
+	struct s_room		*last_conj;
+	int					end;
+	size_t				len;
+	size_t				ants;
+	struct s_room		**route;
+	BITFIELD_TYPE		*bitroute;
+}						t_route;
 
-typedef struct		s_room
+typedef struct			s_routes_wrapper
 {
-	int				sps;
-	int				spe;
-	char			*name;
-	ssize_t			xpos;//might become depecrated
-	ssize_t			ypos;//might become depecrated
-	size_t			ant;//might become depecrated
-	struct s_room	**neighbours;
-	size_t			neighbours_len;
-	size_t			room_i;
-	size_t			num_options;
-	size_t			routes_size;
-	t_subpath		**routes;
-	/* has routes to these conjunctions */
-	BITFIELD_TYPE	*bitconj;
-}					t_room;
+	size_t				size;
+	size_t				num_paths;
+	struct s_route		**routes;
+}						t_routes_wrapper;
 
-typedef struct	s_queue
+typedef struct			s_queue
 {
 	int					new_conj;
 	struct s_subpath	*path;
 	struct s_room		*dst;
 	struct s_room		*src;
-}				t_queue;
+}						t_queue;
 
-typedef struct	s_qwrap
+typedef struct			s_qwrap
 {
-	t_list			**queue;
-	t_list			*last;
-}				t_qwrap;
+	t_list				**queue;
+	t_list				*last;
+}						t_qwrap;
 
-typedef struct		s_poscom
+typedef struct			s_subpath
 {
-	struct s_route	**routes;
-	size_t			num_routes;
-	BITFIELD_TYPE	*bitroutes;
-	size_t			i;//this is where in map->routes it is, it only ever moves forward
-}					t_poscom;
-/*
-** poscom means "possible combination",
-** it is recursively used by the parallelizer to find valid route combinations
-*/
+	size_t				len;
+	struct s_room		*conj;
+	struct s_room		**path;
+	BITFIELD_TYPE		*bitconj;
+}						t_subpath;
 
-typedef struct		s_best
+typedef struct			s_room
 {
-	struct s_route	**combi;
-	size_t			used;
-	size_t			len;
-	size_t			turns;
-}					t_best;
+	int					sps;
+	int					spe;
+	char				*name;
+	ssize_t				xpos;
+	ssize_t				ypos;
+	size_t				ant;
+	struct s_room		**neighbours;
+	size_t				neighbours_len;
+	size_t				room_i;
+	size_t				num_options;
+	size_t				routes_size;
+	t_subpath			**routes;
+	BITFIELD_TYPE		*bitconj;
+}						t_room;
 
-typedef struct		s_map
+typedef struct			s_map
 {
-	ssize_t			antmount;
-	t_room			*start;
-	t_room			*end;
-	struct s_table	*rooms;
-	struct s_route	**routes;
-	size_t			num_routes;
-	size_t			bitfield_len;
-	struct s_best	solution;
-}					t_map;
+	ssize_t				antmount;
+	t_room				*start;
+	t_room				*end;
+	struct s_table		*rooms;
+	struct s_route		**routes;
+	size_t				num_routes;
+	size_t				bitfield_len;
+	struct s_best		solution;
+}						t_map;
 
-typedef struct	s_input_reader
+typedef struct			s_input_reader
 {
-	size_t			size;
-	char			**lines;
-	size_t			num_lines;
-}					t_input_reader;
-
-typedef struct	s_routeput
-{
-	char			**rooms;
-	size_t			rooms_len;
-	size_t			*ants;
-	size_t			ants_received;
-	size_t			finished;
-}				t_routeput;
+	size_t				size;
+	char				**lines;
+	size_t				num_lines;
+}						t_input_reader;
 
 ssize_t				read_input(t_input_reader *input);
 int					get_next_line(const int fd, char **line);
@@ -170,7 +174,6 @@ ssize_t				handle_err_biter(size_t err_code, const char *line);
 // BITFIELD-TOOLKIT:
 ssize_t				bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t				bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
-// ssize_t				bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map);
 ssize_t				bite_bitroute_copy(BITFIELD_TYPE *dst,
 						const BITFIELD_TYPE *src,
 						const t_map *map);

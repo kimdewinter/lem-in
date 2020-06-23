@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/05 13:10:04 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/23 15:27:51 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ ssize_t			bite_bitroute_copy(BITFIELD_TYPE *dst,
 	}
 	return (EXIT_SUCCESS);
 }
-/*
-** copies a bitfield-form route
-*/
 
 ssize_t			bite_bitroute_merge(BITFIELD_TYPE *dst,
 									const BITFIELD_TYPE *src1,
@@ -47,25 +44,10 @@ ssize_t			bite_bitroute_merge(BITFIELD_TYPE *dst,
 	}
 	return (EXIT_SUCCESS);
 }
-/*
-** copies a bitfield-form route
-*/
 
-ssize_t			bite_bitroute_bzero(BITFIELD_TYPE *bitroute, const t_map *map)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < map->bitfield_len)
-	{
-		bitroute[i] = (BITFIELD_TYPE)0;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-size_t			copy_bitconj(BITFIELD_TYPE **dst, BITFIELD_TYPE *src,
-t_map *map)
+size_t			copy_bitconj(BITFIELD_TYPE **dst,
+							BITFIELD_TYPE *src,
+							t_map *map)
 {
 	size_t	i;
 
