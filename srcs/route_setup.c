@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:45:15 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/09 12:37:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 t_subpath		*new_subpath(t_room *conj)
 {

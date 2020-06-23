@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/09 14:04:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 ssize_t			copy_n_routes(t_route ***dst, t_route **src, const size_t n)
 {

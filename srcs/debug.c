@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 15:19:42 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 // void	print_bitroom(t_map *map, t_room *room)
 // {

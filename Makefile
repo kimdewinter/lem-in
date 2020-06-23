@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/12 14:50:22 by lravier       ########   odam.nl          #
+#    Updated: 2020/06/23 19:18:00 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,7 +51,7 @@ OBJ_DIR=obj/
 SRC_DIR=srcs/
 SRCS=$(addprefix $(SRC_DIR),$(addsuffix .c,$(RAW)))
 OBJS=$(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
-HEADER=./includes/lem-in.h
+HEADER=./includes/lemin.h
 
 # LIBRARIES #
 LIB_NAME=libftprintf.a
