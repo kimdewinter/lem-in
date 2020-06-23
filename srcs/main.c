@@ -19,11 +19,11 @@ static ssize_t	setup_map(t_map *map)
 		map->antmount = -1;
 		map->start = NULL;
 		map->end = NULL;
-		map->routes = NULL;
 		map->rooms = create_ht(50);
-		map->num_routes = 0;
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
+		map->routes = NULL;
+		map->num_routes = 0;
 		map->solution.len = 0;
 		map->solution.combi = NULL;
 		map->solution.used = 0;
