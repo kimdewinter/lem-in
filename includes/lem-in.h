@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 11:18:06 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 15:28:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/23 18:02:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,9 @@ typedef struct			s_routeput
 	size_t				ants_received;
 	size_t				finished;
 }						t_routeput;
+/*
+** used to output the execution of the solution to general output
+*/
 
 typedef struct			s_best
 {
@@ -43,6 +46,9 @@ typedef struct			s_best
 	size_t				len;
 	size_t				turns;
 }						t_best;
+/*
+** the combination of routes chosen as being the best one (so far)
+*/
 
 typedef struct			s_poscom
 {
@@ -66,6 +72,9 @@ typedef	struct			s_route
 	struct s_room		**route;
 	BITFIELD_TYPE		*bitroute;
 }						t_route;
+/*
+** the structure of each valid route from the start to the end room
+*/
 
 typedef struct			s_routes_wrapper
 {
@@ -112,6 +121,9 @@ typedef struct			s_room
 	t_subpath			**routes;
 	BITFIELD_TYPE		*bitconj;
 }						t_room;
+/*
+** the structure of each room in the "ant hill"
+*/
 
 typedef struct			s_map
 {
@@ -124,6 +136,9 @@ typedef struct			s_map
 	size_t				bitfield_len;
 	struct s_best		solution;
 }						t_map;
+/*
+** the program's main struct
+*/
 
 typedef struct			s_input_reader
 {
@@ -131,6 +146,9 @@ typedef struct			s_input_reader
 	char				**lines;
 	size_t				num_lines;
 }						t_input_reader;
+/*
+** standalone struct only used for reading and parsing input
+*/
 
 ssize_t				read_input(t_input_reader *input);
 int					get_next_line(const int fd, char **line);
@@ -229,7 +247,6 @@ void				print_path(t_subpath *pt);
 void				print_bitconj(BITFIELD_TYPE *arr, size_t len);
 void				print_troute(t_routes_wrapper *wroutes);
 void				print_solution(t_map *map);
-
 
 void				print_route_rooms(const t_route *rte,
 						const size_t *rte_index);
