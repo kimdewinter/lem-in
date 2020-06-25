@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/25 15:26:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/25 15:48:24 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,10 @@ static ssize_t	check_duplicate_room(const char *room_name, const t_map *map)
 	if (search_ht(map->rooms, (char *)room_name) == NULL)
 		return (EXIT_SUCCESS);
 	else
+	{
+		ft_printf("Error: duplicate room name.\n");
 		return (EXIT_FAILURE);
+	}
 }
 
 static ssize_t	get_coords(char *wordx, char *wordy, size_t *posx, size_t *posy)

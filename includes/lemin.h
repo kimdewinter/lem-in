@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/25 14:15:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/25 16:00:35 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,7 +199,7 @@ int						is_new_conj(t_room *src, t_room *curr, t_subpath *spt);
 t_room					**new_path(size_t size);
 t_subpath				*new_subpath(t_room *conj);
 size_t					setup_paths(t_map *map);
-
+size_t					route_error(size_t err_code);
 /*
 ** PATH BUILDING
 */

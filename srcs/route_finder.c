@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/25 15:21:02 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/25 16:02:55 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,10 @@ static size_t			add_path_to_nb(t_queue *curr)
 size_t			add_paths_to_start(t_map *map)
 {
 	size_t	i;
+	size_t	added;
 
 	i = 0;
+	added = 0;
 	while (i < map->start->neighbours_len)
 	{
 		if (map->start->neighbours[i]->num_options > 1)
@@ -35,6 +37,7 @@ size_t			add_paths_to_start(t_map *map)
 				if (add_new_conj_subpath(map->start,
 				map->start->neighbours[i]) == EXIT_FAILURE)
 						return (EXIT_FAILURE);
+				added++;
 			}
 		}
 		else
@@ -43,6 +46,7 @@ size_t			add_paths_to_start(t_map *map)
 			add_to_conj_path(map->start, map->start->neighbours[i],
 			map->start->neighbours[i]->routes[0]) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
+			added++;
 		}
 		i++;
 	}

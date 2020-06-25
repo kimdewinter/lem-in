@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/23 19:18:00 by kim           ########   odam.nl          #
+#    Updated: 2020/06/25 16:01:08 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,8 @@ RAW=	main\
 		build_paths\
 		calc_ants_routes\
 		outputter\
-		roundputter
+		roundputter\
+		route_error
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
