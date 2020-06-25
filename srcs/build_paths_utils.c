@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:44:28 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 14:52:31 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ size_t	setup_routes(t_routes_wrapper **rw, t_map *map)
 	if (!*rw)
 		return (EXIT_FAILURE);
 	(*rw)->num_paths = 0;
-	(*rw)->size = (map->rooms->size * 100) / (100 / INIT_ROUTE_PERC);
+	(*rw)->size = (map->rooms->size * 100) / (100 * (100 / INIT_ROUTE_PERC));
 	if ((*rw)->size == 0)
 		(*rw)->size = (map->rooms->size);
 	(*rw)->routes = (t_route **)malloc(sizeof(t_route *) * (*rw)->size);

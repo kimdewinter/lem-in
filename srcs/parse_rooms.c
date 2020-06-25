@@ -6,11 +6,19 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 15:26:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+static ssize_t	check_duplicate_room(const char *room_name, const t_map *map)
+{
+	if (search_ht(map->rooms, (char *)room_name) == NULL)
+		return (EXIT_SUCCESS);
+	else
+		return (EXIT_FAILURE);
+}
 
 static ssize_t	get_coords(char *wordx, char *wordy, size_t *posx, size_t *posy)
 {
@@ -44,20 +52,21 @@ size_t *num_room)
 	{
 		words = ft_strsplit(input->lines[*i + 1], ' ');
 		if (words[0] != NULL && words[1] != NULL && words[2] != NULL)
-			if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
-				if (setup_room(&room, words[0], posx, posy, num_room) ==
-					EXIT_SUCCESS)
-					if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
-					{
-						if (is_comment(input->lines[*i]) == 2)
-							map->start = search_ht(map->rooms, room->name);
-						else if (is_comment(input->lines[*i]) == 3)
-							map->end = search_ht(map->rooms, room->name);
-						(*i)++;
-						(*num_room)++;
-						free (words);
-						return (EXIT_SUCCESS);
-					}
+			if (check_duplicate_room(words[0], map) == EXIT_SUCCESS)
+				if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
+					if (setup_room(&room, words[0], posx, posy, num_room) ==
+						EXIT_SUCCESS)
+						if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
+						{
+							if (is_comment(input->lines[*i]) == 2)
+								map->start = search_ht(map->rooms, room->name);
+							else if (is_comment(input->lines[*i]) == 3)
+								map->end = search_ht(map->rooms, room->name);
+							(*i)++;
+							(*num_room)++;
+							free (words);
+							return (EXIT_SUCCESS);
+						}
 	}
 	free (words);
 	return (EXIT_FAILURE);
@@ -72,22 +81,23 @@ static ssize_t	add_room(const char *line, t_map *map, size_t *num_room)
 
 	words = ft_strsplit(line, ' ');
 	if ( words[0] != NULL && words[1] != NULL && words[2] != NULL)
-		if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
-			if (setup_room(&room, words[0], posx, posy, num_room) ==
-				EXIT_SUCCESS)
-				if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
-				{
-					(*num_room)++;
-					free (words);
-					return (EXIT_SUCCESS);
-				}
+		if (check_duplicate_room(words[0], map) == EXIT_SUCCESS)
+			if (get_coords(words[1], words[2], &posx, &posy) == EXIT_SUCCESS)
+				if (setup_room(&room, words[0], posx, posy, num_room) ==
+					EXIT_SUCCESS)
+					if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
+					{
+						(*num_room)++;
+						free (words);
+						return (EXIT_SUCCESS);
+					}
 	free (words);
 	return (EXIT_FAILURE);
 }
 
 static size_t	setup_bitconj_rooms(t_map *map)
 {
-	int		i;
+	size_t	i;
 	t_table	*table;
 	t_room	*tmp;
 

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 15:21:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,50 @@ size_t			execute_queue(t_qwrap *queue, t_map *map)
 	free_queue(&queue);
 	return (add_paths_to_start(map));
 }
+
+// ssize_t			check_dead_ends(t_map *map)
+// {
+// 	size_t	i;
+// 	t_room	*prev;
+// 	t_room	*tmp;
+// 	size_t	j;
+// 	size_t	dead_ends;
+
+// 	j = 0;
+// 	i = 0;
+// 	dead_ends = 0;
+// 	while (i < map->rooms->size)
+// 	{
+// 		if (map->rooms->entries[i] != NULL)
+// 		{
+// 			tmp = ((t_room *)map->rooms->entries[i]->val);
+// 			if (tmp != map->start && tmp != map->end && tmp->dead_end == 0)
+// 			{
+// 				if (tmp->neighbours_len == 1)
+// 				{
+// 					tmp->dead_end = 1;
+// 					dead_ends++;
+// 					prev = tmp;
+// 					tmp = (*tmp->neighbours)->nb;
+// 					while (tmp->neighbours_len == 2 && tmp != map->start
+// 					&& tmp != map->end)
+// 					{
+// 						j = 0;
+// 						tmp->dead_end = 1;
+// 						dead_ends++;
+// 						if (tmp->neighbours[j]->nb == prev)
+// 							j++;
+// 						prev = tmp;
+// 						tmp = tmp->neighbours[j]->nb;
+// 					}
+// 					tmp->viable_nbs--;
+// 				}
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	printf("Dead ends %lu\n", dead_ends);
+// }
 
 size_t			find_routes(t_map *map)
 {

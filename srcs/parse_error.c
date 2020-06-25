@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 15:04:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,7 @@ size_t	parse_error(size_t err_code)
 		ft_printf("parse_rooms\nNo links between rooms specified\n");
 	else if (err_code == 14)
 		ft_printf("parse_rooms\nError allocating memory for bitconj\n");
+	else if (err_code == 15)
+		ft_printf("parse tube\nConnection between rooms specified twice\n");
 	return (EXIT_FAILURE);
 }

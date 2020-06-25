@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 15:28:03 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ void	debug(t_map *map)
 		ft_printf("START: %s\n", map->start->name);
 	if (map->end)
 		ft_printf("END: %s\n", map->end->name);
-	for (int i = 0; i < table->size; i++)
+	for (size_t i = 0; i < table->size; i++)
 	{
 		if (table->entries[i] != NULL)
 		{

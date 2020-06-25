@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 20:10:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/30 17:37:23 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/13 13:55:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/hashing.h"
 
-unsigned	hash(char *key, int prime, int size)
+unsigned long long	hash(char *key, long long unsigned size)
 {
 	size_t i;
 	long long unsigned hash;
@@ -23,34 +23,20 @@ unsigned	hash(char *key, int prime, int size)
 	i = 0;
 	while (i < len)
 	{
-		hash += ft_pow_ll(prime, len - (i + 1)) * key[i];
-		hash = hash % size;
+		hash = key[i] + (hash << 6) + (hash << 16) - hash;
 		i++;
 	}
-	return ((unsigned)hash);
+	return (hash % size);
 }
 
-unsigned	get_hash(char *key, t_table *ht, int attempt)
+unsigned long long	get_hash(char *key, t_table *ht, int attempt)
 {
-	int		hash_a;
-	int		hash_b;
+	unsigned long long hash_a;
+	unsigned long long hash_b;
+	unsigned long long res;
 
-	hash_a = hash(key, PRIME_A, ht->size);
-	hash_b = hash(key, PRIME_B, ht->size);
-	return (((unsigned)hash_a + (attempt * (hash_b + 1))) % ht->size);
-}
-
-unsigned	rehash(char *key, t_table *new_table)
-{
-	int				i;
-	unsigned		ind;
-
-	ind = get_hash(key, new_table, 0);
-	i = 1;
-	while (new_table->entries[ind] != NULL)
-	{
-		ind = get_hash(key, new_table, i);
-		i++;
-	}
-	return (ind);
+	hash_a = hash(key, ht->size);
+	hash_b = hash(key, ht->size - 1);
+	res = (hash_a + (attempt * (hash_b + 1))) % ht->size;
+	return (res);
 }

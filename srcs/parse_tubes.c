@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 15:30:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ static	void		set_spe_sps(t_map *map, t_room *room1, t_room *room2)
 		room1->spe = 1;
 }
 
+static int			check_duplicate_tube(t_room *room1, t_room *room2)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < room1->neighbours_len)
+	{
+		if (room1->neighbours[i] == room2)
+			return (1);
+		i++;
+	}
+	i = 0;
+	while (i < room2->neighbours_len)
+	{
+		if (room2->neighbours[i] == room1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 static ssize_t		add_tubes(t_map *map, char **rooms)
 {
 	t_room *room1;
@@ -33,6 +54,8 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	room2 = (t_room *)search_ht(map->rooms, rooms[1]);
 	if (room1 == NULL || room2 == NULL)
 		return (EXIT_FAILURE);
+	if (check_duplicate_tube(room1, room2) == 1)
+		return (parse_error(15));
 	if (add_neighbour(room1, room2) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (add_neighbour(room2, room1) == EXIT_FAILURE)

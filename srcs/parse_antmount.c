@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 15:22:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,5 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 		(*i)++;
 		return (EXIT_SUCCESS);
 	}
-	/* Could be anything wrong */
-	return (parse_error(3));//TODO: make return more descriptive
-	/* What is the biggest number of ants that is still legal?? */
+	return (parse_error(3));
 }

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   lemin.h                                            :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:28:36 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/25 14:15:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 # include <stdint.h>
 
 struct s_room;
-
 struct s_route;
 
 typedef struct			s_routeput
@@ -212,7 +211,7 @@ size_t					setup_starting_paths(t_routes_wrapper *rw,
 												size_t *active);
 
 /*
-** QUEUE MANAGEMENT
+** PATH FINDING QUEUE MANAGEMENT
 */
 size_t					adjust_queue(t_map *map, t_qwrap *queue, size_t len);
 void					ft_lstaddend_no_alloc(t_qwrap *lst, t_list *new);
