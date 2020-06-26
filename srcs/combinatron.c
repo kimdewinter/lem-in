@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/26 16:51:37 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,9 @@ static ssize_t	combinatron_commit_combi(t_map *map, const t_poscom *candidate)
 
 	i = 0;
 	candidate_turns = calc_cost(map->antmount, candidate);
-	if (candidate_turns < map->solution.turns
-	|| (candidate_turns == map->solution.turns &&
-	candidate->num_routes < map->solution.len)
-	|| map->solution.used == 0)
+	if (candidate_turns < map->solution.turns || (candidate_turns ==
+		map->solution.turns && candidate->num_routes < map->solution.len) ||
+		map->solution.used == 0)
 	{
 		while (i < candidate->num_routes)
 		{
@@ -100,8 +99,8 @@ static ssize_t	combinatron_setup(t_map *map,
 	if (bite_bitroute_merge(child->bitroutes, parent->bitroutes,
 		map->routes[parent->i]->bitroute, map) != EXIT_SUCCESS)
 		return (handle_err_comtron(0, "combinatron_setup\n"));
-	if (copy_n_routes(
-		&(child->routes), parent->routes, parent->num_routes + 1) != EXIT_SUCCESS)
+	if (copy_n_routes(&(child->routes), parent->routes, parent->num_routes + 1)
+		!= EXIT_SUCCESS)
 		return (EXIT_FAILURE);
 	child->routes[parent->num_routes] = map->routes[parent->i];
 	child->i = parent->i + 1;

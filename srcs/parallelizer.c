@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/26 16:49:47 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ ssize_t			copy_n_routes(t_route ***dst, t_route **src, const size_t n)
 	{
 		(*dst)[i] = src[i];
 		i++;
-	}	
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -53,7 +53,8 @@ static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
 	size_t	i;
 
 	*numtocombi = max_parallels(map);
-	map->solution.combi = (t_route **)malloc(sizeof(t_route *) * map->num_routes);
+	map->solution.combi =
+		(t_route **)malloc(sizeof(t_route *) * map->num_routes);
 	if (map->solution.combi == NULL)
 		return (handle_err_para(1, "parallelize_setup\n"));
 	map->solution.len = map->num_routes;
@@ -84,13 +85,3 @@ ssize_t			parallelize(t_map *map)
 	}
 	return (EXIT_SUCCESS);
 }
-
-/*
-	printf("parallelize exit succes\n");
-	for (size_t i = 0; i < map->solution.used; i++)
-	{
-		for (size_t j = 0; j < map->solution.combi[i]->len; j++)
-			printf("%s ", map->solution.combi[i]->route[j]->name);
-		printf("\n");	
-	}
-*/
