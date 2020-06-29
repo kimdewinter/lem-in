@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 15:28:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/29 20:04:18 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 // 		i++;
 // 	}
 // }
+
 static void	print_names(char **names, size_t len)
 {
 	size_t	i;
@@ -46,10 +47,10 @@ static void	print_ants(size_t *ants, size_t len)
 		ft_printf("%lu ", ants[i]);
 		i++;
 	}
-	printf("\n");	
+	printf("\n");
 }
 
-void	print_routeput(t_routeput **routes, size_t len)
+void		print_routeput(t_routeput **routes, size_t len)
 {
 	size_t	i;
 
@@ -62,7 +63,7 @@ void	print_routeput(t_routeput **routes, size_t len)
 	}
 }
 
-void	print_bitconj(uint64_t *arr, size_t len)
+void		print_bitconj(uint64_t *arr, size_t len)
 {
 	size_t	i;
 
@@ -73,10 +74,9 @@ void	print_bitconj(uint64_t *arr, size_t len)
 		printf("%lu \n", arr[i]);
 		i++;
 	}
-
 }
 
-void	print_troute(t_routes_wrapper *wroutes)
+void		print_troute(t_routes_wrapper *wroutes)
 {
 	size_t	i;
 	size_t	j;
@@ -101,13 +101,13 @@ void	print_troute(t_routes_wrapper *wroutes)
 	}
 }
 
-void	print_path(t_subpath *pt)
+void		print_path(t_subpath *pt)
 {
 	size_t	i;
-	
+
 	i = 0;
 	if (!pt)
-		return;
+		return ;
 	printf("Len path %ld\n", pt->len);
 	while (i < pt->len)
 	{
@@ -117,12 +117,12 @@ void	print_path(t_subpath *pt)
 	printf("\n\n");
 }
 
-void	print_queue(t_list **queue)
+void		print_queue(t_list **queue)
 {
-	t_list *item;
-	t_subpath *pt;
-	t_room *dst;
-	t_room *src;
+	t_list		*item;
+	t_subpath	*pt;
+	t_room		*dst;
+	t_room		*src;
 
 	ft_printf("\nPRINT QUEUE\n\n");
 	item = *queue;
@@ -140,12 +140,14 @@ void	print_queue(t_list **queue)
 	}
 }
 
-void	print_paths(t_room *room)
+void		print_paths(t_room *room)
 {
 	for (size_t i = 0; i < room->num_options; i++)
 	{
-		printf("CONJ: %s\nOPTIONS: %lu\nLEN: %lu\n", room->routes[i]->conj->name, 
-		room->num_options, room->routes[i]->len);
+		printf("CONJ: %s\nOPTIONS: %lu\nLEN: %lu\n",
+			room->routes[i]->conj->name,
+			room->num_options,
+			room->routes[i]->len);
 		for (size_t j = 0; j < room->routes[i]->len; j++)
 		{
 			if (room->routes[i]->path[j] != NULL)
@@ -154,10 +156,10 @@ void	print_paths(t_room *room)
 	}
 }
 
-void	debug(t_map *map)
+void		debug(t_map *map)
 {
-	t_table *table;
-	t_room *tmp;
+	t_table	*table;
+	t_room	*tmp;
 
 	table = map->rooms;
 	ft_printf("\nPRINT MAP\n\n");
@@ -180,7 +182,7 @@ void	debug(t_map *map)
 	}
 }
 
-void	print_route_rooms(const t_route *rte, const size_t *rte_index)
+void		print_route_rooms(const t_route *rte, const size_t *rte_index)
 {
 	size_t	i;
 
@@ -195,7 +197,7 @@ void	print_route_rooms(const t_route *rte, const size_t *rte_index)
 	ft_printf("\n");
 }
 
-void	print_n_routes(const t_route **rtes, const size_t n)
+void		print_n_routes(const t_route **rtes, const size_t n)
 {
 	size_t	i;
 

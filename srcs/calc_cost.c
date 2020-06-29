@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:12:56 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t			ft_round_rest(long double rest)
+static size_t		ft_round_rest(long double rest)
 {
 	size_t		fact;
 	long double	rem;
@@ -26,7 +26,7 @@ static size_t			ft_round_rest(long double rest)
 	return (0);
 }
 
-static long double		calc_ants_avg(size_t ants, size_t num_paths)
+static long double	calc_ants_avg(size_t ants, size_t num_paths)
 {
 	long double	result;
 
@@ -34,7 +34,7 @@ static long double		calc_ants_avg(size_t ants, size_t num_paths)
 	return (result);
 }
 
-static long double		calc_paths_avg(size_t num_paths, const t_poscom *routes)
+static long double	calc_paths_avg(size_t num_paths, const t_poscom *routes)
 {
 	size_t		i;
 	long double total;
@@ -49,8 +49,10 @@ static long double		calc_paths_avg(size_t num_paths, const t_poscom *routes)
 	return (total / (long double)num_paths);
 }
 
-static size_t	calc_rounds(long double *rest, long double avg_ants, long double
-avg_paths, const t_poscom *combi)
+static size_t		calc_rounds(long double *rest,
+								long double avg_ants,
+								long double avg_paths,
+								const t_poscom *combi)
 {
 	long double path_diff;
 	long double	ants_diff;
@@ -69,7 +71,7 @@ avg_paths, const t_poscom *combi)
 	return (rounds + ft_round_rest(*rest));
 }
 
-size_t		calc_cost(size_t ants, const t_poscom *routes)
+size_t				calc_cost(size_t ants, const t_poscom *routes)
 {
 	long double avg_ants;
 	long double	avg_paths;

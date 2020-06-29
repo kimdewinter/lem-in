@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/10 14:56:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:36:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ static void	check_finished(t_routeput *route, size_t antmount_in_route)
 
 static void	handle_spacing(const t_routeput *route, const size_t i)
 {
-		if (route->ants[i + 1] > 0)
-			ft_putchar(' ');
+	if (route->ants[i + 1] > 0)
+		ft_putchar(' ');
 }
 
 static void	execute_tail(t_routeput *route, size_t *i)
@@ -55,7 +55,7 @@ static void	execute_head(t_routeput *route,
 		route->ants[0] = 0;
 }
 
-void	execute_route(t_routeput *route, const size_t new_ant)
+void		execute_route(t_routeput *route, const size_t new_ant)
 {
 	size_t	i;
 	size_t	antmount_in_route;

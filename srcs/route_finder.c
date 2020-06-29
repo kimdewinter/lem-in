@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/25 16:02:55 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/29 20:05:31 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t			add_path_to_nb(t_queue *curr)
+static size_t	add_path_to_nb(t_queue *curr)
 {
 	if (curr->new_conj == 1)
 		return (add_new_conj_subpath(curr->dst, curr->src));
@@ -35,8 +35,8 @@ size_t			add_paths_to_start(t_map *map)
 			map->start->neighbours[i]))
 			{
 				if (add_new_conj_subpath(map->start,
-				map->start->neighbours[i]) == EXIT_FAILURE)
-						return (EXIT_FAILURE);
+					map->start->neighbours[i]) == EXIT_FAILURE)
+					return (EXIT_FAILURE);
 				added++;
 			}
 		}

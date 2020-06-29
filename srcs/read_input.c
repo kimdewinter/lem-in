@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:24:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static ssize_t	resize_buffer(t_input_reader *input)
 		new_lines[i] = input->lines[i];
 		i++;
 	}
-	free (input->lines);
+	free(input->lines);
 	input->lines = new_lines;
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t		copy_input(t_input_reader *input)
+static ssize_t	copy_input(t_input_reader *input)
 {
 	int		read;
 

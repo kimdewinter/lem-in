@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/10 16:28:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:23:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 19:48:27 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,18 @@ void		free_routes(t_subpath ***routes, size_t num_options)
 			{
 				if (tmp[i]->bitconj)
 				{
-					free (tmp[i]->bitconj);
+					free(tmp[i]->bitconj);
 					tmp[i]->bitconj = NULL;
 				}
 				if (tmp[i]->path)
 				{
-					free (tmp[i]->path);
+					free(tmp[i]->path);
 					tmp[i]->path = NULL;
 				}
 			}
 			i++;
 		}
-		free (tmp);
+		free(tmp);
 		tmp = NULL;
 	}
 }
@@ -53,9 +53,9 @@ void		free_room(t_room **room)
 		free(tmp->neighbours);
 		free_routes(&tmp->routes, tmp->num_options);
 		if (tmp->bitconj)
-			free (tmp->bitconj);
+			free(tmp->bitconj);
 		if (tmp->name)
-			free (name);
+			free(name);
 	}
 }
 

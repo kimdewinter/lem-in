@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:23:56 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-t_list			*ft_lstnew_no_malloc(void *content, size_t size)
+t_list	*ft_lstnew_no_malloc(void *content, size_t size)
 {
 	t_list *new;
 
@@ -28,7 +28,7 @@ t_list			*ft_lstnew_no_malloc(void *content, size_t size)
 	return (NULL);
 }
 
-void			ft_lstaddend_no_alloc(t_qwrap *lst, t_list *new)
+void	ft_lstaddend_no_alloc(t_qwrap *lst, t_list *new)
 {
 	t_list	*tmp;
 
@@ -60,15 +60,15 @@ t_list	*new_queue_item(t_subpath *pt, t_room *dst, t_room *src)
 		new->path = pt;
 		node = ft_lstnew_no_malloc(new, sizeof(t_queue *));
 		if (!node)
-			free (new);
+			free(new);
 	}
 	return (node);
 }
 
-size_t		add_nodes(t_qwrap **queue, t_map *map)
+size_t	add_nodes(t_qwrap **queue, t_map *map)
 {
 	size_t	i;
-	t_list 	*new_node;
+	t_list	*new_node;
 
 	i = 0;
 	while (i < map->end->neighbours_len)
@@ -86,7 +86,7 @@ size_t		add_nodes(t_qwrap **queue, t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-size_t		setup_queue(t_qwrap **queue, t_map *map)
+size_t	setup_queue(t_qwrap **queue, t_map *map)
 {
 	*queue = (t_qwrap *)malloc(sizeof(t_qwrap));
 	if (*queue)

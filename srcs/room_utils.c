@@ -1,22 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   roomutils.c                                        :+:    :+:            */
+/*   room_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/04/28 15:54:56 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:35:50 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
 ssize_t			setup_room(t_room **dest,
-					const char *name,
-					const ssize_t xpos,
-					const ssize_t ypos, 
-					size_t *num_room)
+							const char *name,
+							const ssize_t xpos,
+							const ssize_t ypos,
+							size_t *num_room)
 {
 	t_room	*room;
 
@@ -85,17 +85,19 @@ static ssize_t	add_neighbour_grow(t_room *room)
 	return (EXIT_FAILURE);
 }//expands the room->neighbours char** array by 1
 
-ssize_t	add_neighbour(t_room *room, t_room *neighbour)
+ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 {
 	if (room != NULL && neighbour != NULL)
 	{
-		if (room->neighbours_len == 0 && room->neighbours == NULL && add_neighbour_new(room) == EXIT_SUCCESS)
+		if (room->neighbours_len == 0 && room->neighbours == NULL &&
+			add_neighbour_new(room) == EXIT_SUCCESS)
 		{
 			room->neighbours[room->neighbours_len - 1] = neighbour;
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
 		}//handles when room->neighbours t_room** array is yet to be made
-		else if (room->neighbours_len > 0 && room->neighbours != NULL && add_neighbour_grow(room) == EXIT_SUCCESS)
+		else if (room->neighbours_len > 0 && room->neighbours != NULL &&
+					add_neighbour_grow(room) == EXIT_SUCCESS)
 		{
 			room->neighbours[room->neighbours_len - 1] = neighbour;
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
@@ -105,7 +107,7 @@ ssize_t	add_neighbour(t_room *room, t_room *neighbour)
 	return (EXIT_FAILURE);
 }
 
-ssize_t	purge_room(t_room **room)
+ssize_t			purge_room(t_room **room)
 {
 	if (*room != NULL)
 	{
@@ -131,4 +133,9 @@ ssize_t	purge_room(t_room **room)
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
-}//resets a room's variables to their default states, frees all underlying allocated space(s), and finally the room itself
+}
+/*
+** resets a room's variables to their default states,
+** frees all underlying allocated space(s)
+** and finally the room itself
+*/

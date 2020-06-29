@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 20:18:40 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 14:09:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/29 20:17:25 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	free_room_names(char **rooms)
 	i = 0;
 	while (rooms[i] != NULL)
 	{
-		free (rooms[i]);
+		free(rooms[i]);
 		i++;
 	}
-	free (rooms);
+	free(rooms);
 }

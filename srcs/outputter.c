@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 13:54:50 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:16:16 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ ssize_t		copy_roomnames(char ***rooms, t_route *curr)
 ssize_t		setup_ants(size_t **ants, size_t len)
 {
 	size_t	i;
-	
+
 	i = 0;
 	*ants = (size_t *)malloc(sizeof(size_t) * len);
 	if (*ants == NULL)
@@ -58,9 +58,9 @@ ssize_t		setup_routeput(t_routeput **new, t_route *curr)
 				(*new)->finished = 0;
 				return (EXIT_SUCCESS);
 			}
-			free ((*new)->rooms);
+			free((*new)->rooms);
 		}
-		free (*new);
+		free(*new);
 	}
 	return (EXIT_FAILURE);
 }
@@ -108,7 +108,7 @@ size_t *curr_ant)
 void		print_input(t_input_reader *input)
 {
 	size_t	i;
-	
+
 	i = 0;
 	while (i < input->num_lines)
 	{

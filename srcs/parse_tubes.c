@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 15:48:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/29 20:04:53 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static void			set_spe_sps(t_map *map, t_room *room1, t_room *room2)
+static void		set_spe_sps(t_map *map, t_room *room1, t_room *room2)
 {
 	if (room1 == map->start)
 		room2->sps = 1;
@@ -24,7 +24,7 @@ static void			set_spe_sps(t_map *map, t_room *room1, t_room *room2)
 		room1->spe = 1;
 }
 
-static int			check_duplicate_tube(t_room *room1, t_room *room2)
+static int		check_duplicate_tube(t_room *room1, t_room *room2)
 {
 	size_t	i;
 
@@ -45,7 +45,7 @@ static int			check_duplicate_tube(t_room *room1, t_room *room2)
 	return (0);
 }
 
-static int			add_tubes(t_map *map, char **rooms)
+static int		add_tubes(t_map *map, char **rooms)
 {
 	t_room *room1;
 	t_room *room2;
@@ -64,13 +64,13 @@ static int			add_tubes(t_map *map, char **rooms)
 	return (1);
 }
 
-static size_t		parse_tube(char *line, t_map *map, size_t *tubes)
+static size_t	parse_tube(char *line, t_map *map, size_t *tubes)
 {
-	char 	**rooms;
+	char	**rooms;
 	int		dash;
 	int		i;
 	size_t	error;
-	
+
 	dash = 0;
 	i = 0;
 	while (line[i])
@@ -92,7 +92,7 @@ static size_t		parse_tube(char *line, t_map *map, size_t *tubes)
 	return (1);
 }
 
-ssize_t		parse_tubes(t_input_reader *input, t_map *map, size_t *i)
+ssize_t			parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 {
 	size_t		tubes;
 	size_t		error;

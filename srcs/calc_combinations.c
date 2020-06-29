@@ -6,27 +6,28 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 20:11:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t		ft_factorial(size_t	n)
+static size_t	ft_factorial(size_t n)
 {
 	if (n == 0)
 		return (1);
 	return (n * ft_factorial(n - 1));
 }
 
-/* N = number of paths, r is max number of parallel paths */
-ssize_t		calc_combinations(const size_t n, size_t r)
+// N = number of paths, r is max number of parallel paths
+
+ssize_t			calc_combinations(const size_t n, size_t r)
 {
-	// (n!) / (r!(n-r)!);
 	size_t	result;
 	size_t	fact_n;
 	size_t	i;
 
+	// (n!) / (r!(n-r)!);
 	result = 0;
 	i = r;
 	fact_n = ft_factorial(n);
@@ -40,12 +41,8 @@ ssize_t		calc_combinations(const size_t n, size_t r)
 	return (result);
 }
 
-size_t		max_parallels(t_map *map)
+size_t			max_parallels(t_map *map)
 {
-	/* either number of viable routes
-	number of ends
-	connections to start
-	connections to end */
 	size_t	lowest;
 
 	lowest = map->start->neighbours_len;
@@ -57,3 +54,9 @@ size_t		max_parallels(t_map *map)
 		lowest = map->num_routes;
 	return (lowest);
 }
+/*
+** either number of viable routes
+** number of ends
+** connections to start
+** connections to end
+*/

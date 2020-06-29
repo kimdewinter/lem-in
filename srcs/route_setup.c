@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:45:15 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 19:44:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_subpath		*new_subpath(t_room *conj)
 	return (NULL);
 }
 
-t_room					**new_path(size_t size)
+t_room			**new_path(size_t size)
 {
 	t_room	**new;
 
@@ -36,7 +36,7 @@ t_room					**new_path(size_t size)
 	return (new);
 }
 
-static size_t		add_new_conj_subpath_end(t_room *dst,
+static size_t	add_new_conj_subpath_end(t_room *dst,
 t_room *conj)
 {
 	t_subpath	*new;
@@ -50,14 +50,14 @@ t_room *conj)
 			(*new->path) = NULL;
 			if (add_subpath(dst, new) == EXIT_SUCCESS)
 				return (EXIT_SUCCESS);
-			free (new->path);
+			free(new->path);
 		}
-		free (new);
+		free(new);
 	}
 	return (EXIT_FAILURE);
 }
 
-size_t						setup_paths(t_map *map)
+size_t			setup_paths(t_map *map)
 {
 	t_room *end;
 

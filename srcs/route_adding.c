@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/29 19:42:27 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,9 @@ static t_subpath	*copy_subpath(t_subpath *pt)
 	return (NULL);
 }
 
-size_t			add_to_conj_path(t_room *dst, t_room *src,
-t_subpath *pt)
+size_t			add_to_conj_path(t_room *dst,
+									t_room *src,
+									t_subpath *pt)
 {
 	t_subpath	*new;
 

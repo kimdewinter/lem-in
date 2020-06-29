@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 15:51:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/29 20:18:11 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,16 @@
 size_t	parse_error(size_t err_code)
 {
 	if (err_code == 1)
-		ft_printf("Error: parse_antmount\nNumber of ants too large to be represented in memory\n");
+		ft_printf("Error: parse_antmount\nNumber of ants too large to be
+			represented in memory\n");
 	else if (err_code == 2)
 		ft_printf("Error: parse_antmount\nNumber of ants is zero\n");
 	else if (err_code == 3)
-		ft_printf("Error: parse_antmount\nNo number of ants specified in input\n");
+		ft_printf("Error: parse_antmount\nNo number of ants specified in
+			input\n");
 	else if (err_code == 4)
-		ft_printf("Error: parse_tubes\nInvalid number of dashes in link line\n");
+		ft_printf("Error: parse_tubes\nInvalid number of dashes in link
+			line\n");
 	else if (err_code == 5)
 		ft_printf("Error: parse_tubes\nError allocating memory\n");
 	else if (err_code == 6)
@@ -43,6 +46,7 @@ size_t	parse_error(size_t err_code)
 	else if (err_code == 14)
 		ft_printf("Error: parse_rooms\nError allocating memory for bitconj\n");
 	else if (err_code == 15)
-		ft_printf("Error: parse_tubes\nConnection between rooms specified twice\n");
+		ft_printf("Error: parse_tubes\nConnection between rooms specified
+			twice\n");
 	return (EXIT_FAILURE);
 }

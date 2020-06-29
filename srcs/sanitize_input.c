@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 14:17:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/29 19:49:32 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ size_t			sanitize_input(t_map *map)
 	if (map->start == NULL)
 		return (parse_error(9));
 	if (map->end == NULL)
-		return (parse_error(10));	
+		return (parse_error(10));
 	tmp = (t_room *)search_ht(map->rooms, map->start->name);
 	if (tmp->neighbours == NULL)
 		return (parse_error(11));
