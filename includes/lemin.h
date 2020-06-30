@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 14:22:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/30 15:47:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,8 +116,8 @@ typedef struct			s_room
 	size_t				neighbours_len;
 	size_t				room_i;
 	size_t				num_options;
-	size_t				routes_size;
 	t_subpath			**routes;
+	size_t				routes_size;
 	BITFIELD_TYPE		*bitconj;
 }						t_room;
 /*
@@ -272,8 +272,9 @@ ssize_t					output_result(t_input_reader *input, const t_map *map);
 /*
 ** CLEANER
 */
-void					delete_map(t_map *map);
 void					delete_all_routes(t_map *map);
+void					delete_all_rooms(t_map *map);
+void					delete_map(t_map *map);
 
 /*
 ** DEBUGGING
