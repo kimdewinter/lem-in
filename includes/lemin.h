@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/25 16:46:21 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/30 14:07:30 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ typedef struct			s_poscom
 
 typedef	struct			s_route
 {
+	struct s_room		**route;
+	size_t				len;
+	BITFIELD_TYPE		*bitroute;
 	struct s_room		*last_conj;
 	int					end;
-	size_t				len;
 	size_t				ants;
-	struct s_room		**route;
-	BITFIELD_TYPE		*bitroute;
 }						t_route;
 /*
 ** the structure of each valid route from the start to the end room
@@ -253,6 +253,7 @@ ssize_t					bite_bitroute_merge(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src1,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
+void					bite_free(BITFIELD_TYPE **bitfield, const t_map *map);
 void					bite_route_add_conj(t_route *route, const t_room *conj);
 size_t					copy_bitconj(BITFIELD_TYPE **dst,
 										BITFIELD_TYPE *src,
@@ -267,6 +268,11 @@ void					free_queue_item(t_list *curr);
 void					execute_route(t_routeput *route, const size_t new_ant);
 size_t					parse_error(size_t err_code);
 ssize_t					output_result(t_input_reader *input, const t_map *map);
+
+/*
+** CLEANER
+*/
+void					clean_routes(t_map *map);
 
 /*
 ** DEBUGGING
