@@ -6,13 +6,27 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 15:19:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 15:47:42 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/30 16:01:51 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static void	delete_address_array(void ***array_address, size_t len)
+static void	delete_routes(t_subpath ***array_address, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		(*array_address)[i] = NULL;
+		i++;
+	}
+	free(*array_address);
+	*array_address = NULL;
+}
+
+static void	delete_neighbours(t_room ***array_address, size_t len)
 {
 	size_t	i;
 
@@ -28,8 +42,6 @@ static void	delete_address_array(void ***array_address, size_t len)
 
 static void	delete_single_room(t_room *room)
 {
-	size_t	i;
-
 	room->sps = 0;
 	room->spe = 0;
 	if (room->name != NULL)
@@ -41,12 +53,12 @@ static void	delete_single_room(t_room *room)
 	room->ypos = -1;
 	room->ant = 0;
 	if (room->neighbours)
-		delete_address_array(&room->neighbours, room->neighbours_len);
+		delete_neighbours(&room->neighbours, room->neighbours_len);
 	room->neighbours_len = 0;
 	room->room_i = 0;
 	room->num_options = 0;
 	if (room->routes != NULL)
-		delete_address_array(&room->routes, room->routes_size);
+		delete_routes(&room->routes, room->routes_size);
 	room->routes_size = 0;
 	if (room->bitconj != NULL)
 	{
