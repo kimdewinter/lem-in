@@ -6,13 +6,13 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 13:35:43 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 14:21:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/30 14:37:01 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static void	delete_single_route(t_route *route, t_map *map)
+static void	delete_single_route(t_route *route)
 {
 	size_t	i;
 
@@ -47,7 +47,7 @@ void		delete_all_routes(t_map *map)
 	{
 		if (map->routes[i] != NULL)
 		{
-			delete_single_route(map->routes[i], map);
+			delete_single_route(map->routes[i]);
 			map->routes[i] = NULL;
 		}
 		i++;

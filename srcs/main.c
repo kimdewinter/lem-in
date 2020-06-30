@@ -6,11 +6,16 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/26 16:45:32 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/30 14:29:29 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+static void		delete_all(t_map *map)
+{
+	delete_map(map);
+}
 
 static ssize_t	setup_map(t_map *map)
 {
@@ -44,7 +49,9 @@ int				main(void)
 		parallelize(&map) == EXIT_SUCCESS &&
 		output_result(&input, &map) == EXIT_SUCCESS)
 	{
+		delete_all(&map);
 		return (EXIT_SUCCESS);
 	}
+	delete_all(&map);
 	return (EXIT_FAILURE);
 }
