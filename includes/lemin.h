@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 14:07:30 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/30 14:22:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,7 +272,8 @@ ssize_t					output_result(t_input_reader *input, const t_map *map);
 /*
 ** CLEANER
 */
-void					clean_routes(t_map *map);
+void					delete_map(t_map *map);
+void					delete_all_routes(t_map *map);
 
 /*
 ** DEBUGGING
