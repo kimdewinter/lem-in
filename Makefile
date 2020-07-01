@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/25 16:01:08 by lravier       ########   odam.nl          #
+#    Updated: 2020/06/24 20:34:45 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,6 @@ RAW=	main\
 		room_utils\
 		sanitize_input\
 		debug\
-		clean_route_finding\
 		route_adding\
 		route_setup\
 		route_finder\
@@ -45,14 +44,13 @@ RAW=	main\
 		build_paths\
 		calc_ants_routes\
 		outputter\
-		roundputter\
-		route_error
+		roundputter
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
 SRCS=$(addprefix $(SRC_DIR),$(addsuffix .c,$(RAW)))
 OBJS=$(patsubst $(SRC_DIR)%.c,$(OBJ_DIR)%.o,$(SRCS))
-HEADER=./includes/lemin.h
+HEADER=./includes/lem-in.h
 
 # LIBRARIES #
 LIB_NAME=libftprintf.a

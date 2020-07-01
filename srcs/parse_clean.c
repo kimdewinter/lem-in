@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 20:18:40 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 14:09:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 20:19:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "../includes/lem-in.h"
 
 void	free_room_names(char **rooms)
 {

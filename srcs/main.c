@@ -10,20 +10,23 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "../includes/lem-in.h"
 
 static ssize_t	setup_map(t_map *map)
 {
 	if (map != NULL)
 	{
+		// map->paths_id = 0;
 		map->antmount = -1;
 		map->start = NULL;
+		map->start_live = 0;
 		map->end = NULL;
+		map->end_live = 0;
+		map->routes = NULL;
 		map->rooms = create_ht(50);
+		map->num_routes = 0;
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
-		map->routes = NULL;
-		map->num_routes = 0;
 		map->solution.len = 0;
 		map->solution.combi = NULL;
 		map->solution.used = 0;
@@ -34,8 +37,8 @@ static ssize_t	setup_map(t_map *map)
 
 int main(void)
 {
-	t_input_reader	input;
 	t_map	map;
+	t_input_reader	input;
 
 	if (setup_map(&map) == EXIT_SUCCESS &&
 		read_input(&input) == EXIT_SUCCESS &&

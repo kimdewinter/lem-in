@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/10 16:28:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:23:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/lemin.h"
+#include "includes/lem-in.h"
 
 void		free_routes(t_subpath ***routes, size_t num_options)
 {
@@ -27,7 +27,7 @@ void		free_routes(t_subpath ***routes, size_t num_options)
 			{
 				if (tmp[i]->bitconj)
 				{
-					free (tmp[i]->bitconj);
+					free (tmp[i]->bitconj)
 					tmp[i]->bitconj = NULL;
 				}
 				if (tmp[i]->path)
@@ -50,7 +50,7 @@ void		free_room(t_room **room)
 	tmp = *room;
 	if (tmp)
 	{
-		free(tmp->neighbours);
+		free (tmp->neighbours);
 		free_routes(&tmp->routes, tmp->num_options);
 		if (tmp->bitconj)
 			free (tmp->bitconj);

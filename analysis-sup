@@ -1,0 +1,474 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  0.00      0.00     0.00    10700     0.00     0.00  add_neighbour
+  0.00      0.00     0.00    10533     0.00     0.00  ft_atoi_ll
+  0.00      0.00     0.00     5545     0.00     0.00  bite_alloc
+  0.00      0.00     0.00     5434     0.00     0.00  add_neighbour_grow
+  0.00      0.00     0.00     5361     0.00     0.00  is_comment
+  0.00      0.00     0.00     5351     0.00     0.00  free_room_names
+  0.00      0.00     0.00     5350     0.00     0.00  add_tubes
+  0.00      0.00     0.00     5350     0.00     0.00  parse_tube
+  0.00      0.00     0.00     5350     0.00     0.00  set_spe_sps
+  0.00      0.00     0.00     5269     0.00     0.00  is_room
+  0.00      0.00     0.00     5268     0.00     0.00  is_tube
+  0.00      0.00     0.00     5266     0.00     0.00  add_neighbour_new
+  0.00      0.00     0.00     5266     0.00     0.00  get_coords
+  0.00      0.00     0.00     5266     0.00     0.00  setup_room
+  0.00      0.00     0.00     5264     0.00     0.00  add_room
+  0.00      0.00     0.00     5048     0.00     0.00  add_subpath
+  0.00      0.00     0.00     5003     0.00     0.00  add_path_to_nb
+  0.00      0.00     0.00     5003     0.00     0.00  new_queue_item
+  0.00      0.00     0.00     5003     0.00     0.00  remove_queue_item
+  0.00      0.00     0.00     4966     0.00     0.00  increase_routes_size
+  0.00      0.00     0.00     4959     0.00     0.00  add_item_queue
+  0.00      0.00     0.00     4959     0.00     0.00  already_in_visited
+  0.00      0.00     0.00     4943     0.00     0.00  is_new_conj
+  0.00      0.00     0.00     4939     0.00     0.00  add_nbs_to_queue
+  0.00      0.00     0.00     4939     0.00     0.00  add_to_visited
+  0.00      0.00     0.00     4878     0.00     0.00  add_to_conj_path
+  0.00      0.00     0.00     3360     0.00     0.00  add_bite_conj
+  0.00      0.00     0.00      170     0.00     0.00  new_path
+  0.00      0.00     0.00      170     0.00     0.00  new_subpath
+  0.00      0.00     0.00      169     0.00     0.00  add_new_conj_subpath
+  0.00      0.00     0.00      169     0.00     0.00  bite_bitroute_copy
+  0.00      0.00     0.00      115     0.00     0.00  add_conj_to_bitroute
+  0.00      0.00     0.00      109     0.00     0.00  adjust_queue
+  0.00      0.00     0.00       66     0.00     0.00  kill_rooms_in_loop
+  0.00      0.00     0.00        2     0.00     0.00  add_special_room
+  0.00      0.00     0.00        1     0.00     0.00  add_items_start
+  0.00      0.00     0.00        1     0.00     0.00  add_new_conj_subpath_end
+  0.00      0.00     0.00        1     0.00     0.00  add_paths_to_start
+  0.00      0.00     0.00        1     0.00     0.00  check_start_end
+  0.00      0.00     0.00        1     0.00     0.00  copy_input
+  0.00      0.00     0.00        1     0.00     0.00  execute_queue
+  0.00      0.00     0.00        1     0.00     0.00  find_routes
+  0.00      0.00     0.00        1     0.00     0.00  is_antmount
+  0.00      0.00     0.00        1     0.00     0.00  kill_dead_ends
+  0.00      0.00     0.00        1     0.00     0.00  parse_antmount
+  0.00      0.00     0.00        1     0.00     0.00  parse_input
+  0.00      0.00     0.00        1     0.00     0.00  parse_rooms
+  0.00      0.00     0.00        1     0.00     0.00  parse_tubes
+  0.00      0.00     0.00        1     0.00     0.00  print_paths
+  0.00      0.00     0.00        1     0.00     0.00  read_input
+  0.00      0.00     0.00        1     0.00     0.00  resize_buffer
+  0.00      0.00     0.00        1     0.00     0.00  sanitize_input
+  0.00      0.00     0.00        1     0.00     0.00  setup_bitconj_rooms
+  0.00      0.00     0.00        1     0.00     0.00  setup_input
+  0.00      0.00     0.00        1     0.00     0.00  setup_map
+  0.00      0.00     0.00        1     0.00     0.00  setup_paths
+  0.00      0.00     0.00        1     0.00     0.00  setup_queue
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) no time propagated
+
+index % time    self  children    called     name
+                0.00    0.00   10700/10700       add_tubes [7]
+[1]      0.0    0.00    0.00   10700         add_neighbour [1]
+                0.00    0.00    5434/5434        add_neighbour_grow [4]
+                0.00    0.00    5266/5266        add_neighbour_new [12]
+-----------------------------------------------
+                0.00    0.00       1/10533       parse_antmount [45]
+                0.00    0.00   10532/10533       get_coords [13]
+[2]      0.0    0.00    0.00   10533         ft_atoi_ll [2]
+-----------------------------------------------
+                0.00    0.00     109/5545        adjust_queue [33]
+                0.00    0.00     170/5545        new_subpath [29]
+                0.00    0.00    5266/5545        setup_bitconj_rooms [53]
+[3]      0.0    0.00    0.00    5545         bite_alloc [3]
+-----------------------------------------------
+                0.00    0.00    5434/5434        add_neighbour [1]
+[4]      0.0    0.00    0.00    5434         add_neighbour_grow [4]
+-----------------------------------------------
+                0.00    0.00       1/5361        parse_antmount [45]
+                0.00    0.00       3/5361        add_special_room [35]
+                0.00    0.00       6/5361        parse_rooms [47]
+                0.00    0.00    5351/5361        parse_tubes [48]
+[5]      0.0    0.00    0.00    5361         is_comment [5]
+-----------------------------------------------
+                0.00    0.00       1/5351        is_tube [11]
+                0.00    0.00    5350/5351        parse_tube [8]
+[6]      0.0    0.00    0.00    5351         free_room_names [6]
+-----------------------------------------------
+                0.00    0.00    5350/5350        parse_tube [8]
+[7]      0.0    0.00    0.00    5350         add_tubes [7]
+                0.00    0.00   10700/10700       add_neighbour [1]
+                0.00    0.00    5350/5350        set_spe_sps [9]
+-----------------------------------------------
+                0.00    0.00    5350/5350        parse_tubes [48]
+[8]      0.0    0.00    0.00    5350         parse_tube [8]
+                0.00    0.00    5350/5350        add_tubes [7]
+                0.00    0.00    5350/5351        free_room_names [6]
+-----------------------------------------------
+                0.00    0.00    5350/5350        add_tubes [7]
+[9]      0.0    0.00    0.00    5350         set_spe_sps [9]
+-----------------------------------------------
+                0.00    0.00       2/5269        add_special_room [35]
+                0.00    0.00    5267/5269        parse_rooms [47]
+[10]     0.0    0.00    0.00    5269         is_room [10]
+-----------------------------------------------
+                0.00    0.00    5268/5268        parse_rooms [47]
+[11]     0.0    0.00    0.00    5268         is_tube [11]
+                0.00    0.00       1/5351        free_room_names [6]
+-----------------------------------------------
+                0.00    0.00    5266/5266        add_neighbour [1]
+[12]     0.0    0.00    0.00    5266         add_neighbour_new [12]
+-----------------------------------------------
+                0.00    0.00       2/5266        add_special_room [35]
+                0.00    0.00    5264/5266        add_room [15]
+[13]     0.0    0.00    0.00    5266         get_coords [13]
+                0.00    0.00   10532/10533       ft_atoi_ll [2]
+-----------------------------------------------
+                0.00    0.00       2/5266        add_special_room [35]
+                0.00    0.00    5264/5266        add_room [15]
+[14]     0.0    0.00    0.00    5266         setup_room [14]
+-----------------------------------------------
+                0.00    0.00    5264/5264        parse_rooms [47]
+[15]     0.0    0.00    0.00    5264         add_room [15]
+                0.00    0.00    5264/5266        get_coords [13]
+                0.00    0.00    5264/5266        setup_room [14]
+-----------------------------------------------
+                0.00    0.00       1/5048        add_new_conj_subpath_end [37]
+                0.00    0.00     169/5048        add_new_conj_subpath [30]
+                0.00    0.00    4878/5048        add_to_conj_path [26]
+[16]     0.0    0.00    0.00    5048         add_subpath [16]
+                0.00    0.00    4966/4966        increase_routes_size [20]
+-----------------------------------------------
+                0.00    0.00    5003/5003        execute_queue [41]
+[17]     0.0    0.00    0.00    5003         add_path_to_nb [17]
+                0.00    0.00    4836/4878        add_to_conj_path [26]
+                0.00    0.00     167/169         add_new_conj_subpath [30]
+-----------------------------------------------
+                0.00    0.00      44/5003        add_items_start [36]
+                0.00    0.00    4959/5003        add_nbs_to_queue [24]
+[18]     0.0    0.00    0.00    5003         new_queue_item [18]
+-----------------------------------------------
+                0.00    0.00    5003/5003        adjust_queue [33]
+[19]     0.0    0.00    0.00    5003         remove_queue_item [19]
+-----------------------------------------------
+                0.00    0.00    4966/4966        add_subpath [16]
+[20]     0.0    0.00    0.00    4966         increase_routes_size [20]
+-----------------------------------------------
+                0.00    0.00    4959/4959        add_nbs_to_queue [24]
+[21]     0.0    0.00    0.00    4959         add_item_queue [21]
+-----------------------------------------------
+                0.00    0.00    4959/4959        adjust_queue [33]
+[22]     0.0    0.00    0.00    4959         already_in_visited [22]
+-----------------------------------------------
+                0.00    0.00    4943/4943        add_nbs_to_queue [24]
+[23]     0.0    0.00    0.00    4943         is_new_conj [23]
+-----------------------------------------------
+                0.00    0.00    4939/4939        adjust_queue [33]
+[24]     0.0    0.00    0.00    4939         add_nbs_to_queue [24]
+                0.00    0.00    4959/5003        new_queue_item [18]
+                0.00    0.00    4959/4959        add_item_queue [21]
+                0.00    0.00    4943/4943        is_new_conj [23]
+                0.00    0.00      66/66          kill_rooms_in_loop [34]
+-----------------------------------------------
+                0.00    0.00    4939/4939        adjust_queue [33]
+[25]     0.0    0.00    0.00    4939         add_to_visited [25]
+-----------------------------------------------
+                0.00    0.00      42/4878        add_paths_to_start [38]
+                0.00    0.00    4836/4878        add_path_to_nb [17]
+[26]     0.0    0.00    0.00    4878         add_to_conj_path [26]
+                0.00    0.00    4878/5048        add_subpath [16]
+                0.00    0.00    3235/3360        add_bite_conj [27]
+-----------------------------------------------
+                0.00    0.00     125/3360        add_new_conj_subpath [30]
+                0.00    0.00    3235/3360        add_to_conj_path [26]
+[27]     0.0    0.00    0.00    3360         add_bite_conj [27]
+-----------------------------------------------
+                0.00    0.00       1/170         add_new_conj_subpath_end [37]
+                0.00    0.00     169/170         add_new_conj_subpath [30]
+[28]     0.0    0.00    0.00     170         new_path [28]
+-----------------------------------------------
+                0.00    0.00       1/170         add_new_conj_subpath_end [37]
+                0.00    0.00     169/170         add_new_conj_subpath [30]
+[29]     0.0    0.00    0.00     170         new_subpath [29]
+                0.00    0.00     170/5545        bite_alloc [3]
+-----------------------------------------------
+                0.00    0.00       2/169         add_paths_to_start [38]
+                0.00    0.00     167/169         add_path_to_nb [17]
+[30]     0.0    0.00    0.00     169         add_new_conj_subpath [30]
+                0.00    0.00     169/170         new_subpath [29]
+                0.00    0.00     169/170         new_path [28]
+                0.00    0.00     169/169         bite_bitroute_copy [31]
+                0.00    0.00     169/5048        add_subpath [16]
+                0.00    0.00     125/3360        add_bite_conj [27]
+                0.00    0.00     115/115         add_conj_to_bitroute [32]
+-----------------------------------------------
+                0.00    0.00     169/169         add_new_conj_subpath [30]
+[31]     0.0    0.00    0.00     169         bite_bitroute_copy [31]
+-----------------------------------------------
+                0.00    0.00     115/115         add_new_conj_subpath [30]
+[32]     0.0    0.00    0.00     115         add_conj_to_bitroute [32]
+-----------------------------------------------
+                0.00    0.00     109/109         execute_queue [41]
+[33]     0.0    0.00    0.00     109         adjust_queue [33]
+                0.00    0.00    5003/5003        remove_queue_item [19]
+                0.00    0.00    4959/4959        already_in_visited [22]
+                0.00    0.00    4939/4939        add_to_visited [25]
+                0.00    0.00    4939/4939        add_nbs_to_queue [24]
+                0.00    0.00     109/5545        bite_alloc [3]
+-----------------------------------------------
+                0.00    0.00      66/66          add_nbs_to_queue [24]
+[34]     0.0    0.00    0.00      66         kill_rooms_in_loop [34]
+-----------------------------------------------
+                0.00    0.00       2/2           parse_rooms [47]
+[35]     0.0    0.00    0.00       2         add_special_room [35]
+                0.00    0.00       3/5361        is_comment [5]
+                0.00    0.00       2/5269        is_room [10]
+                0.00    0.00       2/5266        get_coords [13]
+                0.00    0.00       2/5266        setup_room [14]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_queue [57]
+[36]     0.0    0.00    0.00       1         add_items_start [36]
+                0.00    0.00      44/5003        new_queue_item [18]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_paths [56]
+[37]     0.0    0.00    0.00       1         add_new_conj_subpath_end [37]
+                0.00    0.00       1/170         new_subpath [29]
+                0.00    0.00       1/170         new_path [28]
+                0.00    0.00       1/5048        add_subpath [16]
+-----------------------------------------------
+                0.00    0.00       1/1           execute_queue [41]
+[38]     0.0    0.00    0.00       1         add_paths_to_start [38]
+                0.00    0.00      42/4878        add_to_conj_path [26]
+                0.00    0.00       2/169         add_new_conj_subpath [30]
+-----------------------------------------------
+                0.00    0.00       1/1           sanitize_input [52]
+[39]     0.0    0.00    0.00       1         check_start_end [39]
+-----------------------------------------------
+                0.00    0.00       1/1           read_input [50]
+[40]     0.0    0.00    0.00       1         copy_input [40]
+                0.00    0.00       1/1           resize_buffer [51]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [42]
+[41]     0.0    0.00    0.00       1         execute_queue [41]
+                0.00    0.00    5003/5003        add_path_to_nb [17]
+                0.00    0.00     109/109         adjust_queue [33]
+                0.00    0.00       1/1           add_paths_to_start [38]
+-----------------------------------------------
+                0.00    0.00       1/1           main [315]
+[42]     0.0    0.00    0.00       1         find_routes [42]
+                0.00    0.00       1/1           setup_paths [56]
+                0.00    0.00       1/1           setup_queue [57]
+                0.00    0.00       1/1           execute_queue [41]
+                0.00    0.00       1/1           print_paths [49]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_antmount [45]
+[43]     0.0    0.00    0.00       1         is_antmount [43]
+-----------------------------------------------
+                0.00    0.00       1/1           sanitize_input [52]
+[44]     0.0    0.00    0.00       1         kill_dead_ends [44]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [46]
+[45]     0.0    0.00    0.00       1         parse_antmount [45]
+                0.00    0.00       1/5361        is_comment [5]
+                0.00    0.00       1/1           is_antmount [43]
+                0.00    0.00       1/10533       ft_atoi_ll [2]
+-----------------------------------------------
+                0.00    0.00       1/1           main [315]
+[46]     0.0    0.00    0.00       1         parse_input [46]
+                0.00    0.00       1/1           parse_antmount [45]
+                0.00    0.00       1/1           parse_rooms [47]
+                0.00    0.00       1/1           parse_tubes [48]
+                0.00    0.00       1/1           sanitize_input [52]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [46]
+[47]     0.0    0.00    0.00       1         parse_rooms [47]
+                0.00    0.00    5268/5268        is_tube [11]
+                0.00    0.00    5267/5269        is_room [10]
+                0.00    0.00    5264/5264        add_room [15]
+                0.00    0.00       6/5361        is_comment [5]
+                0.00    0.00       2/2           add_special_room [35]
+                0.00    0.00       1/1           setup_bitconj_rooms [53]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [46]
+[48]     0.0    0.00    0.00       1         parse_tubes [48]
+                0.00    0.00    5351/5361        is_comment [5]
+                0.00    0.00    5350/5350        parse_tube [8]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [42]
+[49]     0.0    0.00    0.00       1         print_paths [49]
+-----------------------------------------------
+                0.00    0.00       1/1           main [315]
+[50]     0.0    0.00    0.00       1         read_input [50]
+                0.00    0.00       1/1           setup_input [54]
+                0.00    0.00       1/1           copy_input [40]
+-----------------------------------------------
+                0.00    0.00       1/1           copy_input [40]
+[51]     0.0    0.00    0.00       1         resize_buffer [51]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [46]
+[52]     0.0    0.00    0.00       1         sanitize_input [52]
+                0.00    0.00       1/1           kill_dead_ends [44]
+                0.00    0.00       1/1           check_start_end [39]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_rooms [47]
+[53]     0.0    0.00    0.00       1         setup_bitconj_rooms [53]
+                0.00    0.00    5266/5545        bite_alloc [3]
+-----------------------------------------------
+                0.00    0.00       1/1           read_input [50]
+[54]     0.0    0.00    0.00       1         setup_input [54]
+-----------------------------------------------
+                0.00    0.00       1/1           main [315]
+[55]     0.0    0.00    0.00       1         setup_map [55]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [42]
+[56]     0.0    0.00    0.00       1         setup_paths [56]
+                0.00    0.00       1/1           add_new_conj_subpath_end [37]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [42]
+[57]     0.0    0.00    0.00       1         setup_queue [57]
+                0.00    0.00       1/1           add_items_start [36]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [27] add_bite_conj          [22] already_in_visited     [18] new_queue_item
+  [32] add_conj_to_bitroute    [3] bite_alloc             [29] new_subpath
+  [21] add_item_queue         [31] bite_bitroute_copy     [45] parse_antmount
+  [36] add_items_start        [39] check_start_end        [46] parse_input
+  [24] add_nbs_to_queue       [40] copy_input             [47] parse_rooms
+   [1] add_neighbour          [41] execute_queue           [8] parse_tube
+   [4] add_neighbour_grow     [42] find_routes            [48] parse_tubes
+  [12] add_neighbour_new       [6] free_room_names        [49] print_paths
+  [30] add_new_conj_subpath    [2] ft_atoi_ll             [50] read_input
+  [37] add_new_conj_subpath_end [13] get_coords           [19] remove_queue_item
+  [17] add_path_to_nb         [20] increase_routes_size   [51] resize_buffer
+  [38] add_paths_to_start     [43] is_antmount            [52] sanitize_input
+  [15] add_room                [5] is_comment              [9] set_spe_sps
+  [35] add_special_room       [23] is_new_conj            [53] setup_bitconj_rooms
+  [16] add_subpath            [10] is_room                [54] setup_input
+  [26] add_to_conj_path       [11] is_tube                [55] setup_map
+  [25] add_to_visited         [44] kill_dead_ends         [56] setup_paths
+   [7] add_tubes              [34] kill_rooms_in_loop     [57] setup_queue
+  [33] adjust_queue           [28] new_path               [14] setup_room

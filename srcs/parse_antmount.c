@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 15:22:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/04 19:07:32 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "../includes/lem-in.h"
 
 unsigned long long		ft_atoi_ll(char *line, size_t *overflow)
 {
@@ -53,5 +53,7 @@ ssize_t		parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 		(*i)++;
 		return (EXIT_SUCCESS);
 	}
-	return (parse_error(3));
+	/* Could be anything wrong */
+	return (parse_error(3));//TODO: make return more descriptive
+	/* What is the biggest number of ants that is still legal?? */
 }

@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 16:44:28 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 14:52:31 by lravier       ########   odam.nl         */
+/*   Updated: 2020/06/24 19:54:54 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "../includes/lem-in.h"
 
 void		bite_route_add_conj(t_route *route, const t_room *conj)
 {
@@ -106,7 +106,7 @@ size_t	setup_routes(t_routes_wrapper **rw, t_map *map)
 	if (!*rw)
 		return (EXIT_FAILURE);
 	(*rw)->num_paths = 0;
-	(*rw)->size = (map->rooms->size * 100) / (100 * (100 / INIT_ROUTE_PERC));
+	(*rw)->size = (map->rooms->count * 100) / ((100 / INIT_ROUTE_PERC) * 100);
 	if ((*rw)->size == 0)
 		(*rw)->size = (map->rooms->size);
 	(*rw)->routes = (t_route **)malloc(sizeof(t_route *) * (*rw)->size);

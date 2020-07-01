@@ -6,102 +6,105 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/23 19:21:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/01 10:28:48 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lemin.h"
+#include "../includes/lem-in.h"
 
-t_list			*ft_lstnew_no_malloc(void *content, size_t size)
+t_queue		*new_queue_item(t_subpath *pt, t_room *dst, t_room *src)
 {
-	t_list *new;
+	t_queue	*new;
 
-	new = (t_list *)malloc(sizeof(t_list));
+	printf("NEW QUEUE ITEM\n");
+	new = (t_queue *)malloc(sizeof(t_queue));
 	if (new)
 	{
-		new->content_size = size;
+		new->handled = 0;
+		new->src = src;
+		new->dst = dst;
+		new->path = pt;
 		new->next = NULL;
-		new->content = malloc(size);
-		new->content = content;
+		new->prev = NULL;
 		return (new);
 	}
 	return (NULL);
 }
 
-void			ft_lstaddend_no_alloc(t_qwrap *lst, t_list *new)
+void		add_item_queue(t_qwrap **qr, t_queue *new)
 {
-	t_list	*tmp;
+	t_queue	*tmp;
 
-	tmp = lst->last;
+	tmp = (*qr)->last;
+	(*qr)->items++;
 	if (tmp == NULL)
 	{
-		(*lst->queue) = new;
-		lst->last = new;
+		(*qr)->last = new;
+		*((*qr)->queue) = new;
 	}
 	else
 	{
-		tmp->next = new;
-		lst->last = new;
+		(*qr)->last->next = new;
+		new->prev = (*qr)->last;
+		(*qr)->last = new;
 	}
+	// if ((*qr)->last)
+	// 	printf("last %s", (*qr)->last->dst->name);
+	// if ((*(*qr)->queue))
+	// 	printf("\nfirst %s\n", (*(*qr)->queue)->dst->name);
 }
 
-t_list	*new_queue_item(t_subpath *pt, t_room *dst, t_room *src)
+static size_t		add_items_start(t_qwrap **qr, t_map *map)
 {
-	t_queue	*new;
-	t_list	*node;
-
-	node = NULL;
-	new = (t_queue *)malloc(sizeof(t_queue));
-	if (new)
-	{
-		new->new_conj = 0;
-		new->dst = dst;
-		new->src = src;
-		new->path = pt;
-		node = ft_lstnew_no_malloc(new, sizeof(t_queue *));
-		if (!node)
-			free (new);
-	}
-	return (node);
-}
-
-size_t		add_nodes(t_qwrap **queue, t_map *map)
-{
-	size_t	i;
-	t_list 	*new_node;
+	size_t		i;
+	t_queue		*new;
 
 	i = 0;
+	new = NULL;
+	map->end->weight = (*qr)->round;
 	while (i < map->end->neighbours_len)
 	{
-		new_node = new_queue_item((*map->end->routes),
-		map->end->neighbours[i], map->end);
-		if (!new_node)
+		if (map->end->neighbours[i]->nb->dead_end == 0)
 		{
-			free_queue(queue);
-			return (EXIT_FAILURE);
+			new = new_queue_item(NULL,
+			map->end->neighbours[i]->nb, map->end);
+			if (new)
+				add_item_queue(qr, new);
+			else
+				return (EXIT_FAILURE);
 		}
-		ft_lstaddend_no_alloc(*queue, new_node);
+		// map->end->neighbours[i]->available = 0;
+		map->end->neighbours[i]->nb->weight = (*qr)->round;
 		i++;
 	}
 	return (EXIT_SUCCESS);
 }
 
-size_t		setup_queue(t_qwrap **queue, t_map *map)
+size_t		setup_queue(t_qwrap **qr, t_map *map)
 {
-	*queue = (t_qwrap *)malloc(sizeof(t_qwrap));
-	if (*queue)
+	printf("Setup queue\n");
+	*qr = (t_qwrap *)malloc(sizeof(t_qwrap));
+	if (*qr)
 	{
-		(*queue)->last = NULL;
-		(*queue)->queue = (t_list **)malloc(sizeof(t_list *));
-		if ((*queue)->queue)
+		(*qr)->queue = (t_queue **)malloc(sizeof(t_queue *));
+		(*qr)->items = 0;
+		(*qr)->last = NULL;
+		(*qr)->round = 1;
+		if ((*qr)->queue)
 		{
-			(*(*queue)->queue) = NULL;
+			*((*qr)->queue) = NULL;
 			if (map->end->sps == 1)
 				return (EXIT_SUCCESS);
-			if (add_nodes(queue, map) == EXIT_SUCCESS)
+			if (add_items_start(qr, map) == EXIT_SUCCESS)
+			{
+				printf("After setup queue\n");
+				print_queue(*qr);
+				map->end->dead_end = 1;
 				return (EXIT_SUCCESS);
+			}
 		}
+		free ((*qr)->queue);
 	}
-	free_queue(queue);
+	free (*qr);
 	return (EXIT_FAILURE);
 }
