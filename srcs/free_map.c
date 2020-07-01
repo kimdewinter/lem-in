@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/10 16:28:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/10 17:13:22 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/lem-in.h"
+#include "includes/lemin.h"
 
 void		free_routes(t_subpath ***routes, size_t num_options)
 {

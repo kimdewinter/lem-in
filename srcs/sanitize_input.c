@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/29 12:04:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 /* Needs checking:
 	Is there a start room

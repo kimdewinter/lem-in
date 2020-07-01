@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/01 10:28:48 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 t_queue		*new_queue_item(t_subpath *pt, t_room *dst, t_room *src)
 {

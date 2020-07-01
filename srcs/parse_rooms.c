@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/14 15:01:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 static ssize_t	get_coords(char *wordx, char *wordy, size_t *posx, size_t *posy)
 {

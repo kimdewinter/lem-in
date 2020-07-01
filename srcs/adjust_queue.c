@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/01 13:03:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:27:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 void		remove_queue_item(t_qwrap *qr, t_queue *item)
 {
@@ -261,11 +261,6 @@ BITFIELD_TYPE **already_in_queue)
 		}
 		i++;
 	}
-	// if (curr->dst->name[0] == '5')
-	// {
-	// 	printf("%lu round\n", qr->round);
-	// 	exit (0);
-	// }
 	if (curr->dst->viable_nbs == 1 && curr->dst->num_options == 0)
 		curr->dst->is_conj = 0;
 	curr->dst->checked = 1;

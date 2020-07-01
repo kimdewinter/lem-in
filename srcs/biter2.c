@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/15 19:49:42 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 void			add_conj_to_bitroute(t_room *conj, BITFIELD_TYPE *bitconj)
 {

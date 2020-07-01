@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/01 13:16:43 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:27:54 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 static size_t			increase_routes_size(t_room **dst, t_map *map)
 {
@@ -344,11 +344,11 @@ t_map *map)
 	}
 	else
 		item->path = NULL;
-	if (qr->round == 4 && item->src->name[0] == '5' && item->path->len == 5)
-	{
-		print_paths(map->start);
-		exit (0);
-	}
+	// if (qr->round == 4 && item->src->name[0] == '5' && item->path->len == 5)
+	// {
+	// 	print_paths(map->start);
+	// 	exit (0);
+	// }
 	return (EXIT_SUCCESS);
 }
 

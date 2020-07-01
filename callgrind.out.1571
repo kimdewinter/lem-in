@@ -2,7 +2,7 @@
 version: 1
 creator: callgrind-3.15.0
 pid: 1571
-cmd:  ./lem-in
+cmd:  ./lemin
 part: 1
 
 
@@ -18,7 +18,7 @@ events: Ir Dr Dw I1mr D1mr D1mw ILmr DLmr DLmw
 summary: 1240773 491129 319112 1228 2668 2258 1224 2045 2159
 
 
-ob=(5) /mnt/c/Users/bramv/Desktop/Codam/lem-in1406-bck/lem-in
+ob=(5) /mnt/c/Users/bramv/Desktop/Codam/lemin1406-bck/lemin
 fl=(87) ???
 fn=(340) main
 0xa94 0 1 0 1 1 0 0 1

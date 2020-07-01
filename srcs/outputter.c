@@ -6,11 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 13:54:50 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/10 17:33:30 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 ssize_t		copy_roomnames(char ***rooms, t_route *curr)
 {

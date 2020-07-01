@@ -3,14 +3,14 @@
 /*                                                        ::::::::            */
 /*   err_paracom.c                                      :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 14:36:24 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/04 14:58:35 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/lem-in.h"
+#include "../includes/lemin.h"
 
 ssize_t		handle_err_para(size_t err_code, const char *line)
 {

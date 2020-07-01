@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 19:51:36 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/13 13:54:48 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/01 13:24:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include <stdio.h>
 # include "../../libft/libft.h"
 # include "../../libft/get_next_line.h"
-# include "../../../includes/lem-in.h"
+# include "../../../includes/lemin.h"
 
 typedef struct 	s_entry
 {
