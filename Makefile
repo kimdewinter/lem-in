@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/30 15:54:03 by kim           ########   odam.nl          #
+#    Updated: 2020/07/02 21:11:55 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ RAW=	main\
 		sanitize_input\
 		debug\
 		clean_route_finding\
-		route_adding\
 		route_setup\
 		route_finder\
 		biter1\
@@ -41,8 +40,6 @@ RAW=	main\
 		adjust_queue\
 		calc_combinations\
 		parallelizer\
-		build_paths_utils\
-		build_paths\
 		calc_ants_routes\
 		outputter\
 		roundputter\

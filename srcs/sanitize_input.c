@@ -6,11 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/29 19:49:32 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/02 21:19:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+
 
 size_t			sanitize_input(t_map *map)
 {

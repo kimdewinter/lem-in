@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 15:47:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/02 21:22:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,12 @@ typedef struct			s_room
 	ssize_t				xpos;
 	ssize_t				ypos;
 	size_t				ant;
+	size_t				viable_nbs;
+	int					is_conj;
+	int					checked;
+	int					dead_end;
 	struct s_room		**neighbours;
+	size_t				weight;
 	size_t				neighbours_len;
 	size_t				room_i;
 	size_t				num_options;
@@ -202,16 +207,6 @@ size_t					route_error(size_t err_code);
 size_t					setup_paths(t_map *map);
 
 /*
-** PATH BUILDING
-*/
-size_t					build_paths(t_map *map);
-size_t					increase_routes_capacity(t_routes_wrapper *rw);
-size_t					setup_routes(t_routes_wrapper **rw, t_map *map);
-size_t					setup_starting_paths(t_routes_wrapper *rw,
-												t_map *map,
-												size_t *active);
-
-/*
 ** PATH FINDING QUEUE MANAGEMENT
 */
 size_t					adjust_queue(t_map *map, t_qwrap *queue, size_t len);
@@ -254,11 +249,11 @@ ssize_t					bite_bitroute_merge(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
 void					bite_free(BITFIELD_TYPE **bitfield, const t_map *map);
-void					bite_route_add_conj(t_route *route, const t_room *conj);
 size_t					copy_bitconj(BITFIELD_TYPE **dst,
 										BITFIELD_TYPE *src,
 										t_map *map);
-
+int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
+void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 /*
 ** OUTPUTTER
 */
