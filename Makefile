@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/03 14:21:33 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/03 14:45:44 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ RAW=	main\
 		route_adding\
 		route_conflicts\
 		route_add_nodes\
+		route_assembler\
 		biter1\
 		biter2\
 		calc_cost\

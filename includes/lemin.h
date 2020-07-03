@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/03 14:28:09 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 14:47:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,6 +268,10 @@ size_t					is_viable_for_path(t_map *map,
 											t_room *nb,
 											t_subpath *path);
 int						check_length(t_subpath *new_path, t_room *curr);
+/*
+** BUILD_ROUTES
+*/
+ssize_t					assemble_all_routes(t_map *map);
 /*
 ** PARALLELIZER
 */
