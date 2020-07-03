@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 14:08:15 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 16:37:07 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@ size_t round)
 	return (1);
 }
 
-static size_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map,
-BITFIELD_TYPE **already_in_queue)
+static size_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 {
 	size_t		i;
 	size_t		j;
@@ -51,8 +50,6 @@ BITFIELD_TYPE **already_in_queue)
 					curr->dst->neighbours[i], curr->dst->routes[j])
 					== EXIT_FAILURE)
 						return (EXIT_FAILURE);
-					add_to_bitfield(curr->dst->neighbours[i],
-					*already_in_queue);
 				}
 			}
 			j++;
@@ -84,11 +81,8 @@ size_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	t_queue			*prev;
 	size_t			i;
 	BITFIELD_TYPE	*visited;
-	BITFIELD_TYPE	*already_in_queue;
 
 	if (bite_alloc(&visited, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (bite_alloc(&already_in_queue, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	curr = *(qr->queue);
 	i = 0;
@@ -98,7 +92,7 @@ size_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	{
 		if (room_in_bitfield(curr->dst, visited) == 0)
 		{
-			if (add_nbs_to_queue(qr, curr, map, &already_in_queue)
+			if (add_nbs_to_queue(qr, curr, map)
 			== EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			add_to_bitfield(curr->dst, visited);
@@ -109,5 +103,6 @@ size_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 		i++;
 	}
 	set_weights_after(qr->queue, map);
+	free (visited);
 	return (EXIT_SUCCESS);
 }
