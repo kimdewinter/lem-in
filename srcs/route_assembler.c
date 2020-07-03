@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 15:23:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 15:44:58 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 	if (curr->bitconj != NULL)
 		free(curr->bitconj);
 	free(curr);
-	if (next->conj == map->end)
+	if (curr->conj == map->end)
 		return (EXIT_SUCCESS);
 	else
 		return (assemble_single_route(next, route, route_i, map));
@@ -52,11 +52,13 @@ static ssize_t	setup_route(t_route **route_ptr,
 {
 	size_t	i;
 
-	i = 0;
+	(*route_ptr) = (t_route *)malloc(sizeof(t_route) * 1);
+	if ((route_ptr) != NULL)
 	(*route_ptr)->bitroute =
 		(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * bitfield_len);
 	if ((*route_ptr)->bitroute == NULL)
 		return (EXIT_FAILURE);
+	i = 0;
 	while (i < bitfield_len)
 	{
 		(*route_ptr)->bitroute[i] = bitroute[i];
@@ -93,7 +95,7 @@ ssize_t			assemble_all_routes(t_map *map)
 	j = 0;
 	while (j < map->start->num_options)
 	{
-		if (setup_route(&map->routes[i], map->start->routes[j]->len,
+		if (setup_route(&(map->routes[i]), map->start->routes[j]->len,
 			map->start->routes[j]->bitconj, map->bitfield_len) == EXIT_FAILURE
 			|| assemble_single_route(map->start->routes[j],
 			map->routes[i], 0, map) == EXIT_FAILURE)
@@ -101,6 +103,7 @@ ssize_t			assemble_all_routes(t_map *map)
 		i++;
 		j++;
 	}
+	map->num_routes = map->start->num_options;
 	return (EXIT_SUCCESS);
 }
 /*
