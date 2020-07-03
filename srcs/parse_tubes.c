@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/29 20:04:53 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/03 14:31:09 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ static int		check_duplicate_tube(t_room *room1, t_room *room2)
 	while (i < room1->neighbours_len)
 	{
 		if (room1->neighbours[i] == room2)
-			return (1);
-		i++;
-	}
-	i = 0;
-	while (i < room2->neighbours_len)
-	{
-		if (room2->neighbours[i] == room1)
 			return (1);
 		i++;
 	}

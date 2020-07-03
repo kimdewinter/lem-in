@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/02 21:11:55 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/03 14:21:33 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,18 +26,22 @@ RAW=	main\
 		room_utils\
 		sanitize_input\
 		debug\
-		clean_route_finding\
-		route_setup\
 		route_finder\
+		route_resize\
+		route_utils\
+		route_adding\
+		route_conflicts\
+		route_add_nodes\
 		biter1\
 		biter2\
 		calc_cost\
 		combinatron\
 		err_paracom\
 		err_biter\
-		route_finder_helper\
 		queue_utils\
-		adjust_queue\
+		queue_setup\
+		queue_checks\
+		queue_adjust\
 		calc_combinations\
 		parallelizer\
 		calc_ants_routes\

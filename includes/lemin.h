@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/02 21:22:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 14:28:09 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,23 +84,34 @@ typedef struct			s_routes_wrapper
 
 typedef struct			s_queue
 {
+	int					handled;
 	int					new_conj;
 	struct s_subpath	*path;
 	struct s_room		*dst;
 	struct s_room		*src;
+	struct s_queue		*prev;
+	struct s_queue		*next;
 }						t_queue;
 
 typedef struct			s_qwrap
 {
-	t_list				**queue;
-	t_list				*last;
+	t_queue				**queue;
+	t_queue				*last;
+	size_t				items;
+	size_t				round;
 }						t_qwrap;
 
 typedef struct			s_subpath
 {
+	int					added_this_turn;
+	int					sp;
+	ssize_t				start;
+	size_t				size;
+	size_t				segment_len;
 	size_t				len;
 	struct s_room		*conj;
 	struct s_room		**path;
+	struct s_subpath	*next;
 	BITFIELD_TYPE		*bitconj;
 }						t_subpath;
 
@@ -193,29 +204,70 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
-size_t					add_new_conj_subpath(t_room *dst, t_room *src);
-size_t					add_subpath(t_room *dst, t_subpath *pt);
-size_t					add_to_conj_path(t_room *dst,
-											t_room *src,
-											t_subpath *pt);
 size_t					find_routes(t_map *map);
-int						has_path_to_conj(t_room *curr, t_room *conj);
-int						is_new_conj(t_room *src, t_room *curr, t_subpath *spt);
-t_room					**new_path(size_t size);
-t_subpath				*new_subpath(t_room *conj);
+size_t					add_path(t_qwrap *qr,
+									t_queue *item,
+									t_subpath *path,
+									t_map *map);
 size_t					route_error(size_t err_code);
-size_t					setup_paths(t_map *map);
-
+size_t					add_nodes_to_path(t_queue *item,
+											t_subpath **path,
+											t_map *map,
+											int *add);
 /*
-** PATH FINDING QUEUE MANAGEMENT
+** ROUTE FINDING CONFLICTS
 */
-size_t					adjust_queue(t_map *map, t_qwrap *queue, size_t len);
-void					ft_lstaddend_no_alloc(t_qwrap *lst, t_list *new);
-t_list					*new_queue_item(t_subpath *pt,
+void					solve_spe_conflict(t_queue *item,
+											t_subpath *new,
+											t_map *map,
+											int *add);
+void					solve_conflict(t_queue *item,
+										t_subpath *new,
+										int *add);
+int						is_junction(t_room *dst, size_t round);
+/*
+** ROUTE FINDING UTILS
+*/
+size_t					increase_route_size(t_subpath **pt, t_map *map);
+size_t					increase_routes_size(t_room **dst, t_map *map);
+size_t					add_path_to_room(t_queue *item,
+											t_map *map,
+											t_subpath **new);
+size_t					add_to_path(t_subpath *pt, t_room *add, t_map *map);
+t_room					**new_path(size_t size);
+size_t					new_subpath(t_subpath **new, t_room *conj, t_map *map);
+size_t					create_new_path(t_subpath **new,
+											t_subpath *pt,
+											t_room *conj, 
+											t_map *map);
+/*
+** QUEUE MANAGEMENT
+*/
+size_t					adjust_queue(t_qwrap *qr, t_map *map, size_t len);
+/*
+** QUEUE MANAGEMENT UTILS
+*/
+t_queue					*new_queue_item(t_subpath *pt,
 										t_room *dst,
 										t_room *src);
-size_t					setup_queue(t_qwrap **queue, t_map *map);
-
+void					add_item_queue(t_qwrap **qr, t_queue *new);
+size_t					setup_queue(t_qwrap **qr, t_map *map);
+size_t					add_to_queue(t_qwrap *qr,
+										t_room *src,
+										t_room *dst,
+										t_subpath *pt);
+void					remove_queue_item(t_qwrap *qr, t_queue *item);
+/*
+** QUEUE MANAGEMENT CHECKS
+*/
+int						check_length_spe(t_subpath *path,
+											t_room *nb,
+											t_map *map);
+size_t					is_viable_for_path(t_map *map,
+											t_queue *item,
+											t_room *nb,
+											t_subpath *path);
+int						check_length(t_subpath *new_path, t_room *curr);
 /*
 ** PARALLELIZER
 */
@@ -258,8 +310,6 @@ void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 ** OUTPUTTER
 */
 void					calculate_ants_per_path(size_t ants, t_best *best);
-void					free_queue(t_qwrap **rw);
-void					free_queue_item(t_list *curr);
 void					execute_route(t_routeput *route, const size_t new_ant);
 size_t					parse_error(size_t err_code);
 ssize_t					output_result(t_input_reader *input, const t_map *map);
@@ -280,7 +330,7 @@ void					print_bitroute(t_map *map);
 void					print_bitconj(BITFIELD_TYPE *arr, size_t len);
 void					print_n_routes(const t_route **rtes, const size_t n);
 void					print_path(t_subpath *pt);
-void					print_queue(t_list **queue);
+void					print_queue(t_qwrap *qr);
 void					print_route_rooms(const t_route *rte,
 											const size_t *rte_index);
 void					print_routeput(t_routeput **routes, size_t len);

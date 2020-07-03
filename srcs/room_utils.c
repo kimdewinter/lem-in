@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/02 21:23:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 14:31:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ static ssize_t	add_neighbour_grow(t_room *room)
 
 ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 {
+	room->viable_nbs++;
 	if (room != NULL && neighbour != NULL)
 	{
 		if (room->neighbours_len == 0 && room->neighbours == NULL &&
