@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/03 14:28:43 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 15:17:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ size_t			find_routes(t_map *map)
 	t_qwrap		*queue;
 
 	if (setup_queue(&queue, map) == EXIT_SUCCESS &&
-		execute_queue(queue, map) == EXIT_SUCCESS)
+		execute_queue(queue, map) == EXIT_SUCCESS &&
+		assemble_all_routes(map))
 	{
-		debug (map);
-		exit (0);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

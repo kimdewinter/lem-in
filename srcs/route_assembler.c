@@ -6,16 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 14:46:38 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/03 15:23:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
-
-static size_t	count_routes(const t_subpath *subpath, const size_t n)
-{
-	return (subpath == NULL ? n : count_routes(subpath->next_item, n + 1));
-}
 
 static ssize_t	assemble_single_route(t_subpath *curr,
 										t_route *route,
@@ -25,8 +20,8 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 	size_t		segment_i;
 	t_subpath	*next;
 
-	segment_i = 0;
-	while (segment_i < curr->segment_len)
+	segment_i = curr->start + 1;
+	while (segment_i < curr->size)
 	{
 		route->route[route_i] = curr->path[segment_i];
 		route_i++;
@@ -34,13 +29,13 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 	}
 	route->route[route_i] = curr->conj;
 	route_i++;
-	next = curr->conj;
+	next = curr->next;
 	if (curr->path != NULL)
 		free(curr->path);
 	if (curr->bitconj != NULL)
 		free(curr->bitconj);
 	free(curr);
-	if (next == map->end)
+	if (next->conj == map->end)
 		return (EXIT_SUCCESS);
 	else
 		return (assemble_single_route(next, route, route_i, map));
@@ -52,7 +47,7 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 
 static ssize_t	setup_route(t_route **route_ptr,
 							const size_t len,
-							const BITFIELD_TYPE bitroute,
+							const BITFIELD_TYPE *bitroute,
 							const size_t bitfield_len)
 {
 	size_t	i;
@@ -84,24 +79,27 @@ static ssize_t	setup_route(t_route **route_ptr,
 
 ssize_t			assemble_all_routes(t_map *map)
 {
-	t_subpath	*subp;
 	size_t		i;
+	size_t		j;
 
 	if (map == NULL || map->start == NULL ||
 		map->start->routes == NULL || map->start->routes[0] == NULL)
 		return (EXIT_FAILURE);
-	subp = map->start->routes[0];
-	map->routes = (t_route **)malloc(sizeof(t_route *) * count_routes(subp, 1));
+	map->routes =
+		(t_route **)malloc(sizeof(t_route *) * map->start->num_options);
 	if (map->routes == NULL)
 		return (EXIT_FAILURE);
-	while (subp != NULL)
+	i = 0;
+	j = 0;
+	while (j < map->start->num_options)
 	{
-		if (setup_route(&map->routes[i], subp->len,
-			subp->bitconj, map->bitfield_len) == EXIT_FAILURE ||
-			assemble_single_route(subp, map->routes[i], 0, map)
-			== EXIT_FAILURE)
+		if (setup_route(&map->routes[i], map->start->routes[j]->len,
+			map->start->routes[j]->bitconj, map->bitfield_len) == EXIT_FAILURE
+			|| assemble_single_route(map->start->routes[j],
+			map->routes[i], 0, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		subp = subp->next_item;
+		i++;
+		j++;
 	}
 	return (EXIT_SUCCESS);
 }
