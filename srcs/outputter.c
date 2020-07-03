@@ -6,83 +6,16 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 13:54:50 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/29 20:16:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/03 17:09:01 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-ssize_t		copy_roomnames(char ***rooms, t_route *curr)
-{
-	size_t	i;
 
-	i = 0;
-	*rooms = (char **)malloc(sizeof(char *) * curr->len);
-	if (*rooms == NULL)
-		return (EXIT_FAILURE);
-	while (i < curr->len)
-	{
-		(*rooms)[i] = curr->route[i]->name;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-ssize_t		setup_ants(size_t **ants, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	*ants = (size_t *)malloc(sizeof(size_t) * len);
-	if (*ants == NULL)
-		return (EXIT_FAILURE);
-	while (i < len)
-	{
-		(*ants)[i] = 0;
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-ssize_t		setup_routeput(t_routeput **new, t_route *curr)
-{
-	*new = (t_routeput *)malloc(sizeof(t_routeput));
-	if (*new)
-	{
-		if (copy_roomnames(&(*new)->rooms, curr) == EXIT_SUCCESS)
-		{
-			if (setup_ants(&(*new)->ants, curr->len) == EXIT_SUCCESS)
-			{
-				(*new)->rooms_len = curr->len;
-				(*new)->ants_received = 0;
-				(*new)->finished = 0;
-				return (EXIT_SUCCESS);
-			}
-			free((*new)->rooms);
-		}
-		free(*new);
-	}
-	return (EXIT_FAILURE);
-}
-
-ssize_t		setup_all_routeputs(t_routeput ***routes, const t_map *map)
-{
-	size_t		i;
-
-	*routes = (t_routeput **)malloc(sizeof(t_routeput *) * map->solution.len);
-	if (*routes == NULL)
-		return (EXIT_FAILURE);
-	i = 0;
-	while (i < map->solution.used)
-	{
-		setup_routeput(&(*routes)[i], map->solution.combi[i]);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-void		execute_round(t_routeput **routes, const t_map *map,
-size_t *curr_ant)
+void		execute_round(t_routeput **routes,
+							const t_map *map,
+							size_t *curr_ant)
 {
 	size_t	j;
 
@@ -118,7 +51,114 @@ void		print_input(t_input_reader *input)
 	ft_printf("\n");
 }
 
-ssize_t		output_result(t_input_reader *input, const t_map *map)
+static ssize_t	copy_roomnames(char ***rooms, t_route *curr)
+{
+	size_t	i;
+
+	i = 0;
+	*rooms = (char **)malloc(sizeof(char *) * curr->len);
+	if (*rooms == NULL)
+		return (EXIT_FAILURE);
+	while (i < curr->len)
+	{
+		(*rooms)[i] = curr->route[i]->name;
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+static ssize_t	setup_ants(size_t **ants, size_t len)
+{
+	size_t	i;
+
+	i = 0;
+	*ants = (size_t *)malloc(sizeof(size_t) * len);
+	if (*ants == NULL)
+		return (EXIT_FAILURE);
+	while (i < len)
+	{
+		(*ants)[i] = 0;
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+static ssize_t	setup_routeput(t_routeput **new, t_route *curr)
+{
+	*new = (t_routeput *)malloc(sizeof(t_routeput));
+	if (*new)
+	{
+		if (copy_roomnames(&(*new)->rooms, curr) == EXIT_SUCCESS)
+		{
+			if (setup_ants(&(*new)->ants, curr->len) == EXIT_SUCCESS)
+			{
+				(*new)->rooms_len = curr->len;
+				(*new)->ants_received = 0;
+				(*new)->finished = 0;
+				return (EXIT_SUCCESS);
+			}
+			free((*new)->rooms);
+		}
+		free(*new);
+	}
+	return (EXIT_FAILURE);
+}
+
+static ssize_t	setup_all_routeputs(t_routeput ***routes, const t_map *map)
+{
+	size_t		i;
+
+	*routes = (t_routeput **)malloc(sizeof(t_routeput *) * map->solution.len);
+	if (*routes == NULL)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < map->solution.used)
+	{
+		setup_routeput(&(*routes)[i], map->solution.combi[i]);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+static void		delete_routeput(t_routeput **routes, const t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	if (routes == NULL)
+		return ;
+	i = 0;
+	while (i < map->solution.len)
+	{
+		if (routes[i] != NULL)
+		{
+			if (routes[i]->rooms != NULL)
+			{
+				j = 0;
+				while (j < routes[i]->rooms_len)
+				{
+					if (routes[i]->rooms[j] != NULL)
+					{
+						free(routes[i]->rooms[j]);
+						routes[i]->rooms[j] = NULL;
+					
+					j++;}
+				}
+				free(routes[i]->rooms);
+			}
+			if (routes[i]->ants != NULL)
+			{
+				free(routes[i]->ants);
+				routes[i]->ants = NULL;
+			}
+			free(routes[i]);
+			routes[i] = NULL;
+		}
+		i++;
+	}
+}
+
+ssize_t			output_result(t_input_reader *input, const t_map *map)
 {
 	t_routeput	**routes;
 	size_t		i;
@@ -137,5 +177,8 @@ ssize_t		output_result(t_input_reader *input, const t_map *map)
 		i++;
 		ft_printf("\n");
 	}
+	delete_routeput(routes, map);
+	free(routes);
+	routes = NULL;
 	return (EXIT_SUCCESS);
 }
