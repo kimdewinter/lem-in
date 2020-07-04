@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/04 14:55:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 15:06:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static size_t			execute_queue(t_qwrap *qr, t_map *map)
 	}
 	free (qr->queue);
 	free (qr);
-	print_paths(map->start);
-	exit (0);
 	return (EXIT_SUCCESS);
 }
 
