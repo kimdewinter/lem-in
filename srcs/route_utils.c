@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 13:41:30 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 14:23:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ t_subpath **new)
 	item->dst->num_options++;
 	if (item->dst->weight == 0 && item->dst != map->start)
 		item->dst->weight = item->src->weight + 1;
-	add_to_bitfield((*new)->conj, item->dst->bitconj);
+	if ((*new)->conj != map->end)
+		add_to_bitfield((*new)->conj, item->dst->bitconj);
 	return (EXIT_SUCCESS);
 }
 
@@ -96,7 +97,8 @@ t_map *map)
 				return (EXIT_FAILURE);
 			}
 		}
-		add_to_bitfield(conj, (*new)->bitconj);
+		if (conj != map->end)
+			add_to_bitfield(conj, (*new)->bitconj);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

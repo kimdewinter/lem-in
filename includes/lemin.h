@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/03 14:47:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 13:58:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,5 +340,5 @@ void					print_route_rooms(const t_route *rte,
 void					print_routeput(t_routeput **routes, size_t len);
 void					print_solution(t_map *map);
 void					print_troute(t_routes_wrapper *wroutes);
-
+void					print_paths(t_room *room);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 14:27:42 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 14:20:58 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,6 +233,8 @@ void	debug(t_map *map)
 			((t_room *)table->entries[i]->val)->is_conj, ((t_room *)table->entries[i]->val)->viable_nbs,
 			((t_room *)table->entries[i]->val)->weight, ((t_room *)table->entries[i]->val)->spe);
 			tmp = (t_room *)table->entries[i]->val;
+			printf("bitconj\n");
+			print_bitconj(tmp->bitconj, map->bitfield_len);
 			printf("ID: %lu\nDead end: %d\n", tmp->room_i, tmp->dead_end);
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
 				ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);

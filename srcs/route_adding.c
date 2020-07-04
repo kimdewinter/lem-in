@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 13:20:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 14:40:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_map *map)
 		return (EXIT_FAILURE);
 	if (room_in_bitfield(new->conj, item->dst->bitconj) == 1)
 		solve_conflict(item, new, &add);
-	else if (item->dst->spe == 1)
+	else if (item->dst->spe == 1 && item->dst != map->start)
 		solve_spe_conflict(item, new, map, &add);
 	if (add == 1)
 	{

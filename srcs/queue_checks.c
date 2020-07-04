@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:01:31 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 14:06:29 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 14:42:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,7 @@ size_t			is_viable_for_path(t_map *map, t_queue *item,
 t_room *nb, t_subpath *path)
 {
 	if (nb != item->src
-	&& nb != path->conj
-	&& (!(item->dst->sps == 1 && nb != map->start)))
+	&& nb != path->conj)
 	{
 		if (nb->weight == 0 && nb != map->start)
 			return (1);
@@ -46,7 +45,7 @@ t_room *nb, t_subpath *path)
 				return (1);
 			return (0);
 		}
-		if (nb->spe == 1)
+		if (nb->spe == 1 && nb != map->start)
 		{
 			if (check_length_spe(path, nb, map) == 1)
 				return (1);
