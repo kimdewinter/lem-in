@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:21:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/04 14:36:07 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/04 14:53:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,14 +102,16 @@ t_map *map, int *add)
 		{
 			if (new->len < item->dst->routes[j]->len)
 			{
-				free (item->dst->routes[j]);
+				if (item->dst->routes[j])
+					free (item->dst->routes[j]);
 				item->dst->routes[j] = new;
 				*add = 0;
 				return;
 			}
 			else
 			{
-				free (new);
+				if (new)
+					free (new);
 				new = NULL;
 				*add = 0;
 				return ;
