@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/26 16:49:47 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 15:41:58 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,24 +28,20 @@ ssize_t			copy_n_routes(t_route ***dst, t_route **src, const size_t n)
 	return (EXIT_SUCCESS);
 }
 
-size_t			is_valid_combi(t_map *map,
+size_t			is_valid_combi(size_t bitfield_len,
 								BITFIELD_TYPE *rte1,
 								BITFIELD_TYPE *rte2)
 {
 	size_t	i;
 
-	if (map != NULL && rte1 != NULL && rte2 != NULL)
+	i = 0;
+	while (i < bitfield_len)
 	{
-		i = 0;
-		while (i < map->bitfield_len)
-		{
-			if ((rte1[i] & rte2[i]) != (BITFIELD_TYPE)0)
-				return (0);
-			i++;
-		}
-		return (1);
+		if ((rte1[i] & rte2[i]) != (BITFIELD_TYPE)0)
+			return (0);
+		i++;
 	}
-	return (0);
+	return (1);
 }
 
 static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
@@ -54,12 +50,12 @@ static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
 
 	*numtocombi = max_parallels(map);
 	map->solution.combi =
-		(t_route **)malloc(sizeof(t_route *) * map->num_routes);
+		(t_route **)malloc(sizeof(t_route *) * *numtocombi);
 	if (map->solution.combi == NULL)
 		return (handle_err_para(1, "parallelize_setup\n"));
-	map->solution.len = map->num_routes;
+	map->solution.len = *numtocombi;
 	i = 0;
-	while (i < map->num_routes)
+	while (i < *numtocombi)
 	{
 		map->solution.combi[i] = NULL;
 		i++;

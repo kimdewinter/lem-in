@@ -6,79 +6,78 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/29 19:42:27 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/04 14:40:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static void				add_bite_conj(t_room *dst, t_room *conj)
+static size_t				handle_path_src(t_subpath *path, t_queue *item,
+t_map *map, t_subpath **new)
 {
-	dst->bitconj[conj->room_i / BITFIELD_SIZE] |=
-	(BITFIELD_TYPE)1 << (63 - conj->room_i % BITFIELD_SIZE);
-}
-
-size_t		add_new_conj_subpath(t_room *dst, t_room *src)
-{
-	t_subpath	*new;
-
-	add_bite_conj(dst, src);
-	new = new_subpath(src);
-	if (new)
+	if (item->src->is_conj == 0 && item->src != map->end)
 	{
-		new->path = new_path(1);
-		new->len = 1;
-		if (new->path)
-		{
-			new->path[0] = src;
-			if (add_subpath(dst, new) == EXIT_SUCCESS)
-					return (EXIT_SUCCESS);
-		}
-		free (new);
+		if (add_to_path(path, item->src, map) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		path->sp = 1;
+		item->src = path->conj;
+		path->added_this_turn = 1;
+		(*new) = path;
 	}
-	return (EXIT_FAILURE);
-}
-
-static t_subpath	*copy_subpath(t_subpath *pt)
-{
-	t_subpath	*new;
-	size_t		i;
-
-	i = 0;
-	new = new_subpath(pt->conj);
-	if (new)
+	else
 	{
-		new->len = pt->len + 1;
-		new->path = new_path(new->len);
-		if (new->path)
+		if (item->src != map->end)
 		{
-			while (i < pt->len)
-			{
-				new->path[i + 1] = pt->path[i];
-				i++;
-			}
-			return (new);
+			if (create_new_path(new, path, item->src, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 		}
-		free (new);
-	}
-	return (NULL);
-}
-
-size_t			add_to_conj_path(t_room *dst,
-									t_room *src,
-									t_subpath *pt)
-{
-	t_subpath	*new;
-
-	add_bite_conj(dst, pt->conj);
-	new = copy_subpath(pt);
-	if (new)
-	{
-		new->path[0] = src;
+		else
 		{
-			if (add_subpath(dst, new) == EXIT_SUCCESS)
-				return (EXIT_SUCCESS);
+			(*new) = path;
+			(*new)->added_this_turn = 1;
 		}
 	}
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
+}
+
+static size_t		handle_path_dst(size_t round, t_queue *item, t_map *map,
+t_subpath **new, int *add)
+{
+	if (item->dst != map->start && (item->dst->is_conj == 0 ||
+	(item->dst->checked == 0 && is_junction(item->dst, round) == 0)))
+	{
+		item->dst->is_conj = 0;
+		(*new)->sp = 1;
+		if (add_nodes_to_path(item, new, map, add) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
+	return (EXIT_SUCCESS);
+}
+
+size_t				add_path(t_qwrap *qr, t_queue *item, t_subpath *path,
+t_map *map)
+{
+	t_subpath	*new;
+	int			add;
+
+	new = NULL;
+	add = 1;
+	path->added_this_turn = 0;
+	if (handle_path_src(path, item, map, &new) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (handle_path_dst(qr->round, item, map, &new, &add) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (room_in_bitfield(new->conj, item->dst->bitconj) == 1)
+		solve_conflict(item, new, &add);
+	else if (item->dst->spe == 1 && item->dst != map->start)
+		solve_spe_conflict(item, new, map, &add);
+	if (add == 1)
+	{
+		if (add_path_to_room(item, map, &new) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		item->path = new;
+	}
+	else
+		item->path = NULL;
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 13:35:43 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 16:02:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/03 16:36:14 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void		delete_all_routes(t_map *map)
 		if (map->routes[i] != NULL)
 		{
 			delete_single_route(map->routes[i]);
+			free(map->routes[i]);
 			map->routes[i] = NULL;
 		}
 		i++;

@@ -6,14 +6,14 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/30 15:54:03 by kim           ########   odam.nl          #
+#    Updated: 2020/07/06 15:47:36 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
 EXTRA=
-IFLAGS= -Wall -Wextra -Werror $(EXTRA)
+IFLAGS= -Wall -Wextra -Werror -O1 $(EXTRA)
 RAW=	main\
 		parse_antmount\
 		parse_clean\
@@ -26,23 +26,25 @@ RAW=	main\
 		room_utils\
 		sanitize_input\
 		debug\
-		clean_route_finding\
-		route_adding\
-		route_setup\
 		route_finder\
+		route_resize\
+		route_utils\
+		route_adding\
+		route_conflicts\
+		route_add_nodes\
+		route_assembler\
 		biter1\
 		biter2\
 		calc_cost\
 		combinatron\
 		err_paracom\
 		err_biter\
-		route_finder_helper\
 		queue_utils\
-		adjust_queue\
+		queue_setup\
+		queue_checks\
+		queue_adjust\
 		calc_combinations\
 		parallelizer\
-		build_paths_utils\
-		build_paths\
 		calc_ants_routes\
 		outputter\
 		roundputter\

@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   room_utils.c                                       :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/29 20:35:50 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/03 14:31:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,11 @@ ssize_t			setup_room(t_room **dest,
 		room->sps = 0;
 		room->spe = 0;
 		room->room_i = *num_room;
+		room->viable_nbs = 0;
+		room->is_conj = 0;
+		room->checked = 0;
+		room->dead_end = 0;
+		room->weight = 0;
 		room->bitconj = NULL;
 		room->name = (char *)name;
 		room->xpos = xpos;
@@ -87,6 +92,7 @@ static ssize_t	add_neighbour_grow(t_room *room)
 
 ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 {
+	room->viable_nbs++;
 	if (room != NULL && neighbour != NULL)
 	{
 		if (room->neighbours_len == 0 && room->neighbours == NULL &&
