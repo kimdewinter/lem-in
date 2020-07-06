@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:10:41 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/26 16:49:47 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 13:51:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,12 @@ static ssize_t	parallelize_setup(t_map *map, size_t *numtocombi)
 
 	*numtocombi = max_parallels(map);
 	map->solution.combi =
-		(t_route **)malloc(sizeof(t_route *) * map->num_routes);
+		(t_route **)malloc(sizeof(t_route *) * *numtocombi);
 	if (map->solution.combi == NULL)
 		return (handle_err_para(1, "parallelize_setup\n"));
-	map->solution.len = map->num_routes;
+	map->solution.len = *numtocombi;
 	i = 0;
-	while (i < map->num_routes)
+	while (i < *numtocombi)
 	{
 		map->solution.combi[i] = NULL;
 		i++;

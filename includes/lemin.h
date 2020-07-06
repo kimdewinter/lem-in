@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/04 13:58:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/06 14:20:00 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -313,10 +313,12 @@ void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 /*
 ** OUTPUTTER
 */
-void					calculate_ants_per_path(size_t ants, t_best *best);
+void					calculate_ants_per_path(size_t ants,
+												const t_best *best);
 void					execute_route(t_routeput *route, const size_t new_ant);
 size_t					parse_error(size_t err_code);
-ssize_t					output_result(t_input_reader *input, const t_map *map);
+ssize_t					output_result(const t_input_reader *input,
+										const t_map *map);
 
 /*
 ** CLEANER

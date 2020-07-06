@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 13:54:50 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/03 17:09:01 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 14:29:41 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void		execute_round(t_routeput **routes,
 	}
 }
 
-void		print_input(t_input_reader *input)
+void		print_input(const t_input_reader *input)
 {
 	size_t	i;
 
@@ -108,7 +108,7 @@ static ssize_t	setup_all_routeputs(t_routeput ***routes, const t_map *map)
 {
 	size_t		i;
 
-	*routes = (t_routeput **)malloc(sizeof(t_routeput *) * map->solution.len);
+	*routes = (t_routeput **)malloc(sizeof(t_routeput *) * map->solution.used);
 	if (*routes == NULL)
 		return (EXIT_FAILURE);
 	i = 0;
@@ -123,28 +123,18 @@ static ssize_t	setup_all_routeputs(t_routeput ***routes, const t_map *map)
 static void		delete_routeput(t_routeput **routes, const t_map *map)
 {
 	size_t	i;
-	size_t	j;
 
 	if (routes == NULL)
 		return ;
 	i = 0;
-	while (i < map->solution.len)
+	while (i < map->solution.used)
 	{
 		if (routes[i] != NULL)
 		{
 			if (routes[i]->rooms != NULL)
 			{
-				j = 0;
-				while (j < routes[i]->rooms_len)
-				{
-					if (routes[i]->rooms[j] != NULL)
-					{
-						free(routes[i]->rooms[j]);
-						routes[i]->rooms[j] = NULL;
-					
-					j++;}
-				}
 				free(routes[i]->rooms);
+				routes[i]->rooms = NULL;
 			}
 			if (routes[i]->ants != NULL)
 			{
@@ -158,7 +148,7 @@ static void		delete_routeput(t_routeput **routes, const t_map *map)
 	}
 }
 
-ssize_t			output_result(t_input_reader *input, const t_map *map)
+ssize_t			output_result(const t_input_reader *input, const t_map *map)
 {
 	t_routeput	**routes;
 	size_t		i;
@@ -166,7 +156,7 @@ ssize_t			output_result(t_input_reader *input, const t_map *map)
 
 	i = 0;
 	curr_ant = 1;
-	calculate_ants_per_path(map->antmount, (t_best *)&(map->solution));
+	calculate_ants_per_path(map->antmount, &(map->solution));
 	if (setup_all_routeputs(&routes, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	print_input(input);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/04 14:48:02 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/06 14:30:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void		delete_input(t_input_reader *input)
 			}
 			i++;
 		}
-		free(input->lines);
+		if (input->lines != NULL)
+			free(input->lines);
 		input->lines = NULL;
 	}
 }
@@ -69,5 +70,7 @@ int				main(void)
 		delete_map(&map);
 		return (EXIT_SUCCESS);
 	}
+	delete_input(&input);
+	delete_map(&map);
 	return (EXIT_FAILURE);
 }
