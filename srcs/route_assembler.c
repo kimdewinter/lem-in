@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/06 14:44:23 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 15:13:51 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 	route->route[route_i] = curr->conj;
 	route_i++;
 	next = curr->next;
-	if (curr->path != NULL)
-		free(curr->path);
-	if (curr->bitconj != NULL)
-		free(curr->bitconj);
-	free(curr);
+	// if (curr->path != NULL)
+	// 	free(curr->path);
+	// if (curr->bitconj != NULL)
+	// 	free(curr->bitconj);
+	// free(curr);
 	if (curr->conj == map->end)
 		return (EXIT_SUCCESS);
 	else

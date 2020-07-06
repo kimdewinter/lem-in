@@ -6,14 +6,14 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/03 14:45:44 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/06 15:47:36 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
 EXTRA=
-IFLAGS= -Wall -Wextra -Werror $(EXTRA)
+IFLAGS= -Wall -Wextra -Werror -O1 $(EXTRA)
 RAW=	main\
 		parse_antmount\
 		parse_clean\

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/29 20:12:56 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 15:48:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static size_t		calc_rounds(long double *rest,
 	long double rounds;
 	size_t		i;
 
+	rounds = 0;
 	i = 0;
 	while (i < combi->num_routes)
 	{

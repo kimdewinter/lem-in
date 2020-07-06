@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 14:00:07 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/26 16:51:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 15:41:37 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ ssize_t			combinatron(t_map *map,
 	{
 		while (child.i <= map->num_routes - (rtes_to_combi - child.num_routes))
 		{
-			if (is_valid_combi(
-				map, child.bitroutes, map->routes[child.i]->bitroute) == 1)
+			if (is_valid_combi(map->bitfield_len,
+				child.bitroutes, map->routes[child.i]->bitroute) == 1)
 				if (combinatron(map, &child, rtes_to_combi) == EXIT_FAILURE)
 					return (combinatron_cleanup(map, &child, EXIT_FAILURE));
 			child.i++;

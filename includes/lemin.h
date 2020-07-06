@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/06 14:20:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 15:42:41 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -286,7 +286,7 @@ ssize_t					copy_n_routes(t_route ***dst,
 ssize_t					handle_err_biter(size_t err_code, const char *line);
 ssize_t					handle_err_comtron(size_t err_code, const char *line);
 ssize_t					handle_err_para(size_t err_code, const char *line);
-size_t					is_valid_combi(t_map *map,
+size_t					is_valid_combi(size_t bitfield_len,
 										BITFIELD_TYPE *rte1,
 										BITFIELD_TYPE *rte2);
 size_t					max_parallels(t_map *map);
