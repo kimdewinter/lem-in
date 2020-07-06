@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 13:54:50 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/06 14:29:41 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 14:37:13 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,6 @@ ssize_t			output_result(const t_input_reader *input, const t_map *map)
 	print_input(input);
 	while (i < map->solution.turns)
 	{
-		// printf("curr ant %lu\n", curr_ant);
 		execute_round(routes, map, &curr_ant);
 		i++;
 		ft_printf("\n");

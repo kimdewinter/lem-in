@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/06 13:32:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/06 14:39:50 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ static ssize_t	setup_input(t_input_reader *input)
 
 	i = 0;
 	input->lines = (char **)malloc(sizeof(char *) * LINE_BUFF_SIZE);
-	if (!input->lines)
+	input->size = LINE_BUFF_SIZE;
+	if (input->lines == NULL)
 		return (ft_error("Error allocating memory\n", EXIT_FAILURE));
 	while (i < input->size)
 	{
@@ -75,7 +76,6 @@ static ssize_t	setup_input(t_input_reader *input)
 		i++;
 	}
 	input->num_lines = 0;
-	input->size = LINE_BUFF_SIZE;
 	return (EXIT_SUCCESS);
 }
 
