@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/29 20:11:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/07 15:21:31 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ ssize_t			calc_combinations(const size_t n, size_t r)
 	return (result);
 }
 
-size_t			max_parallels(t_map *map)
+size_t			max_parallels(const t_map *map)
 {
 	size_t	lowest;
 
