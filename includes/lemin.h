@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/06 15:42:41 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/07 14:07:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,7 +275,7 @@ ssize_t					assemble_all_routes(t_map *map);
 /*
 ** PARALLELIZER
 */
-ssize_t					calc_combinations(const size_t n, size_t r);
+long long unsigned		calc_combinations(const size_t n, size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
 ssize_t					combinatron(t_map *map,
 									const t_poscom *parent,
