@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/07 14:07:50 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/07 14:15:00 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,11 @@ long long unsigned			calc_combinations(const size_t n, size_t r)
 {
 	long long unsigned	result;
 	long long unsigned	fact_n;
-	long long unsigned	i;
 
 	// (n!) / (r!(n-r)!);
 	result = 0;
-	i = r;
 	fact_n = ft_factorial(n);
-	while (i > 0)
-	{
-		result += (fact_n / (ft_factorial(i) * ft_factorial(n - i)));
-		i--;
-	}
+		result = (fact_n / (ft_factorial(r) * ft_factorial(n - r)));
 	if (result == 0)
 		result = INTMAX_MAX;
 	return (result);
