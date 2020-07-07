@@ -283,7 +283,9 @@ ssize_t					assemble_all_routes(t_map *map);
 /*
 ** PARALLELIZER
 */
-ssize_t					calc_combinations(const size_t n, size_t r);
+ssize_t					calc_combinations(long long unsigned *result,
+											const size_t n,
+											size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
 ssize_t					combinatron(t_map *map,
 									const t_poscom *parent,

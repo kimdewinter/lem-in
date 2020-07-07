@@ -6,39 +6,55 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/07 15:21:31 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/07 14:29:56 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t	ft_factorial(size_t n)
+static size_t	ft_factorial(long long unsigned *res, size_t n)
 {
-	if (n == 0)
-		return (1);
-	return (n * ft_factorial(n - 1));
+	unsigned long long num;
+	unsigned long long prev;
+
+	num = n;
+	*res = 1;
+	while (num > 0)
+	{
+		prev = *res;
+		*res *= num;
+		if (*res / num != prev)
+			return (EXIT_FAILURE);
+		num--;
+	}
+	return (EXIT_SUCCESS);
 }
 
 // N = number of paths, r is max number of parallel paths
 
-ssize_t			calc_combinations(const size_t n, size_t r)
+ssize_t			calc_combinations(long long unsigned *result,
+const size_t n, size_t r)
 {
-	size_t	result;
-	size_t	fact_n;
-	size_t	i;
+	long long unsigned	fact_n;
+	long long unsigned	fact_r;
+	long long unsigned	fact_nr;
+	long long unsigned	div;
 
-	// (n!) / (r!(n-r)!);
-	result = 0;
-	i = r;
-	fact_n = ft_factorial(n);
-	while (i > 0)
+	fact_n = 0;
+	fact_r = 0;
+	fact_nr = 0;
+	div = 0;
+	if (ft_factorial(&fact_n, n) == EXIT_SUCCESS
+	&& ft_factorial(&fact_r, r) == EXIT_SUCCESS
+	&& ft_factorial(&fact_nr, n - r) == EXIT_SUCCESS)
 	{
-		result += (fact_n / (ft_factorial(i) * ft_factorial(n - i)));
-		i--;
+		div = fact_r * fact_nr;
+		if (div / fact_nr != fact_r)
+			return (EXIT_FAILURE);
+		*result = fact_n / div;
+		return (EXIT_SUCCESS);
 	}
-	if (result == 0)
-		result = INTMAX_MAX;
-	return (result);
+	return (EXIT_FAILURE);
 }
 
 size_t			max_parallels(const t_map *map)
