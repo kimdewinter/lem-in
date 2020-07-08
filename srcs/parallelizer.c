@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/07 15:31:25 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/08 13:18:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static ssize_t	setup_single_comvault(t_comvault *comvault,
 	size_t	i;
 
 	comvault->coms_of_num = coms_of_num;
-	comvault->coms_len = calc_combinations(map->num_routes, coms_of_num);
+	calc_combinations(&comvault->coms_len, map->num_routes, coms_of_num);
 	comvault->coms_used = 0;
 	comvault->coms =
 		(t_poscom **)malloc(sizeof(t_poscom *) * comvault->coms_len);
