@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/09 13:38:50 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/09 16:42:11 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ typedef struct			s_comvault
 typedef struct			s_poscom
 {
 	struct s_route		**routes;
-	size_t				num_routes;//delete later; not used by new combinatron
+	size_t				num_routes;
 	BITFIELD_TYPE		*bitroutes;
 	size_t				map_routes_i;
 	size_t				turns;
@@ -288,21 +288,23 @@ ssize_t					calc_combinations(long long unsigned *result,
 											const size_t n,
 											size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
-ssize_t					combinatron(t_comvault *valcom,
-									t_poscom *bestcom,
-									const t_map *map);
 size_t					max_parallels(const t_map *map);
 ssize_t					parallelize(const t_map *map);
+ssize_t					parallelize_multiples_of(const t_comvault *previous,
+													t_comvault *current,
+													t_poscom **bestcom,
+													const t_map *map);
 
 /*
 ** BITFIELD-TOOLKIT
 */
+void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_bitroute_copy(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map);
-ssize_t					bite_bitroute_merge(BITFIELD_TYPE *dst,
+ssize_t					bite_bitroute_merge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src1,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
@@ -310,8 +312,9 @@ void					bite_free(BITFIELD_TYPE **bitfield, const t_map *map);
 size_t					copy_bitconj(BITFIELD_TYPE **dst,
 										BITFIELD_TYPE *src,
 										t_map *map);
+ssize_t					handle_err_biter(size_t err_code, const char *line);
 int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
-void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
+
 /*
 ** OUTPUTTER
 */

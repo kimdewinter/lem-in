@@ -6,11 +6,51 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/08 13:39:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/09 16:46:02 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+
+static ssize_t	commit_single_route_com(t_poscom **new_entry,
+										const size_t i,
+										const t_map *map)
+{
+	*new_entry = (t_poscom *)malloc(sizeof(t_poscom) * 1);
+	if (*new_entry == NULL)
+		return (EXIT_FAILURE);
+	(*new_entry)->routes =
+		(t_route **)malloc(sizeof(t_route *) * 1);
+	if ((*new_entry)->routes == NULL)
+		return (EXIT_FAILURE);
+	(*new_entry)->routes[0] = map->routes[i];
+	(*new_entry)->num_routes = 1;
+	(*new_entry)->bitroutes = map->routes[i]->bitroute;
+	(*new_entry)->map_routes_i = i;
+	(*new_entry)->turns = calc_cost(map->antmount, (*new_entry));
+	return (EXIT_SUCCESS);
+}
+
+static ssize_t	parallelize_singles(t_comvault *valcoms,
+									t_poscom **bestcom,
+									const t_map *map)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->num_routes)
+	{
+		if (commit_single_route_com(&valcoms->coms[i], i, map) ==
+			EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		valcoms->coms_used++;
+		if (*bestcom == NULL || valcoms->coms[i]->turns < (*bestcom)->turns)
+			*bestcom = valcoms->coms[i];
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
 
 static ssize_t	setup_single_comvault(t_comvault *comvault,
 										const size_t coms_of_num,
@@ -40,7 +80,7 @@ static ssize_t	setup_single_comvault(t_comvault *comvault,
 
 static ssize_t	setup_parallelizer(size_t *maxparallels,
 									t_comvault ***valcoms,
-									t_poscom *bestcom,
+									t_poscom **bestcom,
 									const t_map *map)
 {
 	size_t	i;
@@ -64,7 +104,7 @@ ssize_t			parallelize(const t_map *map)
 {
 	size_t		maxparallels;
 	t_comvault	**valcoms;
-	t_poscom	bestcom;
+	t_poscom	*bestcom;
 	size_t		i;
 
 	if (map == NULL || setup_parallelizer(
@@ -73,8 +113,17 @@ ssize_t			parallelize(const t_map *map)
 	i = 0;
 	while (i < maxparallels)
 	{
-		if (combinatron(valcoms[i], &bestcom, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if (i == 1)
+		{
+			if (parallelize_singles(valcoms[i], &bestcom, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		else
+		{
+			if (parallelize_multiples_of(
+				valcoms[i], valcoms[i - 1], &bestcom, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
