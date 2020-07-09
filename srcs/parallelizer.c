@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/08 13:30:35 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/08 13:39:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static ssize_t	setup_parallelizer(size_t *maxparallels,
 			return (EXIT_FAILURE);
 		i++;
 	}
-	*bestcom->routes = NULL;
+	*bestcom = NULL;
 	return (EXIT_SUCCESS);
 }
 
@@ -65,9 +65,17 @@ ssize_t			parallelize(const t_map *map)
 	size_t		maxparallels;
 	t_comvault	**valcoms;
 	t_poscom	bestcom;
+	size_t		i;
 
 	if (map == NULL || setup_parallelizer(
 		&maxparallels, &valcoms, &bestcom, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	i = 0;
+	while (i < maxparallels)
+	{
+		if (combinatron(valcoms[i], &bestcom, map) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		i++;
+	}
 	return (EXIT_SUCCESS);
 }

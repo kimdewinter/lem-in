@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/07 15:31:25 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/09 13:38:50 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,15 @@ typedef struct			s_comvault
 	struct s_poscom		**coms;
 	size_t				coms_len;
 	size_t				coms_used;
-	size_t				i;
 }						t_comvault;
 
 typedef struct			s_poscom
 {
 	struct s_route		**routes;
-	size_t				num_routes;
+	size_t				num_routes;//delete later; not used by new combinatron
 	BITFIELD_TYPE		*bitroutes;
+	size_t				map_routes_i;
+	size_t				turns;
 }						t_poscom;
 /*
 ** "poscom" means "possible combination",
@@ -287,18 +288,9 @@ ssize_t					calc_combinations(long long unsigned *result,
 											const size_t n,
 											size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
-ssize_t					combinatron(t_map *map,
-									const t_poscom *parent,
-									const size_t rtes_to_combi);
-ssize_t					copy_n_routes(t_route ***dst,
-										t_route **src,
-										const size_t n);
-ssize_t					handle_err_biter(size_t err_code, const char *line);
-ssize_t					handle_err_comtron(size_t err_code, const char *line);
-ssize_t					handle_err_para(size_t err_code, const char *line);
-size_t					is_valid_combi(size_t bitfield_len,
-										BITFIELD_TYPE *rte1,
-										BITFIELD_TYPE *rte2);
+ssize_t					combinatron(t_comvault *valcom,
+									t_poscom *bestcom,
+									const t_map *map);
 size_t					max_parallels(const t_map *map);
 ssize_t					parallelize(const t_map *map);
 
