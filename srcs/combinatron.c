@@ -6,11 +6,30 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 15:19:04 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/09 16:44:44 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/10 14:18:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+ssize_t			commit_best(const t_poscom *bestcom, t_best *new_entry)
+{
+	if (bestcom == NULL)
+		return (EXIT_FAILURE);
+	new_entry->len = bestcom->num_routes;
+	new_entry->combi =
+		(t_route **)malloc(sizeof(t_route *) * new_entry->len);
+	if (new_entry->combi == NULL)
+		return (handle_err_comtron(1, "commit_best\n"));
+	new_entry->used = 0;
+	while (new_entry->used < bestcom->num_routes)
+	{
+		new_entry->combi[new_entry->used] = bestcom->routes[new_entry->used];
+		new_entry->used++;
+	}
+	new_entry->turns = bestcom->turns;
+	return (EXIT_SUCCESS);
+}
 
 static size_t	is_valid_combi(size_t bitfield_len,
 								BITFIELD_TYPE *rte1,
@@ -37,7 +56,7 @@ static ssize_t			commit_multi_route_com(t_poscom **new_entry,
 
 	*new_entry = (t_poscom *)malloc(sizeof(t_poscom) * 1);
 	if (*new_entry == NULL)
-		return (EXIT_FAILURE);
+		return (handle_err_comtron(1, "commit_multi_route_com\n"));
 	(*new_entry)->num_routes = rootcom->num_routes + 1;
 	if (bite_bitroute_merge(&(*new_entry)->bitroutes, rootcom->bitroutes,
 		map->routes[i]->bitroute, map) == EXIT_FAILURE)
@@ -46,7 +65,7 @@ static ssize_t			commit_multi_route_com(t_poscom **new_entry,
 	(*new_entry)->routes =
 		(t_route **)malloc(sizeof(t_route *) * (*new_entry)->num_routes);
 	if ((*new_entry)->routes == NULL)
-		return (EXIT_FAILURE);
+		return (handle_err_comtron(1, "commit_multi_route_com\n"));
 	j = 0;
 	while (j < rootcom->num_routes)
 	{
@@ -58,8 +77,8 @@ static ssize_t			commit_multi_route_com(t_poscom **new_entry,
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t			combinatron(t_comvault *current,
-									const t_poscom *rootcom,
+static ssize_t			combinatron(const t_poscom *rootcom,
+									t_comvault *current,
 									t_poscom **bestcom,
 									const t_map *map)
 {
@@ -74,10 +93,10 @@ static ssize_t			combinatron(t_comvault *current,
 			if (commit_multi_route_com(&current->coms[current->coms_used],
 				rootcom, i, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			current->coms_used++;
-			if (current->coms[current->coms_used - 1]->turns <
+			if (current->coms[current->coms_used]->turns <
 				(*bestcom)->turns)
-				*bestcom = current->coms[current->coms_used - 1];
+				*bestcom = current->coms[current->coms_used];
+			current->coms_used++;
 		}
 		i++;
 	}
@@ -94,7 +113,7 @@ ssize_t	parallelize_multiples_of(const t_comvault *previous,
 	i = 0;
 	while (i < previous->coms_used)
 	{
-		if (combinatron(current, previous->coms[i], bestcom, map) ==
+		if (combinatron(previous->coms[i], current, bestcom, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		i++;

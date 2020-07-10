@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/09 16:42:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/10 14:37:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,7 +260,7 @@ t_queue					*new_queue_item(t_subpath *pt,
 										t_room *dst,
 										t_room *src);
 void					add_item_queue(t_qwrap **qr, t_queue *new);
-size_t					setup_queue(t_qwrap **qr, t_map *map);
+ssize_t					setup_queue(t_qwrap **qr, t_map *map);
 size_t					add_to_queue(t_qwrap *qr,
 										t_room *src,
 										t_room *dst,
@@ -288,8 +288,11 @@ ssize_t					calc_combinations(long long unsigned *result,
 											const size_t n,
 											size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
+ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
+ssize_t					handle_err_comtron(size_t err_code, const char *line);
+ssize_t					handle_err_para(size_t err_code, const char *line);
 size_t					max_parallels(const t_map *map);
-ssize_t					parallelize(const t_map *map);
+ssize_t					parallelize(t_map *map);
 ssize_t					parallelize_multiples_of(const t_comvault *previous,
 													t_comvault *current,
 													t_poscom **bestcom,

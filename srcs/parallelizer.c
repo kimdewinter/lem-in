@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/09 16:46:02 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/10 14:30:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ static ssize_t	commit_single_route_com(t_poscom **new_entry,
 {
 	*new_entry = (t_poscom *)malloc(sizeof(t_poscom) * 1);
 	if (*new_entry == NULL)
-		return (EXIT_FAILURE);
+		return (handle_err_para(1, "commit_single_route_com\n"));
 	(*new_entry)->routes =
 		(t_route **)malloc(sizeof(t_route *) * 1);
 	if ((*new_entry)->routes == NULL)
-		return (EXIT_FAILURE);
+		return (handle_err_para(1, "commit_single_route_com\n"));
 	(*new_entry)->routes[0] = map->routes[i];
 	(*new_entry)->num_routes = 1;
 	(*new_entry)->bitroutes = map->routes[i]->bitroute;
@@ -52,27 +52,30 @@ static ssize_t	parallelize_singles(t_comvault *valcoms,
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t	setup_single_comvault(t_comvault *comvault,
+static ssize_t	setup_single_comvault(t_comvault **comvault,
 										const size_t coms_of_num,
 										const t_map *map)
 {
 	size_t	i;
 	long long unsigned receptacle;
 
-	comvault->coms_of_num = coms_of_num;
+	*comvault = (t_comvault *)malloc(sizeof(t_comvault) * 1);
+	if (*comvault == NULL)
+		return (handle_err_para(1, "setup_single_comvault\n"));
+	(*comvault)->coms_of_num = coms_of_num;
 	if (calc_combinations(&receptacle, map->num_routes, coms_of_num) ==
 		EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	comvault->coms_len = (size_t)receptacle;
-	comvault->coms_used = 0;
-	comvault->coms =
-		(t_poscom **)malloc(sizeof(t_poscom *) * comvault->coms_len);
-	if (comvault->coms == NULL)
-		return (EXIT_FAILURE);
+	(*comvault)->coms_len = (size_t)receptacle;
+	(*comvault)->coms_used = 0;
+	(*comvault)->coms =
+		(t_poscom **)malloc(sizeof(t_poscom *) * (*comvault)->coms_len);
+	if ((*comvault)->coms == NULL)
+		return (handle_err_para(1, "setup_single_comvault\n"));
 	i = 0;
-	while (i < comvault->coms_len)
+	while (i < (*comvault)->coms_len)
 	{
-		comvault->coms[i] = NULL;
+		(*comvault)->coms[i] = NULL;
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -88,11 +91,11 @@ static ssize_t	setup_parallelizer(size_t *maxparallels,
 	*maxparallels = max_parallels(map);
 	*valcoms = (t_comvault **)malloc(sizeof(t_comvault *) * *maxparallels);
 	if (*valcoms == NULL)
-		return (EXIT_FAILURE);
+		return (handle_err_para(1, "setup_parallelizer\n"));
 	i = 0;
 	while (i < *maxparallels)
 	{
-		if (setup_single_comvault(*valcoms[i], i + 1, map) == EXIT_FAILURE)
+		if (setup_single_comvault(&(*valcoms)[i], i + 1, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		i++;
 	}
@@ -100,7 +103,7 @@ static ssize_t	setup_parallelizer(size_t *maxparallels,
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			parallelize(const t_map *map)
+ssize_t			parallelize(t_map *map)
 {
 	size_t		maxparallels;
 	t_comvault	**valcoms;
@@ -110,7 +113,7 @@ ssize_t			parallelize(const t_map *map)
 	if (map == NULL || setup_parallelizer(
 		&maxparallels, &valcoms, &bestcom, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	i = 0;
+	i = 1;
 	while (i < maxparallels)
 	{
 		if (i == 1)
@@ -121,10 +124,10 @@ ssize_t			parallelize(const t_map *map)
 		else
 		{
 			if (parallelize_multiples_of(
-				valcoms[i], valcoms[i - 1], &bestcom, map) == EXIT_FAILURE)
+				valcoms[i - 1], valcoms[i], &bestcom, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
 		i++;
 	}
-	return (EXIT_SUCCESS);
+	return (commit_best(bestcom, &map->solution));
 }
