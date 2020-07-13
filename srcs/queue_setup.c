@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:45:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:09:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:32:46 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ ssize_t		setup_queue(t_qwrap **qr, t_map *map)
 		if ((*qr)->queue)
 		{
 			*((*qr)->queue) = NULL;
-			if (map->end->sps == 1)
-				return (EXIT_SUCCESS);
+			// if (map->end->sps == 1)//TO DO: add path to start
+			// 	return (EXIT_SUCCESS);//TO DO: add path to start
 			if (add_items_start(qr, map) == EXIT_SUCCESS)
 			{
 				map->end->dead_end = 1;
