@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/07 14:20:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/10 14:37:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,12 +49,21 @@ typedef struct			s_best
 ** the combination of routes chosen as being the best one (so far)
 */
 
+typedef struct			s_comvault
+{
+	size_t				coms_of_num;
+	struct s_poscom		**coms;
+	size_t				coms_len;
+	size_t				coms_used;
+}						t_comvault;
+
 typedef struct			s_poscom
 {
 	struct s_route		**routes;
 	size_t				num_routes;
 	BITFIELD_TYPE		*bitroutes;
-	size_t				i;
+	size_t				map_routes_i;
+	size_t				turns;
 }						t_poscom;
 /*
 ** "poscom" means "possible combination",
@@ -251,7 +260,7 @@ t_queue					*new_queue_item(t_subpath *pt,
 										t_room *dst,
 										t_room *src);
 void					add_item_queue(t_qwrap **qr, t_queue *new);
-size_t					setup_queue(t_qwrap **qr, t_map *map);
+ssize_t					setup_queue(t_qwrap **qr, t_map *map);
 size_t					add_to_queue(t_qwrap *qr,
 										t_room *src,
 										t_room *dst,
@@ -279,30 +288,26 @@ ssize_t					calc_combinations(long long unsigned *result,
 											const size_t n,
 											size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
-ssize_t					combinatron(t_map *map,
-									const t_poscom *parent,
-									const size_t rtes_to_combi);
-ssize_t					copy_n_routes(t_route ***dst,
-										t_route **src,
-										const size_t n);
-ssize_t					handle_err_biter(size_t err_code, const char *line);
+ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
 ssize_t					handle_err_comtron(size_t err_code, const char *line);
 ssize_t					handle_err_para(size_t err_code, const char *line);
-size_t					is_valid_combi(size_t bitfield_len,
-										BITFIELD_TYPE *rte1,
-										BITFIELD_TYPE *rte2);
-size_t					max_parallels(t_map *map);
+size_t					max_parallels(const t_map *map);
 ssize_t					parallelize(t_map *map);
+ssize_t					parallelize_multiples_of(const t_comvault *previous,
+													t_comvault *current,
+													t_poscom **bestcom,
+													const t_map *map);
 
 /*
 ** BITFIELD-TOOLKIT
 */
+void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_bitroute_copy(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map);
-ssize_t					bite_bitroute_merge(BITFIELD_TYPE *dst,
+ssize_t					bite_bitroute_merge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src1,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
@@ -310,8 +315,9 @@ void					bite_free(BITFIELD_TYPE **bitfield, const t_map *map);
 size_t					copy_bitconj(BITFIELD_TYPE **dst,
 										BITFIELD_TYPE *src,
 										t_map *map);
+ssize_t					handle_err_biter(size_t err_code, const char *line);
 int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
-void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
+
 /*
 ** OUTPUTTER
 */

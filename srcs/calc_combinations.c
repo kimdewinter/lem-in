@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/07 14:29:56 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/08 13:30:57 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static size_t	ft_factorial(long long unsigned *res, size_t n)
 // N = number of paths, r is max number of parallel paths
 
 ssize_t			calc_combinations(long long unsigned *result,
-const size_t n, size_t r)
+									const size_t n,
+									size_t r)
 {
 	long long unsigned	fact_n;
 	long long unsigned	fact_r;
@@ -57,7 +58,7 @@ const size_t n, size_t r)
 	return (EXIT_FAILURE);
 }
 
-size_t			max_parallels(t_map *map)
+size_t			max_parallels(const t_map *map)
 {
 	size_t	lowest;
 

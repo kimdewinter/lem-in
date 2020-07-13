@@ -2,6 +2,10 @@
 	"files.associations": {
 		"unistd.h": "c",
 		"lemin.h": "c",
-		"lib.h": "c"
+		"lib.h": "c",
+		"limits": "c",
+		"*.tcc": "c",
+		"type_traits": "c",
+		"typeinfo": "c"
 	}
 }
