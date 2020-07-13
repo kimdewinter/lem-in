@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/13 13:16:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 14:17:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,7 +291,7 @@ size_t					calc_cost(size_t ants, const t_poscom *routes);
 ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
 ssize_t					handle_err_comtron(size_t err_code, const char *line);
 ssize_t					handle_err_para(size_t err_code, const char *line);
-size_t					max_parallels(const t_map *map);
+ssize_t					max_parallels(size_t *result, const t_map *map);
 ssize_t					parallelize(t_map *map);
 ssize_t					parallelize_multiples_of(const t_comvault *previous,
 													t_comvault *current,
