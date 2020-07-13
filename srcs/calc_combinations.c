@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 14:18:26 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 14:26:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ ssize_t			calc_combinations(long long unsigned *result,
 	fact_r = 0;
 	fact_nr = 0;
 	div = 0;
+	if (r == 1)
+		return (n);
 	if (ft_factorial(&fact_n, n) == EXIT_SUCCESS
 	&& ft_factorial(&fact_r, r) == EXIT_SUCCESS
 	&& ft_factorial(&fact_nr, n - r) == EXIT_SUCCESS)
