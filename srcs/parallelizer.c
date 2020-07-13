@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/13 13:58:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 14:30:30 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ static ssize_t	setup_parallelizer(size_t *maxparallels,
 {
 	size_t	i;
 
-	*maxparallels = max_parallels(map);
+	if (max_parallels(maxparallels, map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	*valcoms = (t_comvault **)malloc(sizeof(t_comvault *) * *maxparallels);
 	if (*valcoms == NULL)
 		return (handle_err_para(1, "setup_parallelizer\n"));
