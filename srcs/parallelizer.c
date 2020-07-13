@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/10 14:30:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:58:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,20 +113,14 @@ ssize_t			parallelize(t_map *map)
 	if (map == NULL || setup_parallelizer(
 		&maxparallels, &valcoms, &bestcom, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
+	if (parallelize_singles(valcoms[0], &bestcom, map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	i = 1;
 	while (i < maxparallels)
 	{
-		if (i == 1)
-		{
-			if (parallelize_singles(valcoms[i], &bestcom, map) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
-		else
-		{
-			if (parallelize_multiples_of(
-				valcoms[i - 1], valcoms[i], &bestcom, map) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-		}
+		if (parallelize_multiples_of(
+			valcoms[i - 1], valcoms[i], &bestcom, map) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		i++;
 	}
 	return (commit_best(bestcom, &map->solution));

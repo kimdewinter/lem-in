@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/08 13:30:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:50:49 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t	ft_factorial(long long unsigned *res, size_t n)
+static ssize_t	ft_factorial(long long unsigned *res, size_t n)
 {
 	unsigned long long num;
 	unsigned long long prev;

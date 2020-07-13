@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/13 13:10:22 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/13 13:54:18 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -97,4 +97,4 @@ fclean: clean
 re: fclean all
 
 debug: all
-	@$(CC) $(IFLAGS) -g -o $(NAME) $(SRCS) $(HEADER) $(LIB)
+	@$(CC) -Wall -Wextra -Werror $(EXTRA) -g -o $(NAME) $(SRCS) $(HEADER) $(LIB)
