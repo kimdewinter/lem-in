@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/06 15:48:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:45:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static size_t		calc_rounds(long double *rest,
 								const t_poscom *combi)
 {
 	long double path_diff;
-	long double	ants_diff;
+	long double	ants;
 	long double rounds;
 	size_t		i;
 
@@ -64,8 +64,8 @@ static size_t		calc_rounds(long double *rest,
 	while (i < combi->num_routes)
 	{
 		path_diff = (long double)combi->routes[i]->len - avg_paths;
-		ants_diff = avg_ants - path_diff;
-		rounds = (long double)combi->routes[i]->len + ants_diff - 1.0;
+		ants = avg_ants - path_diff;
+		rounds = (long double)combi->routes[i]->len + ants - 1.0;
 		*rest += (rounds - (size_t)rounds);
 		i++;
 	}
@@ -81,5 +81,6 @@ size_t				calc_cost(size_t ants, const t_poscom *routes)
 	rest = 0.0;
 	avg_ants = calc_ants_avg(ants, routes->num_routes);
 	avg_paths = calc_paths_avg(routes->num_routes, routes);
-	return (calc_rounds(&rest, avg_ants, avg_paths, routes));
+	size_t cost = calc_rounds(&rest, avg_ants, avg_paths, routes);
+	return (cost);
 }
