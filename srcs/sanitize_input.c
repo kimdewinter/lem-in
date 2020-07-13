@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 14:33:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:11:23 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ static int			check_connections(t_room *curr)
 	return (1);
 }
 
-size_t			sanitize_input(t_map *map)
+ssize_t			sanitize_input(t_map *map)
 {
 	t_room *tmp;
 

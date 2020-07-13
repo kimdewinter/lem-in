@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 16:37:07 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:14:33 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ size_t round)
 	return (1);
 }
 
-static size_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
+static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 {
 	size_t		i;
 	size_t		j;
@@ -75,7 +75,7 @@ static void	set_weights_after(t_queue **queue, t_map *map)
 	}
 }
 
-size_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
+ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 {
 	t_queue			*curr;
 	t_queue			*prev;

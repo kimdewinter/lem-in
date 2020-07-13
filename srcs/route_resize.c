@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:33:39 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 14:25:12 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:16:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-size_t			increase_route_size(t_subpath **pt, t_map *map)
+ssize_t			increase_route_size(t_subpath **pt, t_map *map)
 {
 	t_subpath	*tmp;
 	size_t		new_size;
@@ -49,7 +49,7 @@ size_t			increase_route_size(t_subpath **pt, t_map *map)
 	return (EXIT_FAILURE);
 }
 
-size_t			increase_routes_size(t_room **dst, t_map *map)
+ssize_t			increase_routes_size(t_room **dst, t_map *map)
 {
 	size_t		i;
 	size_t		new_size;

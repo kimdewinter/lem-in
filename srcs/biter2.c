@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   biter2.c                                           :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/10 13:49:56 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:17:03 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ ssize_t			bite_bitroute_merge(BITFIELD_TYPE **dst,
 	return (EXIT_SUCCESS);
 }
 
-size_t			copy_bitconj(BITFIELD_TYPE **dst,
+ssize_t			copy_bitconj(BITFIELD_TYPE **dst,
 							BITFIELD_TYPE *src,
 							t_map *map)
 {

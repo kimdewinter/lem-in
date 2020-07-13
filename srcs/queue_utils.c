@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 13:54:01 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:14:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		remove_queue_item(t_qwrap *qr, t_queue *item)
 	}
 }
 
-size_t			add_to_queue(t_qwrap *qr, t_room *src, t_room *dst,
+ssize_t			add_to_queue(t_qwrap *qr, t_room *src, t_room *dst,
 t_subpath *pt)
 {
 	t_queue *new;

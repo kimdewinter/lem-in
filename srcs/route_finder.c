@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/10 14:20:42 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:12:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t				add_path_to_dst(t_qwrap *qr, t_queue *curr,
+static ssize_t				add_path_to_dst(t_qwrap *qr, t_queue *curr,
 t_map *map)
 {
 	t_subpath	*new;
@@ -33,7 +33,7 @@ t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-static size_t			execute_queue(t_qwrap *qr, t_map *map)
+static ssize_t			execute_queue(t_qwrap *qr, t_map *map)
 {
 	t_queue	*iter;
 
@@ -56,7 +56,7 @@ static size_t			execute_queue(t_qwrap *qr, t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-size_t			find_routes(t_map *map)
+ssize_t			find_routes(t_map *map)
 {
 	t_qwrap		*queue;
 

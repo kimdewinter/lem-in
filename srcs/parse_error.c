@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/30 15:55:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:16:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-size_t	parse_error(size_t err_code)
+ssize_t	parse_error(size_t err_code)
 {
 	if (err_code == 1)
 		ft_printf("Error: parse_antmount\nNumber of ants too large to be\

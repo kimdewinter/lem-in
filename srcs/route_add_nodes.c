@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:27:58 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 13:30:31 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:13:22 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int *found)
 	return (0);
 }
 
-static size_t		add_node_to_path(t_room **nb, t_subpath **path, t_map *map)
+static ssize_t		add_node_to_path(t_room **nb, t_subpath **path, t_map *map)
 {
 	if ((*nb)->is_conj == 0)
 	{
@@ -53,7 +53,7 @@ t_room *prev, t_map *map)
 	(*item)->dst = *nb;	
 }
 
-size_t				add_nodes_to_path(t_queue *item, t_subpath **path,
+ssize_t				add_nodes_to_path(t_queue *item, t_subpath **path,
 t_map *map, int *add)
 {
 	t_room *nb;

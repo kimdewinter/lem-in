@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/04 14:23:36 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:14:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-size_t		add_to_path(t_subpath *pt, t_room *add, t_map *map)
+ssize_t		add_to_path(t_subpath *pt, t_room *add, t_map *map)
 {
 	if (pt->start < 0)
 	{
@@ -26,7 +26,7 @@ size_t		add_to_path(t_subpath *pt, t_room *add, t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-size_t				add_path_to_room(t_queue *item, t_map *map,
+ssize_t				add_path_to_room(t_queue *item, t_map *map,
 t_subpath **new)
 {
 	if (item->src == map->end)
@@ -53,7 +53,7 @@ t_room			**new_path(size_t size)
 	return (new);
 }
 
-size_t		new_subpath(t_subpath **new, t_room *conj, t_map *map)
+ssize_t		new_subpath(t_subpath **new, t_room *conj, t_map *map)
 {
 	*new = (t_subpath *)malloc(sizeof(t_subpath));
 	if (*new)
@@ -78,7 +78,7 @@ size_t		new_subpath(t_subpath **new, t_room *conj, t_map *map)
 	return (EXIT_FAILURE);
 }
 
-size_t		create_new_path(t_subpath **new, t_subpath *pt, t_room *conj, 
+ssize_t		create_new_path(t_subpath **new, t_subpath *pt, t_room *conj, 
 t_map *map)
 {
 	new_subpath(new, conj, map);

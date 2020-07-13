@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/10 14:37:36 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/13 13:16:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ ssize_t					parse_tubes(t_input_reader *input,
 									t_map *map,
 									size_t *i);
 ssize_t					purge_room(t_room **room);
-size_t					sanitize_input(t_map *map);
+ssize_t					sanitize_input(t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
 									const ssize_t xpos,
@@ -213,13 +213,13 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
-size_t					find_routes(t_map *map);
-size_t					add_path(t_qwrap *qr,
+ssize_t					find_routes(t_map *map);
+ssize_t					add_path(t_qwrap *qr,
 									t_queue *item,
 									t_subpath *path,
 									t_map *map);
-size_t					route_error(size_t err_code);
-size_t					add_nodes_to_path(t_queue *item,
+ssize_t					route_error(size_t err_code);
+ssize_t					add_nodes_to_path(t_queue *item,
 											t_subpath **path,
 											t_map *map,
 											int *add);
@@ -237,22 +237,22 @@ int						is_junction(t_room *dst, size_t round);
 /*
 ** ROUTE FINDING UTILS
 */
-size_t					increase_route_size(t_subpath **pt, t_map *map);
-size_t					increase_routes_size(t_room **dst, t_map *map);
-size_t					add_path_to_room(t_queue *item,
+ssize_t					increase_route_size(t_subpath **pt, t_map *map);
+ssize_t					increase_routes_size(t_room **dst, t_map *map);
+ssize_t					add_path_to_room(t_queue *item,
 											t_map *map,
 											t_subpath **new);
-size_t					add_to_path(t_subpath *pt, t_room *add, t_map *map);
+ssize_t					add_to_path(t_subpath *pt, t_room *add, t_map *map);
 t_room					**new_path(size_t size);
-size_t					new_subpath(t_subpath **new, t_room *conj, t_map *map);
-size_t					create_new_path(t_subpath **new,
+ssize_t					new_subpath(t_subpath **new, t_room *conj, t_map *map);
+ssize_t					create_new_path(t_subpath **new,
 											t_subpath *pt,
 											t_room *conj, 
 											t_map *map);
 /*
 ** QUEUE MANAGEMENT
 */
-size_t					adjust_queue(t_qwrap *qr, t_map *map, size_t len);
+ssize_t					adjust_queue(t_qwrap *qr, t_map *map, size_t len);
 /*
 ** QUEUE MANAGEMENT UTILS
 */
@@ -261,7 +261,7 @@ t_queue					*new_queue_item(t_subpath *pt,
 										t_room *src);
 void					add_item_queue(t_qwrap **qr, t_queue *new);
 ssize_t					setup_queue(t_qwrap **qr, t_map *map);
-size_t					add_to_queue(t_qwrap *qr,
+ssize_t					add_to_queue(t_qwrap *qr,
 										t_room *src,
 										t_room *dst,
 										t_subpath *pt);
@@ -312,7 +312,7 @@ ssize_t					bite_bitroute_merge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
 void					bite_free(BITFIELD_TYPE **bitfield, const t_map *map);
-size_t					copy_bitconj(BITFIELD_TYPE **dst,
+ssize_t					copy_bitconj(BITFIELD_TYPE **dst,
 										BITFIELD_TYPE *src,
 										t_map *map);
 ssize_t					handle_err_biter(size_t err_code, const char *line);
@@ -324,7 +324,7 @@ int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
 void					calculate_ants_per_path(size_t ants,
 												const t_best *best);
 void					execute_route(t_routeput *route, const size_t new_ant);
-size_t					parse_error(size_t err_code);
+ssize_t					parse_error(size_t err_code);
 ssize_t					output_result(const t_input_reader *input,
 										const t_map *map);
 

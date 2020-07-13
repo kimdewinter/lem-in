@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:45:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/03 13:47:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:09:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t		add_items_start(t_qwrap **qr, t_map *map)
+static ssize_t		add_items_start(t_qwrap **qr, t_map *map)
 {
 	size_t		i;
 	t_queue		*new;
@@ -37,7 +37,7 @@ static size_t		add_items_start(t_qwrap **qr, t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-size_t		setup_queue(t_qwrap **qr, t_map *map)
+ssize_t		setup_queue(t_qwrap **qr, t_map *map)
 {
 	*qr = (t_qwrap *)malloc(sizeof(t_qwrap));
 	if (*qr)

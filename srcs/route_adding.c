@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/07 13:56:50 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/13 13:12:34 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static size_t				handle_path_src(t_subpath *path, t_queue *item,
+static ssize_t				handle_path_src(t_subpath *path, t_queue *item,
 t_map *map, t_subpath **new)
 {
 	if (item->src->is_conj == 0 && item->src != map->end)
@@ -40,7 +40,7 @@ t_map *map, t_subpath **new)
 	return (EXIT_SUCCESS);
 }
 
-static size_t		handle_path_dst(size_t round, t_queue *item, t_map *map,
+static ssize_t		handle_path_dst(size_t round, t_queue *item, t_map *map,
 t_subpath **new, int *add)
 {
 	if (item->dst != map->start && (item->dst->is_conj == 0 ||
@@ -54,7 +54,7 @@ t_subpath **new, int *add)
 	return (EXIT_SUCCESS);
 }
 
-size_t				add_path(t_qwrap *qr, t_queue *item, t_subpath *path,
+ssize_t				add_path(t_qwrap *qr, t_queue *item, t_subpath *path,
 t_map *map)
 {
 	t_subpath	*new;
