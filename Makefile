@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/13 13:54:18 by kim           ########   odam.nl          #
+#    Updated: 2020/07/14 14:08:20 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ RAW=	main\
 		queue_adjust\
 		calc_combinations\
 		parallelizer\
+		parallelizer_utils\
 		calc_ants_routes\
 		outputter\
 		roundputter\

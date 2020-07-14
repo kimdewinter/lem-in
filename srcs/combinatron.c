@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 15:19:04 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/10 14:18:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/14 14:15:19 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static size_t	is_valid_combi(size_t bitfield_len,
 	return (1);
 }
 
-static ssize_t			commit_multi_route_com(t_poscom **new_entry,
+static ssize_t	commit_multi_route_com(t_poscom **new_entry,
 												const t_poscom *rootcom,
 												const size_t i,
 												const t_map *map)
@@ -77,7 +77,7 @@ static ssize_t			commit_multi_route_com(t_poscom **new_entry,
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t			combinatron(const t_poscom *rootcom,
+static ssize_t	combinatron(const t_poscom *rootcom,
 									t_comvault *current,
 									t_poscom **bestcom,
 									const t_map *map)
@@ -90,6 +90,9 @@ static ssize_t			combinatron(const t_poscom *rootcom,
 		if (is_valid_combi(
 			BITFIELD_SIZE, map->routes[i]->bitroute, rootcom->bitroutes) == 1)
 		{
+			if (current->coms_used >= current->coms_len &&
+				expand_comvault(current) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 			if (commit_multi_route_com(&current->coms[current->coms_used],
 				rootcom, i, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
@@ -103,7 +106,7 @@ static ssize_t			combinatron(const t_poscom *rootcom,
 	return (EXIT_SUCCESS);
 }
 
-ssize_t	parallelize_multiples_of(const t_comvault *previous,
+ssize_t			parallelize_multiples_of(const t_comvault *previous,
 									t_comvault *current,
 									t_poscom **bestcom,
 									const t_map *map)

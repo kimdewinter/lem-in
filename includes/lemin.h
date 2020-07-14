@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/13 14:17:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/14 14:20:16 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 # define ROUTE_LEN_INCR_MULT 2
 # define BITFIELD_TYPE uint64_t
 # define BITFIELD_SIZE 64
+# define COMVAULT_LEN_INIT 9
+# define COMVAULT_LEN_INCR_MULT 10
 
 # include "../lib/lib.h"
 # include <limits.h>
@@ -56,6 +58,9 @@ typedef struct			s_comvault
 	size_t				coms_len;
 	size_t				coms_used;
 }						t_comvault;
+/*
+** there will be a comvault of poscoms of 1, of poscoms of 2, etc
+*/
 
 typedef struct			s_poscom
 {
@@ -247,7 +252,7 @@ t_room					**new_path(size_t size);
 ssize_t					new_subpath(t_subpath **new, t_room *conj, t_map *map);
 ssize_t					create_new_path(t_subpath **new,
 											t_subpath *pt,
-											t_room *conj, 
+											t_room *conj,
 											t_map *map);
 /*
 ** QUEUE MANAGEMENT
@@ -289,6 +294,7 @@ ssize_t					calc_combinations(long long unsigned *result,
 											size_t r);
 size_t					calc_cost(size_t ants, const t_poscom *routes);
 ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
+ssize_t					expand_comvault(t_comvault *comvault);
 ssize_t					handle_err_comtron(size_t err_code, const char *line);
 ssize_t					handle_err_para(size_t err_code, const char *line);
 ssize_t					max_parallels(size_t *result, const t_map *map);
