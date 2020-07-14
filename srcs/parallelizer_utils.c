@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/14 13:43:11 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/14 14:09:18 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/14 16:05:18 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,5 +36,5 @@ ssize_t	expand_comvault(t_comvault *comvault)
 	free(comvault->coms);
 	comvault->coms = new_coms;
 	comvault->coms_len = new_coms_len;
-	return (EXIT_FAILURE);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/06 15:13:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/14 15:20:53 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 		segment_i++;
 	}
 	route->route[route_i] = curr->conj;
-	route_i++;
 	next = curr->next;
 	// if (curr->path != NULL)
 	// 	free(curr->path);
@@ -38,7 +37,7 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 	if (curr->conj == map->end)
 		return (EXIT_SUCCESS);
 	else
-		return (assemble_single_route(next, route, route_i, map));
+		return (assemble_single_route(next, route, route_i + 1, map));
 }
 /*
 ** links all the nodes of a route together
