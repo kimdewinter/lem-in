@@ -6,79 +6,59 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 15:19:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/30 16:01:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/15 17:37:49 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static void	delete_routes(t_subpath ***array_address, size_t len)
+inline static void	delete_ptr(void **arr)
+{
+	free(*arr);
+	*arr = NULL;
+}
+
+static void			delete_single_room(t_room *room)
 {
 	size_t	i;
 
-	i = 0;
-	while (i < len)
-	{
-		(*array_address)[i] = NULL;
-		i++;
-	}
-	free(*array_address);
-	*array_address = NULL;
-}
-
-static void	delete_neighbours(t_room ***array_address, size_t len)
-{
-	size_t	i;
-
-	i = 0;
-	while (i < len)
-	{
-		(*array_address)[i] = NULL;
-		i++;
-	}
-	free(*array_address);
-	*array_address = NULL;
-}
-
-static void	delete_single_room(t_room *room)
-{
-	room->sps = 0;
-	room->spe = 0;
-	if (room->name != NULL)
-	{
-		free(room->name);
-		room->name = NULL;
-	}
-	room->xpos = -1;
-	room->ypos = -1;
-	room->ant = 0;
-	if (room->neighbours)
-		delete_neighbours(&room->neighbours, room->neighbours_len);
-	room->neighbours_len = 0;
-	room->room_i = 0;
-	room->num_options = 0;
 	if (room->routes != NULL)
-		delete_routes(&room->routes, room->routes_size);
-	room->routes_size = 0;
-	if (room->bitconj != NULL)
 	{
-		free(room->bitconj);
-		room->bitconj = NULL;
+		i = 0;
+		while (i < room->routes_size)
+		{
+			if (room->routes[i] != NULL)
+			{
+				if (room->routes[i]->path != NULL)
+					delete_ptr((void **)&room->routes[i]->path);
+				if (room->routes[i]->bitconj != NULL)
+					delete_ptr((void **)&room->routes[i]->bitconj);
+				free(room->routes[i]);//does this have a chance of double-free?
+				room->routes[i] = NULL;
+			}
+			i++;
+		}
+		delete_ptr((void **)&room->routes);
 	}
+	if (room->name != NULL)
+		delete_ptr((void **)&room->name);
+	if (room->neighbours != NULL)
+		delete_ptr((void **)&room->neighbours);
+	if (room->bitconj != NULL)
+		delete_ptr((void **)&room->bitconj);
 }
 
-void		delete_all_rooms(t_map *map)
+void				delete_all_rooms(t_table *rooms)
 {
 	size_t	i;
 
 	i = 0;
-	while (i < map->rooms->size)
+	while (i < rooms->size)
 	{
-		if (map->rooms->entries[i] != NULL)
+		if (rooms->entries[i] != NULL)
 		{
-			delete_single_room(map->rooms->entries[i]->val);
-			free(map->rooms->entries[i]->val);
-			map->rooms->entries[i]->val = NULL;
+			delete_single_room(rooms->entries[i]->val);
+			delete_ptr((void **)&rooms->entries[i]->val);
 		}
 		i++;
 	}

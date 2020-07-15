@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 19:51:36 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/25 14:11:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/15 14:50:20 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ int					resize_down(t_table *ht);
 t_entry				*new_entry(char *key, void *value);
 void				*search_ht(t_table *ht, char *key);
 void				delete_ht(t_table *ht);
+
 #endif

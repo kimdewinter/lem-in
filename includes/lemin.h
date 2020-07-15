@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/14 14:20:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/15 17:18:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -337,8 +337,10 @@ ssize_t					output_result(const t_input_reader *input,
 /*
 ** CLEANER
 */
+void					delete_all_comvaults(t_comvault **comvaults,
+												const size_t len);
 void					delete_all_routes(t_map *map);
-void					delete_all_rooms(t_map *map);
+void					delete_all_rooms(t_table *rooms);
 void					delete_map(t_map *map);
 
 /*

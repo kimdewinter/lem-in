@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 14:29:39 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/15 16:47:33 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ ssize_t			max_parallels(size_t *lowest, const t_map *map)
 	// set_viable_se(map);
 	if (calculate_max_real_parallels(&max_calculated, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	printf("Max parallels real %lu\n", max_calculated);
+	// printf("Max parallels real %lu\n", max_calculated);
 	// printf("Start: %lu\nEnd: %lu\nAnts: %lu\n", map->start->viable_nbs,
 	// map->end->viable_nbs, map->antmount);
 	// exit (0);

@@ -6,30 +6,11 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 15:19:04 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/14 16:00:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/15 17:07:55 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
-
-ssize_t			commit_best(const t_poscom *bestcom, t_best *new_entry)
-{
-	if (bestcom == NULL)
-		return (EXIT_FAILURE);
-	new_entry->len = bestcom->num_routes;
-	new_entry->combi =
-		(t_route **)malloc(sizeof(t_route *) * new_entry->len);
-	if (new_entry->combi == NULL)
-		return (handle_err_comtron(1, "commit_best\n"));
-	new_entry->used = 0;
-	while (new_entry->used < bestcom->num_routes)
-	{
-		new_entry->combi[new_entry->used] = bestcom->routes[new_entry->used];
-		new_entry->used++;
-	}
-	new_entry->turns = bestcom->turns;
-	return (EXIT_SUCCESS);
-}
 
 static size_t	is_valid_combi(size_t bitfield_len,
 								BITFIELD_TYPE *rte1,
@@ -58,7 +39,7 @@ static ssize_t	commit_multi_route_com(t_poscom **new_entry,
 	if (*new_entry == NULL)
 		return (handle_err_comtron(1, "commit_multi_route_com\n"));
 	(*new_entry)->num_routes = rootcom->num_routes + 1;
-	if (bite_bitroute_merge(&(*new_entry)->bitroutes, rootcom->bitroutes,
+	if (bite_bitroute_merge(&((*new_entry)->bitroutes), rootcom->bitroutes,
 		map->routes[i]->bitroute, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	(*new_entry)->map_routes_i = i;

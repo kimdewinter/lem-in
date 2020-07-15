@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/14 14:20:13 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/15 17:18:37 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,5 +124,10 @@ ssize_t			parallelize(t_map *map)
 			return (EXIT_FAILURE);
 		i++;
 	}
-	return (commit_best(bestcom, &map->solution));
+	if (commit_best(bestcom, &map->solution) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	delete_all_comvaults(valcoms, maxparallels);
+	free(valcoms);
+	valcoms = NULL;
+	return (EXIT_SUCCESS);
 }
