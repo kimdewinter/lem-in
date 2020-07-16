@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 15:42:26 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/16 21:31:34 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,16 +18,17 @@ t_map *map)
 	t_subpath	*new;
 
 	new = NULL;
-	if (curr->src == map->end && qr->round == 1)
+	if (curr->path == NULL && qr->round == 2)
 	{
 		if (create_new_path(&new, NULL, map->end, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		if (add_path(qr, curr, new, map) == EXIT_FAILURE)
+		if (add_path_to_room(curr, map, &new) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
+		curr->path = new;
 	}
 	else
 	{
-		if (add_path(qr, curr, curr->path, map) == EXIT_FAILURE)
+		if (add_path_to_room(curr, map, &(curr->path)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -51,6 +52,7 @@ static ssize_t			execute_queue(t_qwrap *qr, t_map *map)
 			iter = *(qr->queue);
 		}
 	}
+	free (qr->in_queue);
 	free (qr->queue);
 	free (qr);
 	return (EXIT_SUCCESS);

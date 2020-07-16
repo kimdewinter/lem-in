@@ -6,72 +6,68 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:14:33 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/16 21:37:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static int				is_viable_nb(t_queue *curr, size_t i,
-size_t round)
-{
-	if (!(curr->dst->neighbours[i]->dead_end == 0
-	&& (curr->dst->neighbours[i]->weight == 0
-	|| curr->dst->neighbours[i]->weight > curr->dst->weight 
-	|| (curr->dst->neighbours[i]->weight < curr->dst->weight &&
-	curr->dst->weight > round))))
-	{
-		return (0);
-	}
-	return (1);
-}
-
 static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 {
 	size_t		i;
-	size_t		j;
 
 	i = 0;
-	curr->dst->viable_nbs = curr->dst->neighbours_len;
+	if (curr->dst == map->start)
+		return (EXIT_SUCCESS);
 	while (i < curr->dst->neighbours_len)
 	{
-		j = 0;
-		while (j < curr->dst->num_options)
+		if (curr->dst->neighbours[i]->dead_end == 0)
 		{
-			if (curr->dst->routes[j]->added_this_turn == 1)
+			if (add_nb_to_queue(map, curr, curr->dst->neighbours[i], qr)
+			== EXIT_FAILURE)
 			{
-				if (curr->dst == map->start)
-					return (EXIT_SUCCESS);
-				if (is_viable_nb(curr, i, qr->round) == 1 &&
-				is_viable_for_path(map, curr, curr->dst->neighbours[i],
-				curr->dst->routes[j]) == 1)
-				{
-					if (add_to_queue(qr, curr->dst,
-					curr->dst->neighbours[i], curr->dst->routes[j])
-					== EXIT_FAILURE)
-						return (EXIT_FAILURE);
-				}
+				printf("Can be added\n");
+				return (EXIT_FAILURE);
 			}
-			j++;
 		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
 }
 
-static void	set_weights_after(t_queue **queue, t_map *map)
+void	set_weights_nbs(t_queue **queue, t_map *map)
 {
 	t_queue	*iter;
+	size_t	i;
 
 	iter = *queue;
 	while (iter)
-	{
+	{	
+		i = 0;
 		if (iter->dst != map->start)
 		{
-			if (iter->src->weight < iter->dst->weight || iter->dst->weight == 0)
-				iter->dst->weight = iter->src->weight + 1;
+			while (i < iter->dst->neighbours_len)
+			{
+				if (iter->dst->neighbours[i] != map->start 
+				&& (iter->dst->neighbours[i]->weight == 0 ||
+				iter->dst->weight < iter->dst->neighbours[i]->weight))
+					iter->dst->neighbours[i]->weight = iter->dst->weight + 1;
+				i++;
+			}
 		}
 		iter = iter->next;
+	}
+}
+
+void		initialize_in_queue(t_qwrap *qr, t_map *map)
+{
+	size_t i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		qr->in_queue[0] = (BITFIELD_TYPE)0;
+		i++;
 	}
 }
 
@@ -80,29 +76,24 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	t_queue			*curr;
 	t_queue			*prev;
 	size_t			i;
-	BITFIELD_TYPE	*visited;
 
-	if (bite_alloc(&visited, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	initialize_in_queue(qr, map);
 	curr = *(qr->queue);
 	i = 0;
 	prev = NULL;
 	qr->round++;
+	set_weights_nbs(qr->queue, map);
 	while (i < len)
 	{
-		if (room_in_bitfield(curr->dst, visited) == 0)
-		{
-			if (add_nbs_to_queue(qr, curr, map)
-			== EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			add_to_bitfield(curr->dst, visited);
-		}
+		if (add_nbs_to_queue(qr, curr, map)
+		== EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		prev = curr;
 		curr = curr->next;
 		remove_queue_item(qr, prev);
 		i++;
 	}
-	set_weights_after(qr->queue, map);
-	free (visited);
+	printf("AFTER ADJUST\n");
+	print_queue(qr);
 	return (EXIT_SUCCESS);
 }

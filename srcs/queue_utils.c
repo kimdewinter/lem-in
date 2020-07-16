@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:14:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/16 21:27:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,23 @@ t_subpath *pt)
 		return (EXIT_FAILURE);
 	add_item_queue(&qr, new);
 	return (EXIT_SUCCESS);
+}
+
+void			delete_path(t_subpath **pt)
+{
+	if (*pt)
+	{
+		if ((*pt)->path)
+		{
+			free ((*pt)->path);
+			(*pt)->path = NULL;
+		}
+		if ((*pt)->bitconj)
+		{
+			free ((*pt)->bitconj);
+			(*pt)->bitconj = NULL;
+		}
+		free (*pt);
+	}
+	*pt = NULL;
 }

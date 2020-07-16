@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 17:18:21 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/16 21:42:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct			s_queue
 
 typedef struct			s_qwrap
 {
+	BITFIELD_TYPE		*in_queue;
 	t_queue				**queue;
 	t_queue				*last;
 	size_t				items;
@@ -219,26 +220,11 @@ ssize_t					setup_room(t_room **dest,
 ** ROUTE FINDING
 */
 ssize_t					find_routes(t_map *map);
-ssize_t					add_path(t_qwrap *qr,
-									t_queue *item,
-									t_subpath *path,
-									t_map *map);
 ssize_t					route_error(size_t err_code);
-ssize_t					add_nodes_to_path(t_queue *item,
-											t_subpath **path,
-											t_map *map,
-											int *add);
 /*
 ** ROUTE FINDING CONFLICTS
 */
-void					solve_spe_conflict(t_queue *item,
-											t_subpath *new,
-											t_map *map,
-											int *add);
-void					solve_conflict(t_queue *item,
-										t_subpath *new,
-										int *add);
-int						is_junction(t_room *dst, size_t round);
+int						is_junction(t_room *src, t_room *dst, t_map *map);
 /*
 ** ROUTE FINDING UTILS
 */
@@ -261,6 +247,7 @@ ssize_t					adjust_queue(t_qwrap *qr, t_map *map, size_t len);
 /*
 ** QUEUE MANAGEMENT UTILS
 */
+void					delete_path(t_subpath **pt);
 t_queue					*new_queue_item(t_subpath *pt,
 										t_room *dst,
 										t_room *src);
@@ -282,6 +269,10 @@ size_t					is_viable_for_path(t_map *map,
 											t_room *nb,
 											t_subpath *path);
 int						check_length(t_subpath *new_path, t_room *curr);
+ssize_t					add_nb_to_queue(t_map *map,
+										t_queue *item,
+										t_room *nb,
+										t_qwrap *qr);
 /*
 ** BUILD_ROUTES
 */
