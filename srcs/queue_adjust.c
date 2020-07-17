@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/16 21:37:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 13:14:06 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 		{
 			if (add_nb_to_queue(map, curr, curr->dst->neighbours[i], qr)
 			== EXIT_FAILURE)
-			{
-				printf("Can be added\n");
 				return (EXIT_FAILURE);
-			}
 		}
 		i++;
 	}
@@ -93,7 +90,7 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 		remove_queue_item(qr, prev);
 		i++;
 	}
-	printf("AFTER ADJUST\n");
-	print_queue(qr);
+	// printf("AFTER ADJUST\n");
+	// print_queue(qr);
 	return (EXIT_SUCCESS);
 }

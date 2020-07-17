@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:45:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/16 21:25:51 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 13:14:49 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,7 @@ ssize_t		setup_queue(t_qwrap **qr, t_map *map)
 		if (add_items_start(*qr, map) == EXIT_SUCCESS)
 		{
 			map->end->dead_end = 1;
-			print_queue((*qr));
+			// print_queue((*qr));
 			(*qr)->round++;
 			return (EXIT_SUCCESS);
 		}
