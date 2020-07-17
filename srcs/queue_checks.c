@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:01:31 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/16 21:39:50 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 16:24:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ t_map *map, BITFIELD_TYPE *in_path)
 			if (tmp->neighbours[i] != prev
 			&& tmp->neighbours[i] != src
 			&& tmp->neighbours[i] != tmp
+			&& tmp->neighbours[i] != nb
 			&& room_in_bitfield(tmp->neighbours[i], in_path) == 0)
 			{
 				prev = tmp;
