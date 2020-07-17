@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:01:31 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/17 16:24:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 17:13:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,17 @@ t_subpath **new, t_map *map, t_queue *item)
 	t_room	*tmp;
 	t_room	*prev;
 	size_t	i;
+	int		first;
 	int		found;
+	BITFIELD_TYPE	*in_path;
 
 	prev = NULL;
 	tmp = nb;
 	*dst = NULL;
 	(*new)->sp = 1;
+	first = 1;
+	if (bite_alloc(&in_path, map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	if (add_to_path(*new, tmp, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	tmp->weight = 0;
@@ -50,25 +55,31 @@ t_subpath **new, t_map *map, t_queue *item)
 	{
 		i = 0;
 		found = 0;
+		add_to_bitfield(tmp, in_path);
 		while (i < tmp->neighbours_len)
 		{
 			if (tmp->neighbours[i] != prev
-			&& tmp->neighbours[i] != item->path->conj
 			&& tmp->neighbours[i]->dead_end == 0
 			&& tmp->neighbours[i] != item->src
-			&& tmp->neighbours[i] != item->dst)
+			&& tmp->neighbours[i] != item->dst
+			&& tmp->neighbours[i] != item->path->conj
+			&& room_in_bitfield(tmp->neighbours[i], in_path) == 0)
 			{
 				if (tmp->neighbours[i]->is_conj == 0
 				&& tmp->neighbours[i] != map->start)
 				{
 					if (add_to_path(*new, tmp->neighbours[i], map)
 					== EXIT_FAILURE)
+					{
+						free (in_path);
 						return (EXIT_FAILURE);
+					}
 					tmp->neighbours[i]->weight = 0;
 				}
 				prev = tmp;
 				tmp = tmp->neighbours[i];
 				found = 1;
+				first = 0;
 				break;
 			}
 			i++;
@@ -76,12 +87,13 @@ t_subpath **new, t_map *map, t_queue *item)
 		if (found == 0)
 			break;
 	}
-	if (found == 1)
+	if (found == 1 || first == 1)
 	{
 		if (tmp != map->start && tmp->weight == 0)
 			tmp->weight = item->dst->weight + 1;
 		*dst = tmp;
 	}
+	free (in_path);
 	return (EXIT_SUCCESS);
 }
 
@@ -138,7 +150,7 @@ t_room *src, int is_orig_path)
 	return (0);
 }
 
-t_room			*nearest_junction(t_room *nb, t_room *src,
+t_room			*nearest_junction(t_room *conj, t_room *nb, t_room *src,
 t_map *map, BITFIELD_TYPE *in_path)
 {
 	t_room	*prev;
@@ -162,6 +174,7 @@ t_map *map, BITFIELD_TYPE *in_path)
 			&& tmp->neighbours[i] != src
 			&& tmp->neighbours[i] != tmp
 			&& tmp->neighbours[i] != nb
+			&& tmp->neighbours[i] != conj
 			&& room_in_bitfield(tmp->neighbours[i], in_path) == 0)
 			{
 				prev = tmp;
@@ -189,7 +202,7 @@ t_map *map)
 
 	if (bite_alloc(&in_path, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	*dst = nearest_junction(nb, item->dst, map, in_path);
+	*dst = nearest_junction(item->path->conj, nb, item->dst, map, in_path);
 	free (in_path);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/04 14:20:58 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 16:56:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,27 @@
 // 		i++;
 // 	}
 // }
+void		print_routes(t_map *map)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = 0;
+	while (i < map->num_routes)
+	{
+		j = 0;
+		printf("\n\nPath:\n");
+		print_bitconj(map->routes[i]->bitroute, map->bitfield_len);
+		while (j < map->routes[i]->len)
+		{
+			printf("%s ", map->routes[i]->route[j]->name);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
+}
 
 static void	print_names(char **names, size_t len)
 {

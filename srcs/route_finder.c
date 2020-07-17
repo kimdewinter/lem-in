@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/16 21:31:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 17:14:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ ssize_t			find_routes(t_map *map)
 		execute_queue(queue, map) == EXIT_SUCCESS &&
 		assemble_all_routes(map) == EXIT_SUCCESS)
 	{
+		print_routes(map);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

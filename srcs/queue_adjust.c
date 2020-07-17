@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/17 13:14:06 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/17 16:38:58 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	set_weights_nbs(qr->queue, map);
 	while (i < len)
 	{
+		printf("%lu\n", i);
 		if (add_nbs_to_queue(qr, curr, map)
 		== EXIT_FAILURE)
 			return (EXIT_FAILURE);
