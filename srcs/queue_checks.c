@@ -6,30 +6,30 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:01:31 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/17 17:13:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 11:11:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-// int				check_length_spe(t_subpath *path, t_room *nb,
-// t_map *map)
-// {
-// 	ssize_t	j;
+int				check_length_spe(t_subpath *path, t_room *nb,
+t_map *map)
+{
+	ssize_t	j;
 
-// 	j = nb->num_options - 1;
-// 	while (j >= 0)
-// 	{
-// 		if (nb->routes[j]->conj == map->end)
-// 		{
-// 			if (path->len + 1 < nb->routes[j]->len)
-// 				return (1);
-// 			return (0);
-// 		}
-// 		j--;
-// 	}
-// 	return (1);
-// }
+	j = nb->num_options - 1;
+	while (j >= 0)
+	{
+		if (nb->routes[j]->conj == map->end)
+		{
+			if (path->len + 1 < nb->routes[j]->len)
+				return (1);
+			return (0);
+		}
+		j--;
+	}
+	return (1);
+}
 
 static ssize_t			add_rooms_to_path(t_room **dst, t_room *nb,
 t_subpath **new, t_map *map, t_queue *item)
@@ -50,21 +50,22 @@ t_subpath **new, t_map *map, t_queue *item)
 		return (EXIT_FAILURE);
 	if (add_to_path(*new, tmp, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	tmp->weight = 0;
 	while (tmp->is_conj == 0 && tmp != map->start)
 	{
 		i = 0;
 		found = 0;
+		tmp->weight = 0;
 		add_to_bitfield(tmp, in_path);
 		while (i < tmp->neighbours_len)
 		{
+			// printf("nb %s %d\n", tmp->neighbours[i]->name, tmp->neighbours[i]->dead_end);
 			if (tmp->neighbours[i] != prev
 			&& tmp->neighbours[i]->dead_end == 0
-			&& tmp->neighbours[i] != item->src
 			&& tmp->neighbours[i] != item->dst
 			&& tmp->neighbours[i] != item->path->conj
 			&& room_in_bitfield(tmp->neighbours[i], in_path) == 0)
 			{
+				// printf("VIABLE IN ADD %s\n", tmp->neighbours[i]->name);
 				if (tmp->neighbours[i]->is_conj == 0
 				&& tmp->neighbours[i] != map->start)
 				{
@@ -85,7 +86,10 @@ t_subpath **new, t_map *map, t_queue *item)
 			i++;
 		}
 		if (found == 0)
+		{
+			// printf("Found == 0\n");
 			break;
+		}
 	}
 	if (found == 1 || first == 1)
 	{
@@ -161,22 +165,27 @@ t_map *map, BITFIELD_TYPE *in_path)
 	prev = src;
 	tmp = nb;
 	found = 1;
+	// printf("Before find dst\n");
 	while ((tmp->checked == 1 && tmp->is_conj == 0)
 	|| (tmp->checked == 0 && is_junction(prev, tmp, map) == 0))
 	{
+		// printf("We found something %s\n", tmp->name);
 		add_to_bitfield(tmp, in_path);
 		tmp->is_conj = 0;
 		i = 0;
 		found = 0;
 		while (i < tmp->neighbours_len)
 		{
-			if (tmp->neighbours[i] != prev
+			// printf("i: %lu\n", i);
+			// printf("nb %s\n", tmp->neighbours[i]->name);
+			if (tmp->neighbours[i]->dead_end == 0
+			&& tmp->neighbours[i] != prev
 			&& tmp->neighbours[i] != src
 			&& tmp->neighbours[i] != tmp
-			&& tmp->neighbours[i] != nb
 			&& tmp->neighbours[i] != conj
 			&& room_in_bitfield(tmp->neighbours[i], in_path) == 0)
 			{
+				// printf("VIABLE IN FIND DST %s\n", tmp->neighbours[i]->name);
 				prev = tmp;
 				tmp = tmp->neighbours[i];
 				found = 1;
@@ -186,11 +195,13 @@ t_map *map, BITFIELD_TYPE *in_path)
 		}
 		if (found == 0)
 		{
+				// printf("After find dst\n");
 			return (NULL);
 		}
 	}
 	if (tmp == src && prev)
 		prev->dead_end = 1;
+	// printf("After find dst\n");
 	return (tmp);
 }
 
@@ -207,8 +218,25 @@ t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-int				is_valid_dst(t_queue *item, t_room *dst, t_room *nb)
+int				has_overlap(BITFIELD_TYPE *path, BITFIELD_TYPE *room,
+t_map *map)
 {
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		if ((path[i] & room[i]) != (BITFIELD_TYPE)0)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int				is_valid_dst(t_queue *item, t_room *dst, t_room *nb,
+size_t round, t_map *map)
+{
+	(void)round;
 	if (dst == NULL)
 	{
 		nb->dead_end = 1;
@@ -218,6 +246,25 @@ int				is_valid_dst(t_queue *item, t_room *dst, t_room *nb)
 	{
 		nb->dead_end = 1;
 		return (0);
+	}
+	if (dst == item->path->conj || dst == item->src)
+		return (0);
+	if (item->dst->weight > dst->weight && dst->weight != 0)
+		return (0);
+	if ((dst->weight == item->dst->weight) && dst->weight != 0)
+	{
+		if (has_overlap(item->path->bitconj, dst->bitconj, map) == 1)
+		{
+			// printf("DST %s %lu ITEM DST %s %lu conj %s\n", dst->name, dst->weight,
+			// item->dst->name, item->dst->weight,
+			// item->path->conj->name);
+			// printf("Not viable because weight round %lu\n", round);
+			// print_path(item->path);
+			// print_paths(dst);
+			return (0);
+		}
+		// exit (0);
+		// return (0);
 	}
 	return (1);
 }
@@ -240,10 +287,20 @@ t_room *nb)
 static int	solve_path_conflicts_q(t_queue *item, t_room *dst,
 t_subpath **new, t_map *map, int is_orig)
 {
-	if (room_in_bitfield(item->path->conj, dst->bitconj) == 1
-	|| ((dst->spe == 1 && item->path->conj == map->end)
-	&& dst != map->start))
+//	|| ((dst->spe == 1 && item->path->conj == map->end)
+	if (dst->spe == 1 && dst != map->start)
 	{
+		if (check_length_spe(*new, dst, map) == 0)
+		{
+			if (is_orig == 0)
+				delete_path(new);
+			add_to_bitfield(item->dst, dst->bitconj);
+			return (0);
+		}
+	}
+	if (room_in_bitfield(item->path->conj, dst->bitconj) == 1)
+	{
+		/* Exclude start?? */
 		if (check_length(*new, dst) == 0)
 		{
 			if (is_orig == 0)
@@ -281,18 +338,27 @@ t_room *nb, t_qwrap *qr)
 
 	new = NULL;
 	is_orig_path = 1;
+	// printf("SRC %s DST %s CONJ %s\n", item->src->name, item->dst->name, item->path->conj->name);
+	// print_path(item->path);
 	if (find_real_nb(nb, item, &dst, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	if (is_valid_dst(item, dst, nb) == 0)
+	// if (dst)
+	// 	printf("REAL DST%s\n", dst->name);
+	if (is_valid_dst(item, dst, nb, qr->round, map) == 0)
+	{
+		// printf("Not valid dst\n");
 		return (EXIT_SUCCESS);
+	}
 	if (is_viable_receiver(dst, item, map, nb) == 1)
 	{
 		if (nb->is_conj == 0)
 		{
+			// printf("Before create path\n");
 			if (create_new_path(&new, item->path, item->dst, map)
 			== EXIT_FAILURE || add_rooms_to_path(&dst, nb, &new, map, item)
 			== EXIT_FAILURE)
 				return (EXIT_FAILURE);
+			// printf("Real dst %s\n", dst->name);
 			is_orig_path = 0;
 		}
 		else

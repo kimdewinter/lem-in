@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/17 16:38:58 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 11:20:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 
 	i = 0;
 	if (curr->dst == map->start)
+	{
+		// printf("map start\n");
 		return (EXIT_SUCCESS);
+	}
 	while (i < curr->dst->neighbours_len)
 	{
 		if (curr->dst->neighbours[i]->dead_end == 0)
@@ -80,9 +83,16 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	prev = NULL;
 	qr->round++;
 	set_weights_nbs(qr->queue, map);
+	// printf("LEN QUEUE %lu\n", len);
+	// if (len == 2)
+	// {
+	// 	printf("Map start %s Map end %s\n", map->start->name, map->end->name);
+	// 	print_queue(qr);
+	// 	exit (0);
+	// }
 	while (i < len)
 	{
-		printf("%lu\n", i);
+		// printf("%lu\n", i);
 		if (add_nbs_to_queue(qr, curr, map)
 		== EXIT_FAILURE)
 			return (EXIT_FAILURE);
@@ -93,5 +103,7 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	}
 	// printf("AFTER ADJUST\n");
 	// print_queue(qr);
+	// if (qr->round == 3)
+	// 	exit (0);
 	return (EXIT_SUCCESS);
 }

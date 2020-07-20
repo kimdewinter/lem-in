@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:45:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/17 13:14:49 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 11:07:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ t_map *map)
 static void					set_if_found(t_room **tmp, t_room **dst,
 t_room **prev, t_map *map)
 {
-	if ((*tmp) != map->start && (*tmp)->weight == 0)
-		(*tmp)->weight = map->end->weight + 1;
+	// if ((*tmp) != map->start && (*tmp)->weight == 0)
+	// 	(*tmp)->weight = map->end->weight + 1;
 	if ((*tmp) == map->end && prev)
 		(*prev)->dead_end = 1;
 	(*tmp)->spe = 1;
@@ -173,8 +173,7 @@ static ssize_t		create_path(t_subpath **path, t_room **dst, t_room *nb,
 t_map *map)
 {
 	if (create_new_path(path, NULL, map->end, map) == EXIT_FAILURE
-	|| add_rooms_to_path(dst, nb,
-	path, map) == EXIT_FAILURE)
+	|| add_rooms_to_path(dst, nb, path, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
@@ -243,6 +242,8 @@ static ssize_t		add_items_start(t_qwrap *qr, t_map *map)
 			if (viable_dst(dst, &path, map->end->neighbours[i], map) == 1
 			&& viable_for_queue(qr, dst, &path) == 1)
 			{
+				if (path)
+					dst->weight = map->end->weight + 1;
 				if (add_item(qr, &path, dst, map) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
 			}
@@ -296,6 +297,7 @@ ssize_t		setup_queue(t_qwrap **qr, t_map *map)
 		{
 			map->end->dead_end = 1;
 			// print_queue((*qr));
+			// exit (0);
 			(*qr)->round++;
 			return (EXIT_SUCCESS);
 		}

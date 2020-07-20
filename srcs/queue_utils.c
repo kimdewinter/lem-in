@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/16 21:27:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 11:17:20 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void		remove_queue_item(t_qwrap *qr, t_queue *item)
 		free (item);
 		qr->last = NULL;
 		*(qr->queue) = NULL;
+		// printf("empty queue\n");
+		// exit (0);
 	}
 	else if (item->prev == NULL)
 	{
