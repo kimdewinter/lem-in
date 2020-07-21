@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/20 11:20:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 20:52:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 	size_t		i;
 
 	i = 0;
+	// printf("\n\nCURR %s\n", curr->dst->name);
 	if (curr->dst == map->start)
 	{
 		// printf("map start\n");
@@ -24,12 +25,23 @@ static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
 	}
 	while (i < curr->dst->neighbours_len)
 	{
+		// printf("neighbour %s dead end %d\n", curr->dst->neighbours[i]->name,
+		// curr->dst->neighbours[i]->dead_end);
 		if (curr->dst->neighbours[i]->dead_end == 0)
 		{
 			if (add_nb_to_queue(map, curr, curr->dst->neighbours[i], qr)
 			== EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
+//				&& ft_strcmp(curr->src->name, "15") == 0
+		// if (ft_strcmp(curr->dst->name, "12") == 0 
+		// && ft_strcmp(curr->dst->neighbours[i]->name, "13") == 0
+		// && ft_strcmp(curr->src->name, "7") == 0)
+		// {
+		// 	printf("Oki\n");
+		// 	// print_paths(curr->dst->neighbours[i]);
+		// 	exit (0);
+		// }
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -83,7 +95,7 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	prev = NULL;
 	qr->round++;
 	set_weights_nbs(qr->queue, map);
-	// printf("LEN QUEUE %lu\n", len);
+	printf("LEN QUEUE %lu\n", len);
 	// if (len == 2)
 	// {
 	// 	printf("Map start %s Map end %s\n", map->start->name, map->end->name);
@@ -104,6 +116,10 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	// printf("AFTER ADJUST\n");
 	// print_queue(qr);
 	// if (qr->round == 3)
+	// {
+	// 	printf("AFTER\n");
+	// 	print_queue(qr);
 	// 	exit (0);
+	// }
 	return (EXIT_SUCCESS);
 }

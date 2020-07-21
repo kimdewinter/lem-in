@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:14:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 20:42:04 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,10 @@ t_subpath **new)
 	if (item->dst->weight == 0 && item->dst != map->start)
 		item->dst->weight = item->src->weight + 1;
 	if ((*new)->conj != map->end)
+	{
 		add_to_bitfield((*new)->conj, item->dst->bitconj);
+		absorb_bitfield((*new)->bitconj, item->dst->access_to, map);
+	}
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/17 16:56:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 09:53:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void		print_routes(t_map *map)
 	{
 		j = 0;
 		printf("\n\nPath:\n");
-		print_bitconj(map->routes[i]->bitroute, map->bitfield_len);
+		// print_bitconj(map->routes[i]->bitroute, map->bitfield_len);
 		while (j < map->routes[i]->len)
 		{
 			printf("%s ", map->routes[i]->route[j]->name);
@@ -178,6 +178,8 @@ void	print_queue(t_qwrap *qr)
 		{
 			print_path(pt);
 		}
+		// printf("Dst paths\n");
+		// print_paths(dst);
 		// else
 		// {
 		// 	printf("No entry %ld\n", i);
@@ -250,9 +252,10 @@ void	debug(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nIS CONJ %d\nVIABLE NBS: %d\nWEIGHT %lu\nSPE %d\n", table->entries[i]->key, 
+			ft_printf("KEY: %s\nIS CONJ %d\nVIABLE NBS: %d\nWEIGHT %lu\nSPE %d\n%lu\n", table->entries[i]->key, 
 			((t_room *)table->entries[i]->val)->is_conj, ((t_room *)table->entries[i]->val)->viable_nbs,
-			((t_room *)table->entries[i]->val)->weight, ((t_room *)table->entries[i]->val)->spe);
+			((t_room *)table->entries[i]->val)->weight, ((t_room *)table->entries[i]->val)->spe,
+			((t_room *)table->entries[i]->val)->start_dst);
 			tmp = (t_room *)table->entries[i]->val;
 			printf("bitconj\n");
 			print_bitconj(tmp->bitconj, map->bitfield_len);

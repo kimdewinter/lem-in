@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/16 21:36:24 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/21 09:52:36 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,8 @@ RAW=	main\
 		route_error\
 		delete_map\
 		delete_rooms\
-		delete_routes
+		delete_routes\
+		set_weights
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

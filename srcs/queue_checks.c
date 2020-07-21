@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:01:31 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/20 11:11:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 10:05:51 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,6 +166,7 @@ t_map *map, BITFIELD_TYPE *in_path)
 	tmp = nb;
 	found = 1;
 	// printf("Before find dst\n");
+	// printf("Src: %s\nConj %s\n", src->name, conj->name);
 	while ((tmp->checked == 1 && tmp->is_conj == 0)
 	|| (tmp->checked == 0 && is_junction(prev, tmp, map) == 0))
 	{
@@ -233,13 +234,31 @@ t_map *map)
 	return (0);
 }
 
+int				opens_options(BITFIELD_TYPE *src, BITFIELD_TYPE *dst, t_map *map)
+{
+	/* DST Should give access to nodes that src doesn't have access to */
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		// printf("dst %lu src %lu src & dst %lu\n", dst[i], src[i], (src[i] & dst[i]));
+		if ((dst[i] ^ (dst[i] & src[i])) != (BITFIELD_TYPE)0)
+			return (1);
+		i++;
+	}
+	// printf("No new options\n");
+	return (0);
+}
+
 int				is_valid_dst(t_queue *item, t_room *dst, t_room *nb,
 size_t round, t_map *map)
 {
 	(void)round;
+	(void)nb;
 	if (dst == NULL)
 	{
-		nb->dead_end = 1;
+		// nb->dead_end = 1;
 		return (0);
 	}
 	if (dst == item->dst)
@@ -249,11 +268,16 @@ size_t round, t_map *map)
 	}
 	if (dst == item->path->conj || dst == item->src)
 		return (0);
-	if (item->dst->weight > dst->weight && dst->weight != 0)
+	// if (dst->weight <= item->dst->weight && dst->weight != 0)
+	// 	return (0);
+	if (dst->start_dst > item->dst->start_dst
+	&& (dst->weight <= item->dst->weight && dst->weight != 0))
 		return (0);
-	if ((dst->weight == item->dst->weight) && dst->weight != 0)
+	if ((dst->weight <= item->dst->weight) && dst->weight != 0)
 	{
-		if (has_overlap(item->path->bitconj, dst->bitconj, map) == 1)
+		if (has_overlap(item->path->bitconj, dst->bitconj, map) == 1
+		|| (opens_options(item->dst->access_to, dst->access_to, map) == 0
+		&& dst->spe == 0 && dst->weight < item->dst->weight))
 		{
 			// printf("DST %s %lu ITEM DST %s %lu conj %s\n", dst->name, dst->weight,
 			// item->dst->name, item->dst->weight,
@@ -294,7 +318,15 @@ t_subpath **new, t_map *map, int is_orig)
 		{
 			if (is_orig == 0)
 				delete_path(new);
-			add_to_bitfield(item->dst, dst->bitconj);
+			if (item->dst != map->end)
+			{
+				// printf("\n\nAdd %s to bitfield %s\n", item->dst->name, dst->name);
+				add_to_bitfield(item->dst, dst->bitconj);
+				// printf("before abs %p\n", *new);
+				if (*new)
+					absorb_bitfield((*new)->bitconj, item->dst->access_to, map);
+				// printf("after abs\n");
+			}
 			return (0);
 		}
 	}
@@ -305,8 +337,15 @@ t_subpath **new, t_map *map, int is_orig)
 		{
 			if (is_orig == 0)
 				delete_path(new);
-			if (dst != map->start)
+			if (dst != map->start && item->dst != map->end)
+			{
+				// printf("\n\nAdd %s to bitfield %s\n", item->dst->name, dst->name);
 				add_to_bitfield(item->dst, dst->bitconj);
+				// printf("before abs\n");
+				if (*new)
+					absorb_bitfield((*new)->bitconj, item->dst->access_to, map);
+				// printf("after abs\n");
+			}
 			return (0);
 		}
 		return (1);
@@ -338,17 +377,22 @@ t_room *nb, t_qwrap *qr)
 
 	new = NULL;
 	is_orig_path = 1;
-	// printf("SRC %s DST %s CONJ %s\n", item->src->name, item->dst->name, item->path->conj->name);
-	// print_path(item->path);
+	// if (qr->round == 11)
+	// {
+		// printf("\n\nSTART\n\nSRC %s %lu DST %s %lu CONJ %s\nNB %s\n", item->src->name, item->src->weight,
+		// item->dst->name, item->dst->weight, item->path->conj->name, nb->name);
+		// print_path(item->path);
+	// }
 	if (find_real_nb(nb, item, &dst, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	// if (dst)
-	// 	printf("REAL DST%s\n", dst->name);
+	// 	printf("REAL DST %s %lu\n", dst->name, dst->weight);
 	if (is_valid_dst(item, dst, nb, qr->round, map) == 0)
 	{
 		// printf("Not valid dst\n");
 		return (EXIT_SUCCESS);
 	}
+	// printf("REAL DST %s\n", dst->name);
 	if (is_viable_receiver(dst, item, map, nb) == 1)
 	{
 		if (nb->is_conj == 0)
@@ -363,13 +407,23 @@ t_room *nb, t_qwrap *qr)
 		}
 		else
 			new = item->path;
+		// if (new->conj == item->dst && is_orig_path == 0
+		// && dst->weight <= item->dst->weight)
+		// 	return (EXIT_SUCCESS);
+		// print_path(new);
+		// if (new->conj == item->dst
+		// && item->dst->weight > dst->weight)
+		// 	return (EXIT_SUCCESS);
 		if (solve_path_conflicts_q(item, dst, &new, map, is_orig_path) == 0)
 			return (EXIT_SUCCESS);
+		// printf("After conflicts\n");
 		if ((room_in_bitfield(dst, qr->in_queue) == 1
 		&& has_queue_conflict(qr, &new, dst, item->dst, is_orig_path) == 0)
 		|| (room_in_bitfield(dst, qr->in_queue) == 0))
 		{
 			add_item_adj(item, new, dst, map, qr);
+			// printf("Added\n");
+			// printf("\n\n				Add %s to bitfield %s\n", item->dst->name, dst->name);
 			if (dst != map->start)
 				add_to_bitfield(dst, qr->in_queue);
 		}

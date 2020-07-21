@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:11:23 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 14:35:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static void		remove_dead_path(t_room **tmp, t_map *map)
 	&& *tmp != map->end)
 	{
 		j = 0;
+		printf("%s\n", (*tmp)->name);
 		(*tmp)->dead_end = 1;
 		if ((*tmp)->neighbours[j] == prev)
 			j++;

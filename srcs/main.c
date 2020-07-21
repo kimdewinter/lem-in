@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 15:59:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/21 09:53:56 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int				main(void)
 	if (setup_map(&map) == EXIT_SUCCESS &&
 		read_input(&input) == EXIT_SUCCESS &&
 		parse_input(&map, &input) == EXIT_SUCCESS &&
+		set_weights(&map) == EXIT_SUCCESS &&
 		find_routes(&map) == EXIT_SUCCESS &&
 		parallelize(&map) == EXIT_SUCCESS &&
 		output_result(&input, &map) == EXIT_SUCCESS)

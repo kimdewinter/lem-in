@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/17 16:57:01 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 09:55:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,13 @@
 
 struct s_room;
 struct s_route;
+
+typedef	struct 			s_weight
+{
+	size_t				weight;
+	struct s_room		*dst;
+	struct s_weight		*next;
+}						t_weight;
 
 typedef struct			s_routeput
 {
@@ -135,6 +142,7 @@ typedef struct			s_room
 	int					sps;
 	int					spe;
 	char				*name;
+	size_t				start_dst;
 	ssize_t				xpos;
 	ssize_t				ypos;
 	size_t				ant;
@@ -150,6 +158,8 @@ typedef struct			s_room
 	t_subpath			**routes;
 	size_t				routes_size;
 	BITFIELD_TYPE		*bitconj;
+	BITFIELD_TYPE		*access_to;
+	BITFIELD_TYPE		*used_nbs;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
@@ -176,6 +186,8 @@ typedef struct			s_input_reader
 	char				**lines;
 	size_t				num_lines;
 }						t_input_reader;
+
+ssize_t					set_weights(t_map *map);
 /*
 ** standalone struct only used for reading and parsing input
 */
@@ -298,6 +310,7 @@ ssize_t					parallelize_multiples_of(const t_comvault *previous,
 /*
 ** BITFIELD-TOOLKIT
 */
+void					absorb_bitfield(BITFIELD_TYPE *src, BITFIELD_TYPE *dst, t_map *map);
 void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);

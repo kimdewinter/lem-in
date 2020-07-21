@@ -6,11 +6,23 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/13 13:17:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/20 20:35:23 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+void			absorb_bitfield(BITFIELD_TYPE *src, BITFIELD_TYPE *dst, t_map *map)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		dst[i] |= src[i];
+		i++;
+	}
+}
 
 ssize_t			bite_bitroute_copy(BITFIELD_TYPE *dst,
 									const BITFIELD_TYPE *src,

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/20 11:20:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 10:03:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ ssize_t			find_routes(t_map *map)
 		assemble_all_routes(map) == EXIT_SUCCESS)
 	{
 		// debug(map);
-		printf("paths found :%lu", map->num_routes);
+		// printf("paths found: %lu", map->num_routes);
 		// print_routes(map);
 		// exit (0);
 		return (EXIT_SUCCESS);
