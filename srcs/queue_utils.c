@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/20 11:17:20 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 21:03:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ t_subpath *pt)
 	if (new == NULL)
 		return (EXIT_FAILURE);
 	add_item_queue(&qr, new);
+	add_to_bitfield(dst, qr->visited);
 	return (EXIT_SUCCESS);
 }
 

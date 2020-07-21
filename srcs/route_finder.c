@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/21 10:03:28 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 19:11:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_map *map)
 	}
 	else
 	{
+		// if (create_new_path(&new, NULL, curr->dst, map) == EXIT_FAILURE)
+		// 	return (EXIT_FAILURE);
 		if (add_path_to_room(curr, map, &(curr->path)) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
@@ -58,9 +60,9 @@ static ssize_t			execute_queue(t_qwrap *qr, t_map *map)
 	free (qr->in_queue);
 	free (qr->queue);
 	free (qr);
-	// debug (map);
+	debug (map);
 	// print_paths(map->start);
-	// exit (0);
+	exit (0);
 	return (EXIT_SUCCESS);
 }
 
@@ -72,10 +74,10 @@ ssize_t			find_routes(t_map *map)
 		execute_queue(queue, map) == EXIT_SUCCESS &&
 		assemble_all_routes(map) == EXIT_SUCCESS)
 	{
-		// debug(map);
-		// printf("paths found: %lu", map->num_routes);
-		// print_routes(map);
-		// exit (0);
+		debug(map);
+		printf("paths found: %lu", map->num_routes);
+		print_routes(map);
+		exit (0);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

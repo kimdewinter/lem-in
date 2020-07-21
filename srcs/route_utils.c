@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/20 20:42:04 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 11:49:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,14 @@ t_subpath **new)
 	}
 	item->dst->routes[item->dst->num_options] = *new;
 	item->dst->num_options++;
-	if (item->dst->weight == 0 && item->dst != map->start)
-		item->dst->weight = item->src->weight + 1;
+	// if (item->dst->weight == 0 && item->dst != map->start)
+	// 	item->dst->weight = item->src->weight + 1;
 	if ((*new)->conj != map->end)
 	{
 		add_to_bitfield((*new)->conj, item->dst->bitconj);
-		absorb_bitfield((*new)->bitconj, item->dst->access_to, map);
+		// absorb_bitfield((*new)->bitconj, item->dst->unavailable, map);
 	}
+	add_to_bitfield((*new)->conj, item->dst->unavailable);
 	return (EXIT_SUCCESS);
 }
 
@@ -85,21 +86,22 @@ ssize_t		create_new_path(t_subpath **new, t_subpath *pt, t_room *conj,
 t_map *map)
 {
 	new_subpath(new, conj, map);
+	(void)pt;
 	if (*new)
 	{
 		(*new)->len += 1;
-		if (pt)
-			(*new)->len += pt->len;
-		(*new)->next = pt;
-		if (pt != NULL)
-		{
-			if (bite_bitroute_copy((*new)->bitconj, pt->bitconj, map)
-			== EXIT_FAILURE)
-			{
-				free (*new);
-				return (EXIT_FAILURE);
-			}
-		}
+		// if (pt)
+		// 	(*new)->len += pt->len;
+		// (*new)->next = pt;
+		// if (pt != NULL)
+		// {
+		// 	if (bite_bitroute_copy((*new)->bitconj, pt->bitconj, map)
+		// 	== EXIT_FAILURE)
+		// 	{
+		// 		free (*new);
+		// 		return (EXIT_FAILURE);
+		// 	}
+		// }
 		if (conj != map->end)
 			add_to_bitfield(conj, (*new)->bitconj);
 		return (EXIT_SUCCESS);

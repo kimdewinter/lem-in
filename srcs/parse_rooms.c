@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/20 21:37:47 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 11:42:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ static size_t	setup_bitconj_rooms(t_map *map)
 		{
 			tmp = (t_room *)table->entries[i]->val;
 			if (bite_alloc(&tmp->bitconj, map) == EXIT_FAILURE
-			|| bite_alloc(&tmp->access_to, map) == EXIT_FAILURE
+			|| bite_alloc(&tmp->unavailable, map) == EXIT_FAILURE
 			|| bite_alloc(&tmp->used_nbs, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}

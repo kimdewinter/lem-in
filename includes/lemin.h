@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/21 09:55:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/21 20:48:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,7 @@ typedef struct			s_queue
 typedef struct			s_qwrap
 {
 	BITFIELD_TYPE		*in_queue;
+	BITFIELD_TYPE		*visited;
 	t_queue				**queue;
 	t_queue				*last;
 	size_t				items;
@@ -158,7 +159,7 @@ typedef struct			s_room
 	t_subpath			**routes;
 	size_t				routes_size;
 	BITFIELD_TYPE		*bitconj;
-	BITFIELD_TYPE		*access_to;
+	BITFIELD_TYPE		*unavailable;
 	BITFIELD_TYPE		*used_nbs;
 }						t_room;
 /*
@@ -187,7 +188,15 @@ typedef struct			s_input_reader
 	size_t				num_lines;
 }						t_input_reader;
 
+int						new_path_needed(t_room *nb, t_room *src, t_map *map);
 ssize_t					set_weights(t_map *map);
+int						is_not_junction(t_room *tmp, t_room *prev, t_map *map);
+int			find_next_dst(t_room *nb, t_queue *item, t_subpath **new,
+t_room **dst, t_map *map);
+int		solve_path_conflict(t_room *dst, t_subpath *new);
+int		solve_queue_conflict(t_qwrap *qr, t_subpath *new, t_room *dst);
+int			find_next_path(t_room **dst, t_subpath **new, t_room *nb,
+t_room *src, t_map *map);
 /*
 ** standalone struct only used for reading and parsing input
 */
@@ -281,10 +290,9 @@ size_t					is_viable_for_path(t_map *map,
 											t_room *nb,
 											t_subpath *path);
 int						check_length(t_subpath *new_path, t_room *curr);
-ssize_t					add_nb_to_queue(t_map *map,
-										t_queue *item,
+ssize_t					add_nb_to_queue(t_qwrap *qr,
 										t_room *nb,
-										t_qwrap *qr);
+										t_map *map);
 /*
 ** BUILD_ROUTES
 */

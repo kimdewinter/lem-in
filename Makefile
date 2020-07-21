@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/21 09:52:36 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/21 20:25:10 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,8 @@ RAW=	main\
 		queue_setup\
 		queue_checks\
 		queue_adjust\
+		queue_find_path\
+		queue_conflicts\
 		calc_combinations\
 		parallelizer\
 		parallelizer_utils\
