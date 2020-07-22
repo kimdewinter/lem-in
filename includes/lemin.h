@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 17:18:21 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/22 14:22:11 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,73 +219,7 @@ ssize_t					setup_room(t_room **dest,
 ** ROUTE FINDING
 */
 ssize_t					find_routes(t_map *map);
-ssize_t					add_path(t_qwrap *qr,
-									t_queue *item,
-									t_subpath *path,
-									t_map *map);
-ssize_t					route_error(size_t err_code);
-ssize_t					add_nodes_to_path(t_queue *item,
-											t_subpath **path,
-											t_map *map,
-											int *add);
-/*
-** ROUTE FINDING CONFLICTS
-*/
-void					solve_spe_conflict(t_queue *item,
-											t_subpath *new,
-											t_map *map,
-											int *add);
-void					solve_conflict(t_queue *item,
-										t_subpath *new,
-										int *add);
-int						is_junction(t_room *dst, size_t round);
-/*
-** ROUTE FINDING UTILS
-*/
-ssize_t					increase_route_size(t_subpath **pt, t_map *map);
-ssize_t					increase_routes_size(t_room **dst, t_map *map);
-ssize_t					add_path_to_room(t_queue *item,
-											t_map *map,
-											t_subpath **new);
-ssize_t					add_to_path(t_subpath *pt, t_room *add, t_map *map);
-t_room					**new_path(size_t size);
-ssize_t					new_subpath(t_subpath **new, t_room *conj, t_map *map);
-ssize_t					create_new_path(t_subpath **new,
-											t_subpath *pt,
-											t_room *conj,
-											t_map *map);
-/*
-** QUEUE MANAGEMENT
-*/
-ssize_t					adjust_queue(t_qwrap *qr, t_map *map, size_t len);
-/*
-** QUEUE MANAGEMENT UTILS
-*/
-t_queue					*new_queue_item(t_subpath *pt,
-										t_room *dst,
-										t_room *src);
-void					add_item_queue(t_qwrap **qr, t_queue *new);
-ssize_t					setup_queue(t_qwrap **qr, t_map *map);
-ssize_t					add_to_queue(t_qwrap *qr,
-										t_room *src,
-										t_room *dst,
-										t_subpath *pt);
-void					remove_queue_item(t_qwrap *qr, t_queue *item);
-/*
-** QUEUE MANAGEMENT CHECKS
-*/
-int						check_length_spe(t_subpath *path,
-											t_room *nb,
-											t_map *map);
-size_t					is_viable_for_path(t_map *map,
-											t_queue *item,
-											t_room *nb,
-											t_subpath *path);
-int						check_length(t_subpath *new_path, t_room *curr);
-/*
-** BUILD_ROUTES
-*/
-ssize_t					assemble_all_routes(t_map *map);
+
 /*
 ** PARALLELIZER
 */
