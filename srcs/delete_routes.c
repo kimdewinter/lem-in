@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 13:35:43 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/03 16:36:14 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/23 15:28:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ static void	delete_single_route(t_route *route)
 		free(route->bitroute);
 		route->bitroute = NULL;
 	}
-	route->last_conj = NULL;
-	route->end = 0;
 	route->ants = -1;
 }
 

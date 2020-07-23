@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/23 13:26:12 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/23 15:28:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define LINE_BUFF_SIZE 10000
 # define INIT_ROUTE_PERC 25
-# define ROUTE_LEN_INCR_MULT 2
+# define ROUTES_LEN_INCR_MULT 2
 # define BITFIELD_TYPE uint64_t
 # define BITFIELD_SIZE 64
 # define COMVAULT_LEN_INIT 9
@@ -81,8 +81,6 @@ typedef	struct			s_route
 	struct s_room		**route;
 	size_t				len;
 	BITFIELD_TYPE		*bitroute;
-	struct s_room		*last_conj;
-	int					end;
 	size_t				ants;
 }						t_route;
 /*
@@ -112,6 +110,7 @@ typedef struct			s_map
 	t_room				*end;
 	struct s_table		*rooms;
 	struct s_route		**routes;
+	size_t				routes_len;
 	size_t				num_routes;
 	size_t				bitfield_len;
 	struct s_best		solution;
@@ -170,6 +169,12 @@ ssize_t					setup_room(t_room **dest,
 ** ROUTE FINDING
 */
 ssize_t					find_routes(t_map *map);
+ssize_t					handle_err_route_finder(size_t err_code,
+												const char *line);
+ssize_t					allocopy_route(t_route **dst,
+										const t_route *src,
+										t_room *room_to_add,
+										const t_map *map);
 
 /*
 ** PARALLELIZER
