@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:11:23 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/23 13:27:39 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static void		remove_dead_path(t_room **tmp, t_map *map)
 		prev = *tmp;
 		*tmp = (*tmp)->neighbours[j];
 	}
-	(*tmp)->viable_nbs--;
 }
 
 static void		remove_dead_ends(t_map *map)
@@ -50,25 +49,6 @@ static void		remove_dead_ends(t_map *map)
 				if (tmp->neighbours_len == 1)
 					remove_dead_path(&tmp, map);
 			}
-		}
-		i++;
-	}
-}
-
-static void		flag_conj(t_map *map)
-{
-	size_t	i;
-	t_room	*tmp;
-
-	i = 0;
-	while (i < map->rooms->size)
-	{
-		if (map->rooms->entries[i] != NULL)
-		{
-			tmp = ((t_room *)map->rooms->entries[i]->val);
-			if (tmp->viable_nbs > 2 || (tmp->viable_nbs >= 2 &&
-			(tmp == map->start || tmp == map->end)))
-				tmp->is_conj = 1;
 		}
 		i++;
 	}
@@ -112,7 +92,6 @@ ssize_t			sanitize_input(t_map *map)
 	if (tmp->neighbours == NULL)
 		return (parse_error(12));
 	remove_dead_ends(map);
-	flag_conj(map);
 	if (check_connections(map->start) == 0 ||
 	check_connections(map->end) == 0)
 		return (EXIT_FAILURE);

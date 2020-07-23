@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/22 14:22:11 by kim           ########   odam.nl          #
+#    Updated: 2020/07/23 13:23:54 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,6 @@ RAW=	main\
 		read_input\
 		room_utils\
 		sanitize_input\
-		debug\
 		route_finder\
 		biter1\
 		biter2\

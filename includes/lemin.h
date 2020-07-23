@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/22 14:22:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/23 13:26:12 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,66 +89,17 @@ typedef	struct			s_route
 ** the structure of each valid route from the start to the end room
 */
 
-typedef struct			s_routes_wrapper
-{
-	size_t				size;
-	size_t				num_paths;
-	struct s_route		**routes;
-}						t_routes_wrapper;
-
-typedef struct			s_queue
-{
-	int					handled;
-	int					new_conj;
-	struct s_subpath	*path;
-	struct s_room		*dst;
-	struct s_room		*src;
-	struct s_queue		*prev;
-	struct s_queue		*next;
-}						t_queue;
-
-typedef struct			s_qwrap
-{
-	t_queue				**queue;
-	t_queue				*last;
-	size_t				items;
-	size_t				round;
-}						t_qwrap;
-
-typedef struct			s_subpath
-{
-	int					added_this_turn;
-	int					sp;
-	ssize_t				start;
-	size_t				size;
-	size_t				segment_len;
-	size_t				len;
-	struct s_room		*conj;
-	struct s_room		**path;
-	struct s_subpath	*next;
-	BITFIELD_TYPE		*bitconj;
-}						t_subpath;
-
 typedef struct			s_room
 {
-	int					sps;
-	int					spe;
 	char				*name;
 	ssize_t				xpos;
 	ssize_t				ypos;
 	size_t				ant;
-	size_t				viable_nbs;
-	int					is_conj;
-	int					checked;
 	int					dead_end;
 	struct s_room		**neighbours;
-	size_t				weight;
 	size_t				neighbours_len;
 	size_t				room_i;
-	size_t				num_options;
-	t_subpath			**routes;
-	size_t				routes_size;
-	BITFIELD_TYPE		*bitconj;
+	BITFIELD_TYPE		*bitroom;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
@@ -257,6 +208,7 @@ ssize_t					copy_bitconj(BITFIELD_TYPE **dst,
 										t_map *map);
 ssize_t					handle_err_biter(size_t err_code, const char *line);
 int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
+ssize_t					bite_room_new(t_room *room, const t_map *map);
 
 /*
 ** OUTPUTTER
@@ -280,17 +232,5 @@ void					delete_map(t_map *map);
 /*
 ** DEBUGGING
 */
-void					debug(t_map *map);
-void					print_bitroom(t_map *map, t_room *room);
-void					print_bitroute(t_map *map);
-void					print_bitconj(BITFIELD_TYPE *arr, size_t len);
-void					print_n_routes(const t_route **rtes, const size_t n);
-void					print_path(t_subpath *pt);
-void					print_queue(t_qwrap *qr);
-void					print_route_rooms(const t_route *rte,
-											const size_t *rte_index);
-void					print_routeput(t_routeput **routes, size_t len);
-void					print_solution(t_map *map);
-void					print_troute(t_routes_wrapper *wroutes);
-void					print_paths(t_room *room);
+
 #endif

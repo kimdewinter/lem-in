@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/15 16:47:33 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/23 13:29:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,49 +90,14 @@ t_room *conj, const t_map *map)
 		*result -= (total - 1);
 }
 
-size_t			calculate_max_real_parallels(size_t *result, const t_map *map)
-{
-	size_t	i;
-	t_room	*tmp;
-	int		*visited;
-
-	i = 0;
-	visited = (int *)malloc(sizeof(int) * map->num_routes);
-	if (!visited)
-		return (EXIT_FAILURE);
-	ft_bzero(visited, sizeof(int) * map->num_routes);
-	tmp = NULL;
-	while (i < map->rooms->size)
-	{
-		if (map->rooms->entries[i] != NULL)
-		{
-			tmp = ((t_room *)map->rooms->entries[i]->val);
-			if (tmp->is_conj == 1 && tmp != map->end && tmp != map->start)
-			{
-				adjust_for_paths_through_junction(&visited, result, tmp, map);
-			}
-		}
-		i++;
-	}
-	free (visited);
-	return (EXIT_SUCCESS);
-}
-
 ssize_t			max_parallels(size_t *lowest, const t_map *map)
 {
-	size_t	max_calculated;
-
-	max_calculated = map->num_routes;
 	// set_viable_se(map);
-	if (calculate_max_real_parallels(&max_calculated, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	// printf("Max parallels real %lu\n", max_calculated);
 	// printf("Start: %lu\nEnd: %lu\nAnts: %lu\n", map->start->viable_nbs,
 	// map->end->viable_nbs, map->antmount);
 	// exit (0);
-	*lowest = max_calculated;
-	if (map->start->neighbours_len < *lowest)
-		*lowest = map->start->neighbours_len;
+	*lowest = map->start->neighbours_len;
 	if (map->end->neighbours_len < *lowest)
 		*lowest = map->end->neighbours_len;
 	if ((size_t)map->antmount < *lowest)
