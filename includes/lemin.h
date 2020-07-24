@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/23 15:28:36 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/24 18:10:13 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ typedef	struct			s_route
 {
 	struct s_room		**route;
 	size_t				len;
+	size_t				used;
 	BITFIELD_TYPE		*bitroute;
 	size_t				ants;
 }						t_route;
@@ -168,13 +169,16 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
-ssize_t					find_routes(t_map *map);
-ssize_t					handle_err_route_finder(size_t err_code,
-												const char *line);
+ssize_t					allocinit_singleroom_route(t_route **dst,
+													t_room *first_room,
+													const t_map *map);
 ssize_t					allocopy_route(t_route **dst,
 										const t_route *src,
 										t_room *room_to_add,
 										const t_map *map);
+ssize_t					find_routes(t_map *map);
+ssize_t					handle_err_route_finder(size_t err_code,
+												const char *line);
 
 /*
 ** PARALLELIZER
