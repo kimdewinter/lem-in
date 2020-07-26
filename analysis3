@@ -1,0 +1,755 @@
+Flat profile:
+
+Each sample counts as 0.01 seconds.
+ no time accumulated
+
+  %   cumulative   self              self     total           
+ time   seconds   seconds    calls  Ts/call  Ts/call  name    
+  0.00      0.00     0.00    32766     0.00     0.00  combinatron_cleanup
+  0.00      0.00     0.00    32766     0.00     0.00  combinatron_setup
+  0.00      0.00     0.00    32752     0.00     0.00  bite_alloc_noval
+  0.00      0.00     0.00    32752     0.00     0.00  bite_bitroute_merge
+  0.00      0.00     0.00    32752     0.00     0.00  copy_n_routes
+  0.00      0.00     0.00    32752     0.00     0.00  is_valid_combi
+  0.00      0.00     0.00    16383     0.00     0.00  calc_ants_avg
+  0.00      0.00     0.00    16383     0.00     0.00  calc_cost
+  0.00      0.00     0.00    16383     0.00     0.00  calc_paths_avg
+  0.00      0.00     0.00    16383     0.00     0.00  calc_rounds
+  0.00      0.00     0.00    16383     0.00     0.00  combinatron_commit_combi
+  0.00      0.00     0.00    16383     0.00     0.00  ft_round_rest
+  0.00      0.00     0.00     2196     0.00     0.00  handle_spacing
+  0.00      0.00     0.00      996     0.00     0.00  add_neighbour
+  0.00      0.00     0.00      973     0.00     0.00  ft_atoi_ll
+  0.00      0.00     0.00      926     0.00     0.00  has_path_to_conj
+  0.00      0.00     0.00      567     0.00     0.00  bite_alloc
+  0.00      0.00     0.00      510     0.00     0.00  add_neighbour_grow
+  0.00      0.00     0.00      509     0.00     0.00  is_comment
+  0.00      0.00     0.00      499     0.00     0.00  free_room_names
+  0.00      0.00     0.00      498     0.00     0.00  add_tubes
+  0.00      0.00     0.00      498     0.00     0.00  check_duplicate_tube
+  0.00      0.00     0.00      498     0.00     0.00  parse_tube
+  0.00      0.00     0.00      498     0.00     0.00  set_spe_sps
+  0.00      0.00     0.00      494     0.00     0.00  add_subpath
+  0.00      0.00     0.00      494     0.00     0.00  increase_routes_size
+  0.00      0.00     0.00      494     0.00     0.00  new_path
+  0.00      0.00     0.00      494     0.00     0.00  new_subpath
+  0.00      0.00     0.00      493     0.00     0.00  add_bite_conj
+  0.00      0.00     0.00      489     0.00     0.00  is_room
+  0.00      0.00     0.00      488     0.00     0.00  is_tube
+  0.00      0.00     0.00      486     0.00     0.00  add_neighbour_new
+  0.00      0.00     0.00      486     0.00     0.00  check_duplicate_room
+  0.00      0.00     0.00      486     0.00     0.00  get_coords
+  0.00      0.00     0.00      486     0.00     0.00  setup_room
+  0.00      0.00     0.00      484     0.00     0.00  add_room
+  0.00      0.00     0.00      479     0.00     0.00  add_nbs_to_queue
+  0.00      0.00     0.00      479     0.00     0.00  add_path_to_nb
+  0.00      0.00     0.00      479     0.00     0.00  add_paths_to_nbs
+  0.00      0.00     0.00      479     0.00     0.00  add_to_visited
+  0.00      0.00     0.00      479     0.00     0.00  already_in_queue
+  0.00      0.00     0.00      479     0.00     0.00  free_queue_item
+  0.00      0.00     0.00      479     0.00     0.00  ft_lstaddend_no_alloc
+  0.00      0.00     0.00      479     0.00     0.00  ft_lstnew_no_malloc
+  0.00      0.00     0.00      479     0.00     0.00  increase_values
+  0.00      0.00     0.00      479     0.00     0.00  new_queue_item
+  0.00      0.00     0.00      479     0.00     0.00  remove_queue_item
+  0.00      0.00     0.00      465     0.00     0.00  is_new_conj
+  0.00      0.00     0.00      375     0.00     0.00  add_to_conj_path
+  0.00      0.00     0.00      375     0.00     0.00  copy_subpath
+  0.00      0.00     0.00      293     0.00     0.00  check_finished
+  0.00      0.00     0.00      293     0.00     0.00  execute_head
+  0.00      0.00     0.00      293     0.00     0.00  execute_route
+  0.00      0.00     0.00      293     0.00     0.00  execute_tail
+  0.00      0.00     0.00      118     0.00     0.00  add_new_conj_subpath
+  0.00      0.00     0.00       57     0.00     0.00  add_nbs_to_routes
+  0.00      0.00     0.00       57     0.00     0.00  add_subpath_to_route
+  0.00      0.00     0.00       57     0.00     0.00  bite_route_add_conj
+  0.00      0.00     0.00       57     0.00     0.00  combine_route_subpath
+  0.00      0.00     0.00       57     0.00     0.00  path_contains_conj
+  0.00      0.00     0.00       54     0.00     0.00  init_values
+  0.00      0.00     0.00       53     0.00     0.00  adjust_queue
+  0.00      0.00     0.00       33     0.00     0.00  execute_round
+  0.00      0.00     0.00       14     0.00     0.00  combinatron
+  0.00      0.00     0.00       14     0.00     0.00  combinatron_setup_begin
+  0.00      0.00     0.00       14     0.00     0.00  set_values_route
+  0.00      0.00     0.00       14     0.00     0.00  setup_route
+  0.00      0.00     0.00        9     0.00     0.00  copy_roomnames
+  0.00      0.00     0.00        9     0.00     0.00  setup_ants
+  0.00      0.00     0.00        9     0.00     0.00  setup_routeput
+  0.00      0.00     0.00        2     0.00     0.00  add_special_room
+  0.00      0.00     0.00        1     0.00     0.00  add_new_conj_subpath_end
+  0.00      0.00     0.00        1     0.00     0.00  add_nodes
+  0.00      0.00     0.00        1     0.00     0.00  add_paths_to_start
+  0.00      0.00     0.00        1     0.00     0.00  build_paths
+  0.00      0.00     0.00        1     0.00     0.00  calc_ants
+  0.00      0.00     0.00        1     0.00     0.00  calc_ants_avg
+  0.00      0.00     0.00        1     0.00     0.00  calc_missed_ants
+  0.00      0.00     0.00        1     0.00     0.00  calc_paths_avg
+  0.00      0.00     0.00        1     0.00     0.00  calculate_ants_per_path
+  0.00      0.00     0.00        1     0.00     0.00  copy_input
+  0.00      0.00     0.00        1     0.00     0.00  del_queue
+  0.00      0.00     0.00        1     0.00     0.00  divide_left_ants
+  0.00      0.00     0.00        1     0.00     0.00  execute_queue
+  0.00      0.00     0.00        1     0.00     0.00  find_routes
+  0.00      0.00     0.00        1     0.00     0.00  free_queue
+  0.00      0.00     0.00        1     0.00     0.00  is_antmount
+  0.00      0.00     0.00        1     0.00     0.00  max_parallels
+  0.00      0.00     0.00        1     0.00     0.00  output_result
+  0.00      0.00     0.00        1     0.00     0.00  parallelize
+  0.00      0.00     0.00        1     0.00     0.00  parallelize_setup
+  0.00      0.00     0.00        1     0.00     0.00  parse_antmount
+  0.00      0.00     0.00        1     0.00     0.00  parse_input
+  0.00      0.00     0.00        1     0.00     0.00  parse_rooms
+  0.00      0.00     0.00        1     0.00     0.00  parse_tubes
+  0.00      0.00     0.00        1     0.00     0.00  print_input
+  0.00      0.00     0.00        1     0.00     0.00  read_input
+  0.00      0.00     0.00        1     0.00     0.00  sanitize_input
+  0.00      0.00     0.00        1     0.00     0.00  setup_all_routeputs
+  0.00      0.00     0.00        1     0.00     0.00  setup_bitconj_rooms
+  0.00      0.00     0.00        1     0.00     0.00  setup_input
+  0.00      0.00     0.00        1     0.00     0.00  setup_map
+  0.00      0.00     0.00        1     0.00     0.00  setup_paths
+  0.00      0.00     0.00        1     0.00     0.00  setup_queue
+  0.00      0.00     0.00        1     0.00     0.00  setup_routes
+  0.00      0.00     0.00        1     0.00     0.00  setup_starting_paths
+  0.00      0.00     0.00        1     0.00     0.00  solve_paths
+
+ %         the percentage of the total running time of the
+time       program used by this function.
+
+cumulative a running sum of the number of seconds accounted
+ seconds   for by this function and those listed above it.
+
+ self      the number of seconds accounted for by this
+seconds    function alone.  This is the major sort for this
+           listing.
+
+calls      the number of times this function was invoked, if
+           this function is profiled, else blank.
+
+ self      the average number of milliseconds spent in this
+ms/call    function per call, if this function is profiled,
+	   else blank.
+
+ total     the average number of milliseconds spent in this
+ms/call    function and its descendents per call, if this
+	   function is profiled, else blank.
+
+name       the name of the function.  This is the minor sort
+           for this listing. The index shows the location of
+	   the function in the gprof listing. If the index is
+	   in parenthesis it shows where it would appear in
+	   the gprof listing if it were to be printed.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+		     Call graph (explanation follows)
+
+
+granularity: each sample hit covers 2 byte(s) no time propagated
+
+index % time    self  children    called     name
+                0.00    0.00   32766/32766       combinatron [64]
+[1]      0.0    0.00    0.00   32766         combinatron_cleanup [1]
+-----------------------------------------------
+                0.00    0.00   32766/32766       combinatron [64]
+[2]      0.0    0.00    0.00   32766         combinatron_setup [2]
+                0.00    0.00   32752/32752       bite_alloc_noval [3]
+                0.00    0.00   32752/32752       bite_bitroute_merge [4]
+                0.00    0.00   32752/32752       copy_n_routes [5]
+                0.00    0.00      14/14          combinatron_setup_begin [65]
+-----------------------------------------------
+                0.00    0.00   32752/32752       combinatron_setup [2]
+[3]      0.0    0.00    0.00   32752         bite_alloc_noval [3]
+-----------------------------------------------
+                0.00    0.00   32752/32752       combinatron_setup [2]
+[4]      0.0    0.00    0.00   32752         bite_bitroute_merge [4]
+-----------------------------------------------
+                0.00    0.00   32752/32752       combinatron_setup [2]
+[5]      0.0    0.00    0.00   32752         copy_n_routes [5]
+-----------------------------------------------
+                0.00    0.00   32752/32752       combinatron [64]
+[6]      0.0    0.00    0.00   32752         is_valid_combi [6]
+-----------------------------------------------
+                0.00    0.00   16383/16383       calc_cost [8]
+[7]      0.0    0.00    0.00   16383         calc_ants_avg [7]
+-----------------------------------------------
+                0.00    0.00   16383/16383       combinatron_commit_combi [11]
+[8]      0.0    0.00    0.00   16383         calc_cost [8]
+                0.00    0.00   16383/16383       calc_ants_avg [7]
+                0.00    0.00   16383/16383       calc_paths_avg [9]
+                0.00    0.00   16383/16383       calc_rounds [10]
+-----------------------------------------------
+                0.00    0.00   16383/16383       calc_cost [8]
+[9]      0.0    0.00    0.00   16383         calc_paths_avg [9]
+-----------------------------------------------
+                0.00    0.00   16383/16383       calc_cost [8]
+[10]     0.0    0.00    0.00   16383         calc_rounds [10]
+                0.00    0.00   16383/16383       ft_round_rest [12]
+-----------------------------------------------
+                0.00    0.00   16383/16383       combinatron [64]
+[11]     0.0    0.00    0.00   16383         combinatron_commit_combi [11]
+                0.00    0.00   16383/16383       calc_cost [8]
+-----------------------------------------------
+                0.00    0.00   16383/16383       calc_rounds [10]
+[12]     0.0    0.00    0.00   16383         ft_round_rest [12]
+-----------------------------------------------
+                0.00    0.00     116/2196        execute_head [52]
+                0.00    0.00    2080/2196        execute_route [53]
+[13]     0.0    0.00    0.00    2196         handle_spacing [13]
+-----------------------------------------------
+                0.00    0.00     996/996         add_tubes [21]
+[14]     0.0    0.00    0.00     996         add_neighbour [14]
+                0.00    0.00     510/510         add_neighbour_grow [18]
+                0.00    0.00     486/486         add_neighbour_new [32]
+-----------------------------------------------
+                0.00    0.00       1/973         parse_antmount [92]
+                0.00    0.00     972/973         get_coords [34]
+[15]     0.0    0.00    0.00     973         ft_atoi_ll [15]
+-----------------------------------------------
+                0.00    0.00     461/926         is_new_conj [48]
+                0.00    0.00     465/926         add_nbs_to_queue [37]
+[16]     0.0    0.00    0.00     926         has_path_to_conj [16]
+-----------------------------------------------
+                0.00    0.00      14/567         combinatron_setup_begin [65]
+                0.00    0.00      14/567         setup_route [67]
+                0.00    0.00      53/567         adjust_queue [62]
+                0.00    0.00     486/567         setup_bitconj_rooms [100]
+[17]     0.0    0.00    0.00     567         bite_alloc [17]
+-----------------------------------------------
+                0.00    0.00     510/510         add_neighbour [14]
+[18]     0.0    0.00    0.00     510         add_neighbour_grow [18]
+-----------------------------------------------
+                0.00    0.00       1/509         parse_antmount [92]
+                0.00    0.00       3/509         add_special_room [71]
+                0.00    0.00       6/509         parse_rooms [94]
+                0.00    0.00     499/509         parse_tubes [95]
+[19]     0.0    0.00    0.00     509         is_comment [19]
+-----------------------------------------------
+                0.00    0.00       1/499         is_tube [31]
+                0.00    0.00     498/499         parse_tube [23]
+[20]     0.0    0.00    0.00     499         free_room_names [20]
+-----------------------------------------------
+                0.00    0.00     498/498         parse_tube [23]
+[21]     0.0    0.00    0.00     498         add_tubes [21]
+                0.00    0.00     996/996         add_neighbour [14]
+                0.00    0.00     498/498         check_duplicate_tube [22]
+                0.00    0.00     498/498         set_spe_sps [24]
+-----------------------------------------------
+                0.00    0.00     498/498         add_tubes [21]
+[22]     0.0    0.00    0.00     498         check_duplicate_tube [22]
+-----------------------------------------------
+                0.00    0.00     498/498         parse_tubes [95]
+[23]     0.0    0.00    0.00     498         parse_tube [23]
+                0.00    0.00     498/498         add_tubes [21]
+                0.00    0.00     498/499         free_room_names [20]
+-----------------------------------------------
+                0.00    0.00     498/498         add_tubes [21]
+[24]     0.0    0.00    0.00     498         set_spe_sps [24]
+-----------------------------------------------
+                0.00    0.00       1/494         add_new_conj_subpath_end [72]
+                0.00    0.00     118/494         add_new_conj_subpath [55]
+                0.00    0.00     375/494         add_to_conj_path [49]
+[25]     0.0    0.00    0.00     494         add_subpath [25]
+                0.00    0.00     494/494         increase_routes_size [26]
+-----------------------------------------------
+                0.00    0.00     494/494         add_subpath [25]
+[26]     0.0    0.00    0.00     494         increase_routes_size [26]
+-----------------------------------------------
+                0.00    0.00       1/494         add_new_conj_subpath_end [72]
+                0.00    0.00     118/494         add_new_conj_subpath [55]
+                0.00    0.00     375/494         copy_subpath [50]
+[27]     0.0    0.00    0.00     494         new_path [27]
+-----------------------------------------------
+                0.00    0.00       1/494         add_new_conj_subpath_end [72]
+                0.00    0.00     118/494         add_new_conj_subpath [55]
+                0.00    0.00     375/494         copy_subpath [50]
+[28]     0.0    0.00    0.00     494         new_subpath [28]
+-----------------------------------------------
+                0.00    0.00     118/493         add_new_conj_subpath [55]
+                0.00    0.00     375/493         add_to_conj_path [49]
+[29]     0.0    0.00    0.00     493         add_bite_conj [29]
+-----------------------------------------------
+                0.00    0.00       2/489         add_special_room [71]
+                0.00    0.00     487/489         parse_rooms [94]
+[30]     0.0    0.00    0.00     489         is_room [30]
+-----------------------------------------------
+                0.00    0.00     488/488         parse_rooms [94]
+[31]     0.0    0.00    0.00     488         is_tube [31]
+                0.00    0.00       1/499         free_room_names [20]
+-----------------------------------------------
+                0.00    0.00     486/486         add_neighbour [14]
+[32]     0.0    0.00    0.00     486         add_neighbour_new [32]
+-----------------------------------------------
+                0.00    0.00       2/486         add_special_room [71]
+                0.00    0.00     484/486         add_room [36]
+[33]     0.0    0.00    0.00     486         check_duplicate_room [33]
+-----------------------------------------------
+                0.00    0.00       2/486         add_special_room [71]
+                0.00    0.00     484/486         add_room [36]
+[34]     0.0    0.00    0.00     486         get_coords [34]
+                0.00    0.00     972/973         ft_atoi_ll [15]
+-----------------------------------------------
+                0.00    0.00       2/486         add_special_room [71]
+                0.00    0.00     484/486         add_room [36]
+[35]     0.0    0.00    0.00     486         setup_room [35]
+-----------------------------------------------
+                0.00    0.00     484/484         parse_rooms [94]
+[36]     0.0    0.00    0.00     484         add_room [36]
+                0.00    0.00     484/486         check_duplicate_room [33]
+                0.00    0.00     484/486         get_coords [34]
+                0.00    0.00     484/486         setup_room [35]
+-----------------------------------------------
+                0.00    0.00     479/479         add_paths_to_nbs [39]
+[37]     0.0    0.00    0.00     479         add_nbs_to_queue [37]
+                0.00    0.00     465/465         is_new_conj [48]
+                0.00    0.00     465/926         has_path_to_conj [16]
+                0.00    0.00     465/479         new_queue_item [46]
+                0.00    0.00     465/479         ft_lstaddend_no_alloc [43]
+-----------------------------------------------
+                0.00    0.00     479/479         execute_queue [84]
+[38]     0.0    0.00    0.00     479         add_path_to_nb [38]
+                0.00    0.00     361/375         add_to_conj_path [49]
+                0.00    0.00     118/118         add_new_conj_subpath [55]
+-----------------------------------------------
+                0.00    0.00     479/479         adjust_queue [62]
+[39]     0.0    0.00    0.00     479         add_paths_to_nbs [39]
+                0.00    0.00     479/479         add_nbs_to_queue [37]
+-----------------------------------------------
+                0.00    0.00     479/479         adjust_queue [62]
+[40]     0.0    0.00    0.00     479         add_to_visited [40]
+-----------------------------------------------
+                0.00    0.00     479/479         adjust_queue [62]
+[41]     0.0    0.00    0.00     479         already_in_queue [41]
+-----------------------------------------------
+                0.00    0.00     479/479         remove_queue_item [47]
+[42]     0.0    0.00    0.00     479         free_queue_item [42]
+-----------------------------------------------
+                0.00    0.00      14/479         add_nodes [73]
+                0.00    0.00     465/479         add_nbs_to_queue [37]
+[43]     0.0    0.00    0.00     479         ft_lstaddend_no_alloc [43]
+-----------------------------------------------
+                0.00    0.00     479/479         new_queue_item [46]
+[44]     0.0    0.00    0.00     479         ft_lstnew_no_malloc [44]
+-----------------------------------------------
+                0.00    0.00     479/479         execute_queue [84]
+[45]     0.0    0.00    0.00     479         increase_values [45]
+-----------------------------------------------
+                0.00    0.00      14/479         add_nodes [73]
+                0.00    0.00     465/479         add_nbs_to_queue [37]
+[46]     0.0    0.00    0.00     479         new_queue_item [46]
+                0.00    0.00     479/479         ft_lstnew_no_malloc [44]
+-----------------------------------------------
+                0.00    0.00     479/479         adjust_queue [62]
+[47]     0.0    0.00    0.00     479         remove_queue_item [47]
+                0.00    0.00     479/479         free_queue_item [42]
+-----------------------------------------------
+                0.00    0.00     465/465         add_nbs_to_queue [37]
+[48]     0.0    0.00    0.00     465         is_new_conj [48]
+                0.00    0.00     461/926         has_path_to_conj [16]
+-----------------------------------------------
+                0.00    0.00      14/375         add_paths_to_start [74]
+                0.00    0.00     361/375         add_path_to_nb [38]
+[49]     0.0    0.00    0.00     375         add_to_conj_path [49]
+                0.00    0.00     375/493         add_bite_conj [29]
+                0.00    0.00     375/375         copy_subpath [50]
+                0.00    0.00     375/494         add_subpath [25]
+-----------------------------------------------
+                0.00    0.00     375/375         add_to_conj_path [49]
+[50]     0.0    0.00    0.00     375         copy_subpath [50]
+                0.00    0.00     375/494         new_subpath [28]
+                0.00    0.00     375/494         new_path [27]
+-----------------------------------------------
+                0.00    0.00     293/293         execute_route [53]
+[51]     0.0    0.00    0.00     293         check_finished [51]
+-----------------------------------------------
+                0.00    0.00     293/293         execute_route [53]
+[52]     0.0    0.00    0.00     293         execute_head [52]
+                0.00    0.00     116/2196        handle_spacing [13]
+-----------------------------------------------
+                0.00    0.00     293/293         execute_round [63]
+[53]     0.0    0.00    0.00     293         execute_route [53]
+                0.00    0.00    2080/2196        handle_spacing [13]
+                0.00    0.00     293/293         execute_tail [54]
+                0.00    0.00     293/293         execute_head [52]
+                0.00    0.00     293/293         check_finished [51]
+-----------------------------------------------
+                0.00    0.00     293/293         execute_route [53]
+[54]     0.0    0.00    0.00     293         execute_tail [54]
+-----------------------------------------------
+                0.00    0.00     118/118         add_path_to_nb [38]
+[55]     0.0    0.00    0.00     118         add_new_conj_subpath [55]
+                0.00    0.00     118/493         add_bite_conj [29]
+                0.00    0.00     118/494         new_subpath [28]
+                0.00    0.00     118/494         new_path [27]
+                0.00    0.00     118/494         add_subpath [25]
+-----------------------------------------------
+                0.00    0.00      57/57          solve_paths [107]
+[56]     0.0    0.00    0.00      57         add_nbs_to_routes [56]
+                0.00    0.00      57/57          path_contains_conj [60]
+                0.00    0.00      57/57          add_subpath_to_route [57]
+-----------------------------------------------
+                0.00    0.00      57/57          add_nbs_to_routes [56]
+[57]     0.0    0.00    0.00      57         add_subpath_to_route [57]
+                0.00    0.00      57/57          combine_route_subpath [59]
+                0.00    0.00      44/57          bite_route_add_conj [58]
+-----------------------------------------------
+                0.00    0.00      13/57          set_values_route [66]
+                0.00    0.00      44/57          add_subpath_to_route [57]
+[58]     0.0    0.00    0.00      57         bite_route_add_conj [58]
+-----------------------------------------------
+                0.00    0.00      57/57          add_subpath_to_route [57]
+[59]     0.0    0.00    0.00      57         combine_route_subpath [59]
+-----------------------------------------------
+                0.00    0.00      57/57          add_nbs_to_routes [56]
+[60]     0.0    0.00    0.00      57         path_contains_conj [60]
+-----------------------------------------------
+                0.00    0.00      54/54          execute_queue [84]
+[61]     0.0    0.00    0.00      54         init_values [61]
+-----------------------------------------------
+                0.00    0.00      53/53          execute_queue [84]
+[62]     0.0    0.00    0.00      53         adjust_queue [62]
+                0.00    0.00     479/479         already_in_queue [41]
+                0.00    0.00     479/479         add_to_visited [40]
+                0.00    0.00     479/479         add_paths_to_nbs [39]
+                0.00    0.00     479/479         remove_queue_item [47]
+                0.00    0.00      53/567         bite_alloc [17]
+-----------------------------------------------
+                0.00    0.00      33/33          output_result [89]
+[63]     0.0    0.00    0.00      33         execute_round [63]
+                0.00    0.00     293/293         execute_route [53]
+-----------------------------------------------
+                               32752             combinatron [64]
+                0.00    0.00      14/14          parallelize [90]
+[64]     0.0    0.00    0.00      14+32752   combinatron [64]
+                0.00    0.00   32766/32766       combinatron_setup [2]
+                0.00    0.00   32766/32766       combinatron_cleanup [1]
+                0.00    0.00   32752/32752       is_valid_combi [6]
+                0.00    0.00   16383/16383       combinatron_commit_combi [11]
+                               32752             combinatron [64]
+-----------------------------------------------
+                0.00    0.00      14/14          combinatron_setup [2]
+[65]     0.0    0.00    0.00      14         combinatron_setup_begin [65]
+                0.00    0.00      14/567         bite_alloc [17]
+-----------------------------------------------
+                0.00    0.00      14/14          setup_route [67]
+[66]     0.0    0.00    0.00      14         set_values_route [66]
+                0.00    0.00      13/57          bite_route_add_conj [58]
+-----------------------------------------------
+                0.00    0.00      14/14          setup_starting_paths [106]
+[67]     0.0    0.00    0.00      14         setup_route [67]
+                0.00    0.00      14/567         bite_alloc [17]
+                0.00    0.00      14/14          set_values_route [66]
+-----------------------------------------------
+                0.00    0.00       9/9           setup_routeput [70]
+[68]     0.0    0.00    0.00       9         copy_roomnames [68]
+-----------------------------------------------
+                0.00    0.00       9/9           setup_routeput [70]
+[69]     0.0    0.00    0.00       9         setup_ants [69]
+-----------------------------------------------
+                0.00    0.00       9/9           setup_all_routeputs [99]
+[70]     0.0    0.00    0.00       9         setup_routeput [70]
+                0.00    0.00       9/9           copy_roomnames [68]
+                0.00    0.00       9/9           setup_ants [69]
+-----------------------------------------------
+                0.00    0.00       2/2           parse_rooms [94]
+[71]     0.0    0.00    0.00       2         add_special_room [71]
+                0.00    0.00       3/509         is_comment [19]
+                0.00    0.00       2/489         is_room [30]
+                0.00    0.00       2/486         check_duplicate_room [33]
+                0.00    0.00       2/486         get_coords [34]
+                0.00    0.00       2/486         setup_room [35]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_paths [103]
+[72]     0.0    0.00    0.00       1         add_new_conj_subpath_end [72]
+                0.00    0.00       1/494         new_subpath [28]
+                0.00    0.00       1/494         new_path [27]
+                0.00    0.00       1/494         add_subpath [25]
+-----------------------------------------------
+                0.00    0.00       1/1           setup_queue [104]
+[73]     0.0    0.00    0.00       1         add_nodes [73]
+                0.00    0.00      14/479         new_queue_item [46]
+                0.00    0.00      14/479         ft_lstaddend_no_alloc [43]
+-----------------------------------------------
+                0.00    0.00       1/1           execute_queue [84]
+[74]     0.0    0.00    0.00       1         add_paths_to_start [74]
+                0.00    0.00      14/375         add_to_conj_path [49]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [85]
+[75]     0.0    0.00    0.00       1         build_paths [75]
+                0.00    0.00       1/1           setup_routes [105]
+                0.00    0.00       1/1           setup_starting_paths [106]
+                0.00    0.00       1/1           solve_paths [107]
+-----------------------------------------------
+                0.00    0.00       1/1           calculate_ants_per_path [80]
+[76]     0.0    0.00    0.00       1         calc_ants [76]
+                0.00    0.00       1/1           calc_missed_ants [78]
+-----------------------------------------------
+                0.00    0.00       1/1           calculate_ants_per_path [80]
+[77]     0.0    0.00    0.00       1         calc_ants_avg [77]
+-----------------------------------------------
+                0.00    0.00       1/1           calc_ants [76]
+[78]     0.0    0.00    0.00       1         calc_missed_ants [78]
+-----------------------------------------------
+                0.00    0.00       1/1           calculate_ants_per_path [80]
+[79]     0.0    0.00    0.00       1         calc_paths_avg [79]
+-----------------------------------------------
+                0.00    0.00       1/1           output_result [89]
+[80]     0.0    0.00    0.00       1         calculate_ants_per_path [80]
+                0.00    0.00       1/1           calc_paths_avg [79]
+                0.00    0.00       1/1           calc_ants_avg [77]
+                0.00    0.00       1/1           calc_ants [76]
+                0.00    0.00       1/1           divide_left_ants [83]
+-----------------------------------------------
+                0.00    0.00       1/1           read_input [97]
+[81]     0.0    0.00    0.00       1         copy_input [81]
+-----------------------------------------------
+                0.00    0.00       1/1           free_queue [86]
+[82]     0.0    0.00    0.00       1         del_queue [82]
+-----------------------------------------------
+                0.00    0.00       1/1           calculate_ants_per_path [80]
+[83]     0.0    0.00    0.00       1         divide_left_ants [83]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [85]
+[84]     0.0    0.00    0.00       1         execute_queue [84]
+                0.00    0.00     479/479         add_path_to_nb [38]
+                0.00    0.00     479/479         increase_values [45]
+                0.00    0.00      54/54          init_values [61]
+                0.00    0.00      53/53          adjust_queue [62]
+                0.00    0.00       1/1           free_queue [86]
+                0.00    0.00       1/1           add_paths_to_start [74]
+-----------------------------------------------
+                0.00    0.00       1/1           main [330]
+[85]     0.0    0.00    0.00       1         find_routes [85]
+                0.00    0.00       1/1           setup_paths [103]
+                0.00    0.00       1/1           setup_queue [104]
+                0.00    0.00       1/1           execute_queue [84]
+                0.00    0.00       1/1           build_paths [75]
+-----------------------------------------------
+                0.00    0.00       1/1           execute_queue [84]
+[86]     0.0    0.00    0.00       1         free_queue [86]
+                0.00    0.00       1/1           del_queue [82]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_antmount [92]
+[87]     0.0    0.00    0.00       1         is_antmount [87]
+-----------------------------------------------
+                0.00    0.00       1/1           parallelize_setup [91]
+[88]     0.0    0.00    0.00       1         max_parallels [88]
+-----------------------------------------------
+                0.00    0.00       1/1           main [330]
+[89]     0.0    0.00    0.00       1         output_result [89]
+                0.00    0.00      33/33          execute_round [63]
+                0.00    0.00       1/1           calculate_ants_per_path [80]
+                0.00    0.00       1/1           setup_all_routeputs [99]
+                0.00    0.00       1/1           print_input [96]
+-----------------------------------------------
+                0.00    0.00       1/1           main [330]
+[90]     0.0    0.00    0.00       1         parallelize [90]
+                0.00    0.00      14/14          combinatron [64]
+                0.00    0.00       1/1           parallelize_setup [91]
+-----------------------------------------------
+                0.00    0.00       1/1           parallelize [90]
+[91]     0.0    0.00    0.00       1         parallelize_setup [91]
+                0.00    0.00       1/1           max_parallels [88]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [93]
+[92]     0.0    0.00    0.00       1         parse_antmount [92]
+                0.00    0.00       1/509         is_comment [19]
+                0.00    0.00       1/1           is_antmount [87]
+                0.00    0.00       1/973         ft_atoi_ll [15]
+-----------------------------------------------
+                0.00    0.00       1/1           main [330]
+[93]     0.0    0.00    0.00       1         parse_input [93]
+                0.00    0.00       1/1           parse_antmount [92]
+                0.00    0.00       1/1           parse_rooms [94]
+                0.00    0.00       1/1           parse_tubes [95]
+                0.00    0.00       1/1           sanitize_input [98]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [93]
+[94]     0.0    0.00    0.00       1         parse_rooms [94]
+                0.00    0.00     488/488         is_tube [31]
+                0.00    0.00     487/489         is_room [30]
+                0.00    0.00     484/484         add_room [36]
+                0.00    0.00       6/509         is_comment [19]
+                0.00    0.00       2/2           add_special_room [71]
+                0.00    0.00       1/1           setup_bitconj_rooms [100]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [93]
+[95]     0.0    0.00    0.00       1         parse_tubes [95]
+                0.00    0.00     499/509         is_comment [19]
+                0.00    0.00     498/498         parse_tube [23]
+-----------------------------------------------
+                0.00    0.00       1/1           output_result [89]
+[96]     0.0    0.00    0.00       1         print_input [96]
+-----------------------------------------------
+                0.00    0.00       1/1           main [330]
+[97]     0.0    0.00    0.00       1         read_input [97]
+                0.00    0.00       1/1           setup_input [101]
+                0.00    0.00       1/1           copy_input [81]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_input [93]
+[98]     0.0    0.00    0.00       1         sanitize_input [98]
+-----------------------------------------------
+                0.00    0.00       1/1           output_result [89]
+[99]     0.0    0.00    0.00       1         setup_all_routeputs [99]
+                0.00    0.00       9/9           setup_routeput [70]
+-----------------------------------------------
+                0.00    0.00       1/1           parse_rooms [94]
+[100]    0.0    0.00    0.00       1         setup_bitconj_rooms [100]
+                0.00    0.00     486/567         bite_alloc [17]
+-----------------------------------------------
+                0.00    0.00       1/1           read_input [97]
+[101]    0.0    0.00    0.00       1         setup_input [101]
+-----------------------------------------------
+                0.00    0.00       1/1           main [330]
+[102]    0.0    0.00    0.00       1         setup_map [102]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [85]
+[103]    0.0    0.00    0.00       1         setup_paths [103]
+                0.00    0.00       1/1           add_new_conj_subpath_end [72]
+-----------------------------------------------
+                0.00    0.00       1/1           find_routes [85]
+[104]    0.0    0.00    0.00       1         setup_queue [104]
+                0.00    0.00       1/1           add_nodes [73]
+-----------------------------------------------
+                0.00    0.00       1/1           build_paths [75]
+[105]    0.0    0.00    0.00       1         setup_routes [105]
+-----------------------------------------------
+                0.00    0.00       1/1           build_paths [75]
+[106]    0.0    0.00    0.00       1         setup_starting_paths [106]
+                0.00    0.00      14/14          setup_route [67]
+-----------------------------------------------
+                0.00    0.00       1/1           build_paths [75]
+[107]    0.0    0.00    0.00       1         solve_paths [107]
+                0.00    0.00      57/57          add_nbs_to_routes [56]
+-----------------------------------------------
+
+ This table describes the call tree of the program, and was sorted by
+ the total amount of time spent in each function and its children.
+
+ Each entry in this table consists of several lines.  The line with the
+ index number at the left hand margin lists the current function.
+ The lines above it list the functions that called this function,
+ and the lines below it list the functions this one called.
+ This line lists:
+     index	A unique number given to each element of the table.
+		Index numbers are sorted numerically.
+		The index number is printed next to every function name so
+		it is easier to look up where the function is in the table.
+
+     % time	This is the percentage of the `total' time that was spent
+		in this function and its children.  Note that due to
+		different viewpoints, functions excluded by options, etc,
+		these numbers will NOT add up to 100%.
+
+     self	This is the total amount of time spent in this function.
+
+     children	This is the total amount of time propagated into this
+		function by its children.
+
+     called	This is the number of times the function was called.
+		If the function called itself recursively, the number
+		only includes non-recursive calls, and is followed by
+		a `+' and the number of recursive calls.
+
+     name	The name of the current function.  The index number is
+		printed after it.  If the function is a member of a
+		cycle, the cycle number is printed between the
+		function's name and the index number.
+
+
+ For the function's parents, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the function into this parent.
+
+     children	This is the amount of time that was propagated from
+		the function's children into this parent.
+
+     called	This is the number of times this parent called the
+		function `/' the total number of times the function
+		was called.  Recursive calls to the function are not
+		included in the number after the `/'.
+
+     name	This is the name of the parent.  The parent's index
+		number is printed after it.  If the parent is a
+		member of a cycle, the cycle number is printed between
+		the name and the index number.
+
+ If the parents of the function cannot be determined, the word
+ `<spontaneous>' is printed in the `name' field, and all the other
+ fields are blank.
+
+ For the function's children, the fields have the following meanings:
+
+     self	This is the amount of time that was propagated directly
+		from the child into the function.
+
+     children	This is the amount of time that was propagated from the
+		child's children to the function.
+
+     called	This is the number of times the function called
+		this child `/' the total number of times the child
+		was called.  Recursive calls by the child are not
+		listed in the number after the `/'.
+
+     name	This is the name of the child.  The child's index
+		number is printed after it.  If the child is a
+		member of a cycle, the cycle number is printed
+		between the name and the index number.
+
+ If there are any cycles (circles) in the call graph, there is an
+ entry for the cycle-as-a-whole.  This entry shows who called the
+ cycle (as parents) and the members of the cycle (as children.)
+ The `+' recursive calls entry shows the number of function calls that
+ were internal to the cycle, and the calls entry for each member shows,
+ for that member, how many times it was called from other members of
+ the cycle.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+Copying and distribution of this file, with or without modification,
+are permitted in any medium without royalty provided the copyright
+notice and this notice are preserved.
+
+Index by function name
+
+  [29] add_bite_conj          [22] check_duplicate_tube   [30] is_room
+  [37] add_nbs_to_queue       [51] check_finished         [31] is_tube
+  [56] add_nbs_to_routes      [64] combinatron             [6] is_valid_combi
+  [14] add_neighbour           [1] combinatron_cleanup    [88] max_parallels
+  [18] add_neighbour_grow     [11] combinatron_commit_combi [27] new_path
+  [32] add_neighbour_new       [2] combinatron_setup      [46] new_queue_item
+  [55] add_new_conj_subpath   [65] combinatron_setup_begin [28] new_subpath
+  [72] add_new_conj_subpath_end [59] combine_route_subpath [89] output_result
+  [73] add_nodes              [81] copy_input             [90] parallelize
+  [38] add_path_to_nb          [5] copy_n_routes          [91] parallelize_setup
+  [39] add_paths_to_nbs       [68] copy_roomnames         [92] parse_antmount
+  [74] add_paths_to_start     [50] copy_subpath           [93] parse_input
+  [36] add_room               [82] del_queue              [94] parse_rooms
+  [71] add_special_room       [83] divide_left_ants       [23] parse_tube
+  [25] add_subpath            [52] execute_head           [95] parse_tubes
+  [57] add_subpath_to_route   [84] execute_queue          [60] path_contains_conj
+  [49] add_to_conj_path       [63] execute_round          [96] print_input
+  [40] add_to_visited         [53] execute_route          [97] read_input
+  [21] add_tubes              [54] execute_tail           [47] remove_queue_item
+  [62] adjust_queue           [85] find_routes            [98] sanitize_input
+  [41] already_in_queue       [86] free_queue             [24] set_spe_sps
+  [17] bite_alloc             [42] free_queue_item        [66] set_values_route
+   [3] bite_alloc_noval       [20] free_room_names        [99] setup_all_routeputs
+   [4] bite_bitroute_merge    [15] ft_atoi_ll             [69] setup_ants
+  [58] bite_route_add_conj    [43] ft_lstaddend_no_alloc [100] setup_bitconj_rooms
+  [75] build_paths            [44] ft_lstnew_no_malloc   [101] setup_input
+  [76] calc_ants              [12] ft_round_rest         [102] setup_map
+   [7] calc_ants_avg          [34] get_coords            [103] setup_paths
+  [77] calc_ants_avg          [13] handle_spacing        [104] setup_queue
+   [8] calc_cost              [16] has_path_to_conj       [35] setup_room
+  [78] calc_missed_ants       [26] increase_routes_size   [67] setup_route
+   [9] calc_paths_avg         [45] increase_values        [70] setup_routeput
+  [79] calc_paths_avg         [61] init_values           [105] setup_routes
+  [10] calc_rounds            [87] is_antmount           [106] setup_starting_paths
+  [80] calculate_ants_per_path [19] is_comment           [107] solve_paths
+  [33] check_duplicate_room   [48] is_new_conj

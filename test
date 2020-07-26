@@ -1,0 +1,9 @@
+1237
+##start
+S 1 4
+##end
+E 2 7
+M 5 9
+S-M
+M-E
+S-E
