@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:45:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 17:23:55 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/26 19:31:49 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,19 @@
 static ssize_t		add_items_start(t_qwrap **qr, t_room *curr, t_map *map)
 {
 	size_t		i;
-	t_queue		*new;
 	t_subpath	*pt;
 
 	i = 0;
-	new = NULL;
-	if (create_new_path(&pt, curr->routes[0], curr, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	pt->end = curr;
 	while (i < curr->neighbours_len)
 	{
 		if (room_in_bitfield(curr->neighbours[i], (*qr)->visited) == 0
 		&& !(curr->sps == 1 && curr->neighbours[i] != map->start)
 		&& curr->neighbours[i]->dead_end == 0)
 		{
-			new = new_queue_item(pt, curr->neighbours[i], curr);
-			if (new)
-				add_item_queue(qr, new);
-			else
+			if (create_new_path(&pt, curr->routes[0], curr, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+			pt->end = curr;
+			if (add_to_queue(*qr, curr, curr->neighbours[i], pt) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
 		i++;

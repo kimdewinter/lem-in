@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   parallelizer.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 17:18:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/26 19:06:24 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,7 @@ ssize_t			parallelize(t_map *map)
 	i = 1;
 	while (i < maxparallels)
 	{
+		printf("number of parallels %lu\n", i);
 		if (parallelize_multiples_of(
 			valcoms[i - 1], valcoms[i], &bestcom, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);

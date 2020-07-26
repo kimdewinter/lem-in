@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   delete_rooms.c                                     :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 15:19:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 17:37:49 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/26 19:20:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void			delete_single_room(t_room *room)
 	if (room->routes != NULL)
 	{
 		i = 0;
-		while (i < room->routes_size)
+		while (i < room->num_options)
 		{
 			if (room->routes[i] != NULL)
 			{
