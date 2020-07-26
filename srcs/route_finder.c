@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/26 16:48:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/26 18:25:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ ssize_t			find_routes(t_map *map)
 		i++;
 	}
 	assemble_all_routes(map);
-	print_routes(map);
+	// print_routes(map);
+	size_t	res;
+	max_parallels(&res, map);
 	printf("paths: %lu end nodes: %lu\n", map->start->num_options, map->end->neighbours_len);
+	printf("max parallels %lu\n", res);
 	for (size_t	i = 0; i < map->start->neighbours_len; i++)
 	{
-		printf("options per end nb: %lu\n", map->start->neighbours[i]->num_options);
+		printf("options per start nb: %lu\n", map->start->neighbours[i]->num_options);
 	}
 	print_paths(map->start);
 	exit (0);
