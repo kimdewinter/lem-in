@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/26 19:06:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/26 21:57:50 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,19 @@ static ssize_t			execute_queue(t_qwrap *qr, t_map *map)
 	iter = *(qr->queue);
 	while (iter)
 	{
+		iter->handled = 1;
 		if (add_path_to_room(iter->dst, map, &(iter->path))
 		== EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		iter = iter->next;
 		if (iter == NULL)
 		{
+			// printf("BEFORE ADJUST QUEUE\n");
+			// print_queue(qr);
 			if (adjust_queue(qr, map, qr->items) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
+			// printf("AFTER ADJUST QUEUE\n");
+			// print_queue(qr);
 			iter = *(qr->queue);
 		}
 	}
@@ -50,7 +55,9 @@ ssize_t			find_routes(t_map *map)
 		i++;
 	}
 	assemble_all_routes(map);
-	// print_routes(map);
+	print_routes(map);
+	printf("NUM PATHS %lu\n", map->num_routes);
+	exit (0);
 	// size_t	res;
 	// max_parallels(&res, map);
 	// printf("paths: %lu end nodes: %lu\n", map->start->num_options, map->end->neighbours_len);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 17:33:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/26 19:44:33 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,19 @@ void	print_paths(t_room *room)
 			printf("\n\n");
 		}
 	}
+}
+
+void	print_route(t_route *route)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < route->len)
+	{
+		printf("%s ", route->route[i]->name);
+		i++;
+	}
+	printf("\n");
 }
 
 void	debug(t_map *map)

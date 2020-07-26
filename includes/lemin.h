@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/26 16:46:33 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/26 20:51:56 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct			s_routes_wrapper
 
 typedef struct			s_queue
 {
+	int					handled;
 	struct s_subpath	*path;
 	struct s_room		*dst;
 	struct s_room		*src;
@@ -330,4 +331,5 @@ void					print_solution(t_map *map);
 void					print_troute(t_routes_wrapper *wroutes);
 void					print_paths(t_room *room);
 void					print_routes(t_map *map);
+void					print_route(t_route *route);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/02 11:45:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 16:22:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/26 20:52:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ t_queue		*new_queue_item(t_subpath *pt, t_room *dst, t_room *src)
 	new = (t_queue *)malloc(sizeof(t_queue));
 	if (new)
 	{
+		new->handled = 0;
 		new->src = src;
 		new->dst = dst;
 		new->path = pt;
