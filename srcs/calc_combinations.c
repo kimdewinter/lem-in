@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 15:35:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 13:46:52 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,7 +149,8 @@ ssize_t			max_parallels(size_t *lowest, const t_map *map)
 	// map->end->viable_nbs, map->antmount);
 	// exit (0);
 	*lowest = max_calculated;
-	printf("max parallels calculated %lu\nend neighbours %lu\n", max_calculated,
+	if (DEBUG_MODE == 1)
+		printf("max parallels calculated %lu\nend neighbours %lu\n", max_calculated,
 	map->end->neighbours_len);
 	active_start_nbs =  start_nbs(map);
 	if (active_start_nbs < *lowest)

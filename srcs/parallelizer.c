@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 13:43:45 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/26 19:06:24 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 13:44:55 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,8 @@ ssize_t			parallelize(t_map *map)
 	i = 1;
 	while (i < maxparallels)
 	{
-		printf("number of parallels %lu\n", i);
+		if (DEBUG_MODE == 1)
+			printf("number of parallels %lu\n", i);
 		if (parallelize_multiples_of(
 			valcoms[i - 1], valcoms[i], &bestcom, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);

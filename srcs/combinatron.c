@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 15:19:04 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/26 19:06:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 13:47:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static ssize_t	combinatron(const t_poscom *rootcom,
 		if (is_valid_combi(map->bitfield_len, map->routes[i]->bitroute,
 			rootcom->bitroutes) == 1)
 		{
-			printf("Valid combi\n");
 			if (current->coms_used >= current->coms_len &&
 				expand_comvault(current) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
