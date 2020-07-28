@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/28 13:44:06 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 14:34:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ ssize_t			find_routes(t_map *map)
 		return (EXIT_FAILURE);
 	if (DEBUG_MODE == 1)
 	{
-		print_routes(map);
+		// print_routes(map);
 		printf("NUM PATHS %lu\n", map->num_routes);
 	}
 	// size_t	res;

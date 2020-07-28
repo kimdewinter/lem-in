@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 21:56:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 14:33:35 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,11 @@ BITFIELD_TYPE *visited)
 				curr->dst->neighbours[i], new)
 				== EXIT_FAILURE)
 					return (EXIT_FAILURE);
-				add_to_bitfield(curr->dst->neighbours[i], visited);
+				if (curr->dst->neighbours[i] != map->start)
+					add_to_bitfield(curr->dst->neighbours[i], visited);
+				/* TEST */
+				if (curr->dst->neighbours[i] != map->start)
+					add_to_bitfield(curr->dst->neighbours[i], qr->visited);
 			}
 		}
 		i++;

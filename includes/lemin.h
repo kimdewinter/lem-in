@@ -6,14 +6,14 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/28 13:48:10 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 14:06:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
 
-# define DEBUG_MODE 0
+# define DEBUG_MODE 1
 # define LINE_BUFF_SIZE 10000
 # define INIT_ROUTE_PERC 25
 # define ROUTE_LEN_INCR_MULT 2
