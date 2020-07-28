@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/26 21:57:50 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 13:36:32 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ ssize_t			find_routes(t_map *map)
 			return (EXIT_FAILURE);
 		i++;
 	}
-	assemble_all_routes(map);
+	if (assemble_all_routes(map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	print_routes(map);
 	printf("NUM PATHS %lu\n", map->num_routes);
-	exit (0);
 	// size_t	res;
 	// max_parallels(&res, map);
 	// printf("paths: %lu end nodes: %lu\n", map->start->num_options, map->end->neighbours_len);
