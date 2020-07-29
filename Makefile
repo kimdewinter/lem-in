@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/29 14:35:56 by kim           ########   odam.nl          #
+#    Updated: 2020/07/29 15:07:06 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,9 @@ RAW=	main\
 		roundputter\
 		delete_map\
 		delete_rooms\
-		delete_routes
+		delete_routes\
+		bfs_utils\
+		bfs_resize
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

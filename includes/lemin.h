@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 14:35:56 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 15:09:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,7 +195,19 @@ ssize_t					allocopy_route(t_route **dst,
 ssize_t					find_routes(t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
-
+/*
+** BFS UTILS
+*/
+t_room      			**create_new_route(size_t size);
+ssize_t					add_room(t_bfs_route *bfs_route, t_room *to_add);
+ssize_t  				branch_bfs_route(const t_bfs_route *parent,
+											t_bfs_vault *vault,
+											const t_room *next_to_add,
+											t_map *map);
+/*
+** BFS RESIZE
+*/
+ssize_t					increase_route_size(t_bfs_route *bfs_route);
 /*
 ** PARALLELIZER
 */
