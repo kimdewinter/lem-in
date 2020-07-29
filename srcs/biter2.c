@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/13 13:17:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 13:20:31 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ ssize_t			bite_bitroute_merge(BITFIELD_TYPE **dst,
 {
 	size_t	i;
 
-	*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * BITFIELD_SIZE);
+	*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * map->bitfield_len);
 	if (*dst == NULL)
 		return (handle_err_biter(1, "bite_bitroute_merge\n"));
 	i = 0;
