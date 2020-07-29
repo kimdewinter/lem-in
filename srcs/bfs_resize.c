@@ -36,7 +36,34 @@ ssize_t		increase_route_size(t_bfs_route *bfs_route)
 	return (EXIT_FAILURE);
 }
 
-ssize_t		increase_vault_size(t_bfs_vault *bfs_vault)
+ssize_t		increase_vault_size(t_bfs_vault *vault, t_map *map)
 {
+	size_t		new_size;
+	size_t		i;
+	t_bfs_route	**new_bfs_routes;
 
+	i = 0;
+	if (vault->len == 0)
+	{
+		new_size = (map->rooms->count * 100) / ((100 / INIT_ROUTE_PERC) * 100);
+		if (new_size == 0)
+			new_size = map->rooms->count;
+	}
+	else
+		new_size = vault->len * 2;
+	new_bfs_routes = (t_bfs_route **)malloc(sizeof(t_bfs_route *) * new_size);
+	if (new_bfs_routes)
+	{
+		while (i < vault->used)
+		{
+			new_bfs_routes[i] = vault->routes[i];
+			i++;
+		}
+		vault->len = new_size;
+		if (vault->routes)
+			free (vault->routes);
+		vault->routes = new_bfs_routes;
+		return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
 }

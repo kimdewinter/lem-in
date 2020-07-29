@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:41:25 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 15:53:34 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,6 +213,7 @@ ssize_t  				branch_bfs_route(const t_bfs_route *parent,
 ** BFS RESIZE
 */
 ssize_t					increase_route_size(t_bfs_route *bfs_route);
+ssize_t					increase_vault_size(t_bfs_vault *vault, t_map *map);
 /*
 ** PARALLELIZER
 */
