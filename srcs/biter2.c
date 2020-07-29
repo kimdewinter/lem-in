@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/13 13:17:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 14:11:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ ssize_t			bite_bitroute_merge(BITFIELD_TYPE **dst,
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			copy_bitconj(BITFIELD_TYPE **dst,
-							BITFIELD_TYPE *src,
-							t_map *map)
+ssize_t			allocopy_bitfield(BITFIELD_TYPE **dst,
+									BITFIELD_TYPE *src,
+									t_map *map)
 {
 	size_t	i;
 
 	i = 0;
-	if (bite_alloc(dst, map) == EXIT_SUCCESS)
+	if (bite_alloc_noval(dst, map) == EXIT_SUCCESS)
 	{
 		while (i < map->bitfield_len)
 		{

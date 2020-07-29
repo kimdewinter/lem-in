@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 15:59:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 13:33:33 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static ssize_t	setup_map(t_map *map)
 int				main(void)
 {
 	t_input_reader	input;
-	t_map			map;
+	t_map		map;
 
 	if (setup_map(&map) == EXIT_SUCCESS &&
 		read_input(&input) == EXIT_SUCCESS &&
 		parse_input(&map, &input) == EXIT_SUCCESS &&
+		sanitize_input(&map) == EXIT_SUCCESS &&
 		find_routes(&map) == EXIT_SUCCESS &&
-		parallelize(&map) == EXIT_SUCCESS &&
 		output_result(&input, &map) == EXIT_SUCCESS)
 	{
 		delete_input(&input);

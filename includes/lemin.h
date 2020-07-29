@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/24 18:10:13 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 14:11:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,14 @@ typedef	struct			s_route
 /*
 ** the structure of each valid route from the start to the end room
 */
+
+typedef struct			s_bfs_route
+{
+	struct s_room		**route;
+	size_t				len;
+	size_t				used;
+	struct s_room		*next_to_add;
+}						t_bfs_route;
 
 typedef struct			s_room
 {
@@ -212,9 +220,9 @@ ssize_t					bite_bitroute_merge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
 void					bite_free(BITFIELD_TYPE **bitfield, const t_map *map);
-ssize_t					copy_bitconj(BITFIELD_TYPE **dst,
-										BITFIELD_TYPE *src,
-										t_map *map);
+ssize_t					allocopy_bitfield(BITFIELD_TYPE **dst,
+											BITFIELD_TYPE *src,
+											t_map *map);
 ssize_t					handle_err_biter(size_t err_code, const char *line);
 int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
 ssize_t					bite_room_new(t_room *room, const t_map *map);
