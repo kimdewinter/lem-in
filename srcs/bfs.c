@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 13:37:28 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:14:02 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 15:50:46 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,14 @@ static ssize_t	grow_route(t_bfs_route *route,
 	t_room	*room;
 	size_t	i;
 
-	if (route->next_to_add == map->end)// if true, shortest has been found
+	room = route->next_to_add;
+	if (room == map->end && add_room(route, room))// if true, shortest has been found
 	{
 		vault->shortest = route;
 		return (EXIT_SUCCESS);
 	}
-	if (add_room(route) == EXIT_FAILURE)// add next_to_add to route->route
+	if (bite_add_room_to_bitfield(vault->visited, room->bitroom)
+		== EXIT_FAILURE || add_room(route, room) == EXIT_FAILURE)// add next_to_add to route->route
 		return (EXIT_FAILURE);
 	i = 0;
 	while (i < room->neighbours_len)
@@ -35,10 +37,11 @@ static ssize_t	grow_route(t_bfs_route *route,
 		{
 			route->next_to_add = room->neighbours[i];
 		}
-		else if (branch_route(route, vault, room->neighbours[i], map) ==
-			EXIT_FAILURE)// multiple remaining, must copy-branch t_bfs_route
+		else if (room_in_bitfield(room->neighbours[i], vault->visited) == 0)
 		{
-			return (EXIT_FAILURE);
+			if (branch_route(route, vault, room->neighbours[i], map) ==
+				EXIT_FAILURE))// multiple remaining, must copy-branch t_bfs_route
+				return (EXIT_FAILURE);
 		}
 		i++;
 	}
@@ -48,9 +51,21 @@ static ssize_t	grow_route(t_bfs_route *route,
 ssize_t			bfs_shortest(t_map *map)
 {
 	t_bfs_vault	vault;
+	size_t		i;
 
+	vault.len = 0;
+	vault.used = 0;
 	if (bite_bitroute_copy(vault.visited, map->start->bitroom, map) ==
-		EXIT_FAILURE ||
-		setup_vault(&vault) == EXIT_FAILURE)
+		EXIT_FAILURE)
 		return (EXIT_FAILURE);
+
+	i = 0;
+	while (i < map->start->neighbours_len)
+	{
+		if (branch_route(NULL, &vault, map->start->neighbours[i], map) ==
+			EXIT_FAILURE ||
+			add_room(vault.routes[vault.used - 1], map->start) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		i++;
+	}
 }

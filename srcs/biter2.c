@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 14:11:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 15:42:41 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,20 +29,35 @@ ssize_t			bite_bitroute_copy(BITFIELD_TYPE *dst,
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			bite_bitroute_merge(BITFIELD_TYPE **dst,
-									const BITFIELD_TYPE *src1,
-									const BITFIELD_TYPE *src2,
-									const t_map *map)
+ssize_t			bite_biteroute_allocmerge(BITFIELD_TYPE **dst,
+											const BITFIELD_TYPE *src1,
+											const BITFIELD_TYPE *src2,
+											const t_map *map)
 {
 	size_t	i;
 
 	*dst = (BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * BITFIELD_SIZE);
 	if (*dst == NULL)
-		return (handle_err_biter(1, "bite_bitroute_merge\n"));
+		return (handle_err_biter(1, "bite_biteroute_allocmerge\n"));
 	i = 0;
 	while (i < map->bitfield_len)
 	{
 		(*dst)[i] = src1[i] | src2[i];
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
+ssize_t			bite_add_room_to_bitfield(BITFIELD_TYPE **dst,
+											const BITFIELD_TYPE *src,
+											const t_map *map)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		(*dst)[i] |= src[i];
 		i++;
 	}
 	return (EXIT_SUCCESS);

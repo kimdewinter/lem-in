@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/07 15:19:04 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 17:07:55 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 15:38:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static ssize_t	commit_multi_route_com(t_poscom **new_entry,
 	if (*new_entry == NULL)
 		return (handle_err_comtron(1, "commit_multi_route_com\n"));
 	(*new_entry)->num_routes = rootcom->num_routes + 1;
-	if (bite_bitroute_merge(&((*new_entry)->bitroutes), rootcom->bitroutes,
+	if (bite_biteroute_allocmerge(&((*new_entry)->bitroutes), rootcom->bitroutes,
 		map->routes[i]->bitroute, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	(*new_entry)->map_routes_i = i;

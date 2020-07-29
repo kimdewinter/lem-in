@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:18:33 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 15:41:25 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,10 @@ ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_bitroute_copy(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map);
-ssize_t					bite_bitroute_merge(BITFIELD_TYPE **dst,
+ssize_t					bite_add_room_to_bitfield(BITFIELD_TYPE **dst,
+													const BITFIELD_TYPE *src,
+													const t_map *map);
+ssize_t					bite_biteroute_allocmerge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src1,
 											const BITFIELD_TYPE *src2,
 											const t_map *map);
