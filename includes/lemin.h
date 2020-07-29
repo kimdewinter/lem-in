@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:09:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 15:18:33 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct			s_bfs_route
 typedef struct			s_bfs_vault
 {
 	struct s_bfs_route	**routes;
+	struct s_bfs_route	*shortest;
 	size_t				len;
 	size_t				used;
 	BITFIELD_TYPE		visited;
@@ -185,6 +186,10 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
+ssize_t					branch_route(const t_bfs_route *parent,
+										t_bfs_vault *vault,
+										const t_room *next_to_add,
+										const t_map *map);
 ssize_t					allocinit_singleroom_route(t_route **dst,
 													t_room *first_room,
 													const t_map *map);
