@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 14:11:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 14:35:56 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,14 @@ typedef struct			s_bfs_route
 	size_t				used;
 	struct s_room		*next_to_add;
 }						t_bfs_route;
+
+typedef struct			s_bfs_vault
+{
+	struct s_bfs_route	**routes;
+	size_t				len;
+	size_t				used;
+	BITFIELD_TYPE		visited;
+}						t_bfs_vault;
 
 typedef struct			s_room
 {

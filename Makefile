@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/29 14:11:08 by kim           ########   odam.nl          #
+#    Updated: 2020/07/29 14:35:56 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ RAW=	main\
 		room_utils\
 		sanitize_input\
 		route_finder\
+		bfs\
+		bfs_utils\
 		biter1\
 		biter2\
 		calc_cost\
