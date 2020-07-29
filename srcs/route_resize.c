@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:33:39 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:16:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 14:56:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ ssize_t			increase_route_size(t_subpath **pt, t_map *map)
 		free ((*pt)->path);
 		(*pt)->path = new_route;
 		(*pt)->size = new_size;
-		(*pt)->start = i;
+		(*pt)->start_ind = i;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

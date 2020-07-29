@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/15 16:47:33 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 14:44:47 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,29 @@ size_t			calculate_max_real_parallels(size_t *result, const t_map *map)
 	return (EXIT_SUCCESS);
 }
 
+static size_t	start_nbs(const t_map *map)
+{
+	size_t	active;
+	size_t	i;
+
+	i = 0;
+	active = 0;
+	while (i < map->start->neighbours_len)
+	{
+		if (map->start->neighbours[i]->num_options != 0)
+			active++;
+		i++;
+	}
+	return (active);
+}
+
 ssize_t			max_parallels(size_t *lowest, const t_map *map)
 {
 	size_t	max_calculated;
+	size_t	active_start_nbs;
 
 	max_calculated = map->num_routes;
+	active_start_nbs = 0;
 	// set_viable_se(map);
 	if (calculate_max_real_parallels(&max_calculated, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -131,8 +149,12 @@ ssize_t			max_parallels(size_t *lowest, const t_map *map)
 	// map->end->viable_nbs, map->antmount);
 	// exit (0);
 	*lowest = max_calculated;
-	if (map->start->neighbours_len < *lowest)
-		*lowest = map->start->neighbours_len;
+	if (DEBUG_MODE == 1)
+		printf("max parallels calculated %lu\nend neighbours %lu\n", max_calculated,
+	map->end->neighbours_len);
+	active_start_nbs =  start_nbs(map);
+	if (active_start_nbs < *lowest)
+		*lowest = active_start_nbs;
 	if (map->end->neighbours_len < *lowest)
 		*lowest = map->end->neighbours_len;
 	if ((size_t)map->antmount < *lowest)

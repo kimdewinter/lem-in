@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/14 16:13:17 by kim           ########   odam.nl          #
+#    Updated: 2020/07/28 14:57:50 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,9 +29,6 @@ RAW=	main\
 		route_finder\
 		route_resize\
 		route_utils\
-		route_adding\
-		route_conflicts\
-		route_add_nodes\
 		route_assembler\
 		biter1\
 		biter2\
@@ -41,7 +38,6 @@ RAW=	main\
 		err_biter\
 		queue_utils\
 		queue_setup\
-		queue_checks\
 		queue_adjust\
 		calc_combinations\
 		parallelizer\

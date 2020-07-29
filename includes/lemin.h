@@ -6,13 +6,14 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 17:18:21 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 14:55:54 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEMIN_H
 # define LEMIN_H
 
+# define DEBUG_MODE 1
 # define LINE_BUFF_SIZE 10000
 # define INIT_ROUTE_PERC 25
 # define ROUTE_LEN_INCR_MULT 2
@@ -99,7 +100,6 @@ typedef struct			s_routes_wrapper
 typedef struct			s_queue
 {
 	int					handled;
-	int					new_conj;
 	struct s_subpath	*path;
 	struct s_room		*dst;
 	struct s_room		*src;
@@ -109,20 +109,21 @@ typedef struct			s_queue
 
 typedef struct			s_qwrap
 {
+	BITFIELD_TYPE		*visited;
 	t_queue				**queue;
 	t_queue				*last;
 	size_t				items;
-	size_t				round;
 }						t_qwrap;
 
 typedef struct			s_subpath
 {
-	int					added_this_turn;
 	int					sp;
-	ssize_t				start;
+	ssize_t				start_ind;
 	size_t				size;
 	size_t				segment_len;
 	size_t				len;
+	struct s_room		*start;
+	struct s_room		*end;
 	struct s_room		*conj;
 	struct s_room		**path;
 	struct s_subpath	*next;
@@ -139,10 +140,8 @@ typedef struct			s_room
 	size_t				ant;
 	size_t				viable_nbs;
 	int					is_conj;
-	int					checked;
 	int					dead_end;
 	struct s_room		**neighbours;
-	size_t				weight;
 	size_t				neighbours_len;
 	size_t				room_i;
 	size_t				num_options;
@@ -219,32 +218,13 @@ ssize_t					setup_room(t_room **dest,
 ** ROUTE FINDING
 */
 ssize_t					find_routes(t_map *map);
-ssize_t					add_path(t_qwrap *qr,
-									t_queue *item,
-									t_subpath *path,
-									t_map *map);
 ssize_t					route_error(size_t err_code);
-ssize_t					add_nodes_to_path(t_queue *item,
-											t_subpath **path,
-											t_map *map,
-											int *add);
-/*
-** ROUTE FINDING CONFLICTS
-*/
-void					solve_spe_conflict(t_queue *item,
-											t_subpath *new,
-											t_map *map,
-											int *add);
-void					solve_conflict(t_queue *item,
-										t_subpath *new,
-										int *add);
-int						is_junction(t_room *dst, size_t round);
 /*
 ** ROUTE FINDING UTILS
 */
 ssize_t					increase_route_size(t_subpath **pt, t_map *map);
 ssize_t					increase_routes_size(t_room **dst, t_map *map);
-ssize_t					add_path_to_room(t_queue *item,
+ssize_t					add_path_to_room(t_room *dst,
 											t_map *map,
 											t_subpath **new);
 ssize_t					add_to_path(t_subpath *pt, t_room *add, t_map *map);
@@ -265,23 +245,12 @@ t_queue					*new_queue_item(t_subpath *pt,
 										t_room *dst,
 										t_room *src);
 void					add_item_queue(t_qwrap **qr, t_queue *new);
-ssize_t					setup_queue(t_qwrap **qr, t_map *map);
+ssize_t					setup_queue(t_qwrap **qr, t_room *curr, t_map *map);
 ssize_t					add_to_queue(t_qwrap *qr,
 										t_room *src,
 										t_room *dst,
 										t_subpath *pt);
 void					remove_queue_item(t_qwrap *qr, t_queue *item);
-/*
-** QUEUE MANAGEMENT CHECKS
-*/
-int						check_length_spe(t_subpath *path,
-											t_room *nb,
-											t_map *map);
-size_t					is_viable_for_path(t_map *map,
-											t_queue *item,
-											t_room *nb,
-											t_subpath *path);
-int						check_length(t_subpath *new_path, t_room *curr);
 /*
 ** BUILD_ROUTES
 */

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:14:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 14:57:29 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,34 +14,30 @@
 
 ssize_t		add_to_path(t_subpath *pt, t_room *add, t_map *map)
 {
-	if (pt->start < 0)
+	if (pt->start_ind < 0)
 	{
 		if (increase_route_size(&pt, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	pt->path[pt->start] = add;
-	pt->start -= 1;
+	pt->path[pt->start_ind] = add;
+	pt->start_ind -= 1;
 	pt->len += 1;
 	pt->segment_len += 1;
 	return (EXIT_SUCCESS);
 }
 
-ssize_t				add_path_to_room(t_queue *item, t_map *map,
+ssize_t				add_path_to_room(t_room *dst, t_map *map,
 t_subpath **new)
 {
-	if (item->src == map->end)
-		item->dst->spe = 1;
-	if (item->dst->num_options >= item->dst->routes_size)
+	if (dst->num_options >= dst->routes_size)
 	{
-		if (increase_routes_size(&item->dst, map) == EXIT_FAILURE)
+		if (increase_routes_size(&dst, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	item->dst->routes[item->dst->num_options] = *new;
-	item->dst->num_options++;
-	if (item->dst->weight == 0 && item->dst != map->start)
-		item->dst->weight = item->src->weight + 1;
+	dst->routes[dst->num_options] = *new;
+	dst->num_options++;
 	if ((*new)->conj != map->end)
-		add_to_bitfield((*new)->conj, item->dst->bitconj);
+		add_to_bitfield((*new)->conj, dst->bitconj);
 	return (EXIT_SUCCESS);
 }
 
@@ -63,8 +59,9 @@ ssize_t		new_subpath(t_subpath **new, t_room *conj, t_map *map)
 		(*new)->size = 0;
 		(*new)->segment_len = 0;
 		(*new)->len = 0;
-		(*new)->start = -1;
-		(*new)->added_this_turn = 1;
+		(*new)->start_ind = -1;
+		(*new)->start = NULL;
+		(*new)->end = NULL;
 		(*new)->path = NULL;
 		(*new)->next = NULL;
 		if (bite_alloc(&(*new)->bitconj, map) == EXIT_FAILURE)
@@ -88,8 +85,10 @@ t_map *map)
 		if (pt)
 			(*new)->len += pt->len;
 		(*new)->next = pt;
+		(*new)->start = conj;
 		if (pt != NULL)
 		{
+			(*new)->end = pt->end;
 			if (bite_bitroute_copy((*new)->bitconj, pt->bitconj, map)
 			== EXIT_FAILURE)
 			{
@@ -97,6 +96,8 @@ t_map *map)
 				return (EXIT_FAILURE);
 			}
 		}
+		else
+			(*new)->end = conj;	
 		if (conj != map->end)
 			add_to_bitfield(conj, (*new)->bitconj);
 		return (EXIT_SUCCESS);

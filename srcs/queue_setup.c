@@ -6,55 +6,75 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 13:45:50 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:32:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 14:55:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static ssize_t		add_items_start(t_qwrap **qr, t_map *map)
+static ssize_t		add_items_start(t_qwrap **qr, t_room *curr, t_map *map)
 {
 	size_t		i;
-	t_queue		*new;
+	t_subpath	*pt;
 
 	i = 0;
-	new = NULL;
-	map->end->weight = (*qr)->round;
-	while (i < map->end->neighbours_len)
+	while (i < curr->neighbours_len)
 	{
-		if (map->end->neighbours[i]->dead_end == 0)
+		if (room_in_bitfield(curr->neighbours[i], (*qr)->visited) == 0
+		&& !(curr->sps == 1 && curr->neighbours[i] != map->start)
+		&& curr->neighbours[i]->dead_end == 0)
 		{
-			new = new_queue_item(NULL,
-			map->end->neighbours[i], map->end);
-			if (new)
-				add_item_queue(qr, new);
-			else
+			if (create_new_path(&pt, curr->routes[0], curr, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+			pt->end = curr;
+			if (add_to_queue(*qr, curr, curr->neighbours[i], pt) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		map->end->neighbours[i]->weight = (*qr)->round;
 		i++;
 	}
 	return (EXIT_SUCCESS);
 }
 
-ssize_t		setup_queue(t_qwrap **qr, t_map *map)
+void		add_other_nbs_to_visited(t_qwrap *qr, t_room *src, t_room *dst)
 {
+	size_t	i;
+
+	i = 0;
+	while (i < src->neighbours_len)
+	{
+		if (src->neighbours[i] != dst)
+			add_to_bitfield(src->neighbours[i], qr->visited);
+		i++;
+	}
+}
+
+ssize_t		setup_queue(t_qwrap **qr, t_room *curr, t_map *map)
+{
+	t_subpath	*pt;
+
+	pt = NULL;
+	if (create_new_path(&pt, NULL, map->end, map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	if (add_path_to_room(curr, map, &pt) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	*qr = (t_qwrap *)malloc(sizeof(t_qwrap));
 	if (*qr)
 	{
 		(*qr)->queue = (t_queue **)malloc(sizeof(t_queue *));
 		(*qr)->items = 0;
 		(*qr)->last = NULL;
-		(*qr)->round = 1;
 		if ((*qr)->queue)
 		{
 			*((*qr)->queue) = NULL;
-			// if (map->end->sps == 1)//TO DO: add path to start
-			// 	return (EXIT_SUCCESS);//TO DO: add path to start
-			if (add_items_start(qr, map) == EXIT_SUCCESS)
+			if (bite_alloc(&((*qr)->visited), map) == EXIT_SUCCESS)
 			{
-				map->end->dead_end = 1;
-				return (EXIT_SUCCESS);
+				add_to_bitfield(map->end, (*qr)->visited);
+				add_other_nbs_to_visited(*qr, map->end, curr);
+				if (add_items_start(qr, curr, map) == EXIT_SUCCESS)
+				{
+					add_to_bitfield(curr, (*qr)->visited);
+					return (EXIT_SUCCESS);
+				}
 			}
 		}
 		free ((*qr)->queue);

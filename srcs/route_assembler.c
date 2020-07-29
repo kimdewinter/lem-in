@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/14 15:20:53 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 14:58:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static ssize_t	assemble_single_route(t_subpath *curr,
 	size_t		segment_i;
 	t_subpath	*next;
 
-	segment_i = curr->start + 1;
+	segment_i = curr->start_ind + 1;
 	while (segment_i < curr->size)
 	{
 		route->route[route_i] = curr->path[segment_i];

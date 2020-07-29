@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/04 14:20:58 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 14:52:33 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,10 @@ void	print_path(t_subpath *pt)
 	
 	if (pt == NULL)
 		return;
-	i = pt->start + 1;
-	printf("Len path %ld\nAdded this turn %d\nSP %d\n", pt->len, pt->added_this_turn, pt->sp);
+	i = pt->start_ind + 1;
+	printf("Len path %ld\nSP %d\n", pt->len, pt->sp);
 	printf("conj %s\n", pt->conj->name);
-	while (i < pt->segment_len + pt->start + 1)
+	while (i < pt->segment_len + pt->start_ind + 1)
 	{
 		if (pt->path[i] != NULL)
 			printf("%s ", pt->path[i]->name);
@@ -126,7 +126,7 @@ void	print_path(t_subpath *pt)
 	while (tmp != NULL)
 	{
 		printf("conj %s\n", tmp->conj->name);
-		for (size_t j = tmp->start + 1; j < tmp->size; j++)
+		for (size_t j = tmp->start_ind + 1; j < tmp->size; j++)
 		{
 			if (tmp->path[j] != NULL)
 				printf("%s ", tmp->path[j]->name);
@@ -152,7 +152,7 @@ void	print_queue(t_qwrap *qr)
 		dst = q->dst;
 		src = q->src;
 		pt = q->path;
-		printf("dst: %s\nsrc %s\ndst weight %lu\nsrc weight %lu\n", dst->name, src->name, dst->weight, src->weight);
+		printf("dst: %s\nsrc %s\n", dst->name, src->name);
 		if (pt)
 		{
 			print_path(pt);
@@ -193,7 +193,7 @@ void	print_paths(t_room *room)
 		{
 			printf("\nSP: %u\nCONJ: %s\nLen %lu\nSeg len %lu\n",room->routes[i]->sp, room->routes[i]->conj->name,
 			room->routes[i]->len, room->routes[i]->segment_len);
-			for (size_t j = room->routes[i]->start + 1; j < room->routes[i]->size; j++)
+			for (size_t j = room->routes[i]->start_ind + 1; j < room->routes[i]->size; j++)
 			{
 				if (room->routes[i]->path[j] != NULL)
 					printf("%s ", room->routes[i]->path[j]->name);
@@ -203,7 +203,7 @@ void	print_paths(t_room *room)
 			while (tmp)
 			{
 				printf("CONJ %s\n", tmp->conj->name);
-				for (size_t j = tmp->start + 1; j < tmp->size; j++)
+				for (size_t j = tmp->start_ind + 1; j < tmp->size; j++)
 				{
 					if (tmp->path[j] != NULL)
 						printf("%s ", tmp->path[j]->name);
@@ -229,9 +229,8 @@ void	debug(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nIS CONJ %d\nVIABLE NBS: %d\nWEIGHT %lu\nSPE %d\n", table->entries[i]->key, 
-			((t_room *)table->entries[i]->val)->is_conj, ((t_room *)table->entries[i]->val)->viable_nbs,
-			((t_room *)table->entries[i]->val)->weight, ((t_room *)table->entries[i]->val)->spe);
+			ft_printf("KEY: %s\nIS CONJ %d\nVIABLE NBS: %d\nSPE %d\n", table->entries[i]->key, 
+			((t_room *)table->entries[i]->val)->is_conj, ((t_room *)table->entries[i]->val)->viable_nbs, ((t_room *)table->entries[i]->val)->spe);
 			tmp = (t_room *)table->entries[i]->val;
 			printf("bitconj\n");
 			print_bitconj(tmp->bitconj, map->bitfield_len);

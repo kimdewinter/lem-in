@@ -6,71 +6,133 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:14:33 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 13:08:03 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static int				is_viable_nb(t_queue *curr, size_t i,
-size_t round)
+static int				has_other_options(t_room *candidate,
+t_room *side, t_room *dst, t_room *src)
 {
-	if (!(curr->dst->neighbours[i]->dead_end == 0
-	&& (curr->dst->neighbours[i]->weight == 0
-	|| curr->dst->neighbours[i]->weight > curr->dst->weight 
-	|| (curr->dst->neighbours[i]->weight < curr->dst->weight &&
-	curr->dst->weight > round))))
+	size_t	i;
+
+	i = 0;
+	// printf("candidate %s side %s dst %s src %s\n", candidate->name, side->name,
+	// dst->name, src->name);
+	while (i < candidate->neighbours_len)
 	{
-		return (0);
+		if (candidate->neighbours[i]->dead_end == 0
+		&& candidate->neighbours[i] != side
+		&& candidate->neighbours[i] != dst
+		&& candidate->neighbours[i] != src)
+		{
+			return (1);
+		}
+		i++;
 	}
-	return (1);
+	return (0);
 }
 
-static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map)
+static int				queue_conflict(t_qwrap *qr, t_room *dst, t_room *src,
+t_room *nb)
+{
+	t_queue	*iter;
+	int		options_queue;
+	int		options_new;
+
+	iter = qr->last;
+	options_new = 0;
+	options_queue = 0;
+	while (iter && iter->handled == 0)
+	{
+		if (iter->dst == nb)
+		{
+			// printf("iter dst == nb\n");
+			// print_path(iter->path);
+			if (iter->path && iter->path->next && iter->path->next->conj == src)
+			{
+				// print_path(iter->path);
+				// printf("stuff\n");
+				/* 4, 5, 1, 7 */
+				options_queue = has_other_options(iter->path->conj, dst, nb, src);
+				// printf("Queue has options: %d\n", options_queue);
+				/* 5, 4, 1, 7 */
+				options_new = has_other_options(dst, iter->path->conj, nb, src);
+				// printf("Curr has options: %d\n", options_new);
+				if (options_new == 1 && options_queue == 1)
+					return (0);
+				if (options_new == 0 && options_queue == 0)
+					return (1);
+				if (options_new == 1 && options_queue == 0)
+					return (1);
+				if (options_new == 0 && options_queue == 1)
+				{
+					free (iter->path);
+					remove_queue_item(qr, iter);
+					return (0);
+				}
+			}
+		}
+		iter = iter->prev;
+	}
+	return (0);
+}
+
+static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map,
+BITFIELD_TYPE *visited)
 {
 	size_t		i;
-	size_t		j;
+	t_subpath	*new;
+	int			add;
 
 	i = 0;
 	curr->dst->viable_nbs = curr->dst->neighbours_len;
 	while (i < curr->dst->neighbours_len)
 	{
-		j = 0;
-		while (j < curr->dst->num_options)
+		add = 1;
+		if (curr->dst == map->start)
+			return (EXIT_SUCCESS);
+		if (room_in_bitfield(curr->dst->neighbours[i], qr->visited) == 0
+		&& !(curr->dst->sps == 1 && curr->dst->neighbours[i] != map->start)
+		&& curr->dst->neighbours[i]->dead_end == 0)
 		{
-			if (curr->dst->routes[j]->added_this_turn == 1)
+			if (room_in_bitfield(curr->dst->neighbours[i], visited) == 1)
 			{
-				if (curr->dst == map->start)
-					return (EXIT_SUCCESS);
-				if (is_viable_nb(curr, i, qr->round) == 1 &&
-				is_viable_for_path(map, curr, curr->dst->neighbours[i],
-				curr->dst->routes[j]) == 1)
-				{
-					if (add_to_queue(qr, curr->dst,
-					curr->dst->neighbours[i], curr->dst->routes[j])
-					== EXIT_FAILURE)
-						return (EXIT_FAILURE);
-				}
+				if (queue_conflict(qr, curr->dst, curr->src,
+				curr->dst->neighbours[i]) == 1)
+					add = 0;
 			}
-			j++;
+			if (add == 1)
+			{
+				if (create_new_path(&new, curr->path, curr->dst, map)
+				== EXIT_FAILURE)
+					return (EXIT_FAILURE);
+				if (add_to_queue(qr, curr->dst,
+				curr->dst->neighbours[i], new)
+				== EXIT_FAILURE)
+				return (EXIT_FAILURE);
+				if (curr->dst->neighbours[i] != map->start)
+					add_to_bitfield(curr->dst->neighbours[i], visited);
+				/* TEST */
+				// if (curr->dst->neighbours[i] != map->start)
+					add_to_bitfield(curr->dst->neighbours[i], qr->visited);
+			}
 		}
 		i++;
 	}
 	return (EXIT_SUCCESS);
 }
 
-static void	set_weights_after(t_queue **queue, t_map *map)
+void	set_visited(t_qwrap *qr, t_map *map)
 {
 	t_queue	*iter;
 
-	iter = *queue;
+	iter = *(qr->queue);
 	while (iter)
 	{
 		if (iter->dst != map->start)
-		{
-			if (iter->src->weight < iter->dst->weight || iter->dst->weight == 0)
-				iter->dst->weight = iter->src->weight + 1;
-		}
+			add_to_bitfield(iter->dst, qr->visited);
 		iter = iter->next;
 	}
 }
@@ -87,22 +149,17 @@ ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)
 	curr = *(qr->queue);
 	i = 0;
 	prev = NULL;
-	qr->round++;
+	set_visited(qr, map);
 	while (i < len)
 	{
-		if (room_in_bitfield(curr->dst, visited) == 0)
-		{
-			if (add_nbs_to_queue(qr, curr, map)
-			== EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			add_to_bitfield(curr->dst, visited);
-		}
+		if (add_nbs_to_queue(qr, curr, map, visited)
+		== EXIT_FAILURE)
+			return (EXIT_FAILURE);
 		prev = curr;
 		curr = curr->next;
 		remove_queue_item(qr, prev);
 		i++;
 	}
-	set_weights_after(qr->queue, map);
 	free (visited);
 	return (EXIT_SUCCESS);
 }

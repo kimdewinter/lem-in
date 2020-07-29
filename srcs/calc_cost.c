@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:45:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/28 14:46:08 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,11 @@ size_t				calc_cost(size_t ants, const t_poscom *routes)
 	long double avg_ants;
 	long double	avg_paths;
 	long double rest;
+	size_t		cost;
 
 	rest = 0.0;
 	avg_ants = calc_ants_avg(ants, routes->num_routes);
 	avg_paths = calc_paths_avg(routes->num_routes, routes);
-	size_t cost = calc_rounds(&rest, avg_ants, avg_paths, routes);
+	cost = calc_rounds(&rest, avg_ants, avg_paths, routes);
 	return (cost);
 }
