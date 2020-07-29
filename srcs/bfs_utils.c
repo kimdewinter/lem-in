@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 13:37:28 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:10:54 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 15:42:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,25 @@ ssize_t	add_room(t_bfs_route *bfs_route, t_room *to_add)
 	return (EXIT_SUCCESS);
 }
 
+static ssize_t	add_to_vault(t_bfs_vault *vault, t_bfs_route *new, t_map *map)
+{
+	if (vault->used == vault->len)
+	{
+		if (increase_vault_size(vault, map) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	}
+	vault->routes[vault->used] = new;
+	vault->used++;
+	return (EXIT_SUCCESS);
+}
+
 ssize_t  branch_bfs_route(const t_bfs_route *parent, t_bfs_vault *vault,
 const t_room *next_to_add, t_map *map);
 {
     t_bfs_route *new;
 
     new = create_bfs_route(parent, next_to_add, map);
+	if (new != NULL)
+		return (add_to_vault(vault, new, map));
+	return (EXIT_FAILURE);
 }
