@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:34:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 16:45:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 11:05:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ ssize_t		new_subpath(t_subpath **new, t_room *conj, t_map *map)
 		(*new)->end = NULL;
 		(*new)->path = NULL;
 		(*new)->next = NULL;
+		(*new)->compatible_paths = NULL;
+		(*new)->max_compatible = 0;
 		if (bite_alloc(&(*new)->bitconj, map) == EXIT_FAILURE)
 		{
 			free (*new);
@@ -98,7 +100,7 @@ t_map *map)
 		}
 		else
 			(*new)->end = conj;	
-		if (conj != map->end)
+		if (conj != map->end && conj->is_conj)
 			add_to_bitfield(conj, (*new)->bitconj);
 		return (EXIT_SUCCESS);
 	}

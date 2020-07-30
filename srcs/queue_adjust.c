@@ -6,18 +6,20 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/28 14:33:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 17:39:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
 static int				has_other_options(t_room *candidate,
-t_room *side, t_room *dst, t_room *src)
+t_room *side, t_room *dst, t_room *src, t_map *map)
 {
 	size_t	i;
 
 	i = 0;
+	if (candidate->is_conj == 0)
+		return (0);
 	// printf("candidate %s side %s dst %s src %s\n", candidate->name, side->name,
 	// dst->name, src->name);
 	while (i < candidate->neighbours_len)
@@ -25,7 +27,8 @@ t_room *side, t_room *dst, t_room *src)
 		if (candidate->neighbours[i]->dead_end == 0
 		&& candidate->neighbours[i] != side
 		&& candidate->neighbours[i] != dst
-		&& candidate->neighbours[i] != src)
+		&& candidate->neighbours[i] != src
+		&& !(candidate->sps == 1 && candidate->neighbours[i] != map->start))
 		{
 			return (1);
 		}
@@ -35,7 +38,7 @@ t_room *side, t_room *dst, t_room *src)
 }
 
 static int				queue_conflict(t_qwrap *qr, t_room *dst, t_room *src,
-t_room *nb)
+t_room *nb, t_map *map)
 {
 	t_queue	*iter;
 	int		options_queue;
@@ -55,15 +58,21 @@ t_room *nb)
 				// print_path(iter->path);
 				// printf("stuff\n");
 				/* 4, 5, 1, 7 */
-				options_queue = has_other_options(iter->path->conj, dst, nb, src);
+				options_queue = has_other_options(iter->path->conj, dst, nb, src,
+				map);
 				// printf("Queue has options: %d\n", options_queue);
 				/* 5, 4, 1, 7 */
-				options_new = has_other_options(dst, iter->path->conj, nb, src);
+				options_new = has_other_options(dst, iter->path->conj, nb, src,
+				map);
 				// printf("Curr has options: %d\n", options_new);
 				if (options_new == 1 && options_queue == 1)
+				{
 					return (0);
+				}
 				if (options_new == 0 && options_queue == 0)
+				{
 					return (1);
+				}
 				if (options_new == 1 && options_queue == 0)
 					return (1);
 				if (options_new == 0 && options_queue == 1)
@@ -79,6 +88,14 @@ t_room *nb)
 	return (0);
 }
 
+static void				remove_start_end_nb(t_subpath *pt)
+{
+	pt->bitconj[pt->start->room_i / BITFIELD_SIZE] ^= ((BITFIELD_TYPE)1
+	<< (63 - pt->start->room_i % BITFIELD_SIZE));
+	pt->bitconj[pt->end->room_i / BITFIELD_SIZE] ^= ((BITFIELD_TYPE)1
+	<< (63 - pt->end->room_i % BITFIELD_SIZE));
+}
+
 static ssize_t			add_nbs_to_queue(t_qwrap *qr, t_queue *curr, t_map *map,
 BITFIELD_TYPE *visited)
 {
@@ -92,7 +109,10 @@ BITFIELD_TYPE *visited)
 	{
 		add = 1;
 		if (curr->dst == map->start)
+		{
+			remove_start_end_nb(curr->path);
 			return (EXIT_SUCCESS);
+		}
 		if (room_in_bitfield(curr->dst->neighbours[i], qr->visited) == 0
 		&& !(curr->dst->sps == 1 && curr->dst->neighbours[i] != map->start)
 		&& curr->dst->neighbours[i]->dead_end == 0)
@@ -100,7 +120,7 @@ BITFIELD_TYPE *visited)
 			if (room_in_bitfield(curr->dst->neighbours[i], visited) == 1)
 			{
 				if (queue_conflict(qr, curr->dst, curr->src,
-				curr->dst->neighbours[i]) == 1)
+				curr->dst->neighbours[i], map) == 1)
 					add = 0;
 			}
 			if (add == 1)
@@ -112,11 +132,11 @@ BITFIELD_TYPE *visited)
 				curr->dst->neighbours[i], new)
 				== EXIT_FAILURE)
 					return (EXIT_FAILURE);
-				if (curr->dst->neighbours[i] != map->start)
-					add_to_bitfield(curr->dst->neighbours[i], visited);
+				// if (curr->dst->neighbours[i] != map->start)
+				add_to_bitfield(curr->dst->neighbours[i], visited);
 				/* TEST */
-				if (curr->dst->neighbours[i] != map->start)
-					add_to_bitfield(curr->dst->neighbours[i], qr->visited);
+				// if (curr->dst->neighbours[i] != map->start)
+				// 	add_to_bitfield(curr->dst->neighbours[i], qr->visited);
 			}
 		}
 		i++;
@@ -132,9 +152,13 @@ void	set_visited(t_qwrap *qr, t_map *map)
 	while (iter)
 	{
 		if (iter->dst != map->start)
+		{
+			// printf("Set visited %s\n", iter->dst->name);
 			add_to_bitfield(iter->dst, qr->visited);
+		}
 		iter = iter->next;
 	}
+	// printf("Done\n");
 }
 
 ssize_t		adjust_queue(t_qwrap *qr, t_map *map, size_t len)

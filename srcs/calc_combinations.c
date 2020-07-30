@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/28 13:46:52 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/29 11:37:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ t_room *conj, const t_map *map)
 	i = 0;
 	first_i = -1;
 	total = 0;
-	while (i < map->num_routes)
+	while (i < map->start->num_options)
 	{
 		if ((*visited)[i] == 0 &&
-		room_in_bitfield(conj, map->routes[i]->bitroute) == 1)
+		room_in_bitfield(conj, map->start->routes[i]->bitconj) == 1)
 		{
 			total++;
 			first_i = i;
@@ -97,10 +97,10 @@ size_t			calculate_max_real_parallels(size_t *result, const t_map *map)
 	int		*visited;
 
 	i = 0;
-	visited = (int *)malloc(sizeof(int) * map->num_routes);
+	visited = (int *)malloc(sizeof(int) * map->start->num_options);
 	if (!visited)
 		return (EXIT_FAILURE);
-	ft_bzero(visited, sizeof(int) * map->num_routes);
+	ft_bzero(visited, sizeof(int) * map->start->num_options);
 	tmp = NULL;
 	while (i < map->rooms->size)
 	{
@@ -139,12 +139,12 @@ ssize_t			max_parallels(size_t *lowest, const t_map *map)
 	size_t	max_calculated;
 	size_t	active_start_nbs;
 
-	max_calculated = map->num_routes;
+	max_calculated = map->start->num_options;
 	active_start_nbs = 0;
 	// set_viable_se(map);
 	if (calculate_max_real_parallels(&max_calculated, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	// printf("Max parallels real %lu\n", max_calculated);
+	printf("Max parallels real %lu\n", max_calculated);
 	// printf("Start: %lu\nEnd: %lu\nAnts: %lu\n", map->start->viable_nbs,
 	// map->end->viable_nbs, map->antmount);
 	// exit (0);
@@ -152,15 +152,16 @@ ssize_t			max_parallels(size_t *lowest, const t_map *map)
 	if (DEBUG_MODE == 1)
 		printf("max parallels calculated %lu\nend neighbours %lu\n", max_calculated,
 	map->end->neighbours_len);
-	active_start_nbs =  start_nbs(map);
+	active_start_nbs = start_nbs(map);
+	printf("Start nbs %lu\n", active_start_nbs);
 	if (active_start_nbs < *lowest)
 		*lowest = active_start_nbs;
 	if (map->end->neighbours_len < *lowest)
 		*lowest = map->end->neighbours_len;
 	if ((size_t)map->antmount < *lowest)
 		*lowest = map->antmount;
-	if (map->num_routes < *lowest)
-		*lowest = map->num_routes;
+	if (map->start->num_options < *lowest)
+		*lowest = map->start->num_options;
 	return (EXIT_SUCCESS);
 }
 /*

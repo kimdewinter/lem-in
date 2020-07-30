@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/08 15:11:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 19:44:33 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/29 11:53:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,8 +213,9 @@ void	print_paths(t_room *room)
 	{
 		if (room->routes[i] != NULL)
 		{
-			printf("START: %s\nEND: %s\n",
-			room->routes[i]->start->name, room->routes[i]->end->name);
+			printf("START: %s\nEND: %s\nCompatible with: %lu\n",
+			room->routes[i]->start->name, room->routes[i]->end->name,
+			room->routes[i]->max_compatible);
 			printf("%s ", room->routes[i]->conj->name);
 			for (size_t j = room->routes[i]->start_ind + 1; j < room->routes[i]->size; j++)
 			{
@@ -319,4 +320,28 @@ void		print_solution(t_map *map)
 		print_route_rooms(map->solution.combi[i], NULL);
 		i++;
 	}
+}
+
+void		print_combis(t_path_combi **combi)
+{
+	t_path_combi *tmp;
+	size_t	i;
+	size_t	total;
+
+	i = 0;
+	tmp = *combi;
+	total = 0;
+	while (tmp)
+	{
+		i = 0;
+		printf("Options: %lu\n", tmp->has_options);
+		while (i < tmp->num_paths)
+		{
+			print_path(tmp->paths[i]);
+			i++;
+		}
+		tmp = tmp->next;
+		total++;
+	}
+	printf("Total combis %lu\n", total);
 }

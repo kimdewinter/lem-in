@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/15 15:59:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/28 19:22:55 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,14 @@ static ssize_t	setup_map(t_map *map)
 {
 	if (map != NULL)
 	{
+		map->bitfield_len_paths = 0;
 		map->antmount = -1;
 		map->start = NULL;
 		map->end = NULL;
 		map->rooms = create_ht(50);
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
+		map->shortest_path = NULL;
 		map->routes = NULL;
 		map->num_routes = 0;
 		map->solution.len = 0;

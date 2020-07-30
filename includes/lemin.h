@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/28 14:06:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/30 13:23:48 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,20 @@ typedef	struct			s_route
 ** the structure of each valid route from the start to the end room
 */
 
+typedef struct			s_path_combi
+{
+	size_t				has_options;
+	size_t				*compatible_paths;
+	size_t				cost;
+	size_t				size;
+	size_t				search_index;
+	size_t				index;
+	size_t				num_paths;
+	struct s_subpath	**paths;
+	struct s_path_combi	*next;
+	struct s_path_combi	*prev;
+}						t_path_combi;
+
 typedef struct			s_routes_wrapper
 {
 	size_t				size;
@@ -118,6 +132,9 @@ typedef struct			s_qwrap
 typedef struct			s_subpath
 {
 	int					sp;
+	int					valid;
+	size_t				max_compatible;
+	int					*compatible_paths;
 	ssize_t				start_ind;
 	size_t				size;
 	size_t				segment_len;
@@ -159,9 +176,12 @@ typedef struct			s_map
 	t_room				*start;
 	t_room				*end;
 	struct s_table		*rooms;
+	t_subpath			*shortest_path;
 	struct s_route		**routes;
 	size_t				num_routes;
+	size_t				bitfield_len_paths;
 	size_t				bitfield_len;
+	struct s_path_combi	*best;
 	struct s_best		solution;
 }						t_map;
 /*
@@ -177,7 +197,10 @@ typedef struct			s_input_reader
 /*
 ** standalone struct only used for reading and parsing input
 */
-
+void					sort_paths(t_room *room, size_t start_ind);
+ssize_t					select_paths(t_map *map, int *changed);
+ssize_t					set_compatibility(t_map *map);
+ssize_t					find_best_combi(t_map *map);
 /*
 ** READER
 */
@@ -264,7 +287,7 @@ ssize_t					assemble_all_routes(t_map *map);
 ssize_t					calc_combinations(long long unsigned *result,
 											const size_t n,
 											size_t r);
-size_t					calc_cost(size_t ants, const t_poscom *routes);
+size_t					calc_cost(size_t ants, t_path_combi *routes);
 ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
 ssize_t					expand_comvault(t_comvault *comvault);
 ssize_t					handle_err_comtron(size_t err_code, const char *line);
@@ -333,4 +356,5 @@ void					print_troute(t_routes_wrapper *wroutes);
 void					print_paths(t_room *room);
 void					print_routes(t_map *map);
 void					print_route(t_route *route);
+void					print_combis(t_path_combi **combi);
 #endif
