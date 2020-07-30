@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/30 13:23:48 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/30 13:41:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ ssize_t					assemble_all_routes(t_map *map);
 ssize_t					calc_combinations(long long unsigned *result,
 											const size_t n,
 											size_t r);
-size_t					calc_cost(size_t ants, t_path_combi *routes);
+size_t					calc_cost(size_t ants, const t_poscom *routes);
 ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
 ssize_t					expand_comvault(t_comvault *comvault);
 ssize_t					handle_err_comtron(size_t err_code, const char *line);

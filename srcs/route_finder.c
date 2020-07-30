@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/30 13:26:50 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/30 13:39:08 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,11 +96,12 @@ ssize_t			find_routes(t_map *map)
 
 	// if (set_compatibility(map) == EXIT_FAILURE)
 	// 	return (EXIT_FAILURE);
-	print_paths(map->start);
-	printf("Num routes %lu", map->num_routes);
+	// print_paths(map->start);
+	// printf("Num routes %lu", map->num_routes);
 	// find_best_combi(map);
-	// if (assemble_all_routes(map) == EXIT_FAILURE)
-	// 	return (EXIT_FAILURE);
+	if (assemble_all_routes(map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	print_routes(map);
 	// if (DEBUG_MODE == 1)
 	// {
 	// 	print_routes(map);
@@ -121,7 +122,7 @@ ssize_t			find_routes(t_map *map)
 	// 		exit (0);
 	// }
 	// print_paths(map->start);
-	exit (0);
+	// exit (0);
 	// size_t result;
 
 	// result = 0;

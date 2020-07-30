@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/22 16:03:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/29 11:37:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/30 13:43:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,33 +90,33 @@ t_room *conj, const t_map *map)
 		*result -= (total - 1);
 }
 
-size_t			calculate_max_real_parallels(size_t *result, const t_map *map)
-{
-	size_t	i;
-	t_room	*tmp;
-	int		*visited;
+// size_t			calculate_max_real_parallels(size_t *result, const t_map *map)
+// {
+// 	size_t	i;
+// 	t_room	*tmp;
+// 	int		*visited;
 
-	i = 0;
-	visited = (int *)malloc(sizeof(int) * map->start->num_options);
-	if (!visited)
-		return (EXIT_FAILURE);
-	ft_bzero(visited, sizeof(int) * map->start->num_options);
-	tmp = NULL;
-	while (i < map->rooms->size)
-	{
-		if (map->rooms->entries[i] != NULL)
-		{
-			tmp = ((t_room *)map->rooms->entries[i]->val);
-			if (tmp->is_conj == 1 && tmp != map->end && tmp != map->start)
-			{
-				adjust_for_paths_through_junction(&visited, result, tmp, map);
-			}
-		}
-		i++;
-	}
-	free (visited);
-	return (EXIT_SUCCESS);
-}
+// 	i = 0;
+// 	visited = (int *)malloc(sizeof(int) * map->start->num_options);
+// 	if (!visited)
+// 		return (EXIT_FAILURE);
+// 	ft_bzero(visited, sizeof(int) * map->start->num_options);
+// 	tmp = NULL;
+// 	while (i < map->rooms->size)
+// 	{
+// 		if (map->rooms->entries[i] != NULL)
+// 		{
+// 			tmp = ((t_room *)map->rooms->entries[i]->val);
+// 			if (tmp->is_conj == 1 && tmp != map->end && tmp != map->start)
+// 			{
+// 				adjust_for_paths_through_junction(&visited, result, tmp, map);
+// 			}
+// 		}
+// 		i++;
+// 	}
+// 	free (visited);
+// 	return (EXIT_SUCCESS);
+// }
 
 static size_t	start_nbs(const t_map *map)
 {
@@ -142,8 +142,8 @@ ssize_t			max_parallels(size_t *lowest, const t_map *map)
 	max_calculated = map->start->num_options;
 	active_start_nbs = 0;
 	// set_viable_se(map);
-	if (calculate_max_real_parallels(&max_calculated, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	// if (calculate_max_real_parallels(&max_calculated, map) == EXIT_FAILURE)
+	// 	return (EXIT_FAILURE);
 	printf("Max parallels real %lu\n", max_calculated);
 	// printf("Start: %lu\nEnd: %lu\nAnts: %lu\n", map->start->viable_nbs,
 	// map->end->viable_nbs, map->antmount);

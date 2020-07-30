@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/03 12:35:53 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/29 17:39:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/30 13:42:04 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ BITFIELD_TYPE *visited)
 				if (create_new_path(&new, curr->path, curr->dst, map)
 				== EXIT_FAILURE)
 					return (EXIT_FAILURE);
+				// if (has_other_options(dst, ))
 				if (add_to_queue(qr, curr->dst,
 				curr->dst->neighbours[i], new)
 				== EXIT_FAILURE)

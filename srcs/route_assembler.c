@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/03 14:45:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/26 16:42:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/30 13:38:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ ssize_t			assemble_all_routes(t_map *map)
 	size_t		j;
 
 	if (map == NULL || map->start == NULL ||
-		map->start->routes == NULL || map->start->routes[0] == NULL)
+		map->start->routes == NULL)
 		return (EXIT_FAILURE);
 	map->routes =
 		(t_route **)malloc(sizeof(t_route *) * map->start->num_options);
@@ -94,15 +94,18 @@ ssize_t			assemble_all_routes(t_map *map)
 	j = 0;
 	while (j < map->start->num_options)
 	{
-		if (setup_route(&(map->routes[i]), map->start->routes[j]->len,
-			map->start->routes[j]->bitconj, map->bitfield_len) == EXIT_FAILURE
-			|| assemble_single_route(map->start->routes[j],
-			map->routes[i], 0, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		i++;
+		if (map->start->routes[j] != NULL)
+		{
+			if (setup_route(&(map->routes[i]), map->start->routes[j]->len,
+				map->start->routes[j]->bitconj, map->bitfield_len) == EXIT_FAILURE
+				|| assemble_single_route(map->start->routes[j],
+				map->routes[i], 0, map) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+			i++;
+		}
 		j++;
 	}
-	map->num_routes = map->start->num_options;
+	// map->num_routes = map->start->num_options;
 	return (EXIT_SUCCESS);
 }
 /*
