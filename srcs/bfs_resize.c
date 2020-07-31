@@ -36,7 +36,7 @@ ssize_t		increase_route_size(t_bfs_route *bfs_route)
 	return (EXIT_FAILURE);
 }
 
-ssize_t		increase_vault_size(t_bfs_vault *vault, t_map *map)
+ssize_t		increase_vault_size(t_bfs_vault *vault, const t_map *map)
 {
 	size_t		new_size;
 	size_t		i;

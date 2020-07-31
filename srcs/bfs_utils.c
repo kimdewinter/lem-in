@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/29 13:37:28 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:42:27 by lravier       ########   odam.nl         */
+/*   Updated: 2020/07/31 14:55:52 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ t_room      		**create_new_route(size_t size)
     return (new);
 }
 
-static void         copy_bfs_route(t_bfs_route *parent, t_bfs_route *new)
+static void         copy_bfs_route(const t_bfs_route *parent, t_bfs_route *new)
 {
     size_t	i;
 
@@ -33,8 +33,8 @@ static void         copy_bfs_route(t_bfs_route *parent, t_bfs_route *new)
 	new->used = parent->used;
 }
 
-static t_bfs_route        *create_bfs_route(t_bfs_route *parent,
-t_room *next_to_add, t_map *map)
+static t_bfs_route        *create_bfs_route(const t_bfs_route *parent,
+t_room *next_to_add, const t_map *map)
 {
     t_bfs_route *new;
 	size_t		size;
@@ -64,7 +64,7 @@ t_room *next_to_add, t_map *map)
     return (NULL);
 }
 
-ssize_t	add_room(t_bfs_route *bfs_route, t_room *to_add)
+ssize_t	add_bfs_room(t_bfs_route *bfs_route, t_room *to_add)
 {
 	if (bfs_route->used == bfs_route->len)
 	{
@@ -76,7 +76,7 @@ ssize_t	add_room(t_bfs_route *bfs_route, t_room *to_add)
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t	add_to_vault(t_bfs_vault *vault, t_bfs_route *new, t_map *map)
+static ssize_t	add_to_vault(t_bfs_vault *vault, t_bfs_route *new, const t_map *map)
 {
 	if (vault->used == vault->len)
 	{
@@ -88,8 +88,10 @@ static ssize_t	add_to_vault(t_bfs_vault *vault, t_bfs_route *new, t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-ssize_t  branch_bfs_route(const t_bfs_route *parent, t_bfs_vault *vault,
-const t_room *next_to_add, t_map *map);
+ssize_t  branch_bfs_route(const t_bfs_route *parent,
+							t_bfs_vault *vault,
+							t_room *next_to_add,
+							const t_map *map)
 {
     t_bfs_route *new;
 

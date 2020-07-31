@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:53:34 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/31 14:56:25 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ typedef struct			s_bfs_vault
 	struct s_bfs_route	*shortest;
 	size_t				len;
 	size_t				used;
-	BITFIELD_TYPE		visited;
+	size_t				next_rnd_used;
+	BITFIELD_TYPE		*visited;
 }						t_bfs_vault;
 
 typedef struct			s_room
@@ -186,10 +187,10 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
-ssize_t					branch_route(const t_bfs_route *parent,
-										t_bfs_vault *vault,
-										const t_room *next_to_add,
-										const t_map *map);
+ssize_t					branch_bfs_route(const t_bfs_route *parent,
+											t_bfs_vault *vault,
+											t_room *next_to_add,
+											const t_map *map);
 ssize_t					allocinit_singleroom_route(t_route **dst,
 													t_room *first_room,
 													const t_map *map);
@@ -204,16 +205,12 @@ ssize_t					handle_err_route_finder(size_t err_code,
 ** BFS UTILS
 */
 t_room      			**create_new_route(size_t size);
-ssize_t					add_room(t_bfs_route *bfs_route, t_room *to_add);
-ssize_t  				branch_bfs_route(const t_bfs_route *parent,
-											t_bfs_vault *vault,
-											const t_room *next_to_add,
-											t_map *map);
+ssize_t					add_bfs_room(t_bfs_route *bfs_route, t_room *to_add);
 /*
 ** BFS RESIZE
 */
 ssize_t					increase_route_size(t_bfs_route *bfs_route);
-ssize_t					increase_vault_size(t_bfs_vault *vault, t_map *map);
+ssize_t					increase_vault_size(t_bfs_vault *vault, const t_map *map);
 /*
 ** PARALLELIZER
 */
@@ -241,7 +238,7 @@ ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_bitroute_copy(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map);
-ssize_t					bite_add_room_to_bitfield(BITFIELD_TYPE **dst,
+ssize_t					bite_add_room_to_bitfield(BITFIELD_TYPE *dst,
 													const BITFIELD_TYPE *src,
 													const t_map *map);
 ssize_t					bite_biteroute_allocmerge(BITFIELD_TYPE **dst,

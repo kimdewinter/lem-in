@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/29 15:07:06 by lravier       ########   odam.nl          #
+#    Updated: 2020/07/31 14:58:27 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ RAW=	main\
 		route_finder\
 		bfs\
 		bfs_utils\
+		bfs_resize\
 		biter1\
 		biter2\
 		calc_cost\
@@ -44,8 +45,6 @@ RAW=	main\
 		delete_map\
 		delete_rooms\
 		delete_routes\
-		bfs_utils\
-		bfs_resize
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

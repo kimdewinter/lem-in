@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:42:41 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/31 14:49:19 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ ssize_t			bite_biteroute_allocmerge(BITFIELD_TYPE **dst,
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			bite_add_room_to_bitfield(BITFIELD_TYPE **dst,
+ssize_t			bite_add_room_to_bitfield(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map)
 {
@@ -57,7 +57,7 @@ ssize_t			bite_add_room_to_bitfield(BITFIELD_TYPE **dst,
 	i = 0;
 	while (i < map->bitfield_len)
 	{
-		(*dst)[i] |= src[i];
+		dst[i] |= src[i];
 		i++;
 	}
 	return (EXIT_SUCCESS);
