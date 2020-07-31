@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/31 14:56:25 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/31 15:24:52 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ typedef struct			s_room
 	size_t				ant;
 	int					dead_end;
 	struct s_room		**neighbours;
+	struct s_tube		*tubes;
 	size_t				neighbours_len;
 	size_t				room_i;
 	BITFIELD_TYPE		*bitroom;
@@ -121,6 +122,14 @@ typedef struct			s_room
 /*
 ** the structure of each room in the "ant hill"
 */
+
+typedef struct			s_tube
+{
+	ssize_t				posval;
+	ssize_t				poscap;
+	ssize_t				negval;
+	ssize_t				negcap;
+}						t_tube;
 
 typedef struct			s_map
 {
