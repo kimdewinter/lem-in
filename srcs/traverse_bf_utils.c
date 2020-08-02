@@ -1,24 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   err_route_finder.c                                 :+:    :+:            */
+/*   traverse_bf_utils.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/07/23 14:15:58 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/02 19:23:23 by kim           ########   odam.nl         */
+/*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
+/*   Updated: 2020/08/02 19:55:12 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-ssize_t		handle_err_route_finder(size_t err_code, const char *line)
+void			set_visited(t_room **rooms, size_t len, size_t set_to)
 {
-	if (err_code == 0)
-		perror("Error: unspecified error in routefinder\n");
-	else if (err_code == 1)
-		perror("Error: misallocation in routefinder-related function ");
-	if (line != NULL)
-		perror(line);
-	return (EXIT_FAILURE);
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (rooms[i] != NULL)
+			rooms[i]->visited = set_to;
+		i++;
+	}
 }

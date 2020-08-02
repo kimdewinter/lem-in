@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/31 16:17:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/02 20:53:01 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,33 +88,12 @@ typedef	struct			s_route
 ** the structure of each valid route from the start to the end room
 */
 
-typedef struct			s_bfs_route
+typedef struct			s_qnode
 {
-	struct s_room		**route;
-	size_t				len;
-	size_t				used;
-	struct s_room		*next_to_add;
-}						t_bfs_route;
-
-typedef struct			s_bfs_vault
-{
-	struct s_bfs_route	**routes;
-	struct s_bfs_route	*shortest;
-	size_t				len;
-	size_t				used;
-	size_t				next_rnd_used;
-	BITFIELD_TYPE		*visited;
-}						t_bfs_vault;
-
-typedef struct			s_tube_vault
-{
-	t_room				**walkers;
-	size_t				active_walkers;
-	size_t				used;
-	size_t				next_rnd_used;
-	size_t				len;
-	BITFIELD_TYPE		*visited;
-}						t_tube_vault;
+	void				*data;
+	struct s_q_node		*next;
+	struct s_q_node		*prev;
+}						t_qnode;
 
 typedef struct			s_room
 {
@@ -124,24 +103,16 @@ typedef struct			s_room
 	size_t				ant;
 	int					dead_end;
 	struct s_room		**neighbours;
-	struct s_tube		*tubes;
 	size_t				neighbours_len;
 	size_t				room_i;
 	BITFIELD_TYPE		*bitroom;
+	size_t				dist_to_end;
+	size_t				dist_to_start;
+	size_t				visited;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
 */
-
-typedef struct			s_tube
-{
-	t_room				*posroom;//further from start
-	ssize_t				posval;
-	ssize_t				poscap;
-	t_room				*negroom;//closer to start
-	ssize_t				negval;
-	ssize_t				negcap;
-}						t_tube;
 
 typedef struct			s_map
 {
@@ -208,30 +179,16 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
-ssize_t					branch_bfs_route(const t_bfs_route *parent,
-											t_bfs_vault *vault,
-											t_room *next_to_add,
-											const t_map *map);
-ssize_t					allocinit_singleroom_route(t_route **dst,
-													t_room *first_room,
-													const t_map *map);
-ssize_t					allocopy_route(t_route **dst,
-										const t_route *src,
-										t_room *room_to_add,
-										const t_map *map);
 ssize_t					find_routes(t_map *map);
+void					set_visited(t_room **rooms, size_t len, size_t set_to);
+ssize_t					alloc_multiple_blank_routes(t_route ***dst,
+													const size_t route_num,
+													const size_t route_len,
+													const size_t bitroute_len);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
-/*
-** BFS UTILS
-*/
-t_room      			**create_new_route(size_t size);
-ssize_t					add_bfs_room(t_bfs_route *bfs_route, t_room *to_add);
-/*
-** BFS RESIZE
-*/
-ssize_t					increase_route_size(t_bfs_route *bfs_route);
-ssize_t					increase_vault_size(t_bfs_vault *vault, const t_map *map);
+ssize_t					traverse_bf(t_map *map, t_room *room_to_begin_from);
+
 /*
 ** PARALLELIZER
 */
