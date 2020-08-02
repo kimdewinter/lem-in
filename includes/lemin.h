@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/31 15:24:52 by kim           ########   odam.nl         */
+/*   Updated: 2020/07/31 16:17:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,16 @@ typedef struct			s_bfs_vault
 	BITFIELD_TYPE		*visited;
 }						t_bfs_vault;
 
+typedef struct			s_tube_vault
+{
+	t_room				**walkers;
+	size_t				active_walkers;
+	size_t				used;
+	size_t				next_rnd_used;
+	size_t				len;
+	BITFIELD_TYPE		*visited;
+}						t_tube_vault;
+
 typedef struct			s_room
 {
 	char				*name;
@@ -125,8 +135,10 @@ typedef struct			s_room
 
 typedef struct			s_tube
 {
+	t_room				*posroom;//further from start
 	ssize_t				posval;
 	ssize_t				poscap;
+	t_room				*negroom;//closer to start
 	ssize_t				negval;
 	ssize_t				negcap;
 }						t_tube;
