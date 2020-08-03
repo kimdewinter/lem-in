@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 14:14:28 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 14:37:52 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,24 +55,17 @@ static ssize_t		exec_traverse_bf(t_qnode *curr,
 	if (curr->next == NULL)//if true, this was the last node
 	{
 		*head = NULL;
-		// optional safeties at cost of performance:
-		// curr->next = NULL;
-		// curr->prev = NULL;
-		// curr->room = NULL;
+		*tail = NULL;
 		free(curr);
-		// curr = NULL;
+		curr = NULL;
 		return (EXIT_SUCCESS);
 	}
 	else
 	{
 		*head = curr->next;
 		(*head)->prev = NULL;
-		// optional safeties at cost of performance:
-		// curr->next = NULL;
-		// curr->prev = NULL;
-		// curr->room = NULL;
 		free(curr);
-		// curr = NULL;
+		curr = NULL;
 		return (exec_traverse_bf(*head, head, tail, map));
 	}
 }//TO DO: add an actual operation when traversing a room
