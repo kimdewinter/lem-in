@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 13:22:33 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 14:14:28 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ inline static void	add_nb_to_q(t_qnode **tail, t_room *room)
 	curr = (t_qnode *)malloc(sizeof(t_qnode) * 1);
 	if (curr != NULL)
 	{
-		curr->prev = (*tail == NULL) ? NULL : *tail;
+		curr->prev = *tail;
 		curr->next = NULL;
 		curr->room = room;
 		if (*tail != NULL)
@@ -28,7 +28,7 @@ inline static void	add_nb_to_q(t_qnode **tail, t_room *room)
 	}
 }
 
-static ssize_t	*add_nbs_to_q(t_qnode **head, t_qnode **tail, t_room *room)
+static ssize_t	add_nbs_to_q(t_qnode **head, t_qnode **tail, t_room *room)
 {
 	size_t	i;
 
@@ -88,7 +88,7 @@ ssize_t				traverse_bf(t_map *map, t_room *room_to_begin_from)
 	room_to_begin_from->visited = 1;//set start/end room to visited
 	if (add_nbs_to_q(&head, &tail, room_to_begin_from) == EXIT_FAILURE)//put neighbours of start/end in queue
 		return (EXIT_FAILURE);
-	if (exec_traverse_bf(map, &head, &tail) == EXIT_FAILURE)
+	if (exec_traverse_bf(head, &head, &tail, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

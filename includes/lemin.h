@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 13:11:35 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 14:16:55 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,8 @@ typedef	struct			s_route
 typedef struct			s_qnode
 {
 	struct s_room		*room;
-	struct s_q_node		*next;
-	struct s_q_node		*prev;
+	struct s_qnode		*next;
+	struct s_qnode		*prev;
 }						t_qnode;
 
 typedef struct			s_room
@@ -180,7 +180,7 @@ ssize_t					setup_room(t_room **dest,
 ** ROUTE FINDING
 */
 ssize_t					find_routes(t_map *map);
-void					set_visited(t_room **rooms, size_t len, size_t set_to);
+void					set_visited(t_entry **rooms, size_t len, size_t set_to);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
 													const size_t route_len,

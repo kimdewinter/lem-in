@@ -6,13 +6,13 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/02 19:55:12 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 14:17:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-void			set_visited(t_room **rooms, size_t len, size_t set_to)
+void			set_visited(t_entry **rooms, size_t len, size_t set_to)
 {
 	size_t	i;
 
@@ -20,7 +20,7 @@ void			set_visited(t_room **rooms, size_t len, size_t set_to)
 	while (i < len)
 	{
 		if (rooms[i] != NULL)
-			rooms[i]->visited = set_to;
+			((t_room *)rooms[i]->val)->visited = set_to;
 		i++;
 	}
 }
