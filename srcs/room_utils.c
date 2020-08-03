@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/23 13:26:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 17:40:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ ssize_t			setup_room(t_room **dest,
 		room->neighbours = NULL;
 		room->ant = 0;
 		room->dead_end = 0;
+		room->dist_to_end = -1;
+		room->dist_to_start = -1;
 		*dest = room;
 		return (EXIT_SUCCESS);
 	}

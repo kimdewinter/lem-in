@@ -6,13 +6,14 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 15:54:54 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 17:39:12 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-inline static void	add_nb_to_q(t_qwrap *queue, t_room *room)
+inline static void	add_nb_to_q(t_qwrap *queue,
+								t_room *room)
 {
 	t_qnode	*curr;
 
@@ -28,7 +29,9 @@ inline static void	add_nb_to_q(t_qwrap *queue, t_room *room)
 	}
 }
 
-static ssize_t	add_nbs_to_q(t_qwrap *queue, t_room *room)
+static ssize_t	add_nbs_to_q(t_qwrap *queue,
+								t_room *room,
+								const size_t call_code)
 {
 	size_t	i;
 
@@ -38,6 +41,10 @@ static ssize_t	add_nbs_to_q(t_qwrap *queue, t_room *room)
 		add_nb_to_q(queue, room->neighbours[i]);
 		if (queue->tail == NULL || queue->tail->room != room->neighbours[i])
 			return (handle_err_route_finder(1, "add_nb_to_q\n"));
+		if (call_code == LVL_GRPH_E2S)
+			queue->tail->room->dist_to_end = room->dist_to_end + 1;
+		else if (call_code == LVL_GRPH_S2E)
+			queue->tail->room->dist_to_start = room->dist_to_start + 1;
 		if (queue->head == NULL)
 			queue->head = queue->tail;
 		i++;
@@ -47,9 +54,10 @@ static ssize_t	add_nbs_to_q(t_qwrap *queue, t_room *room)
 
 static ssize_t		exec_traverse_bf(t_qnode *curr,
 										t_qwrap *queue,
+										const size_t call_code,
 										t_map *map)
 {
-	if (add_nbs_to_q(queue, curr->room) == EXIT_FAILURE)
+	if (add_nbs_to_q(queue, curr->room, call_code) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (curr->next == NULL)//if true, this was the last node
 	{
@@ -65,11 +73,13 @@ static ssize_t		exec_traverse_bf(t_qnode *curr,
 		queue->head->prev = NULL;
 		free(curr);
 		curr = NULL;
-		return (exec_traverse_bf(queue->head, queue, map));
+		return (exec_traverse_bf(queue->head, queue, call_code, map));
 	}
 }//TO DO: add an actual operation when traversing a room
 
-ssize_t				traverse_bf(t_map *map, t_room *room_to_begin_from)
+ssize_t				traverse_bf(t_room *room_to_begin_from,
+								const size_t call_code,
+								t_map *map)
 {
 	t_qwrap	queue;
 
@@ -77,9 +87,14 @@ ssize_t				traverse_bf(t_map *map, t_room *room_to_begin_from)
 	queue.tail = NULL;
 	set_visited(map->rooms->entries, map->rooms->size, 0);//set all rooms to unvisited
 	room_to_begin_from->visited = 1;//set start/end room to visited
-	if (add_nbs_to_q(&queue, room_to_begin_from) == EXIT_FAILURE)//put neighbours of start/end in queue
+	if (add_nbs_to_q(&queue, room_to_begin_from, call_code) == EXIT_FAILURE)//put neighbours of start/end in queue
 		return (EXIT_FAILURE);
-	if (exec_traverse_bf(queue.head, &queue, map) == EXIT_FAILURE)
+	if (exec_traverse_bf(queue.head, &queue, call_code, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
+/*
+** call_codes:
+** LVL_GRPH_E2S is level-graph from end->start (set distance from end)
+** LVL_GRPH_S2E is level-graph from start->end (set distance from start)
+*/

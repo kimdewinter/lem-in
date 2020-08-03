@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 15:48:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 17:42:49 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define BITFIELD_SIZE 64
 # define COMVAULT_LEN_INIT 9
 # define COMVAULT_LEN_INCR_MULT 10
+# define LVL_GRPH_E2S 0
+# define LVL_GRPH_S2E 1
 
 # include "../lib/lib.h"
 # include <limits.h>
@@ -112,8 +114,8 @@ typedef struct			s_room
 	size_t				neighbours_len;
 	size_t				room_i;
 	BITFIELD_TYPE		*bitroom;
-	size_t				dist_to_end;
-	size_t				dist_to_start;
+	ssize_t				dist_to_end;
+	ssize_t				dist_to_start;
 	size_t				visited;
 }						t_room;
 /*
@@ -193,7 +195,9 @@ ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t bitroute_len);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
-ssize_t					traverse_bf(t_map *map, t_room *room_to_begin_from);
+ssize_t					traverse_bf(t_room *room_to_begin_from,
+									const size_t call_code,
+									t_map *map);
 
 /*
 ** PARALLELIZER
