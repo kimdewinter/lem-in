@@ -6,82 +6,80 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 14:37:52 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 15:54:54 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-inline static void	add_nb_to_q(t_qnode **tail, t_room *room)
+inline static void	add_nb_to_q(t_qwrap *queue, t_room *room)
 {
 	t_qnode	*curr;
 
 	curr = (t_qnode *)malloc(sizeof(t_qnode) * 1);
 	if (curr != NULL)
 	{
-		curr->prev = *tail;
+		curr->prev = queue->tail;
 		curr->next = NULL;
 		curr->room = room;
-		if (*tail != NULL)
-			(*tail)->next = curr;
-		*tail = curr;
+		if (queue->tail != NULL)
+			queue->tail->next = curr;
+		queue->tail = curr;
 	}
 }
 
-static ssize_t	add_nbs_to_q(t_qnode **head, t_qnode **tail, t_room *room)
+static ssize_t	add_nbs_to_q(t_qwrap *queue, t_room *room)
 {
 	size_t	i;
 
 	i = 0;
 	while (i < room->neighbours_len)
 	{
-		add_nb_to_q(tail, room->neighbours[i]);
-		if (*tail == NULL || (*tail)->room != room->neighbours[i])
+		add_nb_to_q(queue, room->neighbours[i]);
+		if (queue->tail == NULL || queue->tail->room != room->neighbours[i])
 			return (handle_err_route_finder(1, "add_nb_to_q\n"));
-		if (*head == NULL)
-			*head = *tail;
+		if (queue->head == NULL)
+			queue->head = queue->tail;
 		i++;
 	}//adding the rest of the neighbours
 	return (EXIT_SUCCESS);
 }
 
 static ssize_t		exec_traverse_bf(t_qnode *curr,
-										t_qnode **head,
-										t_qnode **tail,
+										t_qwrap *queue,
 										t_map *map)
 {
-	if (add_nbs_to_q(head, tail, curr->room) == EXIT_FAILURE)
+	if (add_nbs_to_q(queue, curr->room) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (curr->next == NULL)//if true, this was the last node
 	{
-		*head = NULL;
-		*tail = NULL;
+		queue->head = NULL;
+		queue->tail = NULL;
 		free(curr);
 		curr = NULL;
 		return (EXIT_SUCCESS);
 	}
 	else
 	{
-		*head = curr->next;
-		(*head)->prev = NULL;
+		queue->head = curr->next;
+		queue->head->prev = NULL;
 		free(curr);
 		curr = NULL;
-		return (exec_traverse_bf(*head, head, tail, map));
+		return (exec_traverse_bf(queue->head, queue, map));
 	}
 }//TO DO: add an actual operation when traversing a room
 
 ssize_t				traverse_bf(t_map *map, t_room *room_to_begin_from)
 {
-	t_qnode	*head;
-	t_qnode	*tail;
+	t_qwrap	queue;
 
-	head = NULL;
-	tail = NULL;
+	queue.head = NULL;
+	queue.tail = NULL;
 	set_visited(map->rooms->entries, map->rooms->size, 0);//set all rooms to unvisited
 	room_to_begin_from->visited = 1;//set start/end room to visited
-	if (add_nbs_to_q(&head, &tail, room_to_begin_from) == EXIT_FAILURE)//put neighbours of start/end in queue
+	if (add_nbs_to_q(&queue, room_to_begin_from) == EXIT_FAILURE)//put neighbours of start/end in queue
 		return (EXIT_FAILURE);
-	if (exec_traverse_bf(head, &head, &tail, map) == EXIT_FAILURE)
+	if (exec_traverse_bf(queue.head, &queue, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

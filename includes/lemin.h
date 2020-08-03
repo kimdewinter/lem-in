@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 14:16:55 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 15:48:20 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,12 @@ typedef struct			s_qnode
 	struct s_qnode		*next;
 	struct s_qnode		*prev;
 }						t_qnode;
+
+typedef struct			s_qwrap
+{
+	struct s_qnode		*head;
+	struct s_qnode		*tail;
+}						t_qwrap;
 
 typedef struct			s_room
 {
