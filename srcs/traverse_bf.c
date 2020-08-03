@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 13:22:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 13:22:33 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static ssize_t		exec_traverse_bf(t_qnode *curr,
 		// curr->room = NULL;
 		free(curr);
 		// curr = NULL;
-		return (exec_traverse_bf(*head, head, tail));
+		return (exec_traverse_bf(*head, head, tail, map));
 	}
 }//TO DO: add an actual operation when traversing a room
 
