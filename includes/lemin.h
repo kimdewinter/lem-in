@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/02 20:53:01 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/03 13:11:35 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ typedef	struct			s_route
 
 typedef struct			s_qnode
 {
-	void				*data;
+	struct s_room		*room;
 	struct s_q_node		*next;
 	struct s_q_node		*prev;
 }						t_qnode;
