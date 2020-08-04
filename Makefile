@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/04 15:41:41 by kim           ########   odam.nl          #
+#    Updated: 2020/08/04 16:04:30 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ RAW=	main\
 		roundputter\
 		delete_rooms\
 		traverse_bf\
+		df_routefinder\
 		route_finder_utils\
 
 OBJ_DIR=obj/

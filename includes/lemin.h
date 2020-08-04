@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 15:40:30 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 16:16:03 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,6 +165,8 @@ ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t bitroute_len);
 size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
+ssize_t					find_routes_df(t_room *room_to_begin_from,
+										t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
