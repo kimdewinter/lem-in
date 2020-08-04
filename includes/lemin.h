@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 15:33:57 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 15:40:30 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,29 +163,13 @@ ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
 													const size_t route_len,
 													const size_t bitroute_len);
+size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
-
-/*
-** PARALLELIZER
-*/
-ssize_t					calc_combinations(long long unsigned *result,
-											const size_t n,
-											size_t r);
-size_t					calc_cost(size_t ants, const t_poscom *routes);
-ssize_t					commit_best(const t_poscom *bestcom, t_best *new_entry);
-ssize_t					expand_comvault(t_comvault *comvault);
-ssize_t					handle_err_comtron(size_t err_code, const char *line);
-ssize_t					handle_err_para(size_t err_code, const char *line);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t					parallelize(t_map *map);
-ssize_t					parallelize_multiples_of(const t_comvault *previous,
-													t_comvault *current,
-													t_poscom **bestcom,
-													const t_map *map);
 
 /*
 ** BITFIELD-TOOLKIT
@@ -224,8 +208,6 @@ ssize_t					output_result(const t_input_reader *input,
 /*
 ** CLEANER
 */
-void					delete_all_comvaults(t_comvault **comvaults,
-												const size_t len);
 void					delete_all_routes(t_map *map);
 void					delete_all_rooms(t_table *rooms);
 void					delete_map(t_map *map);

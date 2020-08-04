@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/04 15:32:11 by kim           ########   odam.nl          #
+#    Updated: 2020/08/04 15:41:41 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,13 +31,10 @@ RAW=	main\
 		calc_cost\
 		err_biter\
 		err_route_finder\
-		calc_combinations\
 		calc_ants_routes\
 		outputter\
 		roundputter\
-		delete_map\
 		delete_rooms\
-		delete_routes\
 		traverse_bf\
 		route_finder_utils\
 
