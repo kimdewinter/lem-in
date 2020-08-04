@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/23 14:15:58 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/02 19:23:23 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 18:10:02 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,17 @@ ssize_t		handle_err_route_finder(size_t err_code, const char *line)
 	if (line != NULL)
 		perror(line);
 	return (EXIT_FAILURE);
+}
+
+void		handle_err_allocopy_single_route(t_route **dst)
+{
+	if (*dst == NULL)
+	{
+			if ((*dst)->bitroute != NULL)
+				free((*dst)->bitroute);
+			if ((*dst)->route != NULL)
+				free((*dst)->route);
+			free(*dst);
+			*dst = NULL;
+	}
 }

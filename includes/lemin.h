@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 16:16:03 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 18:10:32 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,11 +167,13 @@ size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_room *room_to_begin_from,
 										t_map *map);
+void					handle_err_allocopy_single_route(t_route **dst);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
 ssize_t					max_parallels(size_t *result, const t_map *map);
+ssize_t					setup_best(t_map *map);
 
 /*
 ** BITFIELD-TOOLKIT
