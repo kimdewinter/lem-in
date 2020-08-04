@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 17:42:32 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 13:36:35 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ static ssize_t	add_special_room(t_input_reader *input,
 							if (is_comment(input->lines[*i]) == 2)
 							{
 								map->start = search_ht(map->rooms, room->name);
-								map->start->dist_to_start = 0;
+								map->start->dist_to_start = -1;
 							}
 							else if (is_comment(input->lines[*i]) == 3)
 							{
 								map->end = search_ht(map->rooms, room->name);
-								map->end->dist_to_end = 0;
+								map->end->dist_to_end = -1;
 							}
 							(*i)++;
 							(*num_room)++;

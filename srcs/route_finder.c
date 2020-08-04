@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 14:11:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 14:23:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@
 ssize_t			find_routes(t_map *map)
 {
 	if (map->start == NULL)
+		return (EXIT_FAILURE);
+	if (traverse_bf(map->end, LVL_GRPH_E2S) == EXIT_FAILURE)//step 1: create level graph from end to start
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

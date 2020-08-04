@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 17:39:12 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 14:13:43 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ inline static void	add_nb_to_q(t_qwrap *queue,
 		curr->prev = queue->tail;
 		curr->next = NULL;
 		curr->room = room;
-		if (queue->tail != NULL)
-			queue->tail->next = curr;
+		if (curr->prev != NULL)
+			curr->prev->next = curr;
 		queue->tail = curr;
 	}
 }
@@ -38,58 +38,66 @@ static ssize_t	add_nbs_to_q(t_qwrap *queue,
 	i = 0;
 	while (i < room->neighbours_len)
 	{
-		add_nb_to_q(queue, room->neighbours[i]);
-		if (queue->tail == NULL || queue->tail->room != room->neighbours[i])
-			return (handle_err_route_finder(1, "add_nb_to_q\n"));
-		if (call_code == LVL_GRPH_E2S)
-			queue->tail->room->dist_to_end = room->dist_to_end + 1;
-		else if (call_code == LVL_GRPH_S2E)
-			queue->tail->room->dist_to_start = room->dist_to_start + 1;
-		if (queue->head == NULL)
-			queue->head = queue->tail;
+		if ((call_code == LVL_GRPH_E2S &&
+			room->neighbours[i]->dist_to_end == -1) ||
+			(call_code == LVL_GRPH_S2E &&
+			room->neighbours[i]->dist_to_start == -1))
+		{
+			add_nb_to_q(queue, room->neighbours[i]);
+			if (queue->tail == NULL || queue->tail->room != room->neighbours[i])
+				return (handle_err_route_finder(1, "add_nb_to_q\n"));
+			if (call_code == LVL_GRPH_E2S)
+				queue->tail->room->dist_to_end = room->dist_to_end + 1;
+			else if (call_code == LVL_GRPH_S2E)
+				queue->tail->room->dist_to_start = room->dist_to_start + 1;
+			if (queue->head == NULL)
+				queue->head = queue->tail;
+		}
 		i++;
 	}//adding the rest of the neighbours
 	return (EXIT_SUCCESS);
 }
 
-static ssize_t		exec_traverse_bf(t_qnode *curr,
-										t_qwrap *queue,
-										const size_t call_code,
-										t_map *map)
+static ssize_t		exec_traverse_bf(t_qwrap *queue,
+										const size_t call_code)
 {
-	if (add_nbs_to_q(queue, curr->room, call_code) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (curr->next == NULL)//if true, this was the last node
+	while (queue->head != NULL)
 	{
-		queue->head = NULL;
-		queue->tail = NULL;
-		free(curr);
-		curr = NULL;
-		return (EXIT_SUCCESS);
+		if (add_nbs_to_q(queue, queue->head->room, call_code) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		if (queue->head->next == NULL)//if true, this was the last node
+		{
+			free(queue->head);
+			queue->head = NULL;
+			queue->tail = NULL;
+			return (EXIT_SUCCESS);
+		}
+		else
+		{
+			queue->head = queue->head->next;
+			free(queue->head->prev);
+			queue->head->prev = NULL;
+		}
 	}
-	else
-	{
-		queue->head = curr->next;
-		queue->head->prev = NULL;
-		free(curr);
-		curr = NULL;
-		return (exec_traverse_bf(queue->head, queue, call_code, map));
-	}
-}//TO DO: add an actual operation when traversing a room
+	return (handle_err_route_finder(0, "exec_traverse_bf\n"));
+}
 
 ssize_t				traverse_bf(t_room *room_to_begin_from,
-								const size_t call_code,
-								t_map *map)
+								const size_t call_code)
 {
 	t_qwrap	queue;
 
 	queue.head = NULL;
 	queue.tail = NULL;
-	set_visited(map->rooms->entries, map->rooms->size, 0);//set all rooms to unvisited
-	room_to_begin_from->visited = 1;//set start/end room to visited
+	// set_visited(map->rooms->entries, map->rooms->size, 0);//set all rooms to unvisited
+	// room_to_begin_from->visited = 1;//set start/end room to visited
+	if (call_code == LVL_GRPH_E2S)
+		room_to_begin_from->dist_to_end = 0;
+	else
+		room_to_begin_from->dist_to_start = 0;
 	if (add_nbs_to_q(&queue, room_to_begin_from, call_code) == EXIT_FAILURE)//put neighbours of start/end in queue
 		return (EXIT_FAILURE);
-	if (exec_traverse_bf(queue.head, &queue, call_code, map) == EXIT_FAILURE)
+	if (exec_traverse_bf(&queue, call_code) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

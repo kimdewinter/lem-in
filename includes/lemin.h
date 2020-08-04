@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/03 17:42:49 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 14:25:37 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ typedef struct			s_room
 	BITFIELD_TYPE		*bitroom;
 	ssize_t				dist_to_end;
 	ssize_t				dist_to_start;
-	size_t				visited;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
@@ -131,6 +130,7 @@ typedef struct			s_map
 	struct s_route		**routes;
 	size_t				routes_len;
 	size_t				num_routes;
+	BITFIELD_TYPE		*visited;
 	size_t				bitfield_len;
 	struct s_best		solution;
 }						t_map;
@@ -187,17 +187,15 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** ROUTE FINDING
 */
-ssize_t					find_routes(t_map *map);
-void					set_visited(t_entry **rooms, size_t len, size_t set_to);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
 													const size_t route_len,
 													const size_t bitroute_len);
+ssize_t					find_routes(t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
-									const size_t call_code,
-									t_map *map);
+									const size_t call_code);
 
 /*
 ** PARALLELIZER

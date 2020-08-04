@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/03 13:26:23 by kim           ########   odam.nl          #
+#    Updated: 2020/08/04 14:25:46 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,6 @@ RAW=	main\
 		delete_rooms\
 		delete_routes\
 		traverse_bf\
-		traverse_bf_utils\
 		route_finder_utils\
 
 OBJ_DIR=obj/
