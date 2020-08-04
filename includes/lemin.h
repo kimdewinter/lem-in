@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 14:25:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/04 15:33:57 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,6 @@ typedef struct			s_best
 }						t_best;
 /*
 ** the combination of routes chosen as being the best one (so far)
-*/
-
-typedef struct			s_comvault
-{
-	size_t				coms_of_num;
-	struct s_poscom		**coms;
-	size_t				coms_len;
-	size_t				coms_used;
-}						t_comvault;
-/*
-** there will be a comvault of poscoms of 1, of poscoms of 2, etc
-*/
-
-typedef struct			s_poscom
-{
-	struct s_route		**routes;
-	size_t				num_routes;
-	BITFIELD_TYPE		*bitroutes;
-	size_t				map_routes_i;
-	size_t				turns;
-}						t_poscom;
-/*
-** "poscom" means "possible combination",
-** it is recursively used by the parallelizer to find valid route combinations
-** "i" indexes where in map->routes it is, only ever moves forward
 */
 
 typedef	struct			s_route
@@ -127,9 +102,6 @@ typedef struct			s_map
 	t_room				*start;
 	t_room				*end;
 	struct s_table		*rooms;
-	struct s_route		**routes;
-	size_t				routes_len;
-	size_t				num_routes;
 	BITFIELD_TYPE		*visited;
 	size_t				bitfield_len;
 	struct s_best		solution;
