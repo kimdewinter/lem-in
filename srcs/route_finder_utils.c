@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:20:25 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 18:14:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/05 15:29:32 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,23 +72,49 @@ ssize_t				alloc_multiple_blank_routes(t_route ***dst,
 	return (EXIT_SUCCESS);
 }
 
-ssize_t				setup_best(t_map *map)
+size_t				find_shortest_dist_to_end(t_find_routes_df_wrap *wrap,
+												const t_map *map)
 {
 	size_t	i;
 
-	map->solution.len = (map->start->neighbours_len < map->end->neighbours_len)
+	wrap->shortest_dist_to_end = NULL;
+	i = 0;
+	while (i < map->start->neighbours_len)
+	{
+		if (wrap->shortest_dist_to_end == NULL ||
+			map->start->neighbours[i]->dist_to_end <
+			wrap->shortest_dist_to_end->dist_to_end)
+		{
+			if (room_in_bitfield(map->start->neighbours[i], wrap->visited) == 0)
+				wrap->shortest_dist_to_end = map->start->neighbours[i];
+		}
+	}
+	if (wrap->shortest_dist_to_end == NULL)
+		return (0);
+	else
+		return (1);
+}
+/*
+** return of 0 means no valid shortest-dist-to-end start nb was found
+*/
+
+ssize_t				setup_best(t_best *best, const t_map *map)
+{
+	size_t	i;
+
+	best->len = (map->start->neighbours_len < map->end->neighbours_len)
 		? map->start->neighbours_len : map->end->neighbours_len;
-	map->solution.combi =
-		(t_route **)malloc(sizeof(t_route *) * map->solution.len);
-	if (map->solution.combi == NULL)
+	best->combi =
+		(t_route **)malloc(sizeof(t_route *) * best->len);
+	if (best->combi == NULL)
 		return (EXIT_FAILURE);
 	i = 0;
-	while (i < map->solution.len)
+	while (i < best->len)
 	{
-		map->solution.combi[i] = NULL;
+		best->combi[i] = NULL;
 		i++;
 	}
-	map->solution.used = 0;
-	map->solution.turns = 0;
+	best->used = 0;
+	best->turns = 0;
 	return (EXIT_SUCCESS);
 }
