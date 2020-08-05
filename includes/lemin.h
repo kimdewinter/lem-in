@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/05 15:28:33 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/05 15:37:51 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,6 @@ typedef struct			s_qwrap
 	struct s_qnode		*tail;
 }						t_qwrap;
 
-typedef struct			s_find_routes_df_wrap
-{
-	BITFIELD_TYPE		*visited;
-	t_room				*shortest_dist_to_end;
-	t_best				candidate_best;
-}						t_find_routes_df_wrap;
-
 typedef struct			s_room
 {
 	char				*name;
@@ -102,6 +95,13 @@ typedef struct			s_room
 /*
 ** the structure of each room in the "ant hill"
 */
+
+typedef struct			s_find_routes_df_wrap
+{
+	BITFIELD_TYPE		*visited;
+	t_room				*shortest_dist_to_end;
+	t_best				candidate_best;
+}						t_find_routes_df_wrap;
 
 typedef struct			s_map
 {
@@ -176,15 +176,15 @@ size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_map *map);
-size_t					find_shortest_dist_to_end(t_find_routes_df_wrap *wrap,
-													const t_map *map);
 void					handle_err_branch_or_new(t_route **dst);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
+ssize_t					init_find_route_df(const t_room *begin,
+											t_find_routes_df_wrap *wrap,
+											const t_map *map);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t					setup_best(t_best *best, const t_map *map);
 
 /*
 ** BITFIELD-TOOLKIT
