@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/05 15:40:30 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/05 16:26:22 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static size_t	find_shortest_dist_to_end(t_find_routes_df_wrap *wrap,
 			map->start->neighbours[i]->dist_to_end <
 			wrap->shortest_dist_to_end->dist_to_end)
 		{
-			if (room_in_bitfield(map->start->neighbours[i], wrap->visited) == 0)
+			if (room_in_bitfield(
+				map->start->neighbours[i], wrap->start_nb_visited) == 0)
 				wrap->shortest_dist_to_end = map->start->neighbours[i];
 		}
 	}
@@ -67,15 +68,18 @@ ssize_t			find_routes_df(t_map *map)
 		if (setup_best(&map->solution, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	if (setup_best(&wrap.candidate_best, map) == EXIT_FAILURE ||
-		bite_alloc(&wrap.visited, map) == EXIT_FAILURE)
+		bite_alloc(&wrap.visited, map) == EXIT_FAILURE ||
+		bite_alloc(&wrap.start_nb_visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	while (find_shortest_dist_to_end(&wrap, map) == 1)
 	{
-		bite_add_room_to_bitfield(
-			wrap.visited, wrap.shortest_dist_to_end->bitroom, map);//to make sure a start nb that has no valid route to end is not repeatedly visited
+		if (bite_add_room_to_bitfield(wrap.start_nb_visited,
+			wrap.shortest_dist_to_end->bitroom, map) == EXIT_FAILURE)
+			return (EXIT_FAILURE);;//to make sure a start nb that has no valid route to end is not repeatedly visited
 		if (init_find_route_df(wrap.shortest_dist_to_end, &wrap, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
+	//PLACEHOLDER: free all the things
 	return (EXIT_SUCCESS);
 }

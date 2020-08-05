@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/05 15:37:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/05 15:51:30 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ typedef struct			s_room
 typedef struct			s_find_routes_df_wrap
 {
 	BITFIELD_TYPE		*visited;
+	BITFIELD_TYPE		*start_nb_visited;
 	t_room				*shortest_dist_to_end;
 	t_best				candidate_best;
 }						t_find_routes_df_wrap;
