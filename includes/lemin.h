@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/05 15:51:30 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/06 17:29:53 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define COMVAULT_LEN_INCR_MULT 10
 # define LVL_GRPH_E2S 0
 # define LVL_GRPH_S2E 1
+# define EXIT_ROUTEFOUND 2
 
 # include "../lib/lib.h"
 # include <limits.h>
@@ -104,6 +105,14 @@ typedef struct			s_find_routes_df_wrap
 	t_best				candidate_best;
 }						t_find_routes_df_wrap;
 
+typedef struct			s_shortest_dist
+{
+	t_room				**nbs;
+	size_t				nbs_len;
+	size_t				*nb_visited;
+	size_t				options_left;
+}						t_shortest_dist;
+
 typedef struct			s_map
 {
 	ssize_t				antmount;
@@ -177,9 +186,15 @@ size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_map *map);
+ssize_t					find_shortest_dist_option(t_room **ret_ptr,
+													const t_room *root,
+													BITFIELD_TYPE *visited,
+													t_shortest_dist *shortwrap);
 void					handle_err_branch_or_new(t_route **dst);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
+ssize_t					handle_err_find_shortest_dist_option(
+							t_shortest_dist *to_free);
 ssize_t					init_find_route_df(const t_room *begin,
 											t_find_routes_df_wrap *wrap,
 											const t_map *map);
