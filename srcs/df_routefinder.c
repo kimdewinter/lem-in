@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/05 16:26:22 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/06 18:12:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ ssize_t			find_routes_df(t_map *map)
 		if (bite_add_room_to_bitfield(wrap.start_nb_visited,
 			wrap.shortest_dist_to_end->bitroom, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);;//to make sure a start nb that has no valid route to end is not repeatedly visited
-		if (init_find_route_df(wrap.shortest_dist_to_end, &wrap, map) ==
+		if (init_find_route_df(&wrap, wrap.shortest_dist_to_end, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
