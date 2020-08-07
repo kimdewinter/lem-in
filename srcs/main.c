@@ -44,8 +44,6 @@ static ssize_t	setup_map(t_map *map)
 		map->rooms = create_ht(50);
 		if (map->rooms != NULL)
 			return (EXIT_SUCCESS);
-		map->routes = NULL;
-		map->num_routes = 0;
 		map->solution.len = 0;
 		map->solution.combi = NULL;
 		map->solution.used = 0;
@@ -57,7 +55,7 @@ static ssize_t	setup_map(t_map *map)
 int				main(void)
 {
 	t_input_reader	input;
-	t_map		map;
+	t_map			map;
 
 		// find_routes(&map) == EXIT_SUCCESS &&
 		// output_result(&input, &map) == EXIT_SUCCESS
@@ -69,11 +67,11 @@ int				main(void)
 		printf("After parse input\n") &&
 		sanitize_input(&map) == EXIT_SUCCESS)
 	{
-		// delete_input(&input);
+		delete_input(&input);
 		// delete_map(&map);
 		return (EXIT_SUCCESS);
 	}
-	// delete_input(&input);
+	delete_input(&input);
 	// delete_map(&map);
 	return (EXIT_FAILURE);
 }

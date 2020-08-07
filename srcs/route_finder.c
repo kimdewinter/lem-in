@@ -16,26 +16,16 @@
 
 ssize_t			find_routes(t_map *map)
 {
-	int			flow;
-	// t_config	*curr;
+	t_best	state;
 
-	flow = -1;
-	/* Give it a bitfield to know when to stop assigning weights from start */
-	if (set_weights(map, flow) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	// find_shortest_path_config(&curr, map);
-	print_map(map);
-	exit (0);
-	// while (configuration_found == 1)
-	// {
-	// 	/* Set weights in appropriate direction
-	// 	DFS shortest path
-	// 	Set weights in opposite direction
-	// 	Find blocking node and remove
-	// 	Find paths
-	// 	*/
-	// }
 	if (map->start == NULL)
+		return (EXIT_FAILURE);
+	if (traverse_bf(map->end, LVL_GRPH_E2S) == EXIT_FAILURE)//step 1: create level graph from end to start
+		return (EXIT_FAILURE);
+	if (find_routes_df(&state, map) == EXIT_FAILURE)//step 2: DFS for valid parallel routes
+		return (EXIT_FAILURE);
+	//PLACEHOLDER: check whether state is now better than the previous map->solution, replace if needed
+	if (traverse_bf(map->start, LVL_GRPH_S2E) == EXIT_FAILURE)//step 3: level graph start to end
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

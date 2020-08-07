@@ -29,17 +29,11 @@ RAW=	main\
 		biter1\
 		biter2\
 		calc_cost\
-		combinatron\
-		err_paracom\
 		err_biter\
 		err_route_finder\
-		calc_combinations\
-		parallelizer\
-		parallelizer_utils\
 		calc_ants_routes\
 		outputter\
 		roundputter\
-		delete_map\
 		delete_rooms\
 		delete_routes\
 		set_weights\
@@ -54,6 +48,10 @@ RAW=	main\
 		un_setup_queue\
 		un_update_queue\
 		print
+		traverse_bf\
+		df_routefinder\
+		df_rf_executor\
+		route_finder_utils\
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

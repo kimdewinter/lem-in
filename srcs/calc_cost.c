@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:45:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/04 15:37:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static long double	calc_ants_avg(size_t ants, size_t num_paths)
 	return (result);
 }
 
-static long double	calc_paths_avg(size_t num_paths, const t_poscom *routes)
+static long double	calc_paths_avg(size_t num_paths, const t_best *routes)
 {
 	size_t		i;
 	long double total;
@@ -43,7 +43,7 @@ static long double	calc_paths_avg(size_t num_paths, const t_poscom *routes)
 	total = 0.0;
 	while (i < num_paths)
 	{
-		total += (long double)routes->routes[i]->len;
+		total += (long double)routes->combi[i]->len;
 		i++;
 	}
 	return (total / (long double)num_paths);
@@ -52,7 +52,7 @@ static long double	calc_paths_avg(size_t num_paths, const t_poscom *routes)
 static size_t		calc_rounds(long double *rest,
 								long double avg_ants,
 								long double avg_paths,
-								const t_poscom *combi)
+								const t_best *combi)
 {
 	long double path_diff;
 	long double	ants;
@@ -61,26 +61,26 @@ static size_t		calc_rounds(long double *rest,
 
 	rounds = 0;
 	i = 0;
-	while (i < combi->num_routes)
+	while (i < combi->used)
 	{
-		path_diff = (long double)combi->routes[i]->len - avg_paths;
+		path_diff = (long double)combi->combi[i]->len - avg_paths;
 		ants = avg_ants - path_diff;
-		rounds = (long double)combi->routes[i]->len + ants - 1.0;
+		rounds = (long double)combi->combi[i]->len + ants - 1.0;
 		*rest += (rounds - (size_t)rounds);
 		i++;
 	}
 	return (rounds + ft_round_rest(*rest));
 }
 
-size_t				calc_cost(size_t ants, const t_poscom *routes)
+size_t				calc_cost(size_t ants, const t_best *routes)
 {
 	long double avg_ants;
 	long double	avg_paths;
 	long double rest;
 
 	rest = 0.0;
-	avg_ants = calc_ants_avg(ants, routes->num_routes);
-	avg_paths = calc_paths_avg(routes->num_routes, routes);
+	avg_ants = calc_ants_avg(ants, routes->used);
+	avg_paths = calc_paths_avg(routes->used, routes);
 	size_t cost = calc_rounds(&rest, avg_ants, avg_paths, routes);
 	return (cost);
 }
