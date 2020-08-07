@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 14:46:05 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 17:08:24 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,10 @@ typedef struct			s_find_routes_df_wrap
 typedef struct			s_shortest_dist
 {
 	t_room				**nbs;
+	t_room				*start;
 	size_t				nbs_len;
 	size_t				*nb_visited;
+	ssize_t				nb_vis_i_of_ret;
 	size_t				options_left;
 }						t_shortest_dist;
 
@@ -305,10 +307,10 @@ ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t				find_shortest_dist_option(t_room **ret_ptr,
-												const t_room *root,
-												BITFIELD_TYPE *visited,
-												t_shortest_dist *shortwrap);
+ssize_t					find_shortest_dist_option(t_room **ret_ptr,
+													t_room *root,
+													BITFIELD_TYPE *visited,
+													t_shortest_dist *shortwrap);
 
 /*
 ** BITFIELD-TOOLKIT
@@ -356,5 +358,6 @@ void					delete_map(t_map *map);
 */
 void					print_connection_queue(t_connection **q);
 void					print_map(t_map *map);
-void		print_connection(t_connection *tmp);
+void					print_connection(t_connection *tmp);
+void					print_best(const t_best *best);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 14:59:45 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 15:38:17 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,13 @@ static ssize_t	setup_map(t_map *map)
 		map->antmount = -1;
 		map->start = NULL;
 		map->end = NULL;
-		map->rooms = create_ht(50);
-		if (map->rooms != NULL)
-			return (EXIT_SUCCESS);
 		map->solution.len = 0;
 		map->solution.combi = NULL;
 		map->solution.used = 0;
 		map->solution.turns = 0;
+		map->rooms = create_ht(50);
+		if (map->rooms != NULL)
+			return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }

@@ -64,3 +64,27 @@ void		print_connection(t_connection *tmp)
 	tmp->src_nb->is_junction ,tmp->dst->name, 
 	tmp->dst->is_junction, tmp->dst_nb->name,tmp->dst_nb->is_junction, tmp->dist);
 }
+
+void		print_best(const t_best *best)
+{
+	size_t	i;
+	size_t	j;
+
+	printf("\nPRINTING T_BEST\n");
+	i = 0;
+	while (i < best->used)
+	{
+		j = 0;
+		printf("Printing route %ld:\n", i);
+		while (j < best->combi[i]->used)
+		{
+			printf("%s", best->combi[i]->route[j]->name);
+			j++;
+			if (j < best->combi[i]->used)
+				printf(" -> ");
+			else
+				printf("\n");
+		}
+		i++;
+	}
+}

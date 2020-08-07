@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 15:20:17 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 17:08:38 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ ssize_t			find_routes(t_map *map)
 		return (EXIT_FAILURE);
 	if (find_routes_df(&state, map) == EXIT_FAILURE)//step 2: DFS for valid parallel routes
 		return (EXIT_FAILURE);
+	print_best(&state);
 	exit (EXIT_SUCCESS);
 	/*
 	//PLACEHOLDER: check whether state is now better than the previous map->solution, replace if needed
