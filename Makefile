@@ -6,14 +6,14 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/07/29 15:07:06 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/05 14:09:57 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
 EXTRA=
-IFLAGS= -Wall -Wextra -Werror -O1 $(EXTRA)
+IFLAGS= #-Wall -Wextra -Werror -O1 $(EXTRA)
 RAW=	main\
 		parse_antmount\
 		parse_clean\
@@ -26,8 +26,6 @@ RAW=	main\
 		room_utils\
 		sanitize_input\
 		route_finder\
-		bfs\
-		bfs_utils\
 		biter1\
 		biter2\
 		calc_cost\
@@ -44,8 +42,18 @@ RAW=	main\
 		delete_map\
 		delete_rooms\
 		delete_routes\
-		bfs_utils\
-		bfs_resize
+		set_weights\
+		un_tubes_delete\
+		un_tubes_neighbours_checks\
+		un_tubes_options_check\
+		un_tubes_queue\
+		un_tubes_remove\
+		un_tubes_short_checks\
+		un_tubes_utils\
+		un_tubes_utils_2\
+		un_setup_queue\
+		un_update_queue\
+		print
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

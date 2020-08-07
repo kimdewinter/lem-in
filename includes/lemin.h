@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/07/29 15:41:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/07 12:11:07 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,59 @@
 
 struct s_room;
 struct s_route;
+
+typedef struct			s_conn_wrap
+{
+	size_t				items;
+	struct s_connection	**q;
+	BITFIELD_TYPE		*visited;
+}						t_conn_wrap;
+
+typedef	struct			s_connection
+{
+	/* Last one that has conflicts */
+	int						add;
+	struct s_room			*src;
+	struct s_room			*src_nb;
+	struct s_room			*dst_nb;
+	struct s_room			*dst;
+	/* Distance to last conflict */
+	size_t					dist;
+	struct s_connection		*next;
+	struct s_connection		*prev;
+}						t_connection;
+
+typedef	struct 			s_diamond
+{
+	size_t				nb_improved_by_side;
+	size_t				side_improved_by_nb;
+	struct s_connection	*src_side;
+	struct s_connection	*nb_src;
+	struct s_connection	*side_nb;
+	struct s_connection	side_dst;
+	struct s_connection	nb_dst;
+	struct s_room 		*curr_nb_nb;
+	struct s_room		*curr_nb_side;
+}						t_diamond;
+
+// typedef	struct			s_tube_cleaner
+// {
+// 	/* Last one that has conflicts */
+// 	BITFIELD_TYPE			*in_route;
+// 	struct s_room			*src;
+// 	struct s_room			*dst;
+// 	/* Distance to last conflict */
+// 	size_t					dist;
+// 	struct s_tube_cleaner	*prev;
+// 	struct s_tube_cleaner	*next;
+// }						t_tube_cleaner;
+
+typedef struct 			s_weight
+{
+	size_t				weight;
+	struct s_room		*dst;
+	struct s_weight		*next;
+}						t_weight;
 
 typedef struct			s_routeput
 {
@@ -88,30 +141,16 @@ typedef	struct			s_route
 ** the structure of each valid route from the start to the end room
 */
 
-typedef struct			s_bfs_route
-{
-	struct s_room		**route;
-	size_t				len;
-	size_t				used;
-	struct s_room		*next_to_add;
-}						t_bfs_route;
-
-typedef struct			s_bfs_vault
-{
-	struct s_bfs_route	**routes;
-	struct s_bfs_route	*shortest;
-	size_t				len;
-	size_t				used;
-	BITFIELD_TYPE		visited;
-}						t_bfs_vault;
-
 typedef struct			s_room
 {
 	char				*name;
+	int					sps;
+	int					spe;
+	int					is_junction;
 	ssize_t				xpos;
 	ssize_t				ypos;
 	size_t				ant;
-	int					dead_end;
+	size_t				weight;
 	struct s_room		**neighbours;
 	size_t				neighbours_len;
 	size_t				room_i;
@@ -146,7 +185,8 @@ typedef struct			s_input_reader
 /*
 ** standalone struct only used for reading and parsing input
 */
-
+ssize_t					remove_unnecessary_tubes(t_map *map, int *changed);
+ssize_t					create_q(void ***q, size_t size);
 /*
 ** READER
 */
@@ -182,38 +222,90 @@ ssize_t					setup_room(t_room **dest,
 									const ssize_t xpos,
 									const ssize_t ypos,
 									size_t *num_room);
+/*
+** UNNECESSARY TUBES REMOVE
+*/
+int						rm_un_conn(t_connection *side_nb,
+t_connection *src_side, t_connection *nb_src, t_map *map);
 
+/*
+** UNNECESSARY TUBES QUEUE SETUP
+*/
+ssize_t					un_add_start_nbs_to_q(t_room *start,
+											t_conn_wrap *qr,
+											t_map *map,
+											int *changed);
+/*
+** UNNECESSARY TUBES QUEUE UPDATE
+*/
+ssize_t					update_queue_un(t_conn_wrap *qr, t_map *map,int *changed);
+/*
+** UNNECESSARY TUBES OPTION CHECKS
+*/
+int						alt_opts_nb(t_connection *side_nb,
+												t_connection *src_side,
+												t_connection *nb_src,
+												t_map *map);
+int						alt_opts_side(t_connection *side_nb,
+												t_connection *src_side,
+												t_connection *nb_src,
+												t_map *map);
+
+/*
+** UNNECESSARY TUBES NB CHECKS
+*/
+int						is_nb_of_src(t_connection *side_nb,
+												t_connection *src_side,
+												t_connection *nb_src,
+												t_map *map);
+int						is_neighbour_of_other(t_room *dst,
+												t_room *curr,
+												t_map *map);
+/*
+** UNNECESSARY TUBES SHORT CHECKS
+*/
+int						shrt_conn_dsts_side(t_connection *src_side,
+													t_connection *nb_src,
+													t_connection *side_nb,
+													t_map *map);
+int						shrt_conn_dsts_nb(t_connection *src_side,
+													t_connection *nb_src,
+													t_connection *side_nb,
+													t_map *map);
+
+/*
+** UNNECESSARY TUBES DELETE
+*/
+int					del_un_tubes(t_conn_wrap *qr,
+										t_connection *q,
+										int *changed,
+										t_map *map);
+/*
+** UNNECESSARY TUBES UTILS
+*/
+void					handle_loop(t_connection *conn, t_map *map, int *changed, size_t *i);
+void					set_conn(t_connection *conn, t_room *nb);
+int						check_dst_src(t_connection *dst, t_connection *src,
+										t_room *curr);
+int		check_src(t_connection *conn, t_room *curr);
+int		check_dest(t_connection *conn, t_room *curr);
+void	setup_conn(t_connection *conn, t_room *src);
+void				find_real_nb(t_room *src, t_connection *tmp, t_map *map);
+int				del_tube(t_room *from, t_room *to, t_map *map);
+t_connection		*new_connection(t_connection *item);
+int					has_conn_to(t_room *curr, t_room *nb);
+/*
+** UNNECESSARY TUBES QUEUE
+*/
+ssize_t			add_q_item_un(t_conn_wrap *qr, t_connection *item);
+void			remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
-ssize_t					branch_route(const t_bfs_route *parent,
-										t_bfs_vault *vault,
-										const t_room *next_to_add,
-										const t_map *map);
-ssize_t					allocinit_singleroom_route(t_route **dst,
-													t_room *first_room,
-													const t_map *map);
-ssize_t					allocopy_route(t_route **dst,
-										const t_route *src,
-										t_room *room_to_add,
-										const t_map *map);
+ssize_t					set_weights(t_map *map, int flow);
 ssize_t					find_routes(t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
-/*
-** BFS UTILS
-*/
-t_room      			**create_new_route(size_t size);
-ssize_t					add_room(t_bfs_route *bfs_route, t_room *to_add);
-ssize_t  				branch_bfs_route(const t_bfs_route *parent,
-											t_bfs_vault *vault,
-											const t_room *next_to_add,
-											t_map *map);
-/*
-** BFS RESIZE
-*/
-ssize_t					increase_route_size(t_bfs_route *bfs_route);
-ssize_t					increase_vault_size(t_bfs_vault *vault, t_map *map);
 /*
 ** PARALLELIZER
 */
@@ -275,5 +367,7 @@ void					delete_map(t_map *map);
 /*
 ** DEBUGGING
 */
-
+void					print_connection_queue(t_connection **q);
+void					print_map(t_map *map);
+void		print_connection(t_connection *tmp);
 #endif
