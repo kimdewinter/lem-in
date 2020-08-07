@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/06 18:17:37 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 13:33:40 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,11 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 		return (EXIT_FAILURE);
 	while (shortest != NULL)
 	{
+		if (shortest == map->end)
+		{
+			attach_room(new, shortest, map);
+			return (commit_route(wrap, new, &shortwrap, map));
+		}
 		if (shortwrap.options_left == 1)//only one way to go
 			attach_room(new, shortest, map);
 		else//gotta branch off
@@ -158,8 +163,6 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 			else if (retval == EXIT_ROUTEFOUND)
 				break;
 		}
-		if (shortest == map->end)
-			return (commit_route(wrap, new, &shortwrap, map));
 		if (find_shortest_dist_option(&shortest, new->route[new->used],
 			new->bitroute, &shortwrap) == EXIT_FAILURE)//find next quickest way to end
 			return (EXIT_FAILURE);
