@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 15:34:40 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/02 15:45:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,15 @@ int				main(void)
 	t_input_reader	input;
 	t_map			map;
 
+		// find_routes(&map) == EXIT_SUCCESS &&
+		// output_result(&input, &map) == EXIT_SUCCESS
 	if (setup_map(&map) == EXIT_SUCCESS &&
+		printf("After setup map\n") &&
 		read_input(&input) == EXIT_SUCCESS &&
+		printf("After read input\n") &&
 		parse_input(&map, &input) == EXIT_SUCCESS &&
-		sanitize_input(&map) == EXIT_SUCCESS &&
-		find_routes(&map) == EXIT_SUCCESS &&
-		output_result(&input, &map) == EXIT_SUCCESS)
+		printf("After parse input\n") &&
+		sanitize_input(&map) == EXIT_SUCCESS)
 	{
 		delete_input(&input);
 		// delete_map(&map);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/13 13:16:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/02 15:48:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 ssize_t	parse_error(size_t err_code)
 {
+	printf("PARSE ERROR %lu\n", err_code);
 	if (err_code == 1)
 		ft_printf("Error: parse_antmount\nNumber of ants too large to be\
 			represented in memory\n");
