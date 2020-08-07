@@ -26,11 +26,11 @@ t_connection *src_side, t_connection *nb_src)
 	setup_conn(&curr->side_dst, nb_src->src);
 }
 
-static void	compr_side_dst(t_diamond *curr, t_map *map)
+static void	compr_side_dst(t_diamond *curr)
 {
 	set_conn(&(curr->nb_dst), curr->curr_nb_nb);
 	if (curr->nb_dst.dst->is_junction == 0)
-		find_real_nb(curr->nb_dst.src, &curr->nb_dst, map);
+		find_real_nb(&curr->nb_dst);
 	if (curr->side_dst.dst == curr->nb_dst.dst)
 	{
 		if ((curr->src_side->dist + curr->side_dst.dist)
@@ -48,13 +48,13 @@ static void	compr_side_dst(t_diamond *curr, t_map *map)
 	}
 }
 
-static void	compr_nb_side_dst(t_diamond *curr, t_map *map)
+static void	compr_nb_side_dst(t_diamond *curr)
 {
 	size_t	j;
 
 	set_conn(&curr->side_dst, curr->curr_nb_side);
 	if (curr->side_dst.dst->is_junction == 0)
-		find_real_nb(curr->side_dst.src, &curr->side_dst, map);
+		find_real_nb(&curr->side_dst);
 	j = 0;
 	while (j < curr->nb_src->src->neighbours_len)
 	{
@@ -64,7 +64,7 @@ static void	compr_nb_side_dst(t_diamond *curr, t_map *map)
 			curr->nb_src->src->neighbours[j]) == 0)
 		{
 			curr->curr_nb_nb = curr->nb_src->src->neighbours[j];
-			compr_side_dst(curr, map);
+			compr_side_dst(curr);
 		}
 		j++;
 	}	
@@ -102,7 +102,7 @@ t_connection *src_side, t_connection *nb_src, t_map *map)
 		== 0)
 		{
 			curr.curr_nb_side = side_nb->src->neighbours[i];
-			compr_nb_side_dst(&curr, map);
+			compr_nb_side_dst(&curr);
 		}
 		i++;
 	}
@@ -134,8 +134,8 @@ ssize_t			setup_q_un(t_conn_wrap **qr, t_map *map)
 	(*qr) = (t_conn_wrap *)malloc(sizeof(t_conn_wrap));
 	if (*qr)
 	{
-		if (create_q(((void ***)(&(*qr)->q)), sizeof(t_connection *))
-		== EXIT_SUCCESS)
+		(*qr)->q = (t_connection **)malloc(sizeof(t_connection *));
+		if ((*qr)->q)
 		{
 			if (bite_alloc(&(*qr)->visited, map) == EXIT_SUCCESS)
 			{
@@ -173,7 +173,7 @@ int *changed)
 		{
 			set_conn(&curr, (*conn)->dst->neighbours[i]);
 			if (curr.dst->is_junction == 0)
-				find_real_nb(curr.src, &curr, map);
+				find_real_nb(&curr);
 			if (curr.dst == NULL)
 				printf("Nowhere to go\n");
 			else if (curr.dst == curr.src)
@@ -193,7 +193,7 @@ int *changed)
 					{
 						set_conn(&other, (*conn)->dst->neighbours[j]);
 						if (other.dst->is_junction == 0)
-							find_real_nb(other.src, &other, map);
+							find_real_nb(&other);
 						if (other.dst == NULL)
 							printf("Nowhere to go\n");
 						else if (other.dst == other.src)
@@ -246,7 +246,7 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		iter->src->name, iter->dist);
 		remove_duplicate_paths(&iter, map, changed);
 		if (iter->dst->is_junction == 0)
-			find_real_nb(iter->dst, iter, map);
+			find_real_nb(iter);
 		if (iter->dst == NULL)
 		{
 			del_tube(iter->src, iter->src_nb, map);
@@ -268,7 +268,7 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 			if (!(iter->src == map->start && iter->dst == map->end))
 			{
 				/* If 0 is returned the curr iter has been deleted */
-				if (del_un_tubes(qr, iter, changed, map) == 1)
+				if (del_un_tubes(iter, changed, map) == 1)
 					iter = iter->next;
 				else
 				{
@@ -282,13 +282,15 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		}
 		if (iter == NULL)
 		{
-			update_queue_un(qr, map, changed);
+			if (update_queue_un(qr, map, changed) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 			iter = *(qr->q);
 		}
 	}
 	free (qr->visited);
 	free (qr->q);
 	free (qr);
+	return (EXIT_SUCCESS);
 }
 
 void			remove_sps_spe_conns(t_map *map, int *changed)
@@ -341,7 +343,6 @@ void			remove_sps_spe_conns(t_map *map, int *changed)
 
 ssize_t			remove_unnecessary_tubes(t_map *map, int *changed)
 {
-	BITFIELD_TYPE	*visited;
 	t_conn_wrap		*qr;
 
 	// set_weights(map, 1);
@@ -355,7 +356,8 @@ ssize_t			remove_unnecessary_tubes(t_map *map, int *changed)
 	// print_connection_queue(qr->q);
 	// exit (0);
 	// print_map(map);
-	execute_queue_un(qr, map, changed);
+	if (execute_queue_un(qr, map, changed) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	// while (*q)
 	// {
 	// 	// printf("QUEUE ITEM dst %s src %s dist %lu\n", (*q)->dst->name,

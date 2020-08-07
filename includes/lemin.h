@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 12:11:07 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/07 14:46:05 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,7 +214,6 @@ ssize_t					setup_room(t_room **dest,
 int						rm_un_conn(t_connection *side_nb,
 t_connection *src_side, t_connection *nb_src, t_map *map);
 ssize_t					remove_unnecessary_tubes(t_map *map, int *changed);
-ssize_t					create_q(void ***q, size_t size);
 
 /*
 ** UNNECESSARY TUBES QUEUE SETUP
@@ -232,40 +231,32 @@ ssize_t					update_queue_un(t_conn_wrap *qr, t_map *map,int *changed);
 */
 int						alt_opts_nb(t_connection *side_nb,
 												t_connection *src_side,
-												t_connection *nb_src,
-												t_map *map);
+												t_connection *nb_src);
 int						alt_opts_side(t_connection *side_nb,
-												t_connection *src_side,
-												t_connection *nb_src,
-												t_map *map);
+												t_connection *src_side);
 
 /*
 ** UNNECESSARY TUBES NB CHECKS
 */
 int						is_nb_of_src(t_connection *side_nb,
 												t_connection *src_side,
-												t_connection *nb_src,
-												t_map *map);
+												t_connection *nb_src);
 int						is_neighbour_of_other(t_room *dst,
-												t_room *curr,
-												t_map *map);
+												t_room *curr);
 /*
 ** UNNECESSARY TUBES SHORT CHECKS
 */
 int						shrt_conn_dsts_side(t_connection *src_side,
 													t_connection *nb_src,
-													t_connection *side_nb,
-													t_map *map);
+													t_connection *side_nb);
 int						shrt_conn_dsts_nb(t_connection *src_side,
 													t_connection *nb_src,
-													t_connection *side_nb,
-													t_map *map);
+													t_connection *side_nb);
 
 /*
 ** UNNECESSARY TUBES DELETE
 */
-int					del_un_tubes(t_conn_wrap *qr,
-										t_connection *q,
+int						del_un_tubes(t_connection *q,
 										int *changed,
 										t_map *map);
 /*
@@ -278,7 +269,7 @@ int						check_dst_src(t_connection *dst, t_connection *src,
 int		check_src(t_connection *conn, t_room *curr);
 int		check_dest(t_connection *conn, t_room *curr);
 void	setup_conn(t_connection *conn, t_room *src);
-void				find_real_nb(t_room *src, t_connection *tmp, t_map *map);
+void				find_real_nb(t_connection *tmp);
 int				del_tube(t_room *from, t_room *to, t_map *map);
 t_connection		*new_connection(t_connection *item);
 int					has_conn_to(t_room *curr, t_room *nb);
@@ -314,6 +305,10 @@ ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
 ssize_t					max_parallels(size_t *result, const t_map *map);
+ssize_t				find_shortest_dist_option(t_room **ret_ptr,
+												const t_room *root,
+												BITFIELD_TYPE *visited,
+												t_shortest_dist *shortwrap);
 
 /*
 ** BITFIELD-TOOLKIT

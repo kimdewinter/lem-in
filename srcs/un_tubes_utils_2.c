@@ -41,6 +41,7 @@ int				del_tube(t_room *from, t_room *to, t_map *map)
 
 	i = 0;
 	found = 0;
+	ret = 0;
 	printf("From %s %lu to %s\n", from->name, from->neighbours_len, to->name);
 	while (i < from->neighbours_len && found == 0)
 	{
@@ -89,7 +90,7 @@ int *found)
 	}
 }
 
-void		find_real_nb(t_room *src, t_connection *tmp, t_map *map)
+void		find_real_nb(t_connection *tmp)
 {
 	size_t	i;
 	t_room	*nb;
@@ -121,11 +122,5 @@ void		find_real_nb(t_room *src, t_connection *tmp, t_map *map)
 			return ;
 		}
 	}
-	// if (src == nb)
-	// {
-	// 	/* Can't this just be handled by the caller ??? */
-	// 	printf("Rm find real nb\n");
-	// 	del_tube(src, tmp->dst_nb, map);
-	// }
 	tmp->dst = nb;
 }

@@ -23,8 +23,8 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 	// printf("\n\nREMOVE IF UN\n");
 	// printf("SRC %s SIDE %s NB %s\n", src_side->src->name, src_side->dst->name,
 	// side_nb->dst->name);
-	add_opt_nb_side = alt_opts_nb(side_nb, src_side, nb_src, map);
-	add_opt_side_nb = alt_opts_side(side_nb, src_side, nb_src, map);
+	add_opt_nb_side = alt_opts_nb(side_nb, src_side, nb_src);
+	add_opt_side_nb = alt_opts_side(side_nb, src_side);
 	if (add_opt_nb_side == 0 && add_opt_side_nb == 0)
 	{
 		printf("Neither adds option to other\n");
@@ -34,7 +34,7 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 	else if (add_opt_nb_side == 0)
 	{
 		printf("nb doesnt add option to side\n");
-		if (shrt_conn_dsts_nb(src_side, nb_src, side_nb, map) == 0
+		if (shrt_conn_dsts_nb(src_side, nb_src, side_nb) == 0
 		&& has_conn_to(side_nb->src, side_nb->src_nb) == 1)
 		{
 			changed = 1;
@@ -44,7 +44,7 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 	else if (add_opt_side_nb == 0)
 	{
 		// printf("side doesnt add option to nb side %s\n", side_nb->src->name);
-		if (shrt_conn_dsts_side(src_side, nb_src, side_nb, map) == 0
+		if (shrt_conn_dsts_side(src_side, nb_src, side_nb) == 0
 		&& has_conn_to(side_nb->dst, side_nb->dst_nb) == 1)
 		{
 			printf("Not better to go through side\n");
@@ -79,7 +79,7 @@ size_t *i)
 	printf("UPDATE\n");
 	if (q->dst->is_junction == 0)
 	{
-		find_real_nb(q->dst, q, map);
+		find_real_nb(q);
 		printf("after find real nb\n");
 		*i = -1;
 		if (q->dst == NULL)
@@ -108,7 +108,7 @@ void	handle_loop(t_connection *conn, t_map *map, int *changed, size_t *i)
 	*i = -1;
 }
 
-int			del_un_tubes(t_conn_wrap *qr, t_connection *q, int *changed, t_map *map)
+int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 {
 	size_t			i;
 	int				res;
@@ -128,7 +128,7 @@ int			del_un_tubes(t_conn_wrap *qr, t_connection *q, int *changed, t_map *map)
 		{
 			set_conn(&side_nb, q->dst->neighbours[i]);
 			if (q->dst->neighbours[i]->is_junction == 0)
-				find_real_nb(q->dst, &side_nb, map);
+				find_real_nb(&side_nb);
 			if (side_nb.dst == NULL)
 			{
 				printf("nowhere to go\n");
@@ -154,7 +154,7 @@ int			del_un_tubes(t_conn_wrap *qr, t_connection *q, int *changed, t_map *map)
 				printf("Conn side to nb\n");
 				print_connection(&side_nb);
 				setup_conn(&nb_src, side_nb.dst);
-				if (is_nb_of_src(&side_nb, q, &nb_src, map) == 1)
+				if (is_nb_of_src(&side_nb, q, &nb_src) == 1)
 				{
 					printf("NB OF SRC\n");
 					prev = q->dst->neighbours[i];

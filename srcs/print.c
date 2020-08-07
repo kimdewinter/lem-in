@@ -27,10 +27,9 @@ void	print_map(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nSPE %d\nSPS %d\nWEIGHT %lu\nJUNCTION %d\n", table->entries[i]->key
+			ft_printf("KEY: %s\nSPE %d\nSPS %d\nJUNCTION %d\n", table->entries[i]->key
 			, ((t_room *)table->entries[i]->val)->spe,
 			((t_room *)table->entries[i]->val)->sps,
-			((t_room *)table->entries[i]->val)->weight,
 			((t_room *)table->entries[i]->val)->is_junction);
 			tmp = (t_room *)table->entries[i]->val;
 			// printf("ID: %lu\nDead end: %d\n", tmp->room_i, tmp->dead_end);

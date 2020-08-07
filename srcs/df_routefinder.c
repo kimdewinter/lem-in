@@ -3,41 +3,14 @@
 /*                                                        ::::::::            */
 /*   df_routefinder.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 13:50:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 14:37:55 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
-
-static size_t	find_shortest_dist_to_end(t_find_routes_df_wrap *wrap,
-												const t_map *map)
-{
-	size_t	i;
-
-	wrap->shortest_dist_to_end = NULL;
-	i = 0;
-	while (i < map->start->neighbours_len)
-	{
-		if (wrap->shortest_dist_to_end == NULL ||
-			map->start->neighbours[i]->dist_to_end <
-			wrap->shortest_dist_to_end->dist_to_end)
-		{
-			if (room_in_bitfield(
-				map->start->neighbours[i], wrap->start_nb_visited) == 0)
-				wrap->shortest_dist_to_end = map->start->neighbours[i];
-		}
-	}
-	if (wrap->shortest_dist_to_end == NULL)
-		return (0);
-	else
-		return (1);
-}
-/*
-** return of 0 means no valid shortest-dist-to-end start nb was found
-*/
 
 static ssize_t	setup_best(t_best *best, const t_map *map)
 {
@@ -63,6 +36,7 @@ static ssize_t	setup_best(t_best *best, const t_map *map)
 ssize_t			find_routes_df(t_best *state, t_map *map)
 {
 	t_find_routes_df_wrap	wrap;
+	t_shortest_dist			shortwrap;
 
 	wrap.candidate_best = state;
 	if (map->solution.combi == NULL)
@@ -72,7 +46,11 @@ ssize_t			find_routes_df(t_best *state, t_map *map)
 		bite_alloc(&wrap.visited, map) == EXIT_FAILURE ||
 		bite_alloc(&wrap.start_nb_visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	while (find_shortest_dist_to_end(&wrap, map) == 1)
+	shortwrap.nb_visited = NULL;
+	if (find_shortest_dist_option(&wrap.shortest_dist_to_end, map->start,
+		wrap.visited, &shortwrap) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	while (wrap.shortest_dist_to_end != NULL)
 	{
 		if (bite_add_room_to_bitfield(wrap.start_nb_visited,
 			wrap.shortest_dist_to_end->bitroom, map) == EXIT_FAILURE)
@@ -80,8 +58,12 @@ ssize_t			find_routes_df(t_best *state, t_map *map)
 		if (init_find_route_df(&wrap, wrap.shortest_dist_to_end, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
+		if (find_shortest_dist_option(&wrap.shortest_dist_to_end, map->start,
+			wrap.visited, &shortwrap) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
 	}
-	//PLACECHOLDER: compare wrap.candidate_best to map->solution, replace if better or NULL
 	//PLACEHOLDER: free all the things
+	if (shortwrap.nb_visited)
+		free(shortwrap.nb_visited);
 	return (EXIT_SUCCESS);
 }

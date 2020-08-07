@@ -13,7 +13,7 @@
 #include "../includes/lemin.h"
 
 int		is_nb_of_src(t_connection *side_nb, t_connection *src_side,
-t_connection *nb_src, t_map *map)
+t_connection *nb_src)
 {
 	size_t			i;
 
@@ -28,7 +28,7 @@ t_connection *nb_src, t_map *map)
 		{
 			set_conn(nb_src, nb_src->src->neighbours[i]);
 			if (nb_src->dst->is_junction == 0)
-				find_real_nb(nb_src->src, nb_src, map);
+				find_real_nb(nb_src);
 			if (nb_src->dst == nb_src->src)
 			{
 				printf("loop\n");
@@ -49,7 +49,7 @@ t_connection *nb_src, t_map *map)
 	return (0);
 }
 
-int		is_neighbour_of_other(t_room *dst, t_room *curr, t_map *map)
+int		is_neighbour_of_other(t_room *dst, t_room *curr)
 {
 	size_t	i;
 	t_connection	tmp;
@@ -64,7 +64,7 @@ int		is_neighbour_of_other(t_room *dst, t_room *curr, t_map *map)
 		{
 			set_conn(&tmp, curr->neighbours[i]);
 			if (tmp.dst->is_junction == 0)
-				find_real_nb(tmp.src, &tmp, map);
+				find_real_nb(&tmp);
 			// if (tmp.dst)
 			// 	printf("DST FOUND %s\n", tmp.dst->name);
 			if (tmp.dst == NULL)

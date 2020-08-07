@@ -63,7 +63,7 @@ int	*changed)
 			tmp.add = 1;
 			set_conn(&tmp, start->neighbours[i]);
 			if (start->neighbours[i]->is_junction == 0)
-				find_real_nb(start, &tmp, map);
+				find_real_nb(&tmp);
 			if (tmp.dst == start)
 			{
 				printf("Loop\n");

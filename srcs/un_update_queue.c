@@ -55,14 +55,12 @@ static ssize_t			un_add_nbs_to_queue(t_room *start, t_conn_wrap *qr,
 t_map *map, int *changed)
 {
 	size_t			i;
-	size_t			prev;
 	t_connection	tmp;
 	BITFIELD_TYPE	*added_to_queue;
 	size_t			added;
 
 	i = 0;
 	added = 0;
-	prev = 0;
 	if (start == map->end)
 		return (EXIT_SUCCESS);
 	// printf("\n\nADJUST QUEUE\n");
@@ -82,7 +80,7 @@ t_map *map, int *changed)
 			{
 				// printf("Dst != junction\n");
 				// print_connection(&tmp);
-				find_real_nb(start, &tmp, map);
+				find_real_nb(&tmp);
 			}
 			// if (tmp.dst)
 			// 	printf("Real nb: %s\n", tmp.dst->name);
@@ -126,23 +124,23 @@ t_map *map, int *changed)
 	return (EXIT_SUCCESS);
 }
 
-static void	set_dsts_to_visited(t_conn_wrap *qr, size_t len)
-{
-	t_connection	*iter;
-	size_t			i;
-	t_connection	*prev;
+// static void	set_dsts_to_visited(t_conn_wrap *qr, size_t len)
+// {
+// 	t_connection	*iter;
+// 	size_t			i;
+// 	t_connection	*prev;
 
-	iter = *(qr->q);
-	i = 0;
-	while (iter && i < len)
-	{
-		add_to_bitfield(iter->dst, qr->visited);
-		prev = iter;
-		iter = iter->next;
-		i++;
-		remove_q_item_un(qr, prev);
-	}
-}
+// 	iter = *(qr->q);
+// 	i = 0;
+// 	while (iter && i < len)
+// 	{
+// 		add_to_bitfield(iter->dst, qr->visited);
+// 		prev = iter;
+// 		iter = iter->next;
+// 		i++;
+// 		remove_q_item_un(qr, prev);
+// 	}
+// }
 
 ssize_t		update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 {
@@ -161,13 +159,15 @@ ssize_t		update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 	{
 		if (room_in_bitfield(iter->dst, qr->visited) == 0)
 		{
-			un_add_nbs_to_queue(iter->dst, qr, map, changed);
+			if (un_add_nbs_to_queue(iter->dst, qr, map, changed) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
 		}
 		prev = iter;
 		iter = iter->next;
 		remove_q_item_un(qr, prev);
 		i++;
 	}
+	return (EXIT_SUCCESS);
 	// set_dsts_to_visited(qr, len);
 	// print_connection_queue(qr->q);
 	// if (qr->round == 5)
