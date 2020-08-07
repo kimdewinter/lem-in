@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 13:40:10 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 13:50:08 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,15 @@ static ssize_t	setup_best(t_best *best, const t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			find_routes_df(t_map *map)
+ssize_t			find_routes_df(t_best *state, t_map *map)
 {
 	t_find_routes_df_wrap	wrap;
 
+	wrap.candidate_best = state;
 	if (map->solution.combi == NULL)
 		if (setup_best(&map->solution, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-	if (setup_best(&wrap.candidate_best, map) == EXIT_FAILURE ||
+	if (setup_best(wrap.candidate_best, map) == EXIT_FAILURE ||
 		bite_alloc(&wrap.visited, map) == EXIT_FAILURE ||
 		bite_alloc(&wrap.start_nb_visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);

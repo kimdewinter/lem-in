@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 13:33:40 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 13:51:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,10 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 		free(shortwrap->nb_visited);
 		shortwrap->nb_visited = NULL;
 	}
-	if (wrap->candidate_best.used == wrap->candidate_best.len)
+	if (wrap->candidate_best->used == wrap->candidate_best->len)
 		return (handle_err_route_finder(0, "commit_route\n"));
-	wrap->candidate_best.combi[wrap->candidate_best.used] = new;
-	wrap->candidate_best.used++;
+	wrap->candidate_best->combi[wrap->candidate_best->used] = new;
+	wrap->candidate_best->used++;
 	if (bite_add_room_to_bitfield(wrap->visited, new->bitroute, map) ==
 		EXIT_FAILURE)
 		return (EXIT_FAILURE);

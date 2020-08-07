@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/06 18:17:16 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 13:46:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ typedef struct			s_find_routes_df_wrap
 	BITFIELD_TYPE		*visited;
 	BITFIELD_TYPE		*start_nb_visited;
 	t_room				*shortest_dist_to_end;
-	t_best				candidate_best;
+	t_best				*candidate_best;
 }						t_find_routes_df_wrap;
 
 typedef struct			s_shortest_dist
@@ -188,7 +188,7 @@ size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 													const t_room *candidate);
 size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
-ssize_t					find_routes_df(t_map *map);
+ssize_t					find_routes_df(t_best *state, t_map *map);
 void					handle_err_branch_or_new(t_route **dst);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
