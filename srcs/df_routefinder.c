@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/06 18:12:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 13:40:10 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ ssize_t			find_routes_df(t_map *map)
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
+	//PLACECHOLDER: compare wrap.candidate_best to map->solution, replace if better or NULL
 	//PLACEHOLDER: free all the things
 	return (EXIT_SUCCESS);
 }
