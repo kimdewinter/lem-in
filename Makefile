@@ -6,14 +6,14 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/05 14:09:57 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/07 14:20:15 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=lem-in
 CC=gcc
 EXTRA=
-IFLAGS= #-Wall -Wextra -Werror -O1 $(EXTRA)
+IFLAGS= -Wall -Wextra -Werror -O1 $(EXTRA)
 RAW=	main\
 		parse_antmount\
 		parse_clean\
@@ -35,8 +35,6 @@ RAW=	main\
 		outputter\
 		roundputter\
 		delete_rooms\
-		delete_routes\
-		set_weights\
 		un_tubes_delete\
 		un_tubes_neighbours_checks\
 		un_tubes_options_check\
@@ -47,11 +45,11 @@ RAW=	main\
 		un_tubes_utils_2\
 		un_setup_queue\
 		un_update_queue\
-		print
+		print\
 		traverse_bf\
 		df_routefinder\
 		df_rf_executor\
-		route_finder_utils\
+		route_finder_utils
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
