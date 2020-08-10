@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/09 19:14:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/10 14:44:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,13 @@ static int		is_dead_end_cont(t_room *curr)
 			return (1);
 		if (curr->conns_to == 2)
 		{
-			printf("curr %s\n", curr->name);
-			for (size_t i = 0; i < curr->neighbours_len; i++)
-				printf("%s ", curr->neighbours[i]->name);
-			printf("\n\n");
+			if (DEBUG == 1)
+			{
+				printf("curr %s\n", curr->name);
+				for (size_t i = 0; i < curr->neighbours_len; i++)
+					printf("%s ", curr->neighbours[i]->name);
+				printf("\n\n");
+			}
 			if (is_mutual_conn(curr, curr->neighbours[0]) == 1
 			|| is_mutual_conn(curr, curr->neighbours[1]) == 1)
 				return (1);
@@ -82,7 +85,8 @@ static void		remove_dead_end_from_nbs(t_room *dead, t_map *map)
 
 	i = 0;
 	(void)map;
-	printf("Remove dead ends from nbs\n");
+	if (DEBUG == 1)
+		printf("Remove dead ends from nbs\n");
 	while (i < dead->neighbours_len)
 	{
 		if (dead->neighbours[i] != NULL)
@@ -126,19 +130,24 @@ static void		remove_dead_path(t_room **tmp, t_map *map)
 		return ;
 	*tmp = *((*tmp)->neighbours);
 	j = 0;
-	printf("Remove dead path\n");
+	if (DEBUG == 1)
+		printf("Remove dead path\n");
 	while (*tmp != NULL
 	&& is_dead_end_cont(*tmp) == 1
 	&& *tmp != map->start
 	&& *tmp != map->end)
 	{
-		printf("Curr: %s\n", (*tmp)->name);
-		for (size_t j = 0; j < (*tmp)->neighbours_len; j++)
-				printf("nbs %s ", (*tmp)->neighbours[j]->name);
-		printf("\n\n");
+		if (DEBUG == 1)
+		{
+			printf("Curr: %s\n", (*tmp)->name);
+			for (size_t j = 0; j < (*tmp)->neighbours_len; j++)
+					printf("nbs %s ", (*tmp)->neighbours[j]->name);
+			printf("\n\n");
+		}
 		j = 0;
 		// (*tmp)->dead_end = 1;
-		printf("dead end %s %d\n", (*tmp)->name, (*tmp)->is_junction);
+		if (DEBUG == 1)
+			printf("dead end %s %d\n", (*tmp)->name, (*tmp)->is_junction);
 		if ((*tmp)->neighbours[j] == prev)
 			j++;
 		prev = *tmp;
@@ -185,7 +194,8 @@ static void		remove_dead_ends(t_map *map, int *changed)
 				if (is_dead_end_first(tmp) == 1)
 				{
 					*changed = 1;
-					printf("Dead end first %s\n", tmp->name);
+					if (DEBUG == 1)
+						printf("Dead end first %s\n", tmp->name);
 					remove_dead_path(&tmp, map);
 				}
 			}
@@ -193,43 +203,6 @@ static void		remove_dead_ends(t_map *map, int *changed)
 		i++;
 	}
 }
-
-// static void		remove_incoming_connections(t_room *curr, t_room *exception,
-// t_map *map)
-// {
-// 	size_t	i;
-// 	t_room	*tmp;
-
-// 	i = 0;
-// 	while (i < map->rooms->size)
-// 	{
-// 		if (map->rooms->entries[i] != NULL)
-// 		{
-// 			tmp = ((t_room *)map->rooms->entries[i]->val);
-// 			if (has_conn_to(tmp, curr) && tmp != exception)
-// 			{
-// 				del_tube(tmp, curr, map);
-// 			}
-// 		}
-// 		i++;
-// 	}
-// }
-
-// static void		remove_outgoing_connections(t_room *curr, t_room *exception,
-// t_map *map)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < curr->neighbours_len)
-// 	{
-// 		if (curr->neighbours[i] != exception)
-// 		{
-// 			i -= del_tube(curr, curr->neighbours[i], map);
-// 		}
-// 		i++;
-// 	}
-// }
 
 void			remove_sps_spe_conns(t_map *map)
 {
@@ -239,7 +212,6 @@ void			remove_sps_spe_conns(t_map *map)
 
 	i = 0;
 	j = 0;
-	printf("Remove sps spe conn\n");
 	while (i < map->rooms->size)
 	{
 		if (((t_entry *)map->rooms->entries[i]) != NULL)
@@ -279,7 +251,8 @@ ssize_t			sanitize_input(t_map *map)
 	t_room *tmp;
 	int		changed;
 
-	printf("Sanitize input\n");
+	if (DEBUG == 1)
+		printf("Sanitize input\n");
 	changed = 1;
 	if (map->rooms == NULL)
 		return (parse_error(8));
@@ -302,18 +275,19 @@ ssize_t			sanitize_input(t_map *map)
 		if (map->start->neighbours_len == 0 ||
 			map->end->neighbours_len == 0)
 		{
-			printf("No connections from start or end\n");
+			if (DEBUG == 1)
+				printf("No connections from start or end\n");
 			return (EXIT_FAILURE);
 		}
-		printf("\n\n		Changed after remove dead_ends %d\n\n\n", changed);
 		flag_conj(map);
-		printf("Before remove tubes\n");
 		remove_unnecessary_tubes(map, &changed);
 		flag_conj(map);
-		printf("\n\n		Changed after remove un %d\n\n\n", changed);
 	}
-	print_map(map);
-	exit (0);
+	if (DEBUG == 1)
+	{
+		print_map(map);
+		exit (0);
+	}
 	// if (map->start->neighbours_len == 0 ||
 	// map->end->neighbours_len == 0)
 	// 	return (EXIT_FAILURE);

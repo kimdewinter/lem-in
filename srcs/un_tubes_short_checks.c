@@ -130,6 +130,7 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 		}
 		i++;
 	}
-	printf("Advantage when taking side from nb %d\n", side_dst_adv);
+	if (DEBUG == 1)
+		printf("Advantage when taking side from nb %d\n", side_dst_adv);
 	return (side_dst_adv);
 }

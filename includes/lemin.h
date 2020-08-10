@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/10 14:20:52 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/10 14:51:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define LVL_GRPH_S2E 1
 # define EXIT_ROUTEFOUND 2
 # define EXIT_NO_BLOCKS 2
+# define DEBUG 1
 
 # include "../lib/lib.h"
 # include <limits.h>
@@ -145,12 +146,14 @@ typedef struct			s_find_routes_df_wrap
 	t_best				*candidate_best;
 }						t_find_routes_df_wrap;
 
-typedef struct			s_shortest_dist
+typedef struct            s_shortest_dist
 {
-	t_room				**nbs;
-	size_t				nbs_len;
-	size_t				*nb_visited;
-	size_t				options_left;
+    t_room                **nbs;
+    t_room                *start;
+    size_t                nbs_len;
+    ssize_t                *nb_visited;
+    ssize_t                nb_vis_i_of_ret;
+    size_t                options_left;
 }						t_shortest_dist;
 
 typedef struct			s_map
@@ -318,7 +321,7 @@ ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t				find_shortest_dist_option(t_room **ret_ptr,
+ssize_t					find_shortest_dist_option(t_room **ret_ptr,
 												const t_room *root,
 												BITFIELD_TYPE *visited,
 												t_shortest_dist *shortwrap);
@@ -373,4 +376,5 @@ void					delete_map(t_map *map);
 void					print_connection_queue(t_connection **q);
 void					print_map(t_map *map);
 void		print_connection(t_connection *tmp);
+void		print_best(const t_best *best);
 #endif

@@ -74,8 +74,11 @@ int	*changed)
 				find_real_nb(&tmp, map);
 			if (tmp.dst == start)
 			{
-				printf("Loop\n");
-				print_connection(&tmp);
+				if (DEBUG == 1)
+				{
+					printf("Loop\n");
+					print_connection(&tmp);
+				}
 				*changed = 1;
 				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
@@ -85,7 +88,8 @@ int	*changed)
 			}
 			else if (tmp.dst == NULL)
 			{
-				printf("Nowhere to go\n");
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
 				*changed = 1;
 				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
@@ -95,7 +99,8 @@ int	*changed)
 				if (room_in_bitfield(tmp.dst, added_to_queue) == 1
 				&& tmp.dst != map->end)
 				{
-					printf("Already a dst %s\n", tmp.dst->name);
+					if (DEBUG == 1)
+						printf("Already a dst %s\n", tmp.dst->name);
 					*changed += solve_queue_conflict_start(qr, &tmp, map, &i);
 					if (*changed == 2)
 						*changed = 1;

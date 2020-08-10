@@ -20,7 +20,8 @@ int		alt_opts_side(t_connection *side_nb, t_connection *src_side, t_map *map)
 
 	i = 0;
 	(void)map;
-	printf("Alt options\n");
+	if (DEBUG == 1)
+		printf("Alt options\n");
 	setup_conn(&side_dst, src_side->dst);
 	len = side_dst.src->neighbours_len;
 	while (i < len)
@@ -35,10 +36,15 @@ int		alt_opts_side(t_connection *side_nb, t_connection *src_side, t_map *map)
 				find_real_nb(&side_dst, map);
 			/* CHECK THIS */
 			if (side_dst.dst == NULL)
-				printf("Nowhere to go\n");
+			{
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
+			}
 			if (side_dst.dst == side_dst.src)
-				printf("Loop\n");
-			/**/
+			{
+				if (DEBUG == 1)
+					printf("Loop\n");
+			}
 			if (side_dst.dst != side_nb->dst
 				&& side_dst.dst != src_side->src
 				&& is_nb_of_other(side_dst.dst, side_nb->dst, map) == 0)
@@ -73,14 +79,22 @@ t_connection *nb_src, t_map *map)
 				find_real_nb(&nb_dst, map);
 			/* CHECK THIS NB CAN ALREADY GO TO SRC*/
 			if (nb_dst.dst == NULL)
-				printf("Nowhere to go\n");
+			{
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
+			}
 			if (nb_dst.dst == nb_dst.src)
-				printf("Loop\n");
-			/**/
-			printf("Side nb\n");
-			print_connection(side_nb);
-			printf("nb dst\n");
-			print_connection(&nb_dst);
+			{
+				if (DEBUG == 1)
+					printf("Loop\n");
+			}
+			if (DEBUG == 1)
+			{
+				printf("Side nb\n");
+				print_connection(side_nb);
+				printf("nb dst\n");
+				print_connection(&nb_dst);
+			}
 			if (nb_dst.dst != side_nb->src
 				&& nb_dst.dst != nb_src->dst
 				&& is_nb_of_other(nb_dst.dst, side_nb->src, map) == 0)

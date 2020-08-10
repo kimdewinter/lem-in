@@ -65,8 +65,11 @@ t_map *map, int *changed)
 
 	i = 0;
 	added = 0;
-	printf("\n\nADJUST QUEUE\n");
-	printf("START %s\n", start->name);
+	if (DEBUG == 1)
+	{
+		printf("\n\nADJUST QUEUE\n");
+		printf("START %s\n", start->name);
+	}
 	if (start == map->end)
 		return (EXIT_SUCCESS);
 	if (bite_alloc(&added_to_queue, map) == EXIT_FAILURE)
@@ -90,7 +93,8 @@ t_map *map, int *changed)
 			// 	printf("Real nb: %s\n", tmp.dst->name);
 			if (tmp.dst == start)
 			{
-				printf("Loop\n");
+				if (DEBUG == 1)
+					printf("Loop\n");
 				*changed = 1;
 				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
@@ -99,7 +103,8 @@ t_map *map, int *changed)
 			}
 			else if (tmp.dst == NULL)
 			{
-				printf("Nowhere to go\n");
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
 				*changed = 1;
 				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
@@ -108,7 +113,8 @@ t_map *map, int *changed)
 			{
 				if (room_in_bitfield(tmp.dst, added_to_queue) == 1)
 				{
-					printf("Already a dst added to queue\n");
+					if (DEBUG == 1)
+						printf("Already a dst added to queue\n");
 					i -= solve_queue_conflict(qr, &tmp, map, added,
 					changed);
 					// printf("After solve queue confl\n");
@@ -156,12 +162,13 @@ ssize_t		update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 	t_connection	*iter;
 	t_connection	*prev;
 
-	printf("Update queue\n");
+	if (DEBUG == 1)
+		printf("Update queue\n");
 	iter = *(qr->q);
 	len = qr->items;
 	i = 0;
-	// printf("ROUND %lu len %lu\n", qr->round, qr->items);
-	printf("Len %lu\n", len);
+	if (DEBUG == 1)
+		printf("Len %lu\n", len);
 	while (i < len && iter)
 	{
 		if (room_in_bitfield(iter->dst, qr->visited) == 0)
@@ -175,8 +182,4 @@ ssize_t		update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		i++;
 	}
 	return (EXIT_SUCCESS);
-	// set_dsts_to_visited(qr, len);
-	// print_connection_queue(qr->q);
-	// if (qr->round == 5)
-	// 	exit (0);
 }

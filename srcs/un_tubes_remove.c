@@ -286,17 +286,20 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 	tmp = 0;
 	while (iter)
 	{
-		printf("QUEUE ITEM dst %s %d src %s dist %lu\n", iter->dst->name, iter->dst->is_junction,
-		iter->src->name, iter->dist);
+		if (DEBUG == 1)
+			printf("QUEUE ITEM dst %s %d src %s dist %lu\n", iter->dst->name, iter->dst->is_junction,
+			iter->src->name, iter->dist);
 		remove_duplicate_paths(&iter, map, changed);
-		printf("AFTER RM DUPL PATHS\n");
+		if (DEBUG == 1)
+			printf("AFTER RM DUPL PATHS\n");
 		if (iter->dst->is_junction == 0)
 			find_real_nb(iter, map);
 		// printf("QUEUE ITEM dst %s %d src %s dist %lu\n", iter->dst->name, iter->dst->is_junction,
 		// iter->src->name, iter->dist);
 		if (iter->dst == NULL)
 		{
-			printf("Nowhere to go\n");
+			if (DEBUG == 1)
+				printf("Nowhere to go\n");
 			del_tube(iter->src, iter->src_nb, map);
 			prev = iter;
 			iter = iter->next;
@@ -305,10 +308,6 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		}
 		else if (iter->dst == iter->src)
 		{
-			// printf("Loop\n");
-			// print_connection(iter);
-			// if (iter->dst_nb == iter->src_nb)
-			// 	printf("Nowhere to go\n");
 			handle_loop(iter, map, changed, &tmp);
 			prev = iter;
 			iter = iter->next;
@@ -320,7 +319,8 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 			if (!(iter->src == map->start && iter->dst == map->end))
 			{
 				/* If 0 is returned the curr iter has been deleted */
-				printf("Before del un_tubes\n");
+				if (DEBUG == 1)
+					printf("Before del un_tubes\n");
 				if (del_un_tubes(iter, changed, map) == 1)
 					iter = iter->next;
 				else
@@ -335,7 +335,8 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		}
 		if (iter == NULL)
 		{
-			printf("Before update queue\n");
+			if (DEBUG == 1)
+				printf("Before update queue\n");
 			if (update_queue_un(qr, map, changed) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 			iter = *(qr->q);

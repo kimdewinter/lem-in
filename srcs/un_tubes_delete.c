@@ -114,23 +114,29 @@ int *changed)
 static int	update_src_path(t_connection *q, t_map *map, int *changed,
 size_t *i)
 {
-	printf("UPDATE\n");
-	print_connection(q);
+	if (DEBUG == 1)
+	{
+		printf("UPDATE\n");
+		print_connection(q);
+	}
 	if (q->dst->is_junction == 0)
 	{
 		find_real_nb(q, map);
-		printf("after find real nb\n");
+		if (DEBUG == 1)
+			printf("after find real nb\n");
 		*i = -1;
 		if (q->dst == NULL)
 		{
-			printf("NOWHERE TO GO dst nb %s src nb %s\n", q->src_nb->name, q->dst_nb->name);
+			if (DEBUG == 1)
+				printf("NOWHERE TO GO dst nb %s src nb %s\n", q->src_nb->name, q->dst_nb->name);
 			del_tube(q->src_nb, q->dst_nb, map);
 			del_tube(q->dst_nb, q->src_nb, map);
 			return (0);
 		}
 		if (q->src == q->dst)
 		{
-			printf("loop\n");
+			if (DEBUG == 1)
+				printf("loop\n");
 			*changed = 1;
 			del_tube(q->dst, q->dst_nb, map);
 			del_tube(q->src, q->src_nb, map);
@@ -163,7 +169,8 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 	res = 0;
 	prev = NULL;
 	prev_i = 0;
-	printf("DEL TUBE\n");
+	if (DEBUG == 1)
+		printf("DEL TUBE\n");
 	setup_conn(&side_nb, q->dst);
 	while (i < q->dst->neighbours_len)
 	{
@@ -175,7 +182,8 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 				find_real_nb(&side_nb, map);
 			if (side_nb.dst == NULL)
 			{
-				printf("nowhere to go\n");
+				if (DEBUG == 1)
+					printf("nowhere to go\n");
 			}
 			if (side_nb.dst == side_nb.src)
 			{
@@ -185,29 +193,34 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 			else if (side_nb.dst == q->src && side_nb.src == q->dst
 			&& !(q->src == map->start && q->dst == map->end))
 			{
-				printf("REMOVE DUPLICATE PATH\n");
-				printf("q\n");
-				printf("side to nb\n");
+				if (DEBUG == 1)
+				{
+					printf("REMOVE DUPLICATE PATH\n");
+					printf("q\n");
+					printf("side to nb\n");
+				}
 				prev_i = i;
 				i -= remove_dupl_path(&side_nb, q, map, changed);
 				if (prev_i == i)
 					return (1);
-				print_connection(q);
-
-				printf("i: %lu\n", i);
-				// exit (0);
+				if (DEBUG == 1)
+					print_connection(q);
 			}
 			else
 			{
-				printf("REGULAR ROUTE\n");
-				printf("Conn src to side\n");
-				print_connection(q);
-				printf("Conn side to nb\n");
-				print_connection(&side_nb);
-				setup_conn(&nb_src, side_nb.dst);
+				if (DEBUG == 1)
+				{
+					printf("REGULAR ROUTE\n");
+					printf("Conn src to side\n");
+					print_connection(q);
+					printf("Conn side to nb\n");
+					print_connection(&side_nb);
+					setup_conn(&nb_src, side_nb.dst);
+				}
 				if (is_nb_of_src(&side_nb, q, &nb_src, map) == 1)
 				{
-					printf("NB IS CONNECTED TO SRC\n");
+					if (DEBUG == 1)
+						printf("NB IS CONNECTED TO SRC\n");
 					prev = q->dst->neighbours[i];
 					res = remove_if_un(q, &nb_src, &side_nb, map);
 					if (q->dst->neighbours[i] != prev)
@@ -216,11 +229,15 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 						*changed = res;
 				}
 				else
-					printf("NOT NB OF SRC\n");
+				{
+					if (DEBUG == 1)
+						printf("NOT NB OF SRC\n");
+				}
 			}
 			if (update_src_path(q, map, changed, &i) == 0)
 			{
-				printf("Path we tried to update became loop or can't go anywhere\n");
+				if (DEBUG == 1)
+					printf("Path we tried to update became loop or can't go anywhere\n");
 				return (1);
 			}
 		}
