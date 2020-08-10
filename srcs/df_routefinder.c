@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 14:37:55 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/07 16:32:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,22 +39,16 @@ ssize_t			find_routes_df(t_best *state, t_map *map)
 	t_shortest_dist			shortwrap;
 
 	wrap.candidate_best = state;
-	if (map->solution.combi == NULL)
-		if (setup_best(&map->solution, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
 	if (setup_best(wrap.candidate_best, map) == EXIT_FAILURE ||
-		bite_alloc(&wrap.visited, map) == EXIT_FAILURE ||
-		bite_alloc(&wrap.start_nb_visited, map) == EXIT_FAILURE)
+		bite_alloc(&wrap.visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	shortwrap.nb_visited = NULL;
+	shortwrap.start = map->start;
 	if (find_shortest_dist_option(&wrap.shortest_dist_to_end, map->start,
-		wrap.visited, &shortwrap) == EXIT_FAILURE)
+		NULL, &shortwrap) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	while (wrap.shortest_dist_to_end != NULL)
 	{
-		if (bite_add_room_to_bitfield(wrap.start_nb_visited,
-			wrap.shortest_dist_to_end->bitroom, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);;//to make sure a start nb that has no valid route to end is not repeatedly visited
 		if (init_find_route_df(&wrap, wrap.shortest_dist_to_end, map) ==
 			EXIT_FAILURE)
 			return (EXIT_FAILURE);
