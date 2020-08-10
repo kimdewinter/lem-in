@@ -88,3 +88,20 @@ void		print_best(const t_best *best)
 		i++;
 	}
 }
+
+void		print_rooms(const t_table *rooms)
+{
+	size_t	i;
+
+	printf("\nPrinting rooms:\n");
+	i = 0;
+	while (i < rooms->size)
+	{
+		if ( rooms->entries[i] != NULL)
+		{
+			printf("Room \"%s\":", ((t_room *)rooms->entries[i]->val)->name);
+			printf("dist-to-end = %ld\n", ((t_room *)rooms->entries[i]->val)->dist_to_end);
+		}
+		i++;
+	}
+}

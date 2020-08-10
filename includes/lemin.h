@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 17:08:24 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/10 14:16:38 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ typedef struct			s_shortest_dist
 	t_room				**nbs;
 	t_room				*start;
 	size_t				nbs_len;
-	size_t				*nb_visited;
+	ssize_t				*nb_visited;
 	ssize_t				nb_vis_i_of_ret;
 	size_t				options_left;
 }						t_shortest_dist;
@@ -360,4 +360,6 @@ void					print_connection_queue(t_connection **q);
 void					print_map(t_map *map);
 void					print_connection(t_connection *tmp);
 void					print_best(const t_best *best);
+void					print_rooms(const t_table *rooms);
+
 #endif

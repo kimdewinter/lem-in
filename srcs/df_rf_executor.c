@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 17:30:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/10 16:51:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ ssize_t				find_shortest_dist_option(t_room **ret_ptr,
 	{
 		shortwrap->nbs = root->neighbours;
 		shortwrap->nbs_len = root->neighbours_len;
-		shortwrap->nb_visited = (size_t *)malloc(sizeof(size_t) *
+		shortwrap->nb_visited = (ssize_t *)malloc(sizeof(ssize_t) *
 			shortwrap->nbs_len);
 		if (shortwrap->nb_visited == NULL)
 			return (handle_err_route_finder(1, "find_shortest_dist_option\n"));
@@ -183,7 +183,7 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 	if (new->route)
 		free(new->route);
 	free(new);
-	return (EXIT_SUCCESS);
+	return (shortest == NULL ? EXIT_SUCCESS : EXIT_ROUTEFOUND);
 }
 
 ssize_t			init_find_route_df(t_find_routes_df_wrap *wrap,
