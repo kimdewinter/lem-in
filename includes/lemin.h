@@ -6,11 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-<<<<<<< HEAD
-/*   Updated: 2020/08/10 14:16:38 by kim           ########   odam.nl         */
-=======
-/*   Updated: 2020/08/10 14:51:05 by lravier       ########   odam.nl         */
->>>>>>> d5cf1995dfebb41451b202cdfb6f8eebe7f1c0eb
+/*   Updated: 2020/08/10 17:08:40 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +24,7 @@
 # define LVL_GRPH_S2E 1
 # define EXIT_ROUTEFOUND 2
 # define EXIT_NO_BLOCKS 2
-# define DEBUG 1
+# define DEBUG 0
 
 # include "../lib/lib.h"
 # include <limits.h>
@@ -325,8 +321,8 @@ ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t					find_shortest_dist_option(t_room **ret_ptr,
-												const t_room *root,
+ssize_t				find_shortest_dist_option(t_room **ret_ptr,
+												t_room *root,
 												BITFIELD_TYPE *visited,
 												t_shortest_dist *shortwrap);
 
