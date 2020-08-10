@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 14:19:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/09 11:56:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,12 @@ ssize_t			setup_room(t_room **dest,
 		room->spe = 0;
 		room->sps = 0;
 		room->bitroom = NULL;
+		room->removed_conns = NULL;
 		room->name = (char *)name;
 		room->xpos = xpos;
 		room->ypos = ypos;
 		room->neighbours_len = 0;
+		room->conns_to = 0;
 		room->neighbours = NULL;
 		room->ant = 0;
 		room->dist_to_end = -1;
@@ -94,14 +96,20 @@ ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 		{
 			room->neighbours[room->neighbours_len - 1] = neighbour;
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
+			{
+				neighbour->conns_to++;
 				return (EXIT_SUCCESS);
+			}
 		}//handles when room->neighbours t_room** array is yet to be made
 		else if (room->neighbours_len > 0 && room->neighbours != NULL &&
 					add_neighbour_grow(room) == EXIT_SUCCESS)
 		{
 			room->neighbours[room->neighbours_len - 1] = neighbour;
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
+			{
+				neighbour->conns_to++;
 				return (EXIT_SUCCESS);
+			}
 		}//handles when room->neighbours t_room** array needs to grow by 1
 	}
 	return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 13:15:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/09 11:58:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ static size_t	setup_bitrooms(t_map *map)
 		if (table->entries[i] != NULL)
 		{
 			tmp = (t_room *)table->entries[i]->val;
-			if (bite_room_new(tmp, map) == EXIT_FAILURE)
+			if (bite_room_new(tmp, map) == EXIT_FAILURE
+			|| bite_alloc(&tmp->removed_conns, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
 		i++;

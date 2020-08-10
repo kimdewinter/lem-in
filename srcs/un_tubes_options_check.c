@@ -12,13 +12,16 @@
 
 #include "../includes/lemin.h"
 
-int		alt_opts_side(t_connection *side_nb, t_connection *src_side)
+int		alt_opts_side(t_connection *side_nb, t_connection *src_side, t_map *map)
 {
 	size_t			i;
 	size_t			len;
 	t_connection	side_dst;
 
 	i = 0;
+	(void)map;
+	if (DEBUG == 1)
+		printf("Alt options\n");
 	setup_conn(&side_dst, src_side->dst);
 	len = side_dst.src->neighbours_len;
 	while (i < len)
@@ -30,17 +33,22 @@ int		alt_opts_side(t_connection *side_nb, t_connection *src_side)
 		{
 			set_conn(&side_dst, side_dst.src->neighbours[i]);
 			if (side_dst.dst->is_junction == 0)
-				find_real_nb(&side_dst);
+				find_real_nb(&side_dst, map);
 			/* CHECK THIS */
 			if (side_dst.dst == NULL)
-				printf("Nowhere to go\n");
+			{
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
+			}
 			if (side_dst.dst == side_dst.src)
-				printf("Loop\n");
-			/**/
+			{
+				if (DEBUG == 1)
+					printf("Loop\n");
+			}
 			if (side_dst.dst != side_nb->dst
 				&& side_dst.dst != src_side->src
-				&& is_neighbour_of_other(side_dst.dst, side_nb->dst) == 0)
-				return (1);
+				&& is_nb_of_other(side_dst.dst, side_nb->dst, map) == 0)
+					return (1);
 		}
 		i++;
 	}
@@ -48,13 +56,15 @@ int		alt_opts_side(t_connection *side_nb, t_connection *src_side)
 }
 
 int		alt_opts_nb(t_connection *side_nb, t_connection *src_side,
-t_connection *nb_src)
+t_connection *nb_src, t_map *map)
 {
 	size_t			i;
 	size_t			len;
 	t_connection	nb_dst;
 
 	i = 0;
+		(void)map;
+
 	setup_conn(&nb_dst, nb_src->src);
 	len = nb_dst.src->neighbours_len;
 	while (i < len)
@@ -66,16 +76,28 @@ t_connection *nb_src)
 		{
 			set_conn(&nb_dst, nb_dst.src->neighbours[i]);
 			if (nb_dst.dst->is_junction == 0)
-				find_real_nb(&nb_dst);
+				find_real_nb(&nb_dst, map);
 			/* CHECK THIS NB CAN ALREADY GO TO SRC*/
 			if (nb_dst.dst == NULL)
-				printf("Nowhere to go\n");
+			{
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
+			}
 			if (nb_dst.dst == nb_dst.src)
-				printf("Loop\n");
-			/**/
+			{
+				if (DEBUG == 1)
+					printf("Loop\n");
+			}
+			if (DEBUG == 1)
+			{
+				printf("Side nb\n");
+				print_connection(side_nb);
+				printf("nb dst\n");
+				print_connection(&nb_dst);
+			}
 			if (nb_dst.dst != side_nb->src
-				&& nb_dst.dst != nb_src->dst 
-				&& is_neighbour_of_other(nb_dst.dst, side_nb->src) == 0)
+				&& nb_dst.dst != nb_src->dst
+				&& is_nb_of_other(nb_dst.dst, side_nb->src, map) == 0)
 					return (1);
 		}
 		i++;

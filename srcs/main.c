@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 15:38:17 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/10 14:20:23 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int				main(void)
 		// printf("After read input\n") &&
 		parse_input(&map, &input) == EXIT_SUCCESS &&
 		// printf("After parse input\n") &&
-		// sanitize_input(&map) == EXIT_SUCCESS
+		sanitize_input(&map) == EXIT_SUCCESS &&
 		find_routes(&map) == EXIT_SUCCESS)
 	{
 		delete_input(&input);
