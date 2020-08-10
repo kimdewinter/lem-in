@@ -18,7 +18,8 @@ t_connection *nb_src, t_map *map)
 	size_t			i;
 
 	i = 0;
-	printf("NB OF SRC CHECK\n");
+	if (DEBUG == 1)
+		printf("NB OF SRC CHECK\n");
 	if (room_in_bitfield(src_side->src, nb_src->src->removed_conns) == 1)
 	{
 		if (DEBUG == 1)

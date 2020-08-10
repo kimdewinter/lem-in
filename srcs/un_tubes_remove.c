@@ -29,14 +29,18 @@ t_connection *src_side, t_connection *nb_src)
 
 static void	compr_side_dst(t_diamond *curr, t_map *map)
 {
-	printf("Compare side and nb dst\n");
+	if (DEBUG == 1)
+		printf("Compare side and nb dst\n");
 	set_conn(&(curr->nb_dst), curr->curr_nb_nb);
 	if (curr->nb_dst.dst->is_junction == 0)
 		find_real_nb(&curr->nb_dst, map);
-	printf("nb to dst\n");
-	print_connection(&curr->nb_dst);
-	printf("side to dst\n");
-	print_connection(&curr->side_dst);
+	if (DEBUG == 1)
+	{
+		printf("nb to dst\n");
+		print_connection(&curr->nb_dst);
+		printf("side to dst\n");
+		print_connection(&curr->side_dst);
+	}
 	if (curr->side_dst.dst == curr->nb_dst.dst)
 	{
 		curr->common_dst_found = 1;
@@ -98,10 +102,14 @@ t_connection *src_side, t_connection *nb_src, t_map *map)
 
 	i = 0;
 	changed = 0;
-	printf("\n\nRM UN CONN\n");
+	if (DEBUG == 1)
+		printf("\n\nRM UN CONN\n");
 	setup_diamond(&curr, side_nb, src_side, nb_src);
-	print_connection(&curr.side_dst);
-	print_connection(&curr.nb_dst);
+	if (DEBUG == 1)
+	{
+		print_connection(&curr.side_dst);
+		print_connection(&curr.nb_dst);
+	}
 	while (i < side_nb->src->neighbours_len)
 	{
 		setup_conn(&curr.side_dst, side_nb->src);
@@ -109,26 +117,31 @@ t_connection *src_side, t_connection *nb_src, t_map *map)
 		&& check_dst_src(src_side, side_nb, side_nb->src->neighbours[i])
 		== 0)
 		{
-			printf("Valid nb found\n");
+			if (DEBUG == 1)
+				printf("Valid nb found\n");
 			curr.curr_nb_side = side_nb->src->neighbours[i];
 			compr_nb_side_dst(&curr, map);
 		}
 		i++;
 	}
-	printf("After looking for dsts\n");
-	printf("Connection nb to dst\n");
-	print_connection(&curr.nb_dst);
-	printf("Connection side to dst\n");
-	print_connection(&curr.side_dst);
-	printf("side improved by nb %lu\nnb improved by side %lu\n",
-	curr.side_improved_by_nb, curr.nb_improved_by_side);
+	if (DEBUG == 1)
+	{
+		printf("After looking for dsts\n");
+		printf("Connection nb to dst\n");
+		print_connection(&curr.nb_dst);
+		printf("Connection side to dst\n");
+		print_connection(&curr.side_dst);
+		printf("side improved by nb %lu\nnb improved by side %lu\n",
+		curr.side_improved_by_nb, curr.nb_improved_by_side);
+	}
 	if (curr.common_dst_found == 1)
 	{
 		if (curr.nb_improved_by_side == 0
 		&& (curr.src_side->dst != map->end && curr.src_side->dst != map->start)
 		&& has_conn_to(side_nb->dst, side_nb->dst_nb) == 1)
 		{
-			printf("Going through side is not better\n");
+			if (DEBUG == 1)
+				printf("Going through side is not better\n");
 			changed = 1;
 			del_tube(side_nb->dst, side_nb->dst_nb, map);
 			if (side_nb->dist != 1)
@@ -139,7 +152,8 @@ t_connection *src_side, t_connection *nb_src, t_map *map)
 		&& has_conn_to(side_nb->src, side_nb->src_nb) == 1)
 		{
 			changed = 1;
-			printf("Going through nb is not better\n");
+			if (DEBUG == 1)
+				printf("Going through nb is not better\n");
 			del_tube(side_nb->src, side_nb->src_nb, map);
 			if (side_nb->dist != 1)
 				del_tube(side_nb->src_nb, side_nb->src, map);
@@ -147,7 +161,8 @@ t_connection *src_side, t_connection *nb_src, t_map *map)
 	}
 	if (curr.common_dst_found == 0)
 	{
-		printf("No common dst\n");
+		if (DEBUG == 1)
+			printf("No common dst\n");
 	}
 	return (changed);
 }
@@ -188,17 +203,20 @@ int *changed)
 	j = 0;
 	tmp = 0;
 	/* WE MIGHT REMOVE Q PATH */
-	printf("REMOVE DUPL PATHS\n");
+	if (DEBUG == 1)
+		printf("REMOVE DUPL PATHS\n");
 	setup_conn(&curr, (*conn)->dst);
 	while (i < (*conn)->dst->neighbours_len)
 	{
 		setup_conn(&curr, (*conn)->dst);
-		print_connection(&curr);
+		if (DEBUG == 1)
+			print_connection(&curr);
 		if ((*conn)->dst->neighbours[i] != NULL
 		&& (*conn)->dst->neighbours[i] != (*conn)->dst_nb
 		&& (*conn)->dst->neighbours[i] != (*conn)->src_nb)
 		{
-			printf("Candidate rm dupl paths %s\n", (*conn)->dst->neighbours[i]->name);
+			if (DEBUG == 1)
+				printf("Candidate rm dupl paths %s\n", (*conn)->dst->neighbours[i]->name);
 			set_conn(&curr, (*conn)->dst->neighbours[i]);
 			// print_connection(&curr);
 			// printf("Before find real nb\n");
@@ -206,17 +224,25 @@ int *changed)
 				find_real_nb(&curr, map);
 			// printf("After find real nb\n");
 			if (curr.dst)
-				printf("real nb %s\n", curr.dst->name);
+			{
+				if (DEBUG == 1)
+					printf("real nb %s\n", curr.dst->name);
+			}
 			if (curr.dst == NULL)
-				printf("Nowhere to go\n");
+			{
+				if (DEBUG == 1)
+					printf("Nowhere to go\n");
+			}
 			else if (curr.dst == curr.src)
 			{
-				printf("Loop\n");
+				if (DEBUG == 1)
+					printf("Loop\n");
 				handle_loop(&curr, map, changed, &tmp);
 			}
 			else
 			{
-				printf("Look for others\n");
+				if (DEBUG == 1)
+					printf("Look for others\n");
 				j = 0;
 				while (j < (*conn)->dst->neighbours_len && j != i)
 				{
@@ -231,21 +257,29 @@ int *changed)
 							find_real_nb(&other, map);
 						// printf("After find real nb\n");
 						if (other.dst == NULL)
-							printf("Nowhere to go\n");
+						{
+							if (DEBUG == 1)
+								printf("Nowhere to go\n");
+						}
 						else if (other.dst == other.src)
 						{
-							printf("Loop\n");
+							if (DEBUG == 1)
+								printf("Loop\n");
 							handle_loop(&other, map, changed, &tmp);
 						}
 						else if (curr.dst == other.dst)
 						{
-							printf("Curr\n");
-							print_connection(&curr);
-							printf("Other\n");
-							print_connection(&other);
+							if (DEBUG == 1)
+							{
+								printf("Curr\n");
+								print_connection(&curr);
+								printf("Other\n");
+								print_connection(&other);
+							}
 							if (curr.dist < other.dist)
 							{
-								printf("curr < other\n");
+								if (DEBUG == 1)
+									printf("curr < other\n");
 								*changed = 1;
 								del_tube(other.src, other.src_nb, map);
 								del_tube(other.src_nb, other.src, map);
@@ -255,7 +289,8 @@ int *changed)
 							}
 							else
 							{
-								printf("curr >= other\n");
+								if (DEBUG == 1)
+									printf("curr >= other\n");
 								*changed = 1;
 								del_tube(curr.src, curr.src_nb, map);
 								del_tube(curr.src_nb, curr.src, map);

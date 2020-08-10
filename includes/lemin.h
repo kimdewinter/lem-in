@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/10 14:51:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/10 18:01:57 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define LVL_GRPH_S2E 1
 # define EXIT_ROUTEFOUND 2
 # define EXIT_NO_BLOCKS 2
-# define DEBUG 1
+# define DEBUG 0
 
 # include "../lib/lib.h"
 # include <limits.h>

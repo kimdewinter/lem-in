@@ -20,12 +20,16 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 	int		changed;
 
 	changed = 0;
-	printf("\n\nREMOVE IF UN\n");
-	printf("SRC %s SIDE %s NB %s\n", src_side->src->name, src_side->dst->name,
-	side_nb->dst->name);
+	if (DEBUG == 1)
+	{
+		printf("\n\nREMOVE IF UN\n");
+		printf("SRC %s SIDE %s NB %s\n", src_side->src->name, src_side->dst->name,
+		side_nb->dst->name);
+	}
 	add_opt_nb_side = alt_opts_nb(side_nb, src_side, nb_src, map);
 	add_opt_side_nb = alt_opts_side(side_nb, src_side, map);
-	printf("Add opt nb side %d Add opt side nb %d\n", add_opt_nb_side, add_opt_side_nb);
+	if (DEBUG == 1)
+		printf("Add opt nb side %d Add opt side nb %d\n", add_opt_nb_side, add_opt_side_nb);
 	if (add_opt_nb_side == 0 && add_opt_side_nb == 0)
 	{
 		// if (shrt_conn_dsts_nb(src_side, nb_src, side_nb) == 0
@@ -42,15 +46,18 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 		// 	changed = 1;
 		// 	del_tube(side_nb->dst, side_nb->dst_nb, map);
 		// }
-		printf("Neither adds option to other\n");
+		if (DEBUG == 1)
+			printf("Neither adds option to other\n");
 		changed = rm_un_conn(side_nb, src_side, nb_src, map);
-		printf("\n\nchanged after rm un conn %d\n\n", changed);
+		if (DEBUG == 1)
+			printf("\n\nchanged after rm un conn %d\n\n", changed);
 	}
 	else if (add_opt_nb_side == 0 &&
 	(nb_src->src != map->end && nb_src->src != map->start))
 	{
 		//&& cause_for_removal_side_to_nb(src_side, side_nb, nb_src) == 1
-		printf("nb doesnt add option to side\n");
+		if (DEBUG == 1)
+			printf("nb doesnt add option to side\n");
 		if (shrt_conn_dsts_nb(src_side, nb_src, side_nb, map) == 0
 		&& has_conn_to(side_nb->src, side_nb->src_nb) == 1)
 		{
@@ -65,12 +72,16 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 	(side_nb->src != map->end && side_nb->src != map->start))
 	{
 		//&& cause_for_removal_nb_to_dst(src_side, side_nb, nb_src) == 1
-		printf("side doesnt add option to nb side %s\n", side_nb->src->name);
+		if (DEBUG == 1)
+			printf("side doesnt add option to nb side %s\n", side_nb->src->name);
 		if (shrt_conn_dsts_side(src_side, nb_src, side_nb, map) == 0
 		&& has_conn_to(side_nb->dst, side_nb->dst_nb) == 1)
 		{
-			printf("Not better to go through side\n");
-			print_connection(side_nb);
+			if (DEBUG == 1)
+			{
+				printf("Not better to go through side\n");
+				print_connection(side_nb);
+			}
 			changed = 1;
 			del_tube(side_nb->dst, side_nb->dst_nb, map);
 			/* MAKE SURE THIS IS OKAY!!*/
@@ -88,7 +99,8 @@ int *changed)
 	if (side_nb->dist < q->dist)
 	{
 		*changed = 1;
-		printf("DELETE Q PATH\n");
+		if (DEBUG == 1)
+			printf("DELETE Q PATH\n");
 		del_tube(q->dst, q->dst_nb, map);
 		del_tube(q->dst_nb, q->dst, map);
 		del_tube(q->src, q->src_nb, map);

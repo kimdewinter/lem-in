@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   df_rf_executor.c                                   :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 17:30:46 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/10 18:01:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 }
 
 ssize_t				find_shortest_dist_option(t_room **ret_ptr,
-												t_room *root,
+												const t_room *root,
 												BITFIELD_TYPE *visited,
 												t_shortest_dist *shortwrap)
 {
@@ -92,7 +92,7 @@ ssize_t				find_shortest_dist_option(t_room **ret_ptr,
 	{
 		shortwrap->nbs = root->neighbours;
 		shortwrap->nbs_len = root->neighbours_len;
-		shortwrap->nb_visited = (size_t *)malloc(sizeof(size_t) *
+		shortwrap->nb_visited = (ssize_t *)malloc(sizeof(ssize_t) *
 			shortwrap->nbs_len);
 		if (shortwrap->nb_visited == NULL)
 			return (handle_err_route_finder(1, "find_shortest_dist_option\n"));
