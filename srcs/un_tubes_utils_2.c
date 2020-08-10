@@ -32,6 +32,35 @@ t_connection		*new_connection(t_connection *item)
 	return (NULL);
 }
 
+int		is_junction(t_room *curr, t_map *map)
+{
+	/* ONE real way to go and ONE real way to get there */
+	if (curr == map->start || curr == map->end)
+		return (1);
+	if (curr->neighbours_len == 1 && curr->conns_to == 1)
+		return (0);
+	// if (curr->spe == 1)
+	// 	return (0);
+	// if (curr->sps == 1)
+	// 	return (0);
+	if (curr->neighbours_len == 2)
+	{
+		if (curr->conns_to == 1)
+		{
+			if (is_mutual_conn(curr, curr->neighbours[0]) == 1
+			|| is_mutual_conn(curr, curr->neighbours[1]) == 1)
+				return (0);
+		}
+		if (curr->conns_to == 2)
+		{
+			if (is_mutual_conn(curr, curr->neighbours[0]) == 1
+			&& is_mutual_conn(curr, curr->neighbours[1]) == 1)
+				return (0);
+		}
+	}
+	return (1);
+}
+
 int				del_tube(t_room *from, t_room *to, t_map *map)
 {
 	int		found;
@@ -42,11 +71,15 @@ int				del_tube(t_room *from, t_room *to, t_map *map)
 	i = 0;
 	found = 0;
 	ret = 0;
-	printf("From %s %lu to %s\n", from->name, from->neighbours_len, to->name);
+	// printf("From %s %lu to %s\n", from->name, from->neighbours_len, to->name);
+	// if (strcmp(from->name, "2") == 0
+	// && strcmp(to->name, "3") == 0)
+	// 	exit (0);
 	while (i < from->neighbours_len && found == 0)
 	{
 		if (from->neighbours[i] == to)
 		{
+			add_to_bitfield(to, from->removed_conns);
 			printf("Remove connection to %s from %s\n", from->neighbours[i]->name, from->name);
 			if (from->neighbours_len == 1)
 			{
@@ -64,33 +97,54 @@ int				del_tube(t_room *from, t_room *to, t_map *map)
 		}
 		i++;
 	}
-	printf("Found %d\n",found);
+	// printf("Found %d\n",found);
 	if (found == 1)
 	{
+		// printf("conns to %lu\nto nb len %lu\njunction %d\n", to->conns_to,
+		// to->neighbours_len, to->is_junction);
+		to->conns_to--;
 		from->neighbours_len--;
-		if (from->neighbours_len == 2 && (from != map->start && from != map->end))
+		if (is_junction(to, map) == 0)
+			to->is_junction = 0;
+		if (is_junction(from, map) == 0)
 			from->is_junction = 0;
+		printf("To %s is junction %d\n", to->name, to->is_junction);
+		printf("From %s is junction %d\n", from->name, from->is_junction);
+		// for (size_t i = 0; i < to->neighbours_len; i++)
+		// 	printf("%s ", to->neighbours[i]->name);
+		if ((strcmp("17", from->name) == 0) && from->is_junction == 0)
+			exit (0);
+		if ((strcmp("17", to->name) == 0) && to->is_junction == 0)
+			exit (0);
+		// if (from->neighbours_len == 2 && (from != map->start && from != map->end))
+		// 	from->is_junction = 0;
 	}
+	printf("After del\n");
 	return (ret);
 }
 
 static void		find_next(t_connection *tmp, t_room **curr, t_room **nb,
-int *found)
+t_map *map, int *found)
 {
+	(void)map;
+	// && !((*curr)->sps == 1 && *nb != map->start)
+	// && !((*curr)->spe == 1 && *nb != map->end)
 	if (*nb != tmp->dst_nb
 	&& *nb != tmp->dst)
 	{
 		if ((*nb)->is_junction == 0)
 		{
+			printf("Found %s\n", (*nb)->name);
 			*found = 1;
 			tmp->dist++;
 		}
+		printf("Found %s %d\n", (*nb)->name, (*nb)->is_junction);
 		tmp->dst_nb = *curr;
 		*curr = *nb;
 	}
 }
 
-void		find_real_nb(t_connection *tmp)
+void		find_real_nb(t_connection *tmp, t_map *map)
 {
 	size_t	i;
 	t_room	*nb;
@@ -108,11 +162,10 @@ void		find_real_nb(t_connection *tmp)
 		{
 			if (nb->neighbours[i] != NULL)
 			{
-				find_next(tmp, &nb, &(nb->neighbours[i]), &found);
-				if (found == 0 && nb->is_junction == 1)
-				{
+				find_next(tmp, &nb, &(nb->neighbours[i]), map, &found);
+				printf("found %d\n", found);
+				if ((found == 0 && nb->is_junction == 1) || found == 1)
 					break;
-				}
 			}
 			i++;
 		}
@@ -122,5 +175,8 @@ void		find_real_nb(t_connection *tmp)
 			return ;
 		}
 	}
+	if (nb)
+		printf("Last found %s\n", nb->name);
+	printf("Done\n");
 	tmp->dst = nb;
 }

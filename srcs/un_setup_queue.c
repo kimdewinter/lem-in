@@ -24,16 +24,24 @@ t_map *map, size_t *i)
 		{
 			if (iter->dist > tmp->dist)
 			{
+				printf("dst %s dst nb %s\n", iter->dst->name, iter->dst_nb->name);
+				printf("src %s src nb %s\n", iter->src->name, iter->src_nb->name);
 				del_tube(iter->dst, iter->dst_nb, map);
+				del_tube(iter->dst_nb, iter->dst, map);
 				del_tube(iter->src, iter->src_nb, map);
+				del_tube(iter->src_nb, iter->src, map);
 				remove_q_item_un(qr, iter);
 				tmp->add = 1;
 				return (1);
 			}
 			else
 			{
+				printf("src %s src nb %s\n", tmp->src->name, tmp->src_nb->name);
+				printf("dst %s dst nb %s\n", tmp->dst->name, tmp->dst_nb->name);
 				*i -= del_tube(tmp->src, tmp->src_nb, map);
+				del_tube(tmp->src_nb, tmp->src, map);
 				del_tube(tmp->dst, tmp->dst_nb, map);
+				del_tube(tmp->dst_nb, tmp->dst, map);
 				tmp->add = 0;
 				return (1);
 			}
@@ -63,20 +71,23 @@ int	*changed)
 			tmp.add = 1;
 			set_conn(&tmp, start->neighbours[i]);
 			if (start->neighbours[i]->is_junction == 0)
-				find_real_nb(&tmp);
+				find_real_nb(&tmp, map);
 			if (tmp.dst == start)
 			{
 				printf("Loop\n");
 				print_connection(&tmp);
 				*changed = 1;
+				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
 				del_tube(start, tmp.dst_nb, map);
+				del_tube(tmp.dst_nb, start, map);
 				// exit (0);
 			}
 			else if (tmp.dst == NULL)
 			{
 				printf("Nowhere to go\n");
 				*changed = 1;
+				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
 			}
 			else
@@ -84,7 +95,7 @@ int	*changed)
 				if (room_in_bitfield(tmp.dst, added_to_queue) == 1
 				&& tmp.dst != map->end)
 				{
-					// printf("Already a dst %s\n", tmp.dst->name);
+					printf("Already a dst %s\n", tmp.dst->name);
 					*changed += solve_queue_conflict_start(qr, &tmp, map, &i);
 					if (*changed == 2)
 						*changed = 1;

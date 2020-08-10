@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 14:46:05 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/10 13:36:09 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef	struct			s_connection
 
 typedef	struct 			s_diamond
 {
+	int					common_dst_found;
 	size_t				nb_improved_by_side;
 	size_t				side_improved_by_nb;
 	struct s_connection	*src_side;
@@ -119,11 +120,13 @@ typedef struct			s_room
 	int					sps;
 	int					spe;
 	int					is_junction;
+	BITFIELD_TYPE		*removed_conns;
 	ssize_t				xpos;
 	ssize_t				ypos;
 	size_t				ant;
 	struct s_room		**neighbours;
 	size_t				neighbours_len;
+	size_t				conns_to;
 	size_t				room_i;
 	BITFIELD_TYPE		*bitroom;
 	ssize_t				dist_to_end;
@@ -211,6 +214,7 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** UNNECESSARY TUBES REMOVE
 */
+int		is_mutual_conn(t_room *curr, t_room *nb);
 int						rm_un_conn(t_connection *side_nb,
 t_connection *src_side, t_connection *nb_src, t_map *map);
 ssize_t					remove_unnecessary_tubes(t_map *map, int *changed);
@@ -229,29 +233,36 @@ ssize_t					update_queue_un(t_conn_wrap *qr, t_map *map,int *changed);
 /*
 ** UNNECESSARY TUBES OPTION CHECKS
 */
+int		is_junction(t_room *curr, t_map *map);
 int						alt_opts_nb(t_connection *side_nb,
 												t_connection *src_side,
-												t_connection *nb_src);
+												t_connection *nb_src,
+												t_map *map);
 int						alt_opts_side(t_connection *side_nb,
-												t_connection *src_side);
+												t_connection *src_side,
+												t_map *map);
 
 /*
 ** UNNECESSARY TUBES NB CHECKS
 */
 int						is_nb_of_src(t_connection *side_nb,
 												t_connection *src_side,
-												t_connection *nb_src);
-int						is_neighbour_of_other(t_room *dst,
-												t_room *curr);
+												t_connection *nb_src,
+												t_map *map);
+int						is_nb_of_other(t_room *dst,
+												t_room *curr,
+												t_map *map);
 /*
 ** UNNECESSARY TUBES SHORT CHECKS
 */
 int						shrt_conn_dsts_side(t_connection *src_side,
 													t_connection *nb_src,
-													t_connection *side_nb);
+													t_connection *side_nb,
+													t_map *map);
 int						shrt_conn_dsts_nb(t_connection *src_side,
 													t_connection *nb_src,
-													t_connection *side_nb);
+													t_connection *side_nb,
+													t_map *map);
 
 /*
 ** UNNECESSARY TUBES DELETE
@@ -269,7 +280,7 @@ int						check_dst_src(t_connection *dst, t_connection *src,
 int		check_src(t_connection *conn, t_room *curr);
 int		check_dest(t_connection *conn, t_room *curr);
 void	setup_conn(t_connection *conn, t_room *src);
-void				find_real_nb(t_connection *tmp);
+void				find_real_nb(t_connection *tmp, t_map *map);
 int				del_tube(t_room *from, t_room *to, t_map *map);
 t_connection		*new_connection(t_connection *item);
 int					has_conn_to(t_room *curr, t_room *nb);
@@ -281,6 +292,7 @@ void			remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
+ssize_t					remove_blockage(t_best *state, t_map *map);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
 													const size_t route_len,
@@ -313,6 +325,9 @@ ssize_t				find_shortest_dist_option(t_room **ret_ptr,
 /*
 ** BITFIELD-TOOLKIT
 */
+void					merge_bitfield(BITFIELD_TYPE *dst,
+										BITFIELD_TYPE *src,
+										t_map *map);
 void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);

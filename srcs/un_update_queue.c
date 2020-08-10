@@ -31,7 +31,9 @@ t_map *map, size_t added, int *changed)
 			{
 				*changed = 1;
 				del_tube(iter->dst, iter->dst_nb, map);
+				del_tube(iter->dst_nb, iter->dst, map);
 				del_tube(iter->src, iter->src_nb, map);
+				del_tube(iter->src_nb, iter->src, map);
 				remove_q_item_un(qr, iter);
 				tmp->add = 1;
 				return (0);
@@ -40,7 +42,9 @@ t_map *map, size_t added, int *changed)
 			{
 				*changed = 1;
 				del_tube(tmp->dst, tmp->dst_nb, map);
+				del_tube(tmp->dst_nb, tmp->dst, map);
 				del_tube(tmp->src, tmp->src_nb, map);
+				del_tube(tmp->src_nb, tmp->src, map);
 				tmp->add = 0;
 				return (1);
 			}
@@ -61,10 +65,10 @@ t_map *map, int *changed)
 
 	i = 0;
 	added = 0;
+	printf("\n\nADJUST QUEUE\n");
+	printf("START %s\n", start->name);
 	if (start == map->end)
 		return (EXIT_SUCCESS);
-	// printf("\n\nADJUST QUEUE\n");
-	// printf("START %s\n", start->name);
 	if (bite_alloc(&added_to_queue, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	setup_conn(&tmp, start);
@@ -80,7 +84,7 @@ t_map *map, int *changed)
 			{
 				// printf("Dst != junction\n");
 				// print_connection(&tmp);
-				find_real_nb(&tmp);
+				find_real_nb(&tmp, map);
 			}
 			// if (tmp.dst)
 			// 	printf("Real nb: %s\n", tmp.dst->name);
@@ -88,13 +92,16 @@ t_map *map, int *changed)
 			{
 				printf("Loop\n");
 				*changed = 1;
+				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
 				del_tube(start, tmp.dst_nb, map);
+				del_tube(tmp.dst_nb, start, map);
 			}
 			else if (tmp.dst == NULL)
 			{
 				printf("Nowhere to go\n");
 				*changed = 1;
+				del_tube(start->neighbours[i], start, map);
 				i -= del_tube(start, start->neighbours[i], map);
 			}
 			else if (room_in_bitfield(tmp.dst, qr->visited) == 0)
