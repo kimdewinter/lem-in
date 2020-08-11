@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/10 18:01:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 13:16:22 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 }
 
 ssize_t				find_shortest_dist_option(t_room **ret_ptr,
-												const t_room *root,
+												t_room *root,
 												BITFIELD_TYPE *visited,
 												t_shortest_dist *shortwrap)
 {
@@ -183,7 +183,7 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 	if (new->route)
 		free(new->route);
 	free(new);
-	return (EXIT_SUCCESS);
+	return (shortest == NULL ? EXIT_SUCCESS : EXIT_ROUTEFOUND);
 }
 
 ssize_t			init_find_route_df(t_find_routes_df_wrap *wrap,
