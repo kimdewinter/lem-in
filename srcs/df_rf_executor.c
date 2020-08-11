@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 13:16:22 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 14:03:26 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,19 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 		EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_ROUTEFOUND);//and there was much rejoicing!
+}
+
+static void			clean_shortwrap(t_shortest_dist *shortwrap)
+{
+	shortwrap->nbs = NULL;
+	shortwrap->nbs_len = 0;
+	if (shortwrap->nb_visited != NULL)
+	{
+		free(shortwrap->nb_visited);
+		shortwrap->nb_visited = NULL;
+	}
+	shortwrap->options_left = 0;
+	shortwrap->nb_vis_i_of_ret = -1;
 }
 
 ssize_t				find_shortest_dist_option(t_room **ret_ptr,
@@ -163,7 +176,10 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 			return (commit_route(wrap, new, &shortwrap, map));
 		}
 		if (shortwrap.options_left == 1)//only one way to go
+		{
 			attach_room(new, shortest, map);
+			clean_shortwrap(&shortwrap);
+		}
 		else//gotta branch off
 		{
 			retval = cont_find_route_df(wrap, new, shortest, map);
