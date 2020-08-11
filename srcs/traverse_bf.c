@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/04 14:13:43 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/11 15:19:03 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ static ssize_t	add_nbs_to_q(t_qwrap *queue,
 		if ((call_code == LVL_GRPH_E2S &&
 			room->neighbours[i]->dist_to_end == -1) ||
 			(call_code == LVL_GRPH_S2E &&
-			room->neighbours[i]->dist_to_start == -1))
+			room->neighbours[i]->dist_to_start == -1 &&
+			room->neighbours[i]->dist_to_end != -1))
 		{
 			add_nb_to_q(queue, room->neighbours[i]);
 			if (queue->tail == NULL || queue->tail->room != room->neighbours[i])
@@ -59,12 +60,16 @@ static ssize_t	add_nbs_to_q(t_qwrap *queue,
 }
 
 static ssize_t		exec_traverse_bf(t_qwrap *queue,
-										const size_t call_code)
+										const size_t call_code,
+										const t_map *map)
 {
 	while (queue->head != NULL)
 	{
-		if (add_nbs_to_q(queue, queue->head->room, call_code) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if (!(queue->head->room == map->start && call_code == LVL_GRPH_E2S))
+		{
+			if (add_nbs_to_q(queue, queue->head->room, call_code) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 		if (queue->head->next == NULL)//if true, this was the last node
 		{
 			free(queue->head);
@@ -83,7 +88,8 @@ static ssize_t		exec_traverse_bf(t_qwrap *queue,
 }
 
 ssize_t				traverse_bf(t_room *room_to_begin_from,
-								const size_t call_code)
+								const size_t call_code,
+								const t_map *map)
 {
 	t_qwrap	queue;
 
@@ -97,7 +103,7 @@ ssize_t				traverse_bf(t_room *room_to_begin_from,
 		room_to_begin_from->dist_to_start = 0;
 	if (add_nbs_to_q(&queue, room_to_begin_from, call_code) == EXIT_FAILURE)//put neighbours of start/end in queue
 		return (EXIT_FAILURE);
-	if (exec_traverse_bf(&queue, call_code) == EXIT_FAILURE)
+	if (exec_traverse_bf(&queue, call_code, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

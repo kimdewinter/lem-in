@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 13:14:00 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 15:06:19 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,12 +325,13 @@ ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
 											t_room *begin,
 											const t_map *map);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
-									const size_t call_code);
+									const size_t call_code,
+									const t_map *map);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t				find_shortest_dist_option(t_room **ret_ptr,
-												t_room *root,
-												BITFIELD_TYPE *visited,
-												t_shortest_dist *shortwrap);
+ssize_t					find_shortest_dist_option(t_room **ret_ptr,
+													t_room *root,
+													BITFIELD_TYPE *visited,
+													t_shortest_dist *shortwrap);
 
 /*
 ** BITFIELD-TOOLKIT
