@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/25 15:44:43 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/11 15:18:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/04 15:37:21 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static long double	calc_paths_avg(size_t num_paths, const t_best *routes)
 	total = 0.0;
 	while (i < num_paths)
 	{
-		total += (long double)routes->combi[i]->used;
+		total += (long double)routes->combi[i]->len;
 		i++;
 	}
 	return (total / (long double)num_paths);
@@ -63,9 +63,9 @@ static size_t		calc_rounds(long double *rest,
 	i = 0;
 	while (i < combi->used)
 	{
-		path_diff = (long double)combi->combi[i]->used - avg_paths;
+		path_diff = (long double)combi->combi[i]->len - avg_paths;
 		ants = avg_ants - path_diff;
-		rounds = (long double)combi->combi[i]->used + ants - 1.0;
+		rounds = (long double)combi->combi[i]->len + ants - 1.0;
 		*rest += (rounds - (size_t)rounds);
 		i++;
 	}
@@ -81,5 +81,6 @@ size_t				calc_cost(size_t ants, const t_best *routes)
 	rest = 0.0;
 	avg_ants = calc_ants_avg(ants, routes->used);
 	avg_paths = calc_paths_avg(routes->used, routes);
-	return (calc_rounds(&rest, avg_ants, avg_paths, routes));
+	size_t cost = calc_rounds(&rest, avg_ants, avg_paths, routes);
+	return (cost);
 }

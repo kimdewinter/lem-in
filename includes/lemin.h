@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 16:36:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 16:43:03 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,7 +302,6 @@ void			remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
-void					compare_state_best(t_map *map, t_best *state);
 ssize_t					remove_blockage(t_best *state, t_map *map);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
@@ -326,12 +325,13 @@ ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
 											t_room *begin,
 											const t_map *map);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
-									const size_t call_code);
+									const size_t call_code,
+									const t_map *map);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t				find_shortest_dist_option(t_room **ret_ptr,
-												t_room *root,
-												BITFIELD_TYPE *visited,
-												t_shortest_dist *shortwrap);
+ssize_t					find_shortest_dist_option(t_room **ret_ptr,
+													t_room *root,
+													BITFIELD_TYPE *visited,
+													t_shortest_dist *shortwrap);
 
 /*
 ** BITFIELD-TOOLKIT
