@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/10 14:44:28 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 12:35:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,34 +81,44 @@ static void		remove_dead_end_from_nbs(t_room *dead, t_map *map)
 	size_t	i;
 	size_t	j;
 	t_room	*nb;
-	t_room	*tmp;
+	// t_room	*tmp;
 
 	i = 0;
 	(void)map;
 	if (DEBUG == 1)
-		printf("Remove dead ends from nbs\n");
+		printf("Remove dead ends from nbs dead %s\n", dead->name);
 	while (i < dead->neighbours_len)
 	{
 		if (dead->neighbours[i] != NULL)
 		{
 			j = 0;
 			nb = dead->neighbours[i];
+			if (DEBUG == 1)
+				printf("Nb %s\n", nb->name);
 			while (j < nb->neighbours_len)
 			{
+				if (DEBUG == 1)
+					printf("nbs nb %s\n", nb->neighbours[j]->name);
 				if (nb->neighbours[j] == dead)
 				{
-					if (has_conn_to(nb->neighbours[j], dead) == 1)
-						del_tube(nb->neighbours[j], dead, map);
-					if (nb->neighbours_len == 1)
-						nb->neighbours[j] = NULL;
-					else
-					{
-						tmp = nb->neighbours[nb->neighbours_len - 1];
-						nb->neighbours[nb->neighbours_len - 1] = NULL;
-						nb->neighbours[j] = tmp;
-					}
-					nb->neighbours_len--;
-					j--;
+					if (DEBUG == 1)
+						printf("Is dead\n");
+					j -= handle_nowhere_to_go(nb, dead, map);
+					// if (has_conn_to(nb->neighbours[j], dead) == 1)
+					// {
+					// 	printf("Has conn to dead\n");
+					// 	del_tube(nb->neighbours[j], dead, map);
+					// }
+					// if (nb->neighbours_len == 1)
+					// 	nb->neighbours[j] = NULL;
+					// else
+					// {
+					// 	tmp = nb->neighbours[nb->neighbours_len - 1];
+					// 	nb->neighbours[nb->neighbours_len - 1] = NULL;
+					// 	nb->neighbours[j] = tmp;
+					// }
+					// nb->neighbours_len--;
+					// j--;
 					break;
 				}
 				j++;
@@ -288,8 +298,9 @@ ssize_t			sanitize_input(t_map *map)
 		print_map(map);
 		exit (0);
 	}
-	// if (map->start->neighbours_len == 0 ||
-	// map->end->neighbours_len == 0)
-	// 	return (EXIT_FAILURE);
+	print_map(map);
+	if (map->start->neighbours_len == 0 ||
+	map->end->neighbours_len == 0)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }

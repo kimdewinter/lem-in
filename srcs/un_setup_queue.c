@@ -91,8 +91,9 @@ int	*changed)
 				if (DEBUG == 1)
 					printf("Nowhere to go\n");
 				*changed = 1;
-				del_tube(start->neighbours[i], start, map);
-				i -= del_tube(start, start->neighbours[i], map);
+				i -= handle_nowhere_to_go(start, start->neighbours[i], map);
+				// del_tube(start->neighbours[i], start, map);
+				// i -= del_tube(start, start->neighbours[i], map);
 			}
 			else
 			{

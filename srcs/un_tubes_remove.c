@@ -44,23 +44,28 @@ static void	compr_side_dst(t_diamond *curr, t_map *map)
 	if (curr->side_dst.dst == curr->nb_dst.dst)
 	{
 		curr->common_dst_found = 1;
-		printf("\n\ntotal len side %lu\ntotal len nb %lu\nSide through nb %lu\nNb through side %lu\nside to dst %lu\nnb to dst %lu\n\n",
-		(curr->src_side->dist + curr->side_dst.dist), (curr->nb_src->dist + curr->nb_dst.dist),
-		(curr->src_side->dist + curr->nb_dst.dist), (curr->nb_src->dist + curr->side_dst.dist),
-		curr->side_dst.dist, curr->nb_dst.dist);
+		if (DEBUG == 1)
+		{
+			printf("\n\ntotal len side %lu\ntotal len nb %lu\nSide through nb %lu\nNb through side %lu\nside to dst %lu\nnb to dst %lu\n\n",
+			(curr->src_side->dist + curr->side_dst.dist), (curr->nb_src->dist + curr->nb_dst.dist),
+			(curr->src_side->dist + curr->nb_dst.dist), (curr->nb_src->dist + curr->side_dst.dist),
+			curr->side_dst.dist, curr->nb_dst.dist);
+		}
 		if ((curr->side_dst.dist + curr->side_nb->dist) < curr->nb_dst.dist)
 			curr->nb_improved_by_side++;
 		if ((curr->nb_dst.dist + curr->side_nb->dist) < curr->side_dst.dist)
 				curr->side_improved_by_nb++;
 	}
-	printf("nb improved by side: %lu\nside improved by nb: %lu\n", curr->nb_improved_by_side, curr->side_improved_by_nb);
+	if (DEBUG == 1)
+		printf("nb improved by side: %lu\nside improved by nb: %lu\n", curr->nb_improved_by_side, curr->side_improved_by_nb);
 }
 
 static void	compr_nb_side_dst(t_diamond *curr, t_map *map)
 {
 	size_t	j;
 
-	printf("Compare nb through side dst\n");
+	if (DEBUG == 1)
+		printf("Compare nb through side dst\n");
 	set_conn(&curr->side_dst, curr->curr_nb_side);
 	if (curr->side_dst.dst->is_junction == 0)
 		find_real_nb(&curr->side_dst, map);
@@ -197,22 +202,26 @@ int *changed)
 	t_connection	other;
 	size_t			i;
 	size_t			j;
-	size_t			tmp;
 
 	i = 0;
 	j = 0;
-	tmp = 0;
 	/* WE MIGHT REMOVE Q PATH */
 	if (DEBUG == 1)
+	{
 		printf("REMOVE DUPL PATHS\n");
+		for (size_t j=0; j < (*conn)->dst->neighbours_len; j++)
+		{
+			printf("nb %s ", (*conn)->dst->neighbours[j]->name);
+			printf("\n\n");
+		}
+	}
 	setup_conn(&curr, (*conn)->dst);
 	while (i < (*conn)->dst->neighbours_len)
 	{
 		setup_conn(&curr, (*conn)->dst);
 		if (DEBUG == 1)
 			print_connection(&curr);
-		if ((*conn)->dst->neighbours[i] != NULL
-		&& (*conn)->dst->neighbours[i] != (*conn)->dst_nb
+		if ((*conn)->dst->neighbours[i] != (*conn)->dst_nb
 		&& (*conn)->dst->neighbours[i] != (*conn)->src_nb)
 		{
 			if (DEBUG == 1)
@@ -230,26 +239,30 @@ int *changed)
 			}
 			if (curr.dst == NULL)
 			{
+				i -= handle_nowhere_to_go(curr.src, curr.src_nb, map);
+				*changed = 1;
 				if (DEBUG == 1)
-					printf("Nowhere to go\n");
+					printf("Nowhere to go remove dupl paths curr\n");
+					// exit (0);
 			}
 			else if (curr.dst == curr.src)
 			{
 				if (DEBUG == 1)
 					printf("Loop\n");
-				handle_loop(&curr, map, changed, &tmp);
+				handle_loop(&curr, map, changed, &i);
 			}
 			else
 			{
 				if (DEBUG == 1)
 					printf("Look for others\n");
 				j = 0;
-				while (j < (*conn)->dst->neighbours_len && j != i)
+				while (j < (*conn)->dst->neighbours_len)
 				{
 					setup_conn(&other, (*conn)->dst);
 					if ((*conn)->dst->neighbours[j] != NULL
 					&& (*conn)->dst->neighbours[j] != (*conn)->dst_nb
-					&& (*conn)->dst->neighbours[j] != (*conn)->src_nb)
+					&& (*conn)->dst->neighbours[j] != (*conn)->src_nb
+					&& j != i)
 					{
 						set_conn(&other, (*conn)->dst->neighbours[j]);
 						// print_connection(&other);
@@ -259,18 +272,22 @@ int *changed)
 						if (other.dst == NULL)
 						{
 							if (DEBUG == 1)
-								printf("Nowhere to go\n");
+								printf("Nowhere to go remove dupl paths other\n");
+							j -= handle_nowhere_to_go(other.src, other.src_nb, map);
+							*changed = 1;
+								// exit (0);
 						}
 						else if (other.dst == other.src)
 						{
 							if (DEBUG == 1)
 								printf("Loop\n");
-							handle_loop(&other, map, changed, &tmp);
+							handle_loop(&other, map, changed, &j);
 						}
 						else if (curr.dst == other.dst)
 						{
 							if (DEBUG == 1)
 							{
+								printf("I: %lu J: %lu\n\n", i, j);
 								printf("Curr\n");
 								print_connection(&curr);
 								printf("Other\n");
@@ -307,7 +324,6 @@ int *changed)
 		}
 		i++;
 	}
-	// exit (0);
 }
 
 ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
@@ -329,13 +345,16 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 			printf("AFTER RM DUPL PATHS\n");
 		if (iter->dst->is_junction == 0)
 			find_real_nb(iter, map);
-		// printf("QUEUE ITEM dst %s %d src %s dist %lu\n", iter->dst->name, iter->dst->is_junction,
-		// iter->src->name, iter->dist);
+		if (DEBUG == 1)
+			printf("QUEUE ITEM AFTER dst %s %d src %s dist %lu\n", iter->dst->name, iter->dst->is_junction,
+		iter->src->name, iter->dist);
+		// print_connection(iter);
 		if (iter->dst == NULL)
 		{
 			if (DEBUG == 1)
-				printf("Nowhere to go\n");
-			del_tube(iter->src, iter->src_nb, map);
+				printf("Nowhere to go execute queue un\n");
+			handle_nowhere_to_go(iter->src, iter->src_nb, map);
+			// del_tube(iter->src, iter->src_nb, map);
 			prev = iter;
 			iter = iter->next;
 			remove_q_item_un(qr, prev);
@@ -343,11 +362,13 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		}
 		else if (iter->dst == iter->src)
 		{
+			if (DEBUG == 1)
+				printf("Handle loop execute queue\n");
 			handle_loop(iter, map, changed, &tmp);
 			prev = iter;
 			iter = iter->next;
 			remove_q_item_un(qr, prev);
-			*changed = 1;
+			// *changed = 1;
 		}
 		else
 		{
@@ -357,7 +378,11 @@ ssize_t			execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 				if (DEBUG == 1)
 					printf("Before del un_tubes\n");
 				if (del_un_tubes(iter, changed, map) == 1)
+				{
+					if (DEBUG == 1)
+						printf("\n\nAFTER DEL UN TUBES\n");
 					iter = iter->next;
+				}
 				else
 				{
 					prev = iter;
@@ -390,7 +415,8 @@ ssize_t			remove_unnecessary_tubes(t_map *map, int *changed)
 	*changed = 0;
 	if (setup_q_un(&qr, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	print_connection_queue(qr->q);
+	if (DEBUG == 1)
+		print_connection_queue(qr->q);
 	if (un_add_start_nbs_to_q(map->start, qr, map, changed) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (execute_queue_un(qr, map, changed) == EXIT_FAILURE)

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/10 18:01:57 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 12:51:55 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,10 +241,12 @@ int		is_junction(t_room *curr, t_map *map);
 int						alt_opts_nb(t_connection *side_nb,
 												t_connection *src_side,
 												t_connection *nb_src,
-												t_map *map);
+												t_map *map,
+												int *changed);
 int						alt_opts_side(t_connection *side_nb,
 												t_connection *src_side,
-												t_map *map);
+												t_map *map,
+												int *changed);
 
 /*
 ** UNNECESSARY TUBES NB CHECKS
@@ -252,10 +254,12 @@ int						alt_opts_side(t_connection *side_nb,
 int						is_nb_of_src(t_connection *side_nb,
 												t_connection *src_side,
 												t_connection *nb_src,
-												t_map *map);
+												t_map *map,
+												int *changed);
 int						is_nb_of_other(t_room *dst,
 												t_room *curr,
-												t_map *map);
+												t_map *map,
+												int *changed);
 /*
 ** UNNECESSARY TUBES SHORT CHECKS
 */
@@ -277,7 +281,9 @@ int						del_un_tubes(t_connection *q,
 /*
 ** UNNECESSARY TUBES UTILS
 */
+int						handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map);
 void					handle_loop(t_connection *conn, t_map *map, int *changed, size_t *i);
+void					handle_loop_no_ret(t_connection *conn, t_map *map, int *changed);
 void					set_conn(t_connection *conn, t_room *nb);
 int						check_dst_src(t_connection *dst, t_connection *src,
 										t_room *curr);

@@ -81,7 +81,7 @@ int				del_tube(t_room *from, t_room *to, t_map *map)
 		{
 			add_to_bitfield(to, from->removed_conns);
 			if (DEBUG == 1)
-				printf("Remove connection to %s from %s\n", from->neighbours[i]->name, from->name);
+				printf("				Remove connection to %s from %s\n", from->neighbours[i]->name, from->name);
 			if (from->neighbours_len == 1)
 			{
 				from->neighbours[i] = NULL;

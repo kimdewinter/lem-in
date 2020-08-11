@@ -104,10 +104,11 @@ t_map *map, int *changed)
 			else if (tmp.dst == NULL)
 			{
 				if (DEBUG == 1)
-					printf("Nowhere to go\n");
+					printf("Nowhere to go un add nbs to queue\n");
 				*changed = 1;
-				del_tube(start->neighbours[i], start, map);
-				i -= del_tube(start, start->neighbours[i], map);
+				i -= handle_nowhere_to_go(start, start->neighbours[i], map);
+				// del_tube(start->neighbours[i], start, map);
+				// i -= del_tube(start, start->neighbours[i], map);
 			}
 			else if (room_in_bitfield(tmp.dst, qr->visited) == 0)
 			{

@@ -26,8 +26,8 @@ t_connection *nb_src, t_connection *side_nb, t_map *map)
 		printf("SRC %s SIDE %s NB %s\n", src_side->src->name, src_side->dst->name,
 		side_nb->dst->name);
 	}
-	add_opt_nb_side = alt_opts_nb(side_nb, src_side, nb_src, map);
-	add_opt_side_nb = alt_opts_side(side_nb, src_side, map);
+	add_opt_nb_side = alt_opts_nb(side_nb, src_side, nb_src, map, &changed);
+	add_opt_side_nb = alt_opts_side(side_nb, src_side, map, &changed);
 	if (DEBUG == 1)
 		printf("Add opt nb side %d Add opt side nb %d\n", add_opt_nb_side, add_opt_side_nb);
 	if (add_opt_nb_side == 0 && add_opt_side_nb == 0)
@@ -140,9 +140,11 @@ size_t *i)
 		if (q->dst == NULL)
 		{
 			if (DEBUG == 1)
-				printf("NOWHERE TO GO dst nb %s src nb %s\n", q->src_nb->name, q->dst_nb->name);
-			del_tube(q->src_nb, q->dst_nb, map);
-			del_tube(q->dst_nb, q->src_nb, map);
+				printf("NOWHERE TO GO update src nb dst nb %s src nb %s\n", q->src_nb->name, q->dst_nb->name);
+			/* Removes different connections.... */
+			handle_nowhere_to_go(q->src, q->src_nb, map);
+			// del_tube(q->src_nb, q->dst_nb, map);
+			// del_tube(q->dst_nb, q->src_nb, map);
 			return (0);
 		}
 		if (q->src == q->dst)
@@ -150,8 +152,9 @@ size_t *i)
 			if (DEBUG == 1)
 				printf("loop\n");
 			*changed = 1;
-			del_tube(q->dst, q->dst_nb, map);
-			del_tube(q->src, q->src_nb, map);
+			handle_loop_no_ret(q, map, changed);
+			// del_tube(q->dst, q->dst_nb, map);
+			// del_tube(q->src, q->src_nb, map);
 			return (0);
 		}
 	}
@@ -166,6 +169,15 @@ void	handle_loop(t_connection *conn, t_map *map, int *changed, size_t *i)
 	del_tube(conn->src_nb, conn->src, map);
 	*changed = 1;
 	*i = -1;
+}
+
+void	handle_loop_no_ret(t_connection *conn, t_map *map, int *changed)
+{
+	del_tube(conn->dst, conn->dst_nb, map);
+	del_tube(conn->dst_nb, conn->dst, map);
+	del_tube(conn->src, conn->src_nb, map);
+	del_tube(conn->src_nb, conn->src, map);
+	*changed = 1;
 }
 
 int			del_un_tubes(t_connection *q, int *changed, t_map *map)
@@ -195,7 +207,9 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 			if (side_nb.dst == NULL)
 			{
 				if (DEBUG == 1)
-					printf("nowhere to go\n");
+					printf("nowhere to go del un tubes\n");
+				handle_nowhere_to_go(side_nb.src, side_nb.src_nb, map);
+					// exit (0);
 			}
 			if (side_nb.dst == side_nb.src)
 			{
@@ -227,9 +241,9 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 					print_connection(q);
 					printf("Conn side to nb\n");
 					print_connection(&side_nb);
-					setup_conn(&nb_src, side_nb.dst);
 				}
-				if (is_nb_of_src(&side_nb, q, &nb_src, map) == 1)
+				setup_conn(&nb_src, side_nb.dst);
+				if (is_nb_of_src(&side_nb, q, &nb_src, map, changed) == 1)
 				{
 					if (DEBUG == 1)
 						printf("NB IS CONNECTED TO SRC\n");

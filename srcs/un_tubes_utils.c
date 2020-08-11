@@ -12,6 +12,15 @@
 
 #include "../includes/lemin.h"
 
+int		handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map)
+{
+	int	res;
+
+	res = del_tube(src, nb, map);
+	del_tube(nb, src, map);
+	return (res);
+}
+
 void	setup_conn(t_connection *conn, t_room *src)
 {
 	conn->add = 1;
