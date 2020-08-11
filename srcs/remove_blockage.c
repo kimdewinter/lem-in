@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/lemin.h"
+#include "../includes/lemin.h"
 
 static ssize_t	setup_in_paths(t_best *state, BITFIELD_TYPE **in_paths, t_map *map)
 {
@@ -24,12 +24,13 @@ static ssize_t	setup_in_paths(t_best *state, BITFIELD_TYPE **in_paths, t_map *ma
 		merge_bitfield(*in_paths ,state->combi[i]->bitroute, map);
 		i++;
 	}
+	return (EXIT_SUCCESS);
 }
 
 static int	find_most_promising_start(t_room *start, BITFIELD_TYPE *visited,
 BITFIELD_TYPE *in_paths, size_t *i)
 {
-	size_t	best;
+	ssize_t	best;
 	size_t	j;
 
 	*i = 0;
@@ -59,7 +60,7 @@ BITFIELD_TYPE *in_paths, size_t *i)
 
 static int	find_most_promising(t_room *start, BITFIELD_TYPE *visited, size_t *i)
 {
-	size_t	best;
+	ssize_t	best;
 	size_t	j;
 
 	*i = 0;
@@ -132,7 +133,7 @@ ssize_t		remove_conn(t_best *state, t_room *block, t_map *map)
 	i = 0;
 	while (i < state->used)
 	{
-		if (room_in_bitfield(block, state->combi[i]) == 1)
+		if (room_in_bitfield(block, state->combi[i]->bitroute) == 1)
 		{
 			next = find_next_node(state->combi[i], block);
 			if (next == NULL)
@@ -142,6 +143,7 @@ ssize_t		remove_conn(t_best *state, t_room *block, t_map *map)
 		}
 		i++;
 	}
+	return (EXIT_FAILURE);
 }
 
 ssize_t		remove_blockage(t_best *state, t_map *map)
@@ -168,6 +170,7 @@ ssize_t		remove_blockage(t_best *state, t_map *map)
 	}
 	if (found != NULL)
 	{
+		printf("Found %s\n", found->name);
 		if (remove_conn(state, found, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}

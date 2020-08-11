@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/07 14:20:15 by kim           ########   odam.nl          #
+#    Updated: 2020/08/11 13:34:20 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ RAW=	main\
 		traverse_bf\
 		df_routefinder\
 		df_rf_executor\
-		route_finder_utils
+		route_finder_utils\
+		remove_blockage
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
