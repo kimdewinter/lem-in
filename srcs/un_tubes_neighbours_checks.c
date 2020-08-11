@@ -32,8 +32,7 @@ t_connection *nb_src, t_map *map, int *changed)
 	while (i < nb_src->src->neighbours_len)
 	{
 		setup_conn(nb_src, side_nb->dst);
-		if (nb_src->src->neighbours[i] != NULL
-		&& nb_src->src->neighbours[i] != side_nb->dst
+		if (nb_src->src->neighbours[i] != side_nb->dst
 		&& nb_src->src->neighbours[i] != side_nb->dst_nb)
 		{
 			if (DEBUG == 1)
@@ -54,7 +53,7 @@ t_connection *nb_src, t_map *map, int *changed)
 					printf("loop\n");
 				handle_loop(nb_src, map, changed, &i);
 			}
-			if (nb_src->dst == NULL)
+			else if (nb_src->dst == NULL)
 			{
 				if (DEBUG == 1)
 					printf("nowhere to go is nb of src\n");
@@ -63,7 +62,7 @@ t_connection *nb_src, t_map *map, int *changed)
 				// print_connection(nb_src);
 				// exit (0);
 			}
-			if (nb_src->dst == src_side->src)
+			else if (nb_src->dst == src_side->src)
 			{
 				if (DEBUG == 1)
 				{

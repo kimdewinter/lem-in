@@ -22,13 +22,25 @@ t_map *map, size_t added, int *changed)
 	iter = *(qr->q);
 	while (iter->next)
 		iter = iter->next;
-	while (iter && i < added)
+	// printf("Iter start\nAdded %lu\n", added);
+	// print_connection(iter);
+	// printf("TMP start\nAdded %lu\n", added);
+	// print_connection(tmp);
+	while (i < added)
 	{
+		// printf("In while iter\n\n");
+		// print_connection(iter);
 		if (iter->dst == tmp->dst
 		&& iter->src == tmp->src)
 		{
+			// printf("iter\n");
+			// print_connection(iter);
+			// printf("tmp\n");
+			// print_connection(tmp);
+			// printf("\n\n");
 			if (iter->dist > tmp->dist)
 			{
+				// printf("Delete iter\n");
 				*changed = 1;
 				del_tube(iter->dst, iter->dst_nb, map);
 				del_tube(iter->dst_nb, iter->dst, map);
@@ -40,6 +52,7 @@ t_map *map, size_t added, int *changed)
 			}
 			else
 			{
+				// printf("Delete tmp\n");
 				*changed = 1;
 				del_tube(tmp->dst, tmp->dst_nb, map);
 				del_tube(tmp->dst_nb, tmp->dst, map);
@@ -52,6 +65,9 @@ t_map *map, size_t added, int *changed)
 		i++;
 		iter = iter->prev;
 	}
+	// printf("Not actually added to queue??\n");
+	// // print_connection_queue(qr->q);
+	// exit (0);
 	return (0);
 }
 
@@ -77,6 +93,7 @@ t_map *map, int *changed)
 	setup_conn(&tmp, start);
 	while (i < start->neighbours_len)
 	{
+		// printf("I in while %lu\n", i);
 		setup_conn(&tmp, start);
 		if (start->neighbours[i] != NULL)
 		{
@@ -89,6 +106,7 @@ t_map *map, int *changed)
 				// print_connection(&tmp);
 				find_real_nb(&tmp, map);
 			}
+			// print_connection(&tmp);
 			// if (tmp.dst)
 			// 	printf("Real nb: %s\n", tmp.dst->name);
 			if (tmp.dst == start)
@@ -127,6 +145,7 @@ t_map *map, int *changed)
 						return (EXIT_FAILURE);
 					added++;
 					// add_to_bitfield(tmp.dst, visited);
+					// printf("add to added to queue %s\n", tmp.dst->name);
 					add_to_bitfield(tmp.dst, added_to_queue);
 				}
 			}
@@ -172,6 +191,8 @@ ssize_t		update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		printf("Len %lu\n", len);
 	while (i < len && iter)
 	{
+		// printf("\n\nAdj iter\n");
+		// print_connection(iter);
 		if (room_in_bitfield(iter->dst, qr->visited) == 0)
 		{
 			if (un_add_nbs_to_queue(iter->dst, qr, map, changed) == EXIT_FAILURE)
@@ -179,6 +200,8 @@ ssize_t		update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		}
 		prev = iter;
 		iter = iter->next;
+		// printf("Prev\n");
+		// print_connection(prev);
 		remove_q_item_un(qr, prev);
 		i++;
 	}

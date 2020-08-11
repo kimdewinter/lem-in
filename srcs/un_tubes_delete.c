@@ -199,7 +199,7 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 	while (i < q->dst->neighbours_len)
 	{
 		setup_conn(&side_nb, q->dst);
-		if (q->dst->neighbours[i] != NULL && q->dst->neighbours[i] != q->dst_nb)
+		if (q->dst->neighbours[i] != q->dst_nb)
 		{
 			set_conn(&side_nb, q->dst->neighbours[i]);
 			if (q->dst->neighbours[i]->is_junction == 0)
@@ -208,10 +208,10 @@ int			del_un_tubes(t_connection *q, int *changed, t_map *map)
 			{
 				if (DEBUG == 1)
 					printf("nowhere to go del un tubes\n");
-				handle_nowhere_to_go(side_nb.src, side_nb.src_nb, map);
+				i -= handle_nowhere_to_go(side_nb.src, side_nb.src_nb, map);
 					// exit (0);
 			}
-			if (side_nb.dst == side_nb.src)
+			else if (side_nb.dst == side_nb.src)
 			{
 				/* Is loop from dst so doesnt affect iter */
 				handle_loop(&side_nb, map, changed, &i);

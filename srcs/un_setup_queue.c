@@ -24,8 +24,6 @@ t_map *map, size_t *i)
 		{
 			if (iter->dist > tmp->dist)
 			{
-				printf("dst %s dst nb %s\n", iter->dst->name, iter->dst_nb->name);
-				printf("src %s src nb %s\n", iter->src->name, iter->src_nb->name);
 				del_tube(iter->dst, iter->dst_nb, map);
 				del_tube(iter->dst_nb, iter->dst, map);
 				del_tube(iter->src, iter->src_nb, map);
@@ -36,8 +34,6 @@ t_map *map, size_t *i)
 			}
 			else
 			{
-				printf("src %s src nb %s\n", tmp->src->name, tmp->src_nb->name);
-				printf("dst %s dst nb %s\n", tmp->dst->name, tmp->dst_nb->name);
 				*i -= del_tube(tmp->src, tmp->src_nb, map);
 				del_tube(tmp->src_nb, tmp->src, map);
 				del_tube(tmp->dst, tmp->dst_nb, map);

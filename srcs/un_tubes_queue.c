@@ -57,6 +57,7 @@ static void		add_to_q(t_conn_wrap *qr, t_connection *new)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
+		new->prev = tmp;
 	}
 	qr->items++;
 }
