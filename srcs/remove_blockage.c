@@ -139,6 +139,7 @@ ssize_t		remove_conn(t_best *state, t_room *block, t_map *map)
 			if (next == NULL)
 				return (EXIT_FAILURE);
 			del_tube(block, next, map);
+			del_tube(next, block, map);
 			return (EXIT_SUCCESS);
 		}
 		i++;
