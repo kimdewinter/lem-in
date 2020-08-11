@@ -78,8 +78,6 @@ void		print_best(const t_best *best)
 		printf("Printing route %ld:\n", i);
 		while (j < best->combi[i]->used)
 		{
-			if (j == 0)
-				printf("Len %lu\n", best->combi[i]->used);
 			printf("%s", best->combi[i]->route[j]->name);
 			j++;
 			if (j < best->combi[i]->used)
