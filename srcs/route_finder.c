@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 13:18:36 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/11 13:22:31 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ ssize_t			find_routes(t_map *map)
 		return (EXIT_FAILURE);
 	//PLACEHOLDER: check whether state is now better than the previous map->solution, replace if needed
 	// print_rooms(map->rooms);
-	print_best(&state);
-	exit (EXIT_SUCCESS);
+	// print_best(&state);
+	// exit (EXIT_SUCCESS);
 	return (EXIT_SUCCESS);
 }
