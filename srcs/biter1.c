@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/10 16:14:02 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/12 15:09:56 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield)
 	return (0);
 }
 
-void	add_to_bitfield(t_room *curr, uint64_t *bitfield)
+void	bite_add_room_to_bitfield(t_room *curr, uint64_t *bitfield)
 {
 	bitfield[curr->room_i / BITFIELD_SIZE] |=
 	((BITFIELD_TYPE)1 << (63 - curr->room_i % BITFIELD_SIZE));

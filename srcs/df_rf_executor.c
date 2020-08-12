@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 15:37:56 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/12 15:37:11 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,23 @@
 
 static ssize_t	branch_route(t_route **dst,
 									const t_route *src,
-									const size_t route_len,
-									const size_t bitroute_len)
+									const size_t route_len)
 {
 	size_t	i;
 
 	*dst = (t_route *)malloc(sizeof(t_route) * 1);
 	if (*dst != NULL)
 	{
+		(*dst)->bitroute = NULL;
 		(*dst)->used = src->used;
 		(*dst)->ants = 0;
 		(*dst)->len = route_len;
-		(*dst)->bitroute =
-			(BITFIELD_TYPE *)malloc(sizeof(BITFIELD_TYPE) * bitroute_len);
 		(*dst)->route = (t_room **)malloc(sizeof(t_room *) * (*dst)->len);
-		if ((*dst)->bitroute != NULL && (*dst)->route != NULL)
+		if ((*dst)->route != NULL)
 		{
 			i = 0;
 			while (i < route_len)
 			{
-				if (i < bitroute_len)
-					(*dst)->bitroute[i] = src->bitroute[i];
 				(*dst)->route[i] = (i < src->len) ? src->route[i] : NULL;
 				i++;
 			}
@@ -47,16 +43,14 @@ static ssize_t	branch_route(t_route **dst,
 }
 
 static ssize_t	attach_room(t_route *route,
-							t_room *room,
-							const t_map *map)
+							BITFIELD_TYPE *visited,
+							t_room *room)
 {
 	if (route->used == route->len)
 		return (handle_err_route_finder(0, "attach_room, out of room_len\n"));
 	route->route[route->used] = room;
 	route->used++;
-	if (bite_add_room_to_bitfield(route->bitroute, room->bitroom, map) ==
-		EXIT_FAILURE)
-		return (EXIT_FAILURE);
+	bite_add_room_to_bitfield(room, visited);
 	return (EXIT_SUCCESS);
 }//TO DO: cannot yet expand route if needed, currently route_len is total number of rooms
 
@@ -65,6 +59,16 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 								t_shortest_dist *shortwrap,
 								const t_map *map)
 {
+	size_t	i;
+
+	if (bite_alloc(&new->bitroute, map) == EXIT_FAILURE)
+		return (handle_err_route_finder(1, "commit_route\n"));
+	i = 0;
+	while (i < new->used)
+	{
+		bite_add_room_to_bitfield(new->route[i], new->bitroute);
+		i++;
+	}
 	if (shortwrap->nb_visited != NULL)
 	{
 		free(shortwrap->nb_visited);
@@ -74,9 +78,6 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 		return (handle_err_route_finder(0, "commit_route\n"));
 	wrap->candidate_best->combi[wrap->candidate_best->used] = new;
 	wrap->candidate_best->used++;
-	if (bite_add_room_to_bitfield(wrap->visited, new->bitroute, map) ==
-		EXIT_FAILURE)
-		return (EXIT_FAILURE);
 	return (EXIT_ROUTEFOUND);//and there was much rejoicing!
 }
 
@@ -158,26 +159,25 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 	t_room			*shortest;
 	ssize_t			retval;
 
-	if (branch_route(&new, parent, map->rooms->count, map->bitfield_len) ==
-		EXIT_FAILURE)//copy parent route
+	if (branch_route(&new, parent, map->rooms->count) == EXIT_FAILURE)//copy parent route
 		return (EXIT_FAILURE);
-	if (attach_room(new, begin, map) == EXIT_FAILURE)//attach begin room to it
+	if (attach_room(new, wrap->visited, begin) == EXIT_FAILURE)//attach begin room to it
 		return (EXIT_FAILURE);
 	shortwrap.nb_visited = NULL;
 	shortwrap.start = map->start;
 	if (find_shortest_dist_option(&shortest, new->route[new->used - 1],
-		new->bitroute, &shortwrap) == EXIT_FAILURE)//find quickest way to end
+		wrap->visited, &shortwrap) == EXIT_FAILURE)//find quickest way to end
 		return (EXIT_FAILURE);
 	while (shortest != NULL)
 	{
 		if (shortest == map->end)
 		{
-			attach_room(new, shortest, map);
+			attach_room(new, wrap->visited, shortest);
 			return (commit_route(wrap, new, &shortwrap, map));
 		}
 		if (shortwrap.options_left == 1)//only one way to go
 		{
-			attach_room(new, shortest, map);
+			attach_room(new, wrap->visited, shortest);
 			clean_shortwrap(&shortwrap);
 		}
 		else//gotta branch off
@@ -189,14 +189,14 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 				break;
 		}
 		if (find_shortest_dist_option(&shortest, new->route[new->used - 1],
-			new->bitroute, &shortwrap) == EXIT_FAILURE)//find next quickest way to end
+			wrap->visited, &shortwrap) == EXIT_FAILURE)//find next quickest way to end
 			return (EXIT_FAILURE);
 	}
-	if (shortwrap.nb_visited)
+	if (shortwrap.nb_visited != NULL)
 		free(shortwrap.nb_visited);
-	if (new->bitroute)
+	if (new->bitroute != NULL)
 		free(new->bitroute);
-	if (new->route)
+	if (new->route != NULL)
 		free(new->route);
 	free(new);
 	return (shortest == NULL ? EXIT_SUCCESS : EXIT_ROUTEFOUND);
@@ -210,8 +210,7 @@ ssize_t			init_find_route_df(t_find_routes_df_wrap *wrap,
 	ssize_t	retval;
 
 	if (alloc_single_blank_route(&new, map->rooms->count, map->bitfield_len)
-		== EXIT_FAILURE || bite_add_room_to_bitfield(new->bitroute,
-		wrap->visited, map) == EXIT_FAILURE)
+		== EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	retval = cont_find_route_df(wrap, new, begin, map);
 	free(new->bitroute);

@@ -144,15 +144,15 @@ t_map *map, int *changed)
 					if (add_q_item_un(qr, &tmp) == EXIT_FAILURE)
 						return (EXIT_FAILURE);
 					added++;
-					// add_to_bitfield(tmp.dst, visited);
+					// bite_add_room_to_bitfield(tmp.dst, visited);
 					// printf("add to added to queue %s\n", tmp.dst->name);
-					add_to_bitfield(tmp.dst, added_to_queue);
+					bite_add_room_to_bitfield(tmp.dst, added_to_queue);
 				}
 			}
 		}
 		i++;
 	}
-	add_to_bitfield(start, qr->visited);
+	bite_add_room_to_bitfield(start, qr->visited);
 	free (added_to_queue);
 	return (EXIT_SUCCESS);
 }
@@ -167,7 +167,7 @@ t_map *map, int *changed)
 // 	i = 0;
 // 	while (iter && i < len)
 // 	{
-// 		add_to_bitfield(iter->dst, qr->visited);
+// 		bite_add_room_to_bitfield(iter->dst, qr->visited);
 // 		prev = iter;
 // 		iter = iter->next;
 // 		i++;

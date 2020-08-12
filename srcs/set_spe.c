@@ -76,12 +76,12 @@ BITFIELD_TYPE *visited, size_t weight)
 	size_t	i;
 
 	i = 0;
-	add_to_bitfield(start, visited);
+	bite_add_room_to_bitfield(start, visited);
 	while (i < start->neighbours_len)
 	{
 		if (add_q_item(q, weight, start->neighbours[i]) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
-		add_to_bitfield(start->neighbours[i], visited);
+		bite_add_room_to_bitfield(start->neighbours[i], visited);
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -99,7 +99,7 @@ static ssize_t	add_nbs_to_q(t_weight **q, BITFIELD_TYPE *visited)
 			if (add_q_item(q, (*q)->weight + 1, (*q)->dst->neighbours[i])
 			== EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			add_to_bitfield((*q)->dst->neighbours[i], visited);
+			bite_add_room_to_bitfield((*q)->dst->neighbours[i], visited);
 		}
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/12 13:30:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/12 15:10:04 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -340,15 +340,13 @@ ssize_t					find_shortest_dist_option(t_room **ret_ptr,
 void					merge_bitfield(BITFIELD_TYPE *dst,
 										BITFIELD_TYPE *src,
 										t_map *map);
-void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
+void					bite_add_room_to_bitfield(t_room *curr,
+													uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_bitroute_copy(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map);
-ssize_t					bite_add_room_to_bitfield(BITFIELD_TYPE *dst,
-													const BITFIELD_TYPE *src,
-													const t_map *map);
 ssize_t					bite_biteroute_allocmerge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src1,
 											const BITFIELD_TYPE *src2,

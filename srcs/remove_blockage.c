@@ -99,7 +99,7 @@ t_room		*find_blockage(t_room *start, BITFIELD_TYPE *visited, BITFIELD_TYPE *in_
 	tried = 0;
 	if (room_in_bitfield(start, in_paths) == 1)
 		return (start);
-	add_to_bitfield(start, visited);
+	bite_add_room_to_bitfield(start, visited);
 	/* Shouldn't be possible to reach start */
 	while (found == NULL && tried < start->neighbours_len)
 	{
@@ -161,7 +161,7 @@ ssize_t		remove_blockage(t_best *state, t_map *map)
 	if (setup_in_paths(state, &in_paths, map) == EXIT_FAILURE
 	|| bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	add_to_bitfield(map->end, visited);
+	bite_add_room_to_bitfield(map->end, visited);
 	while (found == NULL && tried < map->end->neighbours_len)
 	{
 		if (find_most_promising_start(map->end, visited, in_paths, &i) == 0)
