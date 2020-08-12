@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/12 15:37:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/12 16:02:29 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,15 @@ static ssize_t	branch_route(t_route **dst,
 
 static ssize_t	attach_room(t_route *route,
 							BITFIELD_TYPE *visited,
-							t_room *room)
+							t_room *room,
+							const t_map *map)
 {
 	if (route->used == route->len)
 		return (handle_err_route_finder(0, "attach_room, out of room_len\n"));
 	route->route[route->used] = room;
 	route->used++;
-	bite_add_room_to_bitfield(room, visited);
+	if (room != map->end)
+		bite_add_room_to_bitfield(room, visited);
 	return (EXIT_SUCCESS);
 }//TO DO: cannot yet expand route if needed, currently route_len is total number of rooms
 
@@ -66,7 +68,8 @@ static ssize_t	commit_route(t_find_routes_df_wrap *wrap,
 	i = 0;
 	while (i < new->used)
 	{
-		bite_add_room_to_bitfield(new->route[i], new->bitroute);
+		if (new->route[i] != map->end)
+			bite_add_room_to_bitfield(new->route[i], new->bitroute);
 		i++;
 	}
 	if (shortwrap->nb_visited != NULL)
@@ -161,7 +164,7 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 
 	if (branch_route(&new, parent, map->rooms->count) == EXIT_FAILURE)//copy parent route
 		return (EXIT_FAILURE);
-	if (attach_room(new, wrap->visited, begin) == EXIT_FAILURE)//attach begin room to it
+	if (attach_room(new, wrap->visited, begin, map) == EXIT_FAILURE)//attach begin room to it
 		return (EXIT_FAILURE);
 	shortwrap.nb_visited = NULL;
 	shortwrap.start = map->start;
@@ -172,12 +175,12 @@ static ssize_t	cont_find_route_df(t_find_routes_df_wrap *wrap,
 	{
 		if (shortest == map->end)
 		{
-			attach_room(new, wrap->visited, shortest);
+			attach_room(new, wrap->visited, shortest, map);
 			return (commit_route(wrap, new, &shortwrap, map));
 		}
 		if (shortwrap.options_left == 1)//only one way to go
 		{
-			attach_room(new, wrap->visited, shortest);
+			attach_room(new, wrap->visited, shortest, map);
 			clean_shortwrap(&shortwrap);
 		}
 		else//gotta branch off
