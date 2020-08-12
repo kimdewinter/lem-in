@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/09 10:44:07 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/06 14:20:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/12 13:40:17 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ static size_t		calc_ants(long double *rest,
 	i = 0;
 	while (i < combi->used)
 	{
-		path_diff = (long double)combi->combi[i]->len - avg_paths;
+		path_diff = (long double)combi->combi[i]->used - avg_paths;
 		ants_diff = avg_ants - path_diff;
-		rounds = (long double)combi->combi[i]->len + ants_diff - 1.0;
+		rounds = (long double)combi->combi[i]->used + ants_diff - 1.0;
 		combi->combi[i]->ants = (size_t)ants_diff;
 		*rest += (rounds - (size_t)rounds);
 		i++;
@@ -76,7 +76,7 @@ static long double	calc_paths_avg(size_t num_paths, const t_best *combi)
 	total = 0.0;
 	while (i < num_paths)
 	{
-		total += (long double)combi->combi[i]->len;
+		total += (long double)combi->combi[i]->used;
 		i++;
 	}
 	return (total / (long double)num_paths);
