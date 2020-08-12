@@ -1,0 +1,25 @@
+12
+##start
+S 1 2
+##end
+T 1 2
+a 1 2
+b 1 2
+c 1 2
+d 1 2
+e 1 2
+f 1 2
+g 1 2
+w 1 2
+S-a
+S-b
+S-c
+a-b
+c-g
+b-w
+b-e
+g-e
+w-d
+d-T
+f-T
+e-T

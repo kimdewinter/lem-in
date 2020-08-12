@@ -171,7 +171,8 @@ ssize_t		remove_blockage(t_best *state, t_map *map)
 	}
 	if (found != NULL)
 	{
-		printf("Found %s\n", found->name);
+		if (DEBUG != 0)
+			printf("Found %s\n", found->name);
 		if (remove_conn(state, found, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
