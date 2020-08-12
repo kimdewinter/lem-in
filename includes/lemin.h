@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 16:43:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/12 13:30:51 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,6 +302,7 @@ void			remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
+void					compare_state_best(t_map *map, t_best *state);
 ssize_t					remove_blockage(t_best *state, t_map *map);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
