@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/12 15:10:04 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/13 14:00:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,23 +138,15 @@ typedef struct			s_room
 ** the structure of each room in the "ant hill"
 */
 
-typedef struct			s_find_routes_df_wrap
+typedef struct			s_dfs_wrap
 {
+	struct s_route		*route;
+	ssize_t				parent_i;
 	BITFIELD_TYPE		*visited;
-	BITFIELD_TYPE		*start_nb_visited;
-	t_room				*shortest_dist_to_end;
-	t_best				*candidate_best;
-}						t_find_routes_df_wrap;
+	t_best				*candidate;
+	const t_map			*map;
+}						t_dfs_wrap;
 
-typedef struct            s_shortest_dist
-{
-	t_room				**nbs;
-	t_room				*start;
-	size_t				nbs_len;
-	ssize_t				*nb_visited;
-	ssize_t				nb_vis_i_of_ret;
-	size_t				options_left;
-}						t_shortest_dist;
 
 typedef struct			s_map
 {
@@ -317,22 +309,12 @@ size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_best *state, t_map *map);
-void					handle_err_branch_or_new(t_route **dst);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
-ssize_t					handle_err_find_shortest_dist_option(
-							t_shortest_dist *to_free);
-ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
-											t_room *begin,
-											const t_map *map);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code,
 									const t_map *map);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t					find_shortest_dist_option(t_room **ret_ptr,
-													t_room *root,
-													BITFIELD_TYPE *visited,
-													t_shortest_dist *shortwrap);
 
 /*
 ** BITFIELD-TOOLKIT

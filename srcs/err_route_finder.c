@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/23 14:15:58 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 15:24:03 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/13 13:39:36 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,25 +22,5 @@ ssize_t		handle_err_route_finder(size_t err_code, const char *line)
 		perror("Error: no valid route from start to end found\n");
 	if (line != NULL)
 		perror(line);
-	return (EXIT_FAILURE);
-}
-
-void		handle_err_branch_or_new(t_route **dst)
-{
-	if (*dst == NULL)
-	{
-			if ((*dst)->bitroute != NULL)
-				free((*dst)->bitroute);
-			if ((*dst)->route != NULL)
-				free((*dst)->route);
-			free(*dst);
-			*dst = NULL;
-	}
-}
-
-ssize_t		handle_err_find_shortest_dist_option(t_shortest_dist *to_free)
-{
-	free(to_free->nb_visited);
-	to_free->nb_visited = NULL;
 	return (EXIT_FAILURE);
 }

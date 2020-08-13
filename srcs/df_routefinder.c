@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/07 16:32:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/13 15:03:50 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,31 +33,72 @@ static ssize_t	setup_best(t_best *best, const t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			find_routes_df(t_best *state, t_map *map)
+static ssize_t	setup_dfs_wrap(t_dfs_wrap *wrap,
+								t_best *candidate,
+								const t_map *map)
 {
-	t_find_routes_df_wrap	wrap;
-	t_shortest_dist			shortwrap;
+	if (wrap == NULL ||
+		bite_alloc(&wrap->visited, map) == EXIT_FAILURE ||
+		alloc_single_blank_route(&wrap->route,
+		map->rooms->count, map->bitfield_len) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	wrap->parent_i = -1;
+	wrap->candidate = candidate;
+	wrap->map = map;
+	return (EXIT_SUCCESS);
+}
 
-	wrap.candidate_best = state;
-	if (setup_best(wrap.candidate_best, map) == EXIT_FAILURE ||
-		bite_alloc(&wrap.visited, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	shortwrap.nb_visited = NULL;
-	shortwrap.start = map->start;
-	if (find_shortest_dist_option(&wrap.shortest_dist_to_end, map->start,
-		NULL, &shortwrap) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	while (wrap.shortest_dist_to_end != NULL)
+static ssize_t	clean_dfs_wrap(t_dfs_wrap *wrap)
+{
+	size_t	i;
+
+	i = 0;
+	if (wrap->route == NULL)
+		if (alloc_single_blank_route(&wrap->route, wrap->map->rooms->count,
+		wrap->map->bitfield_len) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+	else
 	{
-		if (init_find_route_df(&wrap, wrap.shortest_dist_to_end, map) ==
-			EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		if (find_shortest_dist_option(&wrap.shortest_dist_to_end, map->start,
-			wrap.visited, &shortwrap) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		while (i < wrap->route->len)
+		{
+			wrap->route->route[i] = NULL;
+			i++;
+		}
+		wrap->route->used = 0;
 	}
-	//PLACEHOLDER: free all the things
-	if (shortwrap.nb_visited)
-		free(shortwrap.nb_visited);
+	wrap->parent_i = -1;
+}
+
+void			delete_dfs_wrap(t_dfs_wrap *wrap)
+{
+	if (wrap->route != NULL)
+	{
+		free(wrap->route);
+		wrap->route = NULL;
+	}
+	free(wrap->visited);
+	wrap->visited = NULL;
+}
+
+ssize_t			find_routes_df(t_best *candidate, t_map *map)
+{
+	t_dfs_wrap		wrap;
+	size_t			i;
+
+	if (setup_best(candidate, map) == EXIT_FAILURE ||
+		setup_dfs_wrap(&wrap, candidate, map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < map->start->neighbours_len)
+	{
+		if (room_in_bitfield(map->start->neighbours[i], wrap.visited) == 0)
+		{
+			if (exec_find_routes_df(map->start->neighbours[i], &wrap) ==
+				EXIT_FAILURE || clean_dfs_wrap(&wrap) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
+		i++;
+	}
+	delete_dfs_wrap(&wrap);
 	return (EXIT_SUCCESS);
 }
