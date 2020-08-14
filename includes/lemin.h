@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/13 14:00:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/14 20:05:17 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,9 @@ typedef struct			s_room
 typedef struct			s_dfs_wrap
 {
 	struct s_route		*route;
-	ssize_t				parent_i;
 	BITFIELD_TYPE		*visited;
 	t_best				*candidate;
-	const t_map			*map;
+	const struct s_map	*map;
 }						t_dfs_wrap;
 
 
@@ -307,14 +306,18 @@ size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 													const t_room *best_so_far,
 													const t_room *candidate);
 size_t					calc_cost(size_t ants, const t_best *routes);
+ssize_t					exec_find_routes_df(t_room *curr,
+											t_dfs_wrap *wrap);
 ssize_t					find_routes(t_map *map);
-ssize_t					find_routes_df(t_best *state, t_map *map);
+ssize_t					find_routes_df(t_best *state, const t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code,
 									const t_map *map);
 ssize_t					max_parallels(size_t *result, const t_map *map);
+t_room					*select_next_room(const t_room *curr,
+											const t_dfs_wrap *wrap);
 
 /*
 ** BITFIELD-TOOLKIT
@@ -338,7 +341,8 @@ ssize_t					allocopy_bitfield(BITFIELD_TYPE **dst,
 											BITFIELD_TYPE *src,
 											t_map *map);
 ssize_t					handle_err_biter(size_t err_code, const char *line);
-int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
+int						room_in_bitfield(const t_room *curr,
+											BITFIELD_TYPE *bitfield);
 ssize_t					bite_room_new(t_room *room, const t_map *map);
 
 /*
