@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 13:24:27 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 14:11:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -405,5 +405,6 @@ void					print_map(t_map *map);
 void					print_connection(t_connection *tmp);
 void					print_best(const t_best *best);
 void					print_rooms(const t_table *rooms);
+void					print_neighbours(const t_room *room);
 
 #endif
