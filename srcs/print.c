@@ -70,7 +70,7 @@ void		print_best(const t_best *best)
 	size_t	i;
 	size_t	j;
 
-	printf("\nPRINTING T_BEST\n");
+	printf("\nPRINTING T_BEST\n\n");
 	i = 0;
 	while (i < best->used)
 	{
@@ -87,8 +87,10 @@ void		print_best(const t_best *best)
 			else
 				printf("\n");
 		}
+		printf("\n");
 		i++;
 	}
+	printf("\nTOTAL ROUTES FOUND: %lu\n", best->used);
 }
 
 void		print_rooms(const t_table *rooms)
@@ -106,4 +108,18 @@ void		print_rooms(const t_table *rooms)
 		}
 		i++;
 	}
+}
+
+void		print_neighbours(const t_room *room)
+{
+	size_t	i;
+
+	i = 0;
+	printf("\nROOM \"%s\" HAS %lu NEIGHBOURS:\n", room->name, room->neighbours_len);
+	while (i < room->neighbours_len)
+	{
+		printf("%s, dist_to_end %ld\n", room->neighbours[i]->name, room->neighbours[i]->dist_to_end);
+		i++;
+	}
+	printf("\n");
 }

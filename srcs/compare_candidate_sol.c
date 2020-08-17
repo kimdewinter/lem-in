@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:30:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 15:44:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 16:06:08 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void			compare_candidate_best(t_map *map, t_best *candidate)
 	if (map->solution.combi == NULL)
 	{
 		map->solution.combi = candidate->combi;
+		candidate->combi = NULL;
 		map->solution.len = candidate->len;
 		map->solution.turns = candidate->turns;
 		map->solution.used = candidate->used;
