@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/14 20:05:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 14:48:02 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,28 @@ t_room			*select_next_room(const t_room *curr, const t_dfs_wrap *wrap)
 	return (next);
 }
 
+static size_t	reset_visited(t_dfs_wrap *wrap)
+{
+	size_t	i;
+
+	if (wrap->visited != NULL)
+	{
+		free(wrap->visited);
+		wrap->visited = NULL;
+	}
+	if (bite_alloc(&wrap->visited, wrap->map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	i = 0;
+	while (i < wrap->candidate->used)
+	{
+		if (wrap->candidate->combi[i] != NULL)
+			bite_merge_bitfield(
+				wrap->visited, wrap->candidate->combi[i]->bitroute, wrap->map);
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+
 static size_t	commit_route(t_dfs_wrap *wrap)
 {
 	size_t	i;
@@ -54,6 +76,8 @@ static size_t	commit_route(t_dfs_wrap *wrap)
 	wrap->candidate->combi[wrap->candidate->used] = wrap->route;
 	wrap->route = NULL;
 	wrap->candidate->used++;
+	if (reset_visited(wrap) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_ROUTEFOUND);
 }
 

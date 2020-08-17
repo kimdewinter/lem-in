@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 13:27:34 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 14:43:44 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_map *map)
 		return (EXIT_FAILURE);
 	while (i < candidate->used)
 	{
-		merge_bitfield(*in_paths, candidate->combi[i]->bitroute, map);
+		bite_merge_bitfield(*in_paths, candidate->combi[i]->bitroute, map);
 		i++;
 	}
 	return (EXIT_SUCCESS);

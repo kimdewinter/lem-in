@@ -6,15 +6,15 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 13:02:23 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 14:47:25 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-void			merge_bitfield(BITFIELD_TYPE *dst,
-								BITFIELD_TYPE *src,
-								t_map *map)
+void			bite_merge_bitfield(BITFIELD_TYPE *dst,
+									BITFIELD_TYPE *src,
+									const t_map *map)
 {
 	size_t	i;
 

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 14:11:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 14:47:37 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -357,9 +357,9 @@ t_room					*select_next_room(const t_room *curr,
 /*
 ** BITFIELD-TOOLKIT
 */
-void					merge_bitfield(BITFIELD_TYPE *dst,
+void					bite_merge_bitfield(BITFIELD_TYPE *dst,
 										BITFIELD_TYPE *src,
-										t_map *map);
+										const t_map *map);
 void					bite_add_room_to_bitfield(t_room *curr,
 													uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
