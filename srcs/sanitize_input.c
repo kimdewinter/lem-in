@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 12:07:56 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 14:42:00 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,6 @@ ssize_t				sanitize_input(t_map *map)
 	}
 	if (map->start->neighbours_len == 0 || map->end->neighbours_len == 0)
 		return (EXIT_FAILURE);
+	print_map(map);
 	return (EXIT_SUCCESS);
 }

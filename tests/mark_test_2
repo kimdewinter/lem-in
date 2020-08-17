@@ -1,0 +1,36 @@
+100
+##start
+a 1 1
+b 2 2
+c 3 3
+##end
+d 4 4
+e 5 5
+f 6 6
+g 7 7
+h 8 8
+i 9 9
+j 10 10
+k 11 11
+l 12 12
+m 13 13
+n 14 14
+o 15 15
+#links
+a-b
+b-c
+c-d
+d-e
+e-f
+f-g
+g-h
+h-i
+i-j
+i-n
+j-k
+k-l
+k-m
+m-n
+n-c
+n-o
+a-o

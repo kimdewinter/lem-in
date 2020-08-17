@@ -78,6 +78,7 @@ int				del_tube(t_room *from, t_room *to, t_map *map)
 	i = 0;
 	found = 0;
 	ret = 0;
+	printf("From %s to %s\n", from->name, to->name);
 	while (i < from->neighbours_len && found == 0)
 	{
 		if (from->neighbours[i] == to)
