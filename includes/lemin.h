@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/12 13:30:51 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 12:23:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,21 @@ typedef	struct			s_connection
 	struct s_connection		*next;
 	struct s_connection		*prev;
 }						t_connection;
+
+typedef struct			s_dupl
+{
+	struct s_connection	curr;
+	struct s_connection	other;
+	size_t				i;
+	size_t				j;
+}						t_dupl;
+
+typedef struct			s_triangle
+{
+	struct s_connection	*src_side;
+	struct s_connection	nb_src;
+	struct s_connection	side_nb;
+}						t_triangle;
 
 typedef	struct 			s_diamond
 {
@@ -218,11 +233,16 @@ ssize_t					setup_room(t_room **dest,
 /*
 ** UNNECESSARY TUBES REMOVE
 */
-int		is_mutual_conn(t_room *curr, t_room *nb);
-int						rm_un_conn(t_connection *side_nb,
-t_connection *src_side, t_connection *nb_src, t_map *map);
+void					remove_dead_ends(t_map *map, int *changed);
+void					remove_sps_spe_conns(t_map *map);
+int						is_mutual_conn(t_room *curr, t_room *nb);
+void					rm_un_conn(t_triangle *tr, t_map *map, int *changed);
 ssize_t					remove_unnecessary_tubes(t_map *map, int *changed);
-
+/*
+** UNNECESSARY TUBES DUPLICATE PATHS
+*/
+void					remove_duplicate_paths(t_connection **conn, t_map *map,
+int *changed);
 /*
 ** UNNECESSARY TUBES QUEUE SETUP
 */
@@ -231,16 +251,36 @@ ssize_t					un_add_start_nbs_to_q(t_room *start,
 											t_map *map,
 											int *changed);
 /*
+** UNNECESSARY TUBES DELETE
+*/
+int						del_un_tubes(t_connection *q, int *changed, t_map *map);
+
+/*
+** UNNECESSARY TUBES QR UTILS
+*/
+ssize_t			setup_q_un(t_conn_wrap **qr, t_map *map);
+void			free_q_un(t_conn_wrap **qr);
+/*
+** UNNECESSARY TUBES REMOVE IF UN
+*/
+void					remove_if_un(t_triangle *tr, t_map *map, int *changed);
+/*
 ** UNNECESSARY TUBES QUEUE UPDATE
 */
+ssize_t					un_add_nbs_to_queue(t_room *start, t_conn_wrap *qr,
+												t_map *map, int *changed);
+int						solve_queue_conflict(t_conn_wrap *qr, t_connection *tmp,
+											t_map *map, size_t *added);
 ssize_t					update_queue_un(t_conn_wrap *qr, t_map *map,int *changed);
+/*
+** UNNECESSARY TUBES QUEUE EXECUTE
+*/
+ssize_t					execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed);
 /*
 ** UNNECESSARY TUBES OPTION CHECKS
 */
 int		is_junction(t_room *curr, t_map *map);
-int						alt_opts_nb(t_connection *side_nb,
-												t_connection *src_side,
-												t_connection *nb_src,
+int						alt_opts_nb(t_triangle *curr,
 												t_map *map,
 												int *changed);
 int						alt_opts_side(t_connection *side_nb,
@@ -251,9 +291,7 @@ int						alt_opts_side(t_connection *side_nb,
 /*
 ** UNNECESSARY TUBES NB CHECKS
 */
-int						is_nb_of_src(t_connection *side_nb,
-												t_connection *src_side,
-												t_connection *nb_src,
+int						is_nb_of_src(t_triangle *curr,
 												t_map *map,
 												int *changed);
 int						is_nb_of_other(t_room *dst,
@@ -265,45 +303,42 @@ int						is_nb_of_other(t_room *dst,
 */
 int						shrt_conn_dsts_side(t_connection *src_side,
 													t_connection *nb_src,
-													t_connection *side_nb,
-													t_map *map);
+													t_connection *side_nb);
 int						shrt_conn_dsts_nb(t_connection *src_side,
 													t_connection *nb_src,
-													t_connection *side_nb,
-													t_map *map);
+													t_connection *side_nb);
 
-/*
-** UNNECESSARY TUBES DELETE
-*/
-int						del_un_tubes(t_connection *q,
-										int *changed,
-										t_map *map);
 /*
 ** UNNECESSARY TUBES UTILS
 */
-int						handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map);
-void					handle_loop(t_connection *conn, t_map *map, int *changed, size_t *i);
-void					handle_loop_no_ret(t_connection *conn, t_map *map, int *changed);
+int						check_conn(t_connection *conn, size_t *ind, int *changed, t_map *map);
+size_t					handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map);
+size_t					kill_conn(t_room *src, t_room *nb, t_map *map);
+size_t					remove_path(t_connection *conn, t_map *map);
+size_t					handle_loop(t_connection *conn, t_map *map, int *changed);
 void					set_conn(t_connection *conn, t_room *nb);
 int						check_dst_src(t_connection *dst, t_connection *src,
 										t_room *curr);
-int		check_src(t_connection *conn, t_room *curr);
-int		check_dest(t_connection *conn, t_room *curr);
-void	setup_conn(t_connection *conn, t_room *src);
-void				find_real_nb(t_connection *tmp, t_map *map);
-int				del_tube(t_room *from, t_room *to, t_map *map);
-t_connection		*new_connection(t_connection *item);
-int					has_conn_to(t_room *curr, t_room *nb);
+int						check_src(t_connection *conn, t_room *curr);
+int						check_dest(t_connection *conn, t_room *curr);
+void					setup_conn(t_connection *conn, t_room *src);
+void					find_real_nb(t_connection *tmp);
+int						del_tube(t_room *from, t_room *to, t_map *map);
+t_connection			*new_connection(t_connection *item);
+int						has_conn_to(t_room *curr, t_room *nb);
 /*
 ** UNNECESSARY TUBES QUEUE
 */
-ssize_t			add_q_item_un(t_conn_wrap *qr, t_connection *item);
-void			remove_q_item_un(t_conn_wrap *qr, t_connection *item);
+ssize_t					add_q_item_un(t_conn_wrap *qr, t_connection *item, size_t *added, BITFIELD_TYPE *atq);
+void					remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
 void					compare_state_best(t_map *map, t_best *state);
 ssize_t					remove_blockage(t_best *state, t_map *map);
+ssize_t					remove_conn(t_best *state, t_room *block, t_map *map);
+ssize_t					setup_in_paths(t_best *state, BITFIELD_TYPE **in_paths,
+										t_map *map);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
 													const size_t route_len,

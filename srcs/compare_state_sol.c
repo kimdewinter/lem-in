@@ -5,8 +5,8 @@
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/11 14:54:27 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/11 14:54:27 by lravier       ########   odam.nl         */
+/*   Created: 2020/08/17 10:30:10 by lravier       #+#    #+#                 */
+/*   Updated: 2020/08/17 10:30:55 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void		cleanup_state(t_best *state, size_t ants)
 	{
 		if (state->combi[i] != NULL)
 		{
-			free (state->combi[i]);
+			free(state->combi[i]);
 			state->combi[i] = NULL;
 			state->used--;
 		}
@@ -38,12 +38,12 @@ static void		delete_state(t_best *state)
 	{
 		if (state->combi[i] != NULL)
 		{
-			free (state->combi[i]);
+			free(state->combi[i]);
 			state->combi[i] = NULL;
 		}
 		i++;
 	}
-	free (state->combi);
+	free(state->combi);
 	state->combi = NULL;
 	state->used = 0;
 	state->len = 0;

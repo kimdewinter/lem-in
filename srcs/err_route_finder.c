@@ -3,10 +3,10 @@
 /*                                                        ::::::::            */
 /*   err_route_finder.c                                 :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: kim <kim@student.codam.nl>                   +#+                     */
+/*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/23 14:15:58 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 15:24:03 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 10:32:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,12 @@ void		handle_err_branch_or_new(t_route **dst)
 {
 	if (*dst == NULL)
 	{
-			if ((*dst)->bitroute != NULL)
-				free((*dst)->bitroute);
-			if ((*dst)->route != NULL)
-				free((*dst)->route);
-			free(*dst);
-			*dst = NULL;
+		if ((*dst)->bitroute != NULL)
+			free((*dst)->bitroute);
+		if ((*dst)->route != NULL)
+			free((*dst)->route);
+		free(*dst);
+		*dst = NULL;
 	}
 }
 

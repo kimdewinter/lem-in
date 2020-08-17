@@ -5,30 +5,15 @@
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/10 13:17:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/10 13:17:29 by lravier       ########   odam.nl         */
+/*   Created: 2020/08/17 10:37:22 by lravier       #+#    #+#                 */
+/*   Updated: 2020/08/17 10:58:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static ssize_t	setup_in_paths(t_best *state, BITFIELD_TYPE **in_paths, t_map *map)
-{
-	size_t	i;
-
-	i = 0;
-	if (bite_alloc(in_paths, map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	while (i < state->used)
-	{
-		merge_bitfield(*in_paths ,state->combi[i]->bitroute, map);
-		i++;
-	}
-	return (EXIT_SUCCESS);
-}
-
-static int	find_most_promising_start(t_room *start, BITFIELD_TYPE *visited,
-BITFIELD_TYPE *in_paths, size_t *i)
+static void		find_most_promising_start(t_room *start, BITFIELD_TYPE *visited,
+BITFIELD_TYPE *in_paths, ssize_t *i)
 {
 	ssize_t	best;
 	size_t	j;
@@ -46,19 +31,17 @@ BITFIELD_TYPE *in_paths, size_t *i)
 			else
 			{
 				if (start->neighbours[j]->dist_to_start
-				< start->neighbours[best]->dist_to_start)	
+				< start->neighbours[best]->dist_to_start)
 					best = j;
 			}
 		}
 		j++;
 	}
 	*i = best;
-	if (best == -1)
-		return (0);
-	return (1);
 }
 
-static int	find_most_promising(t_room *start, BITFIELD_TYPE *visited, size_t *i)
+static int		find_most_promising(t_room *start, BITFIELD_TYPE *visited,
+size_t *i)
 {
 	ssize_t	best;
 	size_t	j;
@@ -75,7 +58,7 @@ static int	find_most_promising(t_room *start, BITFIELD_TYPE *visited, size_t *i)
 			else
 			{
 				if (start->neighbours[j]->dist_to_start
-				< start->neighbours[best]->dist_to_start)	
+				< start->neighbours[best]->dist_to_start)
 					best = j;
 			}
 		}
@@ -87,12 +70,12 @@ static int	find_most_promising(t_room *start, BITFIELD_TYPE *visited, size_t *i)
 	return (1);
 }
 
-t_room		*find_blockage(t_room *start, BITFIELD_TYPE *visited, BITFIELD_TYPE *in_paths)
+t_room			*find_blockage(t_room *start, BITFIELD_TYPE *visited,
+BITFIELD_TYPE *in_paths)
 {
 	size_t	i;
 	t_room	*found;
 	size_t	tried;
-
 
 	i = 0;
 	found = NULL;
@@ -100,7 +83,6 @@ t_room		*find_blockage(t_room *start, BITFIELD_TYPE *visited, BITFIELD_TYPE *in_
 	if (room_in_bitfield(start, in_paths) == 1)
 		return (start);
 	add_to_bitfield(start, visited);
-	/* Shouldn't be possible to reach start */
 	while (found == NULL && tried < start->neighbours_len)
 	{
 		if (find_most_promising(start, visited, &i) == 0)
@@ -111,49 +93,25 @@ t_room		*find_blockage(t_room *start, BITFIELD_TYPE *visited, BITFIELD_TYPE *in_
 	return (found);
 }
 
-t_room		*find_next_node(t_route *route, t_room *block)
+static ssize_t	handle_return(t_best *state, t_room *found, t_map *map)
 {
-	size_t	i;
-
-	i = 0;
-	while (i < route->used)
+	if (found != NULL)
 	{
-		if (route->route[i] == block)
-			return (route->route[i + 1]);
-		i++;
+		if (remove_conn(state, found, map) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	}
-	return (NULL);
+	else
+		return (EXIT_SUCCESS);
 }
 
-ssize_t		remove_conn(t_best *state, t_room *block, t_map *map)
-{
-	size_t	i;
-	t_room	*next;
-
-	i = 0;
-	while (i < state->used)
-	{
-		if (room_in_bitfield(block, state->combi[i]->bitroute) == 1)
-		{
-			next = find_next_node(state->combi[i], block);
-			if (next == NULL)
-				return (EXIT_FAILURE);
-			del_tube(block, next, map);
-			del_tube(next, block, map);
-			return (EXIT_SUCCESS);
-		}
-		i++;
-	}
-	return (EXIT_FAILURE);
-}
-
-ssize_t		remove_blockage(t_best *state, t_map *map)
+ssize_t			remove_blockage(t_best *state, t_map *map)
 {
 	BITFIELD_TYPE	*in_paths;
 	BITFIELD_TYPE	*visited;
 	t_room			*found;
 	size_t			tried;
-	size_t			i;
+	ssize_t			i;
 
 	i = 0;
 	tried = 0;
@@ -164,16 +122,11 @@ ssize_t		remove_blockage(t_best *state, t_map *map)
 	add_to_bitfield(map->end, visited);
 	while (found == NULL && tried < map->end->neighbours_len)
 	{
-		if (find_most_promising_start(map->end, visited, in_paths, &i) == 0)
+		find_most_promising_start(map->end, visited, in_paths, &i);
+		if (i == -1)
 			return (EXIT_NO_BLOCKS);
 		tried++;
 		found = find_blockage(map->end->neighbours[i], visited, in_paths);
 	}
-	if (found != NULL)
-	{
-		printf("Found %s\n", found->name);
-		if (remove_conn(state, found, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-	}
-	return (EXIT_SUCCESS);
+	return (handle_return(state, found, map));
 }

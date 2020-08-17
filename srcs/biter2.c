@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 16:01:15 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/10 13:24:12 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 10:27:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			merge_bitfield(BITFIELD_TYPE *dst,
 	while (i < map->bitfield_len)
 	{
 		dst[i] |= src[i];
-		i++; 
+		i++;
 	}
 }
 

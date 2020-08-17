@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/11 14:55:19 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/17 12:23:07 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,22 +35,34 @@ RAW=	main\
 		outputter\
 		roundputter\
 		delete_rooms\
+		un_find_real_nb\
+		un_tubes_main\
 		un_tubes_delete\
+		un_remove_if_un\
 		un_tubes_neighbours_checks\
 		un_tubes_options_check\
 		un_tubes_queue\
 		un_tubes_remove\
+		un_qr_utils\
+		un_duplicate_paths\
 		un_tubes_short_checks\
 		un_tubes_utils\
 		un_tubes_utils_2\
+		un_tubes_utils_3\
 		un_setup_queue\
 		un_update_queue\
+		un_update_q_confl\
+		un_update_q_add_nbs\
+		un_tubes_execute_q\
+		un_sps_spe\
+		un_remove_dead_ends\
 		print\
 		traverse_bf\
 		df_routefinder\
 		df_rf_executor\
 		route_finder_utils\
 		remove_blockage\
+		remove_blockage_2\
 		compare_state_sol
 
 OBJ_DIR=obj/

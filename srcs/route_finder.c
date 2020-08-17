@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/12 13:34:44 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 11:00:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ ssize_t			find_routes(t_map *map)
 			return (EXIT_FAILURE);
 		if (traverse_bf(map->start, LVL_GRPH_S2E, map) == EXIT_FAILURE)//step 3: level graph start to end
 			return (EXIT_FAILURE);
-		// print_best(&state);
+		printf("\n\n");
+		print_best(&state);
 		blocks_found = remove_blockage(&state, map);
+		printf("\n\n");
 		if (blocks_found == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		compare_state_best(map, &state);
