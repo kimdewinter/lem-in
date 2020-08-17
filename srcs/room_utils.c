@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/09 11:56:36 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 13:28:18 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ ssize_t			purge_room(t_room **room)
 	return (EXIT_FAILURE);
 }
 /*
-** resets a room's variables to their default states,
+** resets a room's variables to their default candidates,
 ** frees all underlying allocated space(s)
 ** and finally the room itself
 */

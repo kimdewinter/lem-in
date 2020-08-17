@@ -93,11 +93,11 @@ BITFIELD_TYPE *in_paths)
 	return (found);
 }
 
-static ssize_t	handle_return(t_best *state, t_room *found, t_map *map)
+static ssize_t	handle_return(t_best *candidate, t_room *found, t_map *map)
 {
 	if (found != NULL)
 	{
-		if (remove_conn(state, found, map) == EXIT_FAILURE)
+		if (remove_conn(candidate, found, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
@@ -105,7 +105,7 @@ static ssize_t	handle_return(t_best *state, t_room *found, t_map *map)
 		return (EXIT_SUCCESS);
 }
 
-ssize_t			remove_blockage(t_best *state, t_map *map)
+ssize_t			remove_blockage(t_best *candidate, t_map *map)
 {
 	BITFIELD_TYPE	*in_paths;
 	BITFIELD_TYPE	*visited;
@@ -116,7 +116,7 @@ ssize_t			remove_blockage(t_best *state, t_map *map)
 	i = 0;
 	tried = 0;
 	found = NULL;
-	if (setup_in_paths(state, &in_paths, map) == EXIT_FAILURE
+	if (setup_in_paths(candidate, &in_paths, map) == EXIT_FAILURE
 	|| bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	bite_add_room_to_bitfield(map->end, visited);
@@ -128,5 +128,5 @@ ssize_t			remove_blockage(t_best *state, t_map *map)
 		tried++;
 		found = find_blockage(map->end->neighbours[i], visited, in_paths);
 	}
-	return (handle_return(state, found, map));
+	return (handle_return(candidate, found, map));
 }

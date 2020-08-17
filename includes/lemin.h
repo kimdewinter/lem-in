@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 13:02:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 13:24:27 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,10 +325,10 @@ void					remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
-void					compare_state_best(t_map *map, t_best *state);
-ssize_t					remove_blockage(t_best *state, t_map *map);
-ssize_t					remove_conn(t_best *state, t_room *block, t_map *map);
-ssize_t					setup_in_paths(t_best *state, BITFIELD_TYPE **in_paths,
+void					compare_candidate_best(t_map *map, t_best *candidate);
+ssize_t					remove_blockage(t_best *candidate, t_map *map);
+ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map);
+ssize_t					setup_in_paths(t_best *candidate, BITFIELD_TYPE **in_paths,
 										t_map *map);
 ssize_t					alloc_multiple_blank_routes(t_route ***dst,
 													const size_t route_num,
@@ -344,7 +344,7 @@ size_t					calc_cost(size_t ants, const t_best *routes);
 ssize_t					exec_find_routes_df(t_room *curr,
 											t_dfs_wrap *wrap);
 ssize_t					find_routes(t_map *map);
-ssize_t					find_routes_df(t_best *state, const t_map *map);
+ssize_t					find_routes_df(t_best *candidate, const t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
 ssize_t					traverse_bf(t_room *room_to_begin_from,

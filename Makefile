@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/17 12:23:07 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/17 13:29:08 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ RAW=	main\
 		un_qr_utils\
 		un_duplicate_paths\
 		un_tubes_short_checks\
-		un_tubes_utils\
+		un_tubes_utils_1\
 		un_tubes_utils_2\
 		un_tubes_utils_3\
 		un_setup_queue\
@@ -61,9 +61,9 @@ RAW=	main\
 		df_routefinder\
 		df_rf_executor\
 		route_finder_utils\
-		remove_blockage\
+		remove_blockage_1\
 		remove_blockage_2\
-		compare_state_sol
+		compare_candidate_sol
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
