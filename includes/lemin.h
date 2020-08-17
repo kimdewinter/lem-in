@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 12:23:40 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 13:02:40 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,23 +153,14 @@ typedef struct			s_room
 ** the structure of each room in the "ant hill"
 */
 
-typedef struct			s_find_routes_df_wrap
+typedef struct			s_dfs_wrap
 {
+	struct s_route		*route;
 	BITFIELD_TYPE		*visited;
-	BITFIELD_TYPE		*start_nb_visited;
-	t_room				*shortest_dist_to_end;
-	t_best				*candidate_best;
-}						t_find_routes_df_wrap;
+	t_best				*candidate;
+	const struct s_map	*map;
+}						t_dfs_wrap;
 
-typedef struct            s_shortest_dist
-{
-	t_room				**nbs;
-	t_room				*start;
-	size_t				nbs_len;
-	ssize_t				*nb_visited;
-	ssize_t				nb_vis_i_of_ret;
-	size_t				options_left;
-}						t_shortest_dist;
 
 typedef struct			s_map
 {
@@ -350,24 +341,18 @@ size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 													const t_room *best_so_far,
 													const t_room *candidate);
 size_t					calc_cost(size_t ants, const t_best *routes);
+ssize_t					exec_find_routes_df(t_room *curr,
+											t_dfs_wrap *wrap);
 ssize_t					find_routes(t_map *map);
-ssize_t					find_routes_df(t_best *state, t_map *map);
-void					handle_err_branch_or_new(t_route **dst);
+ssize_t					find_routes_df(t_best *state, const t_map *map);
 ssize_t					handle_err_route_finder(size_t err_code,
 												const char *line);
-ssize_t					handle_err_find_shortest_dist_option(
-							t_shortest_dist *to_free);
-ssize_t					init_find_route_df(t_find_routes_df_wrap *wrap,
-											t_room *begin,
-											const t_map *map);
 ssize_t					traverse_bf(t_room *room_to_begin_from,
 									const size_t call_code,
 									const t_map *map);
 ssize_t					max_parallels(size_t *result, const t_map *map);
-ssize_t					find_shortest_dist_option(t_room **ret_ptr,
-													t_room *root,
-													BITFIELD_TYPE *visited,
-													t_shortest_dist *shortwrap);
+t_room					*select_next_room(const t_room *curr,
+											const t_dfs_wrap *wrap);
 
 /*
 ** BITFIELD-TOOLKIT
@@ -375,15 +360,13 @@ ssize_t					find_shortest_dist_option(t_room **ret_ptr,
 void					merge_bitfield(BITFIELD_TYPE *dst,
 										BITFIELD_TYPE *src,
 										t_map *map);
-void					add_to_bitfield(t_room *curr, uint64_t *bitfield);
+void					bite_add_room_to_bitfield(t_room *curr,
+													uint64_t *bitfield);
 ssize_t					bite_alloc(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map);
 ssize_t					bite_bitroute_copy(BITFIELD_TYPE *dst,
 											const BITFIELD_TYPE *src,
 											const t_map *map);
-ssize_t					bite_add_room_to_bitfield(BITFIELD_TYPE *dst,
-													const BITFIELD_TYPE *src,
-													const t_map *map);
 ssize_t					bite_biteroute_allocmerge(BITFIELD_TYPE **dst,
 											const BITFIELD_TYPE *src1,
 											const BITFIELD_TYPE *src2,
@@ -393,7 +376,8 @@ ssize_t					allocopy_bitfield(BITFIELD_TYPE **dst,
 											BITFIELD_TYPE *src,
 											t_map *map);
 ssize_t					handle_err_biter(size_t err_code, const char *line);
-int						room_in_bitfield(t_room *curr, BITFIELD_TYPE *bitfield);
+int						room_in_bitfield(const t_room *curr,
+											BITFIELD_TYPE *bitfield);
 ssize_t					bite_room_new(t_room *room, const t_map *map);
 
 /*

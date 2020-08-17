@@ -6,13 +6,27 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 11:00:01 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 13:12:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
+void			reset_dist_to_x(t_table *rooms)
+{
+	size_t	i;
 
+	i = 0;
+	while (i < rooms->size)
+	{
+		if (rooms->entries[i] != NULL)
+		{
+			((t_room *)rooms->entries[i]->val)->dist_to_start = -1;
+			((t_room *)rooms->entries[i]->val)->dist_to_end = -1;
+		}
+		i++;
+	}
+}
 
 ssize_t			find_routes(t_map *map)
 {
@@ -30,13 +44,11 @@ ssize_t			find_routes(t_map *map)
 			return (EXIT_FAILURE);
 		if (traverse_bf(map->start, LVL_GRPH_S2E, map) == EXIT_FAILURE)//step 3: level graph start to end
 			return (EXIT_FAILURE);
-		printf("\n\n");
-		print_best(&state);
 		blocks_found = remove_blockage(&state, map);
-		printf("\n\n");
 		if (blocks_found == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		compare_state_best(map, &state);
+		reset_dist_to_x(map->rooms);
 		// printf("Current best solution:\nturns: %lu\nants: %ld\n", map->solution.turns, map->antmount);
 		// print_best(&map->solution);
 	}

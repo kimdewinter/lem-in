@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 16:31:00 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/13 19:50:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 13:10:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ size_t *added, BITFIELD_TYPE *added_to_queue)
 	{
 		if (added != NULL)
 			*added += 1;
-		add_to_bitfield(item->dst, added_to_queue);
+		bite_add_room_to_bitfield(item->dst, added_to_queue);
 		new = new_connection(item);
 		if (new)
 		{

@@ -50,7 +50,7 @@ t_map *map, int *changed)
 
 	i = 0;
 	setup_conn(&tmp, start);
-	add_to_bitfield(start, qr->visited);
+	bite_add_room_to_bitfield(start, qr->visited);
 	if (bite_alloc(&atq, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	while (i < start->neighbours_len)

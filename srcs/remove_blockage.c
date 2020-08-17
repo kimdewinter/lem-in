@@ -82,7 +82,7 @@ BITFIELD_TYPE *in_paths)
 	tried = 0;
 	if (room_in_bitfield(start, in_paths) == 1)
 		return (start);
-	add_to_bitfield(start, visited);
+	bite_add_room_to_bitfield(start, visited);
 	while (found == NULL && tried < start->neighbours_len)
 	{
 		if (find_most_promising(start, visited, &i) == 0)
@@ -119,7 +119,7 @@ ssize_t			remove_blockage(t_best *state, t_map *map)
 	if (setup_in_paths(state, &in_paths, map) == EXIT_FAILURE
 	|| bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	add_to_bitfield(map->end, visited);
+	bite_add_room_to_bitfield(map->end, visited);
 	while (found == NULL && tried < map->end->neighbours_len)
 	{
 		find_most_promising_start(map->end, visited, in_paths, &i);

@@ -30,7 +30,7 @@ ssize_t			update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 			if (un_add_nbs_to_queue(iter->dst, qr, map, changed) ==
 			EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			add_to_bitfield(iter->dst, qr->visited);
+			bite_add_room_to_bitfield(iter->dst, qr->visited);
 		}
 		prev = iter;
 		iter = iter->next;

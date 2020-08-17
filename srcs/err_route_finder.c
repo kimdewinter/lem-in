@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/07/23 14:15:58 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 10:32:14 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 13:07:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,27 +20,11 @@ ssize_t		handle_err_route_finder(size_t err_code, const char *line)
 		perror("Error: misallocation in routefinder-related function ");
 	else if (err_code == 2)
 		perror("Error: no valid route from start to end found\n");
+	else if (err_code == 3)
+		perror("Error: no room remaining in t_room array wrap->route->route\n");
+	else if (err_code == 4)
+		perror("Error: no room remaining in t_best candidate\n");
 	if (line != NULL)
 		perror(line);
-	return (EXIT_FAILURE);
-}
-
-void		handle_err_branch_or_new(t_route **dst)
-{
-	if (*dst == NULL)
-	{
-		if ((*dst)->bitroute != NULL)
-			free((*dst)->bitroute);
-		if ((*dst)->route != NULL)
-			free((*dst)->route);
-		free(*dst);
-		*dst = NULL;
-	}
-}
-
-ssize_t		handle_err_find_shortest_dist_option(t_shortest_dist *to_free)
-{
-	free(to_free->nb_visited);
-	to_free->nb_visited = NULL;
 	return (EXIT_FAILURE);
 }

@@ -54,7 +54,7 @@ static int		rearrange_nbs(t_room *from, t_room *to, size_t i)
 	t_room *tmp;
 
 	tmp = NULL;
-	add_to_bitfield(to, from->removed_conns);
+	bite_add_room_to_bitfield(to, from->removed_conns);
 	if (from->neighbours_len == 1)
 	{
 		from->neighbours[i] = NULL;
