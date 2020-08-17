@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/17 13:29:08 by kim           ########   odam.nl          #
+#    Updated: 2020/08/17 16:42:06 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ RAW=	main\
 		biter2\
 		calc_cost\
 		err_biter\
-		err_route_finder\
 		calc_ants_routes\
 		outputter\
 		roundputter\
@@ -57,13 +56,11 @@ RAW=	main\
 		un_sps_spe\
 		un_remove_dead_ends\
 		print\
-		traverse_bf\
-		df_routefinder\
-		df_rf_executor\
-		route_finder_utils\
 		remove_blockage_1\
 		remove_blockage_2\
-		compare_candidate_sol
+		compare_candidate_sol\
+		set_weights\
+		find_parallel_routes
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/

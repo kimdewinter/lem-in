@@ -27,9 +27,11 @@ void	print_map(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nSPE %d\nSPS %d\nJUNCTION %d\nNbs: %lu\n", table->entries[i]->key
+			ft_printf("KEY: %s\nSPE %d\nSPS %d\nDST START %lu\nDST END %lu\nJUNCTION %d\nNbs: %lu\n", table->entries[i]->key
 			, ((t_room *)table->entries[i]->val)->spe,
 			((t_room *)table->entries[i]->val)->sps,
+			((t_room *)table->entries[i]->val)->dist_to_start,
+			((t_room *)table->entries[i]->val)->dist_to_end,
 			((t_room *)table->entries[i]->val)->is_junction,
 			((t_room *)table->entries[i]->val)->neighbours_len);
 			tmp = (t_room *)table->entries[i]->val;
@@ -122,4 +124,29 @@ void		print_neighbours(const t_room *room)
 		i++;
 	}
 	printf("\n");
+}
+
+void		print_weight_queue(t_weight **q)
+{
+	t_weight *iter;
+
+	iter = *q;
+	while (iter)
+	{
+		printf("name %s\ndist %lu\n",iter->dst->name, iter->dist);
+		iter = iter->next;
+	}
+}
+
+void		print_troute(t_route *route)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < route->used)
+	{
+		printf("%s -->", route->route[i]->name);
+		i++;
+	}
+	printf("\n\n");
 }

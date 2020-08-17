@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 14:11:15 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/17 21:33:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@
 
 struct s_room;
 struct s_route;
+
+typedef struct			s_weight
+{
+	size_t				dist;
+	struct s_room		*dst;
+	struct s_weight		*next;
+}						t_weight;
 
 typedef struct			s_conn_wrap
 {
@@ -118,19 +125,6 @@ typedef	struct			s_route
 ** the structure of each valid route from the start to the end room
 */
 
-typedef struct			s_qnode
-{
-	struct s_room		*room;
-	struct s_qnode		*next;
-	struct s_qnode		*prev;
-}						t_qnode;
-
-typedef struct			s_qwrap
-{
-	struct s_qnode		*head;
-	struct s_qnode		*tail;
-}						t_qwrap;
-
 typedef struct			s_room
 {
 	char				*name;
@@ -142,6 +136,8 @@ typedef struct			s_room
 	ssize_t				ypos;
 	size_t				ant;
 	struct s_room		**neighbours;
+	int					*available;
+	size_t				viable_nbs;
 	size_t				neighbours_len;
 	size_t				conns_to;
 	size_t				room_i;
@@ -152,15 +148,6 @@ typedef struct			s_room
 /*
 ** the structure of each room in the "ant hill"
 */
-
-typedef struct			s_dfs_wrap
-{
-	struct s_route		*route;
-	BITFIELD_TYPE		*visited;
-	t_best				*candidate;
-	const struct s_map	*map;
-}						t_dfs_wrap;
-
 
 typedef struct			s_map
 {
@@ -330,29 +317,31 @@ ssize_t					remove_blockage(t_best *candidate, t_map *map);
 ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map);
 ssize_t					setup_in_paths(t_best *candidate, BITFIELD_TYPE **in_paths,
 										t_map *map);
-ssize_t					alloc_multiple_blank_routes(t_route ***dst,
-													const size_t route_num,
-													const size_t route_len,
-													const size_t bitroute_len);
-ssize_t					alloc_single_blank_route(t_route **dst,
-													const size_t route_len,
-													const size_t bitroute_len);
-size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
-													const t_room *best_so_far,
-													const t_room *candidate);
+ssize_t					find_parallel_routes(t_best *candidate, t_map *map);
+// ssize_t					alloc_multiple_blank_routes(t_route ***dst,
+// 													const size_t route_num,
+// 													const size_t route_len,
+// 													const size_t bitroute_len);
+// ssize_t					alloc_single_blank_route(t_route **dst,
+// 													const size_t route_len,
+// 													const size_t bitroute_len);
+// size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
+// 													const t_room *best_so_far,
+// 													const t_room *candidate);
+ssize_t					set_weights(t_map *map, int flow);
 size_t					calc_cost(size_t ants, const t_best *routes);
-ssize_t					exec_find_routes_df(t_room *curr,
-											t_dfs_wrap *wrap);
+// ssize_t					exec_find_routes_df(t_room *curr,
+// 											t_dfs_wrap *wrap);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_best *candidate, const t_map *map);
-ssize_t					handle_err_route_finder(size_t err_code,
-												const char *line);
-ssize_t					traverse_bf(t_room *room_to_begin_from,
-									const size_t call_code,
-									const t_map *map);
-ssize_t					max_parallels(size_t *result, const t_map *map);
-t_room					*select_next_room(const t_room *curr,
-											const t_dfs_wrap *wrap);
+// ssize_t					handle_err_route_finder(size_t err_code,
+// 												const char *line);
+// ssize_t					traverse_bf(t_room *room_to_begin_from,
+// 									const size_t call_code,
+// 									const t_map *map);
+// ssize_t					max_parallels(size_t *result, const t_map *map);
+// t_room					*select_next_room(const t_room *curr,
+// 											const t_dfs_wrap *wrap);
 
 /*
 ** BITFIELD-TOOLKIT
@@ -406,5 +395,6 @@ void					print_connection(t_connection *tmp);
 void					print_best(const t_best *best);
 void					print_rooms(const t_table *rooms);
 void					print_neighbours(const t_room *room);
-
+void					print_weight_queue(t_weight **q);
+void		print_troute(t_route *route);
 #endif

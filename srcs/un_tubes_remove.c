@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 15:46:16 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/13 19:26:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 21:43:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void		rm_found_un_conn(t_diamond *curr, int *changed, t_map *map)
 	&& (curr->src_side->dst != map->end && curr->src_side->dst != map->start)
 	&& has_conn_to(curr->side_nb->dst, curr->side_nb->dst_nb) == 1)
 	{
+		printf("nb through side doesnt help\n");
 		*changed = 1;
 		del_tube(curr->side_nb->dst, curr->side_nb->dst_nb, map);
 		if (curr->side_nb->dist != 1)
@@ -75,6 +76,7 @@ static void		rm_found_un_conn(t_diamond *curr, int *changed, t_map *map)
 	&& (curr->nb_dst.src != map->end && curr->nb_dst.src != map->start)
 	&& has_conn_to(curr->side_nb->src, curr->side_nb->src_nb) == 1)
 	{
+		printf("side through nb doesnt help\n");
 		*changed = 1;
 		del_tube(curr->side_nb->src, curr->side_nb->src_nb, map);
 		if (curr->side_nb->dist != 1)
@@ -89,6 +91,7 @@ void			rm_un_conn(t_triangle *tr, t_map *map, int *changed)
 
 	i = 0;
 	setup_diamond(&curr, &tr->side_nb, tr->src_side, &tr->nb_src);
+	printf("Neither adds options\n");
 	while (i < curr.side_nb->src->neighbours_len)
 	{
 		setup_conn(&curr.side_dst, curr.side_nb->src);
