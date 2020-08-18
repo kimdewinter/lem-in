@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 13:27:34 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/18 13:14:42 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 		if (room_in_bitfield(block, candidate->combi[i]->bitroute) == 1)
 		{
 			next = find_next_node(candidate->combi[i], block);
+			printf("Remove connection %s %s\n", block->name, next->name);
 			if (next == NULL)
 				return (EXIT_FAILURE);
 			del_tube(block, next, map);
