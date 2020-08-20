@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 16:30:32 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/13 19:29:23 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/18 11:24:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,16 @@ t_connection *nb_src, t_connection *side_nb)
 	while (i < nb_dst.src->neighbours_len)
 	{
 		setup_conn(&nb_dst, side_nb->dst);
-		if (nb_dst.src->neighbours[i] != NULL
+		if (room_in_bitfield(nb_dst.src->neighbours[i], nb_dst.src->unavailable) == 0
 		&& check_dst_src(side_nb, nb_src, nb_dst.src->neighbours[i]) == 0)
 		{
+			// printf("Passed checks\n");
 			set_conn(&nb_dst, nb_dst.src->neighbours[i]);
 			nb_dst_adv += check_adv_nb(src_side, side_nb, &nb_dst);
 		}
 		i++;
 	}
+	// printf("Nb dst adv %d\n", nb_dst_adv);
 	return (nb_dst_adv);
 }
 
@@ -77,7 +79,7 @@ t_connection *nb_dst)
 	while (j < side_dst.src->neighbours_len)
 	{
 		setup_conn(&side_dst, src_side->dst);
-		if (side_dst.src->neighbours[j] != NULL
+		if (room_in_bitfield(side_dst.src->neighbours[j], side_dst.src->unavailable) == 0
 		&& check_dst_src(src_side, side_nb, side_dst.src->neighbours[j])
 		== 0)
 		{
@@ -100,6 +102,7 @@ t_connection *nb_src, t_connection *side_nb)
 	t_connection	nb_dst;
 	size_t			i;
 
+	// printf("Short conn dsts side\n");
 	setup_conn(&nb_dst, side_nb->dst);
 	side_dst_adv = 0;
 	i = 0;
@@ -114,5 +117,6 @@ t_connection *nb_src, t_connection *side_nb)
 		}
 		i++;
 	}
+	// printf("Side dst adv %d\n", side_dst_adv);
 	return (side_dst_adv);
 }

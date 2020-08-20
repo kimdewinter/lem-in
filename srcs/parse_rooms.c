@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 21:37:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 22:01:34 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,10 +113,8 @@ static size_t	setup_bitrooms(t_map *map)
 	unsigned long long	i;
 	t_table				*table;
 	t_room				*tmp;
-	size_t				j;
 
 	i = 0;
-	j = 0;
 	table = map->rooms;
 	while (i < table->size)
 	{
@@ -124,17 +122,9 @@ static size_t	setup_bitrooms(t_map *map)
 		{
 			tmp = (t_room *)table->entries[i]->val;
 			if (bite_room_new(tmp, map) == EXIT_FAILURE
-			|| bite_alloc(&tmp->removed_conns, map) == EXIT_FAILURE)
+			|| bite_alloc(&tmp->removed_conns, map) == EXIT_FAILURE
+			|| bite_alloc(&tmp->unavailable, map) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			tmp->available = (int *)malloc(sizeof(int) * tmp->neighbours_len);
-			if (tmp->available == NULL)
-				return (EXIT_FAILURE);
-			j = 0;
-			while (j < tmp->neighbours_len)
-			{
-				tmp->available[j] = 1;
-				j++;
-			}
 		}
 		i++;
 	}

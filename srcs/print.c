@@ -27,17 +27,22 @@ void	print_map(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nSPE %d\nSPS %d\nDST START %lu\nDST END %lu\nJUNCTION %d\nNbs: %lu\n", table->entries[i]->key
+			ft_printf("KEY: %s\nSPE %d\nSPS %d\nDST START %lu\nDST END %lu\nJUNCTION %d\nNbs: %lu\nViable %lu\nConns to %lu\n", table->entries[i]->key
 			, ((t_room *)table->entries[i]->val)->spe,
 			((t_room *)table->entries[i]->val)->sps,
 			((t_room *)table->entries[i]->val)->dist_to_start,
 			((t_room *)table->entries[i]->val)->dist_to_end,
 			((t_room *)table->entries[i]->val)->is_junction,
-			((t_room *)table->entries[i]->val)->neighbours_len);
+			((t_room *)table->entries[i]->val)->neighbours_len,
+			((t_room *)table->entries[i]->val)->viable_nbs,
+			((t_room *)table->entries[i]->val)->conns_to);
 			tmp = (t_room *)table->entries[i]->val;
 			// printf("ID: %lu\nDead end: %d\n", tmp->room_i, tmp->dead_end);
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
-				ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);
+			{
+				if (room_in_bitfield(tmp->neighbours[j], tmp->unavailable) == 0)
+					ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);
+			}
 			printf("\n\n");
 		}
 	}
@@ -51,9 +56,10 @@ void		print_connection_queue(t_connection **q)
 	printf("QUEUE\n");
 	while (iter)
 	{
-		printf("\n\nSRC %s\nSRC NB: %s\nDST %s\nDST NB: %s\nDISTANCE %lu\n\n\n",
-		iter->src->name, iter->src_nb->name,
-		iter->dst->name, iter->dst_nb->name, iter->dist);
+		print_connection(iter);
+		// printf("\n\nSRC %s\nSRC NB: %s\nDST %s junction %d\nDST NB: %s\nDISTANCE %lu\n\n\n",
+		// iter->src->name, iter->src_nb->name,
+		// iter->dst->name, iter->dst->is_junction, iter->dst_nb->name, iter->dist);
 		iter = iter->next;
 	}
 }

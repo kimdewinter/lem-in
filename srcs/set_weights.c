@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:10:30 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 19:45:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 14:40:24 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,9 @@ BITFIELD_TYPE *visited, size_t weight)
 	bite_add_room_to_bitfield(start, visited);
 	while (i < start->neighbours_len)
 	{
-		if (start->neighbours[i] != 0)
-		{
-			if (add_q_item(q, weight, start->neighbours[i]) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
-			bite_add_room_to_bitfield(start->neighbours[i], visited);
-		}
+		if (add_q_item(q, weight, start->neighbours[i]) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		bite_add_room_to_bitfield(start->neighbours[i], visited);
 		i++;
 	}
 	return (EXIT_SUCCESS);
@@ -106,8 +103,7 @@ static ssize_t	add_nbs_to_q(t_weight **q, BITFIELD_TYPE *visited)
 	i = 0;
 	while (i < (*q)->dst->neighbours_len)
 	{
-		if ((*q)->dst->neighbours[i] != NULL
-		&& room_in_bitfield((*q)->dst->neighbours[i], visited) == 0)
+		if (room_in_bitfield((*q)->dst->neighbours[i], visited) == 0)
 		{
 			if (add_q_item(q, (*q)->dist + 1, (*q)->dst->neighbours[i])
 			== EXIT_FAILURE)

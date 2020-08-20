@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 15:47:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/13 19:22:56 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 15:31:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,17 @@ ssize_t				execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 
 	iter = *(qr->q);
 	prev = NULL;
+	// printf("EXECUTE QUEUE\n");
+	// print_connection_queue(qr->q);
 	while (iter)
 	{
+		// printf("IN EXECUTE QUEUE\n");
+		// print_connection(iter);
 		remove_duplicate_paths(&iter, map, changed);
 		if (iter->dst->is_junction == 0)
 			find_real_nb(iter);
+		// printf("AFTER RM DUPL PATHS IN EXECUTE QUEUE\n");
+		// print_connection(iter);
 		if (check_conn(iter, NULL, changed, map) == 1)
 			execute_queue_item(qr, &iter, changed, map);
 		else
@@ -66,7 +72,10 @@ ssize_t				execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		{
 			if (reset_q(qr, changed, map, &iter) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
+			// printf("EXECUTE QUEUE\n");
+			// print_connection_queue(qr->q);
 		}
 	}
+	// printf("After execute queue\n");
 	return (EXIT_SUCCESS);
 }

@@ -55,14 +55,17 @@ t_map *map, int *changed)
 		return (EXIT_FAILURE);
 	while (i < start->neighbours_len)
 	{
-		setup_conn(&tmp, start);
-		set_conn(&tmp, start->neighbours[i]);
-		if (check_conn(&tmp, &i, changed, map) == 1)
+		if (room_in_bitfield(start->neighbours[i], start->unavailable) == 0)
 		{
-			if (room_in_bitfield(tmp.dst, atq) == 1 && tmp.dst != map->end)
-				*changed += solve_queue_conflict_start(qr, &tmp, map, &i);
-			if (add_q_item_un(qr, &tmp, NULL, atq) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
+			setup_conn(&tmp, start);
+			set_conn(&tmp, start->neighbours[i]);
+			if (check_conn(&tmp, &i, changed, map) == 1)
+			{
+				if (room_in_bitfield(tmp.dst, atq) == 1 && tmp.dst != map->end)
+					*changed += solve_queue_conflict_start(qr, &tmp, map, &i);
+				if (add_q_item_un(qr, &tmp, NULL, atq) == EXIT_FAILURE)
+					return (EXIT_FAILURE);
+			}
 		}
 		i++;
 	}

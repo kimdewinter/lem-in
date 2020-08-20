@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 16:55:54 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/13 19:23:57 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 12:11:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int		is_nb_of_src(t_triangle *curr, t_map *map, int *changed)
 	size_t			i;
 
 	i = 0;
+	// printf("IS NB OF SRC\n");
 	setup_conn(&curr->nb_src, curr->side_nb.dst);
 	if (room_in_bitfield(curr->src_side->src, curr->nb_src.src->removed_conns)
 	== 1)
@@ -45,6 +46,7 @@ int		is_nb_of_other(t_room *dst, t_room *curr, t_map *map, int *changed)
 	t_connection	tmp;
 
 	i = 0;
+	// printf("IS NB OF OTHER\n");
 	setup_conn(&tmp, curr);
 	if (room_in_bitfield(dst, curr->removed_conns) == 1)
 		return (0);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 11:20:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 11:24:02 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 15:32:18 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,39 +14,87 @@
 
 static int		is_dead_end_first(t_room *curr)
 {
-	if (curr->neighbours_len == 0 || curr->conns_to == 0)
+	size_t	i;
+	size_t	mutual;
+
+	mutual = 0;
+	i = 0;
+	// printf("Curr %s\n", curr->name);
+	if (curr->viable_nbs == 0 || curr->conns_to == 0)
 		return (1);
-	if (curr->neighbours_len == 1)
+	if (curr->viable_nbs == 1)
 	{
-		if (curr->conns_to == 1 && is_mutual_conn(curr, curr->neighbours[0])
-		== 1)
+		while (i < curr->neighbours_len)
+		{
+			if (room_in_bitfield(curr->neighbours[i], curr->unavailable) == 0)
+			{
+				// printf("nb %s\n", curr->neighbours[i]->name);
+				if (is_mutual_conn(curr, curr->neighbours[i]) == 1)
+				{
+					// printf("Mutual\n");
+					mutual++;
+				}
+			}
+			i++;
+		}
+		if (mutual >= 1)
+		{
+			// printf("Dead end first %s\n", curr->name);
 			return (1);
+		}
 	}
+	// if (curr->conns_to == 1)
+	// {
+	// 	printf("Only one way to get to this node\n");
+	// 	exit (0);
+	// }
 	return (0);
 }
 
 static int		is_dead_end_cont(t_room *curr)
 {
-	if (curr->neighbours_len > 2)
+	size_t	i;
+	size_t	mutual;
+
+	i = 0;
+	mutual = 0;
+	if (curr->viable_nbs > 2)
 		return (0);
-	if (curr->neighbours_len == 1)
+	if (curr->viable_nbs == 1)
 	{
 		if (curr->conns_to == 1)
 			return (1);
 		if (curr->conns_to == 2)
 		{
-			if (is_mutual_conn(curr, curr->neighbours[0]) == 1)
+			while (i < curr->neighbours_len)
+			{
+				if (room_in_bitfield(curr->neighbours[i], curr->unavailable) == 0)
+				{
+					if (is_mutual_conn(curr, curr->neighbours[i]) == 1)
+						mutual++;
+				}
+				i++;
+			}
+			if (mutual >= 1)
 				return (1);
 		}
 	}
-	if (curr->neighbours_len == 2)
+	else if (curr->viable_nbs == 2)
 	{
 		if (curr->conns_to == 1)
 			return (1);
 		if (curr->conns_to == 2)
 		{
-			if (is_mutual_conn(curr, curr->neighbours[0]) == 1
-			|| is_mutual_conn(curr, curr->neighbours[1]) == 1)
+			while (i < curr->neighbours_len)
+			{
+				if (room_in_bitfield(curr->neighbours[i], curr->unavailable) == 0)
+				{
+					if (is_mutual_conn(curr, curr->neighbours[i]) == 1)
+						mutual++;
+				}
+				i++;
+			}
+			if (mutual >= 2)
 				return (1);
 		}
 	}
@@ -60,8 +108,10 @@ static void		remove_dead_end_from_nbs(t_room *dead, t_map *map)
 	t_room	*nb;
 
 	i = 0;
+	// printf("DEAD %s\nnbs %lu\n", dead->name, dead->neighbours_len);
 	while (i < dead->neighbours_len)
 	{
+		// printf("Neighbour: %s\n", dead->neighbours[i]->name);
 		if (dead->neighbours[i] != NULL)
 		{
 			j = 0;
@@ -70,7 +120,10 @@ static void		remove_dead_end_from_nbs(t_room *dead, t_map *map)
 			{
 				if (nb->neighbours[j] == dead)
 				{
-					j -= handle_nowhere_to_go(nb, dead, map);
+					//j -= 
+					// handle_nowhere_to_go(nb, dead, map);
+					i -= handle_nowhere_to_go(dead, nb, map);
+					// printf("j %lu\n", j);
 					break ;
 				}
 				j++;
@@ -106,6 +159,7 @@ static void		remove_dead_path(t_room **tmp, t_map *map)
 		else
 			break ;
 	}
+	// printf("prev %s\n", prev->name);
 	remove_dead_end_from_nbs(prev, map);
 }
 
@@ -125,6 +179,8 @@ void			remove_dead_ends(t_map *map, int *changed)
 				if (is_dead_end_first(tmp) == 1)
 				{
 					*changed = 1;
+					// printf("Dead end first %s viable nbs %lu conns to %lu\n", tmp->name,
+					// tmp->viable_nbs, tmp->conns_to);
 					remove_dead_path(&tmp, map);
 				}
 			}

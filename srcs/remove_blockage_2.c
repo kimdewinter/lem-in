@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 20:54:03 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/18 11:17:07 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 			next = find_next_node(candidate->combi[i], block);
 			if (next == NULL)
 				return (EXIT_FAILURE);
-			if (next == map->end)
-				printf("remove: %s %s\n", block->name, next->name);
+			// if (next == map->end)
+			// 	printf("remove: %s %s\n", block->name, next->name);
 			del_tube(block, next, map);
 			del_tube(next, block, map);
 			return (EXIT_SUCCESS);

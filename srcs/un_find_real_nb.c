@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 16:32:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 11:40:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/19 17:23:27 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static int		find_next(t_connection *tmp, t_room **curr, t_room **nb,
 int *found)
 {
 	if (*nb != tmp->dst_nb
-	&& *nb != tmp->dst)
+	&& *nb != tmp->dst
+	&& room_in_bitfield(*nb, (*curr)->unavailable) == 0)
 	{
 		if ((*nb)->is_junction == 0)
 		{
@@ -57,11 +58,11 @@ void			find_real_nb(t_connection *tmp)
 		i = 0;
 		while (i < nb->neighbours_len)
 		{
-			if (nb->neighbours[i] != NULL)
-			{
+			// if (room_in_bitfield(nb->neighbours[i], nb->unavailable) == 0)
+			// {
 				if (find_next(tmp, &nb, &(nb->neighbours[i]), &found) == 0)
 					break ;
-			}
+			// }
 			i++;
 		}
 		if (check_found(found, tmp, nb) == 0)

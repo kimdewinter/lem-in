@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 21:33:14 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 22:05:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ typedef struct			s_room
 	ssize_t				ypos;
 	size_t				ant;
 	struct s_room		**neighbours;
-	int					*available;
+	BITFIELD_TYPE		*unavailable;
 	size_t				viable_nbs;
 	size_t				neighbours_len;
 	size_t				conns_to;
@@ -202,6 +202,7 @@ ssize_t					parse_tubes(t_input_reader *input,
 									size_t *i);
 ssize_t					purge_room(t_room **room);
 ssize_t					sanitize_input(t_map *map);
+void					set_unavailable(t_room *from, t_room *to, t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
 									const ssize_t xpos,

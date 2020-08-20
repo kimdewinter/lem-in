@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 12:22:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 12:23:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 12:12:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ t_map *map, int *changed)
 	BITFIELD_TYPE	*atq;
 	size_t			added;
 
+	// printf("ADD NBS TO QUEUE\n");
 	init(&i, &added);
 	if (setup_add(&tmp, start, &atq, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);

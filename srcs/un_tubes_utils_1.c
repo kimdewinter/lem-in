@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   un_tubes_utils.c                                   :+:    :+:            */
+/*   un_tubes_utils_1.c                                 :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 16:29:08 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 11:48:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 12:12:06 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,18 @@ size_t		handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map)
 {
 	size_t	res;
 
+	// printf("HANDLE NOWHERE TO GO\n");
+	// if (room_in_bitfield(nb, src->unavailable) == 1)
+	// {
+	// 	nb->conns_to++;
+	// 	src->viable_nbs++;
+	// }
 	res = del_tube(src, nb, map);
+	// if (room_in_bitfield(src, nb->unavailable) == 1)
+	// {
+	// 	src->conns_to++;
+	// 	nb->viable_nbs++;
+	// }
 	del_tube(nb, src, map);
 	return (res);
 }

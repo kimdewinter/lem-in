@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 21:34:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/17 22:03:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ ssize_t			setup_room(t_room **dest,
 		room->spe = 0;
 		room->sps = 0;
 		room->bitroom = NULL;
-		room->available = NULL;
+		room->unavailable = NULL;
 		room->viable_nbs = 0;
 		room->removed_conns = NULL;
 		room->name = (char *)name;

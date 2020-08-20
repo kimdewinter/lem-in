@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 11:46:30 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 11:49:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 12:12:25 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ size_t		del_conn(t_room *src, t_room *nb, t_map *map)
 {
 	size_t ret;
 
+	// printf("DEL CONN\n");
 	ret = del_tube(src, nb, map);
 	del_tube(nb, src, map);
 	return (ret);
@@ -32,6 +33,7 @@ size_t		del_conn(t_room *src, t_room *nb, t_map *map)
 
 size_t		remove_path(t_connection *conn, t_map *map)
 {
+	// printf("REMOVE PATH\n");
 	del_conn(conn->dst, conn->dst_nb, map);
 	return (del_conn(conn->src, conn->src_nb, map));
 }
@@ -40,6 +42,7 @@ size_t		handle_loop(t_connection *conn, t_map *map, int *changed)
 {
 	size_t	ret;
 
+	// printf("\n\nHANDLE LOOP\n\n");
 	ret = del_tube(conn->src, conn->src_nb, map);
 	del_tube(conn->dst, conn->dst_nb, map);
 	del_tube(conn->dst_nb, conn->dst, map);

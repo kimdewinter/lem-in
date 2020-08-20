@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 20:41:08 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/18 11:17:22 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@
 
 ssize_t			find_routes(t_map *map)
 {
-		printf("start nbs %lu end nbs %lu\n", map->start->neighbours_len, map->end->neighbours_len);
+		// printf("start nbs %lu end nbs %lu\n", map->start->neighbours_len, map->end->neighbours_len);
 
 	t_best	candidate;
 	ssize_t	blocks_found;
@@ -65,7 +65,7 @@ ssize_t			find_routes(t_map *map)
 		// printf("Current best solution:\nturns: %lu\nants: %ld\n", map->solution.turns, map->antmount);
 		// print_best(&map->solution);
 	}
-	printf("start nbs %lu end nbs %lu\n", map->start->neighbours_len, map->end->neighbours_len);
+	// printf("start nbs %lu end nbs %lu\n", map->start->neighbours_len, map->end->neighbours_len);
 	exit (0);
 	return (EXIT_SUCCESS);
 	// PLACEHOLDER: check whether candidate is now better than the previous map->solution, replace if needed
