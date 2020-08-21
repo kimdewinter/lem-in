@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/14 20:05:07 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/21 16:25:07 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_room			*select_next_room(const t_room *curr, const t_dfs_wrap *wrap)
 		{
 			if (curr->neighbours[i] == wrap->map->end)
 				return (curr->neighbours[i]);
-			if ((next == NULL || 
+			if ((next == NULL ||
 				curr->neighbours[i]->dist_to_end < next->dist_to_end) &&
 				room_in_bitfield(curr->neighbours[i], wrap->visited) == 0 &&
 				curr->neighbours[i] != wrap->map->start &&

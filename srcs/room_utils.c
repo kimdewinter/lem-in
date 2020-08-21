@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 13:28:18 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/21 16:26:43 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static ssize_t	add_neighbour_new(t_room *room)
 		}
 	}
 	return (EXIT_FAILURE);
-}//creates a new room->neighbours char** array of 1 cell
+}
 
 static ssize_t	add_neighbour_grow(t_room *room)
 {
@@ -85,7 +85,7 @@ static ssize_t	add_neighbour_grow(t_room *room)
 		}
 	}
 	return (EXIT_FAILURE);
-}//expands the room->neighbours char** array by 1
+}
 
 ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 {
@@ -100,7 +100,7 @@ ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 				neighbour->conns_to++;
 				return (EXIT_SUCCESS);
 			}
-		}//handles when room->neighbours t_room** array is yet to be made
+		}
 		else if (room->neighbours_len > 0 && room->neighbours != NULL &&
 					add_neighbour_grow(room) == EXIT_SUCCESS)
 		{
@@ -110,7 +110,7 @@ ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 				neighbour->conns_to++;
 				return (EXIT_SUCCESS);
 			}
-		}//handles when room->neighbours t_room** array needs to grow by 1
+		}
 	}
 	return (EXIT_FAILURE);
 }

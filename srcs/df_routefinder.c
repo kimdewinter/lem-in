@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 15:49:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/14 20:57:35 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/21 16:25:23 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,6 @@ ssize_t			find_routes_df(t_best *candidate, const t_map *map)
 		next = select_next_room(map->start, &wrap);
 	}
 	delete_dfs_wrap(&wrap);
-	return (candidate->used == 0 ? 
+	return (candidate->used == 0 ?
 				handle_err_route_finder(2, NULL) : EXIT_SUCCESS);
 }

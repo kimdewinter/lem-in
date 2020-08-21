@@ -6,7 +6,7 @@
 /*   By: kim <kim@student.codam.nl>                   +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/02 19:04:32 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/11 15:19:03 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/21 16:42:35 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ inline static void	add_nb_to_q(t_qwrap *queue,
 	}
 }
 
-static ssize_t	add_nbs_to_q(t_qwrap *queue,
+static ssize_t		add_nbs_to_q(t_qwrap *queue,
 								t_room *room,
 								const size_t call_code)
 {
@@ -55,7 +55,7 @@ static ssize_t	add_nbs_to_q(t_qwrap *queue,
 				queue->head = queue->tail;
 		}
 		i++;
-	}//adding the rest of the neighbours
+	}
 	return (EXIT_SUCCESS);
 }
 
@@ -67,10 +67,11 @@ static ssize_t		exec_traverse_bf(t_qwrap *queue,
 	{
 		if (!(queue->head->room == map->start && call_code == LVL_GRPH_E2S))
 		{
-			if (add_nbs_to_q(queue, queue->head->room, call_code) == EXIT_FAILURE)
+			if (add_nbs_to_q(
+				queue, queue->head->room, call_code) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
 		}
-		if (queue->head->next == NULL)//if true, this was the last node
+		if (queue->head->next == NULL)
 		{
 			free(queue->head);
 			queue->head = NULL;
@@ -95,13 +96,11 @@ ssize_t				traverse_bf(t_room *room_to_begin_from,
 
 	queue.head = NULL;
 	queue.tail = NULL;
-	// set_visited(map->rooms->entries, map->rooms->size, 0);//set all rooms to unvisited
-	// room_to_begin_from->visited = 1;//set start/end room to visited
 	if (call_code == LVL_GRPH_E2S)
 		room_to_begin_from->dist_to_end = 0;
 	else
 		room_to_begin_from->dist_to_start = 0;
-	if (add_nbs_to_q(&queue, room_to_begin_from, call_code) == EXIT_FAILURE)//put neighbours of start/end in queue
+	if (add_nbs_to_q(&queue, room_to_begin_from, call_code) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	if (exec_traverse_bf(&queue, call_code, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
