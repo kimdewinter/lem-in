@@ -55,6 +55,7 @@ int				is_junction(t_room *curr, t_map *map)
 
 static void		check_junction(t_room *from, t_room *to, t_map *map, int found)
 {
+	printf("%s %d\n", from->name, from->is_junction);
 	if (found == 1)
 	{
 		to->conns_to--;
@@ -86,9 +87,10 @@ static int		rearrange_nbs(t_room *from, t_room *to, size_t i)
 	}
 }
 
-void			set_unavailable(t_room *from, t_room *to, t_map *map)
+void			set_unavailable(t_room *from, t_room *to, int *changed,
+t_map *map)
 {
-	// printf("\n\nMake unavailable %s to %s\n", to->name, from->name);
+	printf("\n\nMake unavailable %s to %s\n", to->name, from->name);
 	// if (from == map->start || to == map->end)
 	// {
 	// 	exit (0);
@@ -102,6 +104,12 @@ void			set_unavailable(t_room *from, t_room *to, t_map *map)
 	// to->conns_to);
 	// printf("From name %s viable %lu nbs %lu conns to %lu\n", from->name, from->viable_nbs, from->neighbours_len,
 	// from->conns_to);
+	if (room_in_bitfield(to, from->unavailable) == 1)
+	{
+		printf("ALREADY UNAVAILABLE\n");
+		return ;
+	}
+	*changed = 1;
 	if (room_in_bitfield(from, to->unavailable) == 1)
 	{
 		// printf("To already unavailable to from\n");
@@ -141,7 +149,7 @@ int				del_tube(t_room *from, t_room *to, t_map *map)
 	i = 0;
 	found = 0;
 	ret = 0;
-	// printf("Remove %s from %s\n", to->name, from->name);
+	printf("Remove %s from %s\n", to->name, from->name);
 	// printf("\nBEFORE\nTo name %s viable %lu nbs %lu conns to %lu\n", to->name, to->viable_nbs, to->neighbours_len,
 	// to->conns_to);
 	// printf("From name %s viable %lu nbs %lu conns to %lu\n", from->name, from->viable_nbs, from->neighbours_len,

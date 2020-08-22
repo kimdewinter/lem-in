@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 16:13:52 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 12:11:53 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 11:14:57 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		alt_opts_side(t_connection *side_nb, t_connection *src_side, t_map *map,
 int *changed)
 {
-	size_t			i;
+	ssize_t			i;
 	t_connection	side_dst;
 
 	i = 0;
@@ -24,7 +24,7 @@ int *changed)
 	if (side_dst.src == map->start || side_dst.src == map->end)
 		return (0);
 	// printf("SRC %s\n", side_dst.src->name);
-	while (i < side_dst.src->neighbours_len)
+	while ((size_t)i < side_dst.src->neighbours_len)
 	{
 		setup_conn(&side_dst, src_side->dst);
 		if (check_dst_src(src_side, &side_dst,
@@ -52,7 +52,7 @@ int *changed)
 
 int		alt_opts_nb(t_triangle *curr, t_map *map, int *changed)
 {
-	size_t			i;
+	ssize_t			i;
 	t_connection	nb_dst;
 
 	i = 0;
@@ -61,7 +61,7 @@ int		alt_opts_nb(t_triangle *curr, t_map *map, int *changed)
 	if (nb_dst.src == map->start || nb_dst.src == map->end)
 		return (0);
 	// printf("SRC %s OTHER %s\n", nb_dst.src->name, curr->side_nb.src->name);
-	while (i < nb_dst.src->neighbours_len)
+	while ((size_t)i < nb_dst.src->neighbours_len)
 	{
 		setup_conn(&nb_dst, curr->nb_src.src);
 		if (check_dst_src(curr->src_side, &curr->side_nb,

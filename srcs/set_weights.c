@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:10:30 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 14:40:24 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 16:32:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,12 @@ ssize_t		set_weights(t_map *map, int flow)
 			(*q)->dst->dist_to_start = (*q)->dist;
 		else
 			(*q)->dst->dist_to_end = (*q)->dist;
-		if (add_nbs_to_q(q, visited) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
+		if ((flow == 1 && (*q)->dst != map->end)
+		|| (flow == -1 && (*q)->dst != map->start))
+		{
+			if (add_nbs_to_q(q, visited) == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+		}
 		remove_q_item(q);
 	}
 	free (q);

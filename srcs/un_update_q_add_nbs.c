@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 12:22:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 12:12:30 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 11:18:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void		setup_and_set(t_connection *tmp, t_room *start, t_room *nb)
 	set_conn(tmp, nb);
 }
 
-static void		init(size_t *i, size_t *added)
+static void		init(ssize_t *i, size_t *added)
 {
 	*i = 0;
 	*added = 0;
@@ -43,7 +43,7 @@ static void		init(size_t *i, size_t *added)
 ssize_t			un_add_nbs_to_queue(t_room *start, t_conn_wrap *qr,
 t_map *map, int *changed)
 {
-	size_t			i;
+	ssize_t			i;
 	t_connection	tmp;
 	BITFIELD_TYPE	*atq;
 	size_t			added;
@@ -52,7 +52,7 @@ t_map *map, int *changed)
 	init(&i, &added);
 	if (setup_add(&tmp, start, &atq, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	while (i < start->neighbours_len)
+	while ((size_t)i < start->neighbours_len)
 	{
 		setup_and_set(&tmp, start, start->neighbours[i]);
 		if (check_conn(&tmp, &i, changed, map) == 1

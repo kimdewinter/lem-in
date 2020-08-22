@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/07 16:54:28 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 19:38:59 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,33 @@ static int		check_duplicate_tube(t_room *room1, t_room *room2)
 	return (0);
 }
 
-static void		set_sps_spe(t_room *room1, t_room *room2, t_map *map)
-{
-	if (room1 == map->start)
-		room2->sps = 1;
-	if (room1 == map->end)
-		room2->spe = 1;
-	if (room2 == map->start)
-		room1->sps = 1;
-	if (room2 == map->end)
-		room1->spe = 1;
-}
+// static void		set_sps_spe(t_room *room1, t_room *room2, t_map *map)
+// {
+// 	if (room1 == map->start)
+// 	{
+// 		room2->sps_len = 1;
+// 		room2->sps_start = map->start;
+// 		room2->sps = 1;
+// 	}
+// 	if (room1 == map->end)
+// 	{
+// 		room2->spe = 1;
+// 		room2->spe_len = 1;
+// 		room2->spe_start = map->end;
+// 	}
+// 	if (room2 == map->start)
+// 	{
+// 		room1->sps_len = 1;
+// 		room1->sps_start = map->start;
+// 		room1->sps = 1;
+// 	}
+// 	if (room2 == map->end)
+// 	{
+// 		room1->spe_len = 1;
+// 		room1->spe_start = map->end;
+// 		room1->spe = 1;
+// 	}
+// }
 
 static int		add_tubes(t_map *map, char **rooms)
 {
@@ -53,7 +69,7 @@ static int		add_tubes(t_map *map, char **rooms)
 		return (0);
 	if (add_neighbour(room2, room1) == EXIT_FAILURE)
 		return (0);
-	set_sps_spe(room1, room2, map);
+	// set_sps_spe(room1, room2, map);
 	return (1);
 }
 

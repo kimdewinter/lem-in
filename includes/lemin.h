@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 22:05:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 16:01:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ typedef struct			s_dupl
 {
 	struct s_connection	curr;
 	struct s_connection	other;
-	size_t				i;
-	size_t				j;
+	ssize_t				i;
+	ssize_t				j;
 }						t_dupl;
 
 typedef struct			s_triangle
@@ -144,6 +144,10 @@ typedef struct			s_room
 	BITFIELD_TYPE		*bitroom;
 	ssize_t				dist_to_end;
 	ssize_t				dist_to_start;
+	size_t				spe_len;
+	size_t				sps_len;
+	struct s_room		*spe_start;
+	struct s_room		*sps_start;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
@@ -202,7 +206,8 @@ ssize_t					parse_tubes(t_input_reader *input,
 									size_t *i);
 ssize_t					purge_room(t_room **room);
 ssize_t					sanitize_input(t_map *map);
-void					set_unavailable(t_room *from, t_room *to, t_map *map);
+ssize_t					set_sps_spe_rooms(t_map *map);
+void					set_unavailable(t_room *from, t_room *to, int *changed, t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
 									const ssize_t xpos,
@@ -290,7 +295,7 @@ int						shrt_conn_dsts_nb(t_connection *src_side,
 /*
 ** UNNECESSARY TUBES UTILS
 */
-int						check_conn(t_connection *conn, size_t *ind, int *changed, t_map *map);
+int						check_conn(t_connection *conn, ssize_t *ind, int *changed, t_map *map);
 size_t					handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map);
 size_t					kill_conn(t_room *src, t_room *nb, t_map *map);
 size_t					remove_path(t_connection *conn, t_map *map);
@@ -398,4 +403,5 @@ void					print_rooms(const t_table *rooms);
 void					print_neighbours(const t_room *room);
 void					print_weight_queue(t_weight **q);
 void		print_troute(t_route *route);
+void	print_triangle(t_triangle *tr);
 #endif

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 11:46:30 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 12:12:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 13:27:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,12 @@ size_t		del_conn(t_room *src, t_room *nb, t_map *map)
 
 size_t		remove_path(t_connection *conn, t_map *map)
 {
+	size_t	ret;
 	// printf("REMOVE PATH\n");
+	ret = del_conn(conn->src, conn->src_nb, map);
 	del_conn(conn->dst, conn->dst_nb, map);
-	return (del_conn(conn->src, conn->src_nb, map));
+	printf("RET %lu\n", ret);
+	return (ret);
 }
 
 size_t		handle_loop(t_connection *conn, t_map *map, int *changed)
@@ -51,14 +54,15 @@ size_t		handle_loop(t_connection *conn, t_map *map, int *changed)
 	return (ret);
 }
 
-int			check_conn(t_connection *conn, size_t *ind, int *changed,
+int			check_conn(t_connection *conn, ssize_t *ind, int *changed,
 t_map *map)
 {
-	size_t	res;
+	ssize_t	res;
 
 	res = 0;
 	if (conn->dst == conn->src)
 	{
+		printf("Handle loop\n");
 		res = handle_loop(conn, map, changed);
 		if (ind != NULL)
 			*ind -= res;
@@ -66,10 +70,26 @@ t_map *map)
 	}
 	if (conn->dst == NULL)
 	{
+		printf("Handle nowhere to go\n");
+		*changed = 1;
 		res = handle_nowhere_to_go(conn->src, conn->src_nb, map);
 		if (ind != NULL)
 			*ind -= res;
 		return (0);
+	}
+	if (conn->src == map->start && conn->dist != 1)
+	{
+		printf("CHECK CONN SPS FOUND\n");
+		conn->dst->sps = 1;
+		conn->dst->sps_len = conn->dist;
+		conn->dst->sps_start = conn->dst_nb;
+	}
+	if (conn->dst == map->end && conn->dist != 1)
+	{
+		printf("CHECK CONN SPE FOUND\n");
+		conn->src->spe = 1;
+		conn->src->spe_len = conn->dist;
+		conn->src->spe_start = conn->src_nb;
 	}
 	return (1);
 }

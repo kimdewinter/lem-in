@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/04 16:55:54 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 12:11:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 11:14:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		is_nb_of_src(t_triangle *curr, t_map *map, int *changed)
 {
-	size_t			i;
+	ssize_t			i;
 
 	i = 0;
 	// printf("IS NB OF SRC\n");
@@ -22,7 +22,7 @@ int		is_nb_of_src(t_triangle *curr, t_map *map, int *changed)
 	if (room_in_bitfield(curr->src_side->src, curr->nb_src.src->removed_conns)
 	== 1)
 		return (0);
-	while (i < curr->nb_src.src->neighbours_len)
+	while ((size_t)i < curr->nb_src.src->neighbours_len)
 	{
 		setup_conn(&curr->nb_src, curr->side_nb.dst);
 		if (curr->nb_src.src->neighbours[i] != curr->side_nb.dst
@@ -42,7 +42,7 @@ int		is_nb_of_src(t_triangle *curr, t_map *map, int *changed)
 
 int		is_nb_of_other(t_room *dst, t_room *curr, t_map *map, int *changed)
 {
-	size_t			i;
+	ssize_t			i;
 	t_connection	tmp;
 
 	i = 0;
@@ -50,7 +50,7 @@ int		is_nb_of_other(t_room *dst, t_room *curr, t_map *map, int *changed)
 	setup_conn(&tmp, curr);
 	if (room_in_bitfield(dst, curr->removed_conns) == 1)
 		return (0);
-	while (i < curr->neighbours_len)
+	while ((size_t)i < curr->neighbours_len)
 	{
 		setup_conn(&tmp, curr);
 		set_conn(&tmp, curr->neighbours[i]);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/17 22:03:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/20 16:25:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ ssize_t			setup_room(t_room **dest,
 		room->dist_to_end = 0;
 		room->dist_to_start = 0;
 		*dest = room;
+		room->spe_len = 0;
+		room->sps_len = 0;
+		room->spe_start = NULL;
+		room->sps_start = NULL;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);

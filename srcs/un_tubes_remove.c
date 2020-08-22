@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 15:46:16 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 12:12:01 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 16:03:48 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,32 @@ static void		compr_nb_side_dst(t_diamond *curr)
 
 static void		rm_found_un_conn(t_diamond *curr, int *changed, t_map *map)
 {
-	// printf("Src to side\n");
-	// print_connection(curr->src_side);
-	// printf("nb to src\n");
-	// print_connection(curr->nb_src);
-	// printf("side to nb\n");
-	// print_connection(curr->side_nb);
+	printf("Src to side\n");
+	print_connection(curr->src_side);
+	printf("nb to src\n");
+	print_connection(curr->nb_src);
+	printf("side to nb\n");
+	print_connection(curr->side_nb);
 	if (curr->nb_improved_by_side == 0
 	&& (curr->src_side->dst != map->end && curr->src_side->dst != map->start)
 	&& has_conn_to(curr->side_nb->dst, curr->side_nb->dst_nb) == 1)
 	{
-		*changed = 1;
+		// *changed = 1;
 		// if (curr->side_nb->dst->dist_to_start <= curr->side_nb->src->dist_to_start)
 		// printf("nb %s is closer or equal to start %s\n", curr->side_nb->dst->name,
 		// curr->side_nb->dst_nb->name);
-		set_unavailable(curr->side_nb->dst, curr->side_nb->dst_nb, map);
+		set_unavailable(curr->side_nb->dst, curr->side_nb->dst_nb, changed, map);
 		if (curr->side_nb->dist != 1)
-			set_unavailable(curr->side_nb->src_nb, curr->side_nb->src, map);
+			set_unavailable(curr->side_nb->src_nb, curr->side_nb->src, changed, map);
 	}
 	if (curr->side_improved_by_nb == 0
 	&& (curr->nb_dst.src != map->end && curr->nb_dst.src != map->start)
 	&& has_conn_to(curr->side_nb->src, curr->side_nb->src_nb) == 1)
 	{
-		*changed = 1;
-		set_unavailable(curr->side_nb->src, curr->side_nb->src_nb, map);
+		// *changed = 1;
+		set_unavailable(curr->side_nb->src, curr->side_nb->src_nb, changed, map);
 		if (curr->side_nb->dist != 1)
-			set_unavailable(curr->side_nb->dst_nb, curr->side_nb->dst, map);
+			set_unavailable(curr->side_nb->dst_nb, curr->side_nb->dst, changed, map);
 	}
 	// if (curr->side_nb->dst->name[0] == 'S' && curr->side_nb->dst_nb->name[0] == '2')
 	// 	exit (0);
@@ -100,7 +100,7 @@ void			rm_un_conn(t_triangle *tr, t_map *map, int *changed)
 	size_t			i;
 
 	i = 0;
-	// printf("\n\nREMOVE UN CONN\n\n");
+	printf("\n\nREMOVE UN CONN\n\n");
 	setup_diamond(&curr, &tr->side_nb, tr->src_side, &tr->nb_src);
 	while (i < curr.side_nb->src->neighbours_len)
 	{
@@ -108,7 +108,8 @@ void			rm_un_conn(t_triangle *tr, t_map *map, int *changed)
 		if (curr.side_nb->src->neighbours[i] != NULL
 		&& check_dst_src(curr.src_side, curr.side_nb,
 		curr.side_nb->src->neighbours[i]) == 0
-		&& room_in_bitfield(curr.side_nb->src->neighbours[i], curr.side_nb->src->unavailable) == 0)
+		&& room_in_bitfield(curr.side_nb->src->neighbours[i],
+		curr.side_nb->src->unavailable) == 0)
 		{
 			curr.curr_nb_side = curr.side_nb->src->neighbours[i];
 			compr_nb_side_dst(&curr);

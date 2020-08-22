@@ -37,6 +37,14 @@ void	print_map(t_map *map)
 			((t_room *)table->entries[i]->val)->viable_nbs,
 			((t_room *)table->entries[i]->val)->conns_to);
 			tmp = (t_room *)table->entries[i]->val;
+			if (tmp->sps == 1 && tmp->sps_len != 0)
+			{
+				printf("sps conn %s\nsps dist %lu\n", tmp->sps_start->name, tmp->sps_len);
+			}
+			if (tmp->spe == 1 && tmp->spe_len != 0)
+			{
+				printf("spe conn %s\nspe dist %lu\n", tmp->spe_start->name, tmp->spe_len);
+			}
 			// printf("ID: %lu\nDead end: %d\n", tmp->room_i, tmp->dead_end);
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
 			{
@@ -155,4 +163,14 @@ void		print_troute(t_route *route)
 		i++;
 	}
 	printf("\n\n");
+}
+
+void	print_triangle(t_triangle *tr)
+{
+	printf("SRC TO SIDE\n");
+	print_connection(tr->src_side);
+	printf("SIDE TO NB\n");
+	print_connection(&tr->side_nb);
+	printf("NB TO SRC\n");
+	print_connection(&tr->nb_src);
 }

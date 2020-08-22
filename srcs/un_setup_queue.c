@@ -13,10 +13,11 @@
 #include "../includes/lemin.h"
 
 static int		solve_queue_conflict_start(t_conn_wrap *qr, t_connection *tmp,
-t_map *map, size_t *i)
+t_map *map, ssize_t *i)
 {
 	t_connection	*iter;
 
+	printf("SOLVE QUEUE CONFLICT\n");
 	iter = *(qr->q);
 	while (iter)
 	{
@@ -44,7 +45,7 @@ t_map *map, size_t *i)
 ssize_t			un_add_start_nbs_to_q(t_room *start, t_conn_wrap *qr,
 t_map *map, int *changed)
 {
-	size_t			i;
+	ssize_t			i;
 	t_connection	tmp;
 	BITFIELD_TYPE	*atq;
 
@@ -53,7 +54,7 @@ t_map *map, int *changed)
 	bite_add_room_to_bitfield(start, qr->visited);
 	if (bite_alloc(&atq, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	while (i < start->neighbours_len)
+	while ((size_t)i < start->neighbours_len)
 	{
 		if (room_in_bitfield(start->neighbours[i], start->unavailable) == 0)
 		{
@@ -61,10 +62,14 @@ t_map *map, int *changed)
 			set_conn(&tmp, start->neighbours[i]);
 			if (check_conn(&tmp, &i, changed, map) == 1)
 			{
+				// print_connection(&tmp);
 				if (room_in_bitfield(tmp.dst, atq) == 1 && tmp.dst != map->end)
 					*changed += solve_queue_conflict_start(qr, &tmp, map, &i);
-				if (add_q_item_un(qr, &tmp, NULL, atq) == EXIT_FAILURE)
-					return (EXIT_FAILURE);
+				if (tmp.dst != map->end)
+				{
+					if (add_q_item_un(qr, &tmp, NULL, atq) == EXIT_FAILURE)
+						return (EXIT_FAILURE);
+				}
 			}
 		}
 		i++;

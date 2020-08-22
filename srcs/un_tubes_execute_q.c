@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 15:47:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/20 15:31:43 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/22 13:15:49 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int *changed, t_map *map)
 	t_connection *prev;
 
 	prev = NULL;
+	printf("EXECUTE QUEUE ITEM\n");
+	print_connection(*iter);
 	if (!((*iter)->src == map->start && (*iter)->dst == map->end))
 	{
 		if (del_un_tubes(*iter, changed, map) == 1)
@@ -49,8 +51,8 @@ ssize_t				execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 
 	iter = *(qr->q);
 	prev = NULL;
-	// printf("EXECUTE QUEUE\n");
-	// print_connection_queue(qr->q);
+	printf("\n\nQUEUE\n");
+	print_connection_queue(qr->q);
 	while (iter)
 	{
 		// printf("IN EXECUTE QUEUE\n");
@@ -72,8 +74,8 @@ ssize_t				execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 		{
 			if (reset_q(qr, changed, map, &iter) == EXIT_FAILURE)
 				return (EXIT_FAILURE);
-			// printf("EXECUTE QUEUE\n");
-			// print_connection_queue(qr->q);
+			printf("\n\nQUEUE\n");
+			print_connection_queue(qr->q);
 		}
 	}
 	// printf("After execute queue\n");
