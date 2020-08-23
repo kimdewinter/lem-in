@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 12:05:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 19:25:13 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,13 @@ ssize_t				sanitize_input(t_map *map)
 	if (res != 1)
 		return (res);
 	flag_conj(map);
+	set_sps_spe_rooms(map);
+	return (EXIT_SUCCESS);
+	// return (EXIT_SUCCESS);
+
 	// remove_sps_spe_conns(map);
 	// print_map(map);
 	// exit (0);
-	set_sps_spe_rooms(map);
 	// remove_dead_ends(map, &changed);
 	// set_weights(map, 1);
 	// remove_sps_spe_conns(map);

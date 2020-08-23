@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/23 11:00:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 17:38:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # define EXIT_ROUTEFOUND 2
 # define EXIT_NO_BLOCKS 2
 # define DEBUG 0
+# define PATHS_DONE 2
 
 # include "../lib/lib.h"
 # include <limits.h>
@@ -32,6 +33,13 @@
 
 struct s_room;
 struct s_route;
+
+typedef struct 			s_weight_wrap
+{
+	BITFIELD_TYPE		*visited;
+	BITFIELD_TYPE		*in_paths;
+	struct s_weight		**q;
+}						t_weight_wrap;
 
 typedef struct			s_weight
 {
@@ -105,8 +113,10 @@ typedef struct			s_routeput
 typedef struct			s_best
 {
 	struct s_route		**combi;
+	BITFIELD_TYPE		*in_paths;
 	size_t				used;
 	size_t				len;
+	size_t				prev_turns;
 	size_t				turns;
 }						t_best;
 /*
@@ -318,6 +328,9 @@ void					remove_q_item_un(t_conn_wrap *qr, t_connection *item);
 /*
 ** ROUTE FINDING
 */
+size_t					calc_cost_add_route(t_best *candidate, t_route *route,
+												t_map *map);
+void					reset_dists(t_table *rooms, int to_start, int to_end);
 void					compare_candidate_best(t_map *map, t_best *candidate);
 ssize_t					remove_blockage(t_best *candidate, t_map *map);
 ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map);
@@ -334,7 +347,7 @@ ssize_t					find_parallel_routes(t_best *candidate, t_map *map);
 // size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
 // 													const t_room *best_so_far,
 // 													const t_room *candidate);
-ssize_t					set_weights(t_map *map, int flow);
+ssize_t					set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths);
 size_t					calc_cost(size_t ants, const t_best *routes);
 // ssize_t					exec_find_routes_df(t_room *curr,
 // 											t_dfs_wrap *wrap);
@@ -404,4 +417,5 @@ void					print_neighbours(const t_room *room);
 void					print_weight_queue(t_weight **q);
 void		print_troute(t_route *route);
 void	print_triangle(t_triangle *tr);
+void		print_in_paths(BITFIELD_TYPE *in_paths, t_map *map);
 #endif

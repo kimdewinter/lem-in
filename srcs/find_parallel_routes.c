@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 21:14:21 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 19:12:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,56 +37,98 @@ void			reset_route(t_route *route)
 	route->used = 0;
 }
 
-static ssize_t	commit_route(t_best *candidate, t_route *route, t_map *map)
+static ssize_t	init_combi(t_map *map, t_best **candidate)
 {
-	size_t	i;
 	size_t	num_routes;
 
-	i = 0;
-	num_routes = 0;
-	if (candidate->combi == NULL)
-	{
-		printf("Init candidate\n\n");
-		if (map->end->neighbours_len < map->start->neighbours_len)
-			num_routes = map->end->neighbours_len;
-		else
-			num_routes = map->start->neighbours_len;
-		candidate->combi = (t_route **)malloc(sizeof(t_route *) * num_routes);
-		printf("Num routes %lu\n", num_routes);
-		if (candidate->combi == NULL)
-			return (EXIT_FAILURE);
-		candidate->len = num_routes;
-	}
+	if (map->end->neighbours_len < map->start->neighbours_len)
+		num_routes = map->end->neighbours_len;
+	else
+		num_routes = map->start->neighbours_len;
+	(*candidate)->combi = (t_route **)malloc(sizeof(t_route *) * num_routes);
+	if ((*candidate)->combi == NULL)
+		return (EXIT_FAILURE);
+	if (bite_alloc(&((*candidate)->in_paths), map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	(*candidate)->len = num_routes;
+	return (EXIT_SUCCESS);
+}
+
+static ssize_t	init_route(t_best *candidate, t_map *map, t_route *route)
+{
+	// printf("INIT ROUTE\n");
 	candidate->combi[candidate->used] = (t_route *)malloc(sizeof(t_route));
 	if (candidate->combi[candidate->used] == NULL)
 		return (EXIT_FAILURE);
-	candidate->combi[candidate->used]->route = (t_room **)malloc(sizeof(t_room *) *
-	route->used);
+	candidate->combi[candidate->used]->route =
+	(t_room **)malloc(sizeof(t_room *) * route->used);
 	if (candidate->combi[candidate->used]->route == NULL)
 		return (EXIT_FAILURE);
-	if (bite_alloc(&candidate->combi[candidate->used]->bitroute, map) == EXIT_FAILURE)
+	if (bite_alloc(&candidate->combi[candidate->used]->bitroute, map)
+	== EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	while (i < route->used)
-	{
-		if (route->route[i] != map->end)
-			bite_add_room_to_bitfield(route->route[i], candidate->combi[candidate->used]->bitroute);
-		i++;
-	}
+	return (EXIT_SUCCESS);	
+}
+
+static void	set_route(t_best *candidate, t_route *route, t_map *map)
+{
+	size_t	i;
+
 	i = 0;
-	// printf("Route used %lu Candidate used %lu\n", route->used, candidate->used);
+	// printf("SET ROUTE\n");
 	while (i < route->used)
 	{
-		// printf("In while %lu\n", i);
 		candidate->combi[candidate->used]->route[i] = route->route[i];
-		// printf("%s\n", candidate->combi[candidate->used]->route[i]->name);
+		if (route->route[i] != map->end)
+		{
+			bite_add_room_to_bitfield(route->route[i],
+			candidate->combi[candidate->used]->bitroute);
+			bite_add_room_to_bitfield(route->route[i], candidate->in_paths);
+		}
 		i++;
 	}
 	candidate->combi[candidate->used]->len = route->len;
 	candidate->combi[candidate->used]->used = route->used;
-	// printf("PRINT ROUTE\n\n");
-	// printf("Used %lu\n", candidate->combi[candidate->used]->used);
-	// print_troute(candidate->combi[candidate->used]);
 	candidate->used++;
+	candidate->turns = calc_cost(map->antmount, candidate);
+}
+
+static int		is_improvement(t_best *best, t_route *add, t_map *map)
+{
+	size_t	new_cost;
+
+	// printf("CHECK IF IMPROVEMENT\n");
+	new_cost = calc_cost_add_route(best, add, map);
+	if (new_cost >= best->turns)
+		return (0);
+	return (1);
+}
+
+static ssize_t	commit_route(t_best *candidate, t_route *route, t_map *map)
+{
+	int		first;
+
+	first = 0;
+	// printf("COMMIT ROUTE\n");
+	if (candidate->combi == NULL)
+	{
+		if (init_combi(map, &candidate) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		first = 1;
+	}
+	if (first == 0)
+	{
+		candidate->prev_turns = candidate->turns;
+		if (is_improvement(candidate, route, map) == 0)
+			return (PATHS_DONE);
+	}
+	if (init_route(candidate, map, route) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
+	set_route(candidate, route, map);
+	if (candidate->used == (size_t)map->antmount ||
+	candidate->used == map->start->neighbours_len ||
+	candidate->used == map->end->neighbours_len)
+		return (PATHS_DONE);
 	return (EXIT_SUCCESS);
 }
 
@@ -98,9 +140,13 @@ static void		find_best_option(t_room *start, BITFIELD_TYPE *visited, ssize_t *i)
 	*i = 0;
 	j = *i;
 	best = -1;
+	// printf("START %s\n", start->name);
 	while (j < start->neighbours_len)
 	{
-		if (room_in_bitfield(start->neighbours[j], visited) == 0)
+		// printf("Candidate %s\n", start->neighbours[j]->name);
+		if (room_in_bitfield(start->neighbours[j], visited) == 0
+		&& room_in_bitfield(start->neighbours[j], start->unavailable) == 0
+		&& start->neighbours[j]->dist_to_end >= 0)
 		{
 			if (best == -1)
 				best = j;
@@ -109,7 +155,13 @@ static void		find_best_option(t_room *start, BITFIELD_TYPE *visited, ssize_t *i)
 				if (start->neighbours[j]->dist_to_end
 				< start->neighbours[best]->dist_to_end)
 					best = j;
+				if (start->neighbours[j]->spe == 1
+				&& (ssize_t)start->neighbours[j]->spe_len ==
+				start->neighbours[best]->dist_to_end)
+					best = j;
 			}
+			/* Make sure to choose the spe option if it exist and
+			it's len is not longer than the current best */
 		}
 		j++;
 	}
@@ -133,7 +185,7 @@ t_route *route, t_map *map)
 	{
 		find_best_option(start, visited, &i);
 		// if (i != -1)
-		// 	printf("Best option %s\n", start->neighbours[i]->name);
+		// 	printf("Best option cont %s\n", start->neighbours[i]->name);
 		tried++;
 		if (i == -1)
 			return (0);
@@ -142,8 +194,8 @@ t_route *route, t_map *map)
 		found = find_route(start->neighbours[i], visited, route, map);
 		if (found == 1)
 			return (1);
-		route->route[route->used] = NULL;
 		route->used--;
+		route->route[route->used] = NULL;
 	}
 	return (0);
 }
@@ -151,7 +203,9 @@ t_route *route, t_map *map)
 void			setup_candidate(t_best *candidate)
 {
 	candidate->combi = NULL;
+	candidate->in_paths = NULL;
 	candidate->len = 0;
+	candidate->prev_turns = 0;
 	candidate->turns = 0;
 	candidate->used = 0;
 }
@@ -162,11 +216,13 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 	size_t			tried;
 	size_t			found;
 	t_route			route;
+	size_t			ret;
 	BITFIELD_TYPE	*visited;
 
 	i = 0;
 	tried = 0;
 	found = 0;
+	ret = 0;
 	// printf("Before find parallel route\n");
 	// print_map(map);
 	setup_candidate(candidate);
@@ -178,24 +234,33 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 	while (tried < map->start->neighbours_len)
 	{
 		find_best_option(map->start, visited, &i);
-		if (i != -1)
-			printf("Best option %s\n", map->start->neighbours[i]->name);
+		// if (i != -1)
+		// 	printf("Best option name %s\n", map->start->neighbours[i]->name);
 		tried++;
 		if (i == -1)
 			return (EXIT_SUCCESS);
 		route.route[route.used] = map->start->neighbours[i];
 		route.used++;
 		found = find_route(map->start->neighbours[i], visited, &route, map);
+		// printf("FOUND %ld\n", found);
 		if (found == 1)
 		{
-			printf("Found way to end\n");
+			// printf("Found way to end\n");
 			found = 0;
 			// printf("Commit\n");
-			if (commit_route(candidate, &route, map) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
+			ret = commit_route(candidate, &route, map);
+			if (ret == EXIT_FAILURE || ret == PATHS_DONE)
+			{
+				free(route.route);
+				free(visited);
+				return (ret);
+			}
+			reset_dists(map->rooms, 0, 1);
+			set_weights(map, -1, candidate->in_paths);
 		}
 		reset_route(&route);
 	}
 	free (visited);
+	free (route.route);
 	return (EXIT_SUCCESS);
 }

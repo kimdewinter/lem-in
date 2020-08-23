@@ -27,7 +27,7 @@ void	print_map(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nSPE %d\nSPS %d\nDST START %lu\nDST END %lu\nJUNCTION %d\nNbs: %lu\nViable %lu\nConns to %lu\n", table->entries[i]->key
+			ft_printf("KEY: %s\nSPE %d\nSPS %d\nDST START %ld\nDST END %ld\nJUNCTION %d\nNbs: %lu\nViable %lu\nConns to %lu\n", table->entries[i]->key
 			, ((t_room *)table->entries[i]->val)->spe,
 			((t_room *)table->entries[i]->val)->sps,
 			((t_room *)table->entries[i]->val)->dist_to_start,
@@ -107,6 +107,19 @@ void		print_best(const t_best *best)
 		i++;
 	}
 	printf("\nTOTAL ROUTES FOUND: %lu\n", best->used);
+}
+
+void		print_in_paths(BITFIELD_TYPE *in_paths, t_map *map)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		printf("%lu ", in_paths[i]);
+		i++;
+	}
+	printf("\n\n");
 }
 
 void		print_rooms(const t_table *rooms)

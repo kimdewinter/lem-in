@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/20 17:57:38 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 12:04:58 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 16:58:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ ssize_t		set_sps_rooms(t_map *map)
 		}
 		moved = 0;
 	}
+	free (visited);
 	return (EXIT_SUCCESS);	
 }
 
@@ -163,6 +164,7 @@ ssize_t		set_spe_rooms(t_map *map)
 		}
 		moved = 0;
 	}
+	free (visited);
 	return (EXIT_SUCCESS);	
 }
 
