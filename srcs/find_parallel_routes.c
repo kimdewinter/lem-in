@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 19:38:58 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 20:36:24 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,12 +140,9 @@ static void		find_best_option(t_room *start, BITFIELD_TYPE *visited, ssize_t *i)
 	*i = 0;
 	j = *i;
 	best = -1;
-	// printf("START %s\n", start->name);
 	while (j < start->neighbours_len)
 	{
-		// printf("Candidate %s\n", start->neighbours[j]->name);
 		if (room_in_bitfield(start->neighbours[j], visited) == 0
-		&& room_in_bitfield(start->neighbours[j], start->unavailable) == 0
 		&& start->neighbours[j]->dist_to_end >= 0)
 		{
 			if (best == -1)
@@ -155,8 +152,9 @@ static void		find_best_option(t_room *start, BITFIELD_TYPE *visited, ssize_t *i)
 				if (start->neighbours[j]->dist_to_end
 				< start->neighbours[best]->dist_to_end)
 					best = j;
-				if (start->neighbours[j]->spe == 1
-				&& (ssize_t)start->neighbours[j]->spe_len ==
+				if (start->spe == 1
+				&& start->neighbours[j] == start->spe_start
+				&& start->neighbours[j]->dist_to_end ==
 				start->neighbours[best]->dist_to_end)
 					best = j;
 			}
@@ -184,8 +182,6 @@ t_route *route, t_map *map)
 	while (found == 0 && tried < start->neighbours_len)
 	{
 		find_best_option(start, visited, &i);
-		// if (i != -1)
-		// 	printf("Best option cont %s\n", start->neighbours[i]->name);
 		tried++;
 		if (i == -1)
 			return (0);
@@ -223,8 +219,6 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 	tried = 0;
 	found = 0;
 	ret = 0;
-	// printf("Before find parallel route\n");
-	// print_map(map);
 	setup_candidate(candidate);
 	if (bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
@@ -234,25 +228,16 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 	while (tried < map->start->neighbours_len)
 	{
 		find_best_option(map->start, visited, &i);
-		// if (i != -1)
-		// 	printf("Best option name %s\n", map->start->neighbours[i]->name);
 		tried++;
 		if (i == -1)
 			return (EXIT_SUCCESS);
 		route.route[route.used] = map->start->neighbours[i];
 		route.used++;
 		found = find_route(map->start->neighbours[i], visited, &route, map);
-		// printf("FOUND %ld\n", found);
 		if (found == 1)
 		{
-			// printf("Found way to end\n");
 			found = 0;
-			// printf("Commit\n");
 			ret = commit_route(candidate, &route, map);
-			for (size_t i = 0; i < map->bitfield_len; i++)
-			{
-				visited[i] = (BITFIELD_TYPE)0;
-			}
 			if (ret == EXIT_FAILURE || ret == PATHS_DONE)
 			{
 				free(route.route);

@@ -118,7 +118,6 @@ ssize_t			remove_blockage(t_best *candidate, t_map *map)
 	i = 0;
 	tried = 0;
 	found = NULL;
-	printf("\nREMOVE BLOCKAGE PATHS %lu\n\n", candidate->used);
 	if (bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	bite_add_room_to_bitfield(map->end, visited);

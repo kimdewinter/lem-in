@@ -27,20 +27,13 @@ void	print_map(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nSPE %d\nSPS %d\nDST START %ld\nDST END %ld\nJUNCTION %d\nNbs: %lu\nViable %lu\nConns to %lu\n", table->entries[i]->key
+			ft_printf("KEY: %s\nSPE %d\nDST START %ld\nDST END %ld\nJUNCTION %d\nNbs: %lu\n", table->entries[i]->key
 			, ((t_room *)table->entries[i]->val)->spe,
-			((t_room *)table->entries[i]->val)->sps,
 			((t_room *)table->entries[i]->val)->dist_to_start,
 			((t_room *)table->entries[i]->val)->dist_to_end,
 			((t_room *)table->entries[i]->val)->is_junction,
-			((t_room *)table->entries[i]->val)->neighbours_len,
-			((t_room *)table->entries[i]->val)->viable_nbs,
-			((t_room *)table->entries[i]->val)->conns_to);
+			((t_room *)table->entries[i]->val)->neighbours_len);
 			tmp = (t_room *)table->entries[i]->val;
-			if (tmp->sps == 1 && tmp->sps_len != 0)
-			{
-				printf("sps conn %s\nsps dist %lu\n", tmp->sps_start->name, tmp->sps_len);
-			}
 			if (tmp->spe == 1 && tmp->spe_len != 0)
 			{
 				printf("spe conn %s\nspe dist %lu\n", tmp->spe_start->name, tmp->spe_len);
@@ -48,7 +41,6 @@ void	print_map(t_map *map)
 			// printf("ID: %lu\nDead end: %d\n", tmp->room_i, tmp->dead_end);
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
 			{
-				if (room_in_bitfield(tmp->neighbours[j], tmp->unavailable) == 0)
 					ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);
 			}
 			printf("\n\n");

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:10:30 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 14:03:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 20:07:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,6 @@ ssize_t		set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths)
 	weight = 1;
 	if (create_q(&qr, in_paths, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
-	/* dst from start */
 	if (flow == 1)
 	{
 		map->start->dist_to_start = 0;

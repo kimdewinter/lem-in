@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/23 17:38:19 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 20:41:51 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,26 +138,19 @@ typedef	struct			s_route
 typedef struct			s_room
 {
 	char				*name;
-	int					sps;
 	int					spe;
 	int					is_junction;
-	BITFIELD_TYPE		*removed_conns;
 	ssize_t				xpos;
 	ssize_t				ypos;
 	size_t				ant;
 	struct s_room		**neighbours;
-	BITFIELD_TYPE		*unavailable;
-	size_t				viable_nbs;
 	size_t				neighbours_len;
-	size_t				conns_to;
 	size_t				room_i;
 	BITFIELD_TYPE		*bitroom;
 	ssize_t				dist_to_end;
 	ssize_t				dist_to_start;
 	size_t				spe_len;
-	size_t				sps_len;
 	struct s_room		*spe_start;
-	struct s_room		*sps_start;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
@@ -169,7 +162,6 @@ typedef struct			s_map
 	t_room				*start;
 	t_room				*end;
 	struct s_table		*rooms;
-	BITFIELD_TYPE		*visited;
 	size_t				bitfield_len;
 	struct s_best		solution;
 }						t_map;
@@ -216,115 +208,21 @@ ssize_t					parse_tubes(t_input_reader *input,
 									size_t *i);
 ssize_t					purge_room(t_room **room);
 ssize_t					sanitize_input(t_map *map);
-ssize_t					set_sps_spe_rooms(t_map *map);
-void					set_unavailable(t_room *from, t_room *to, int *changed, t_map *map);
+ssize_t					set_spe_rooms(t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
 									const ssize_t xpos,
 									const ssize_t ypos,
 									size_t *num_room);
-
-/*
-** UNNECESSARY TUBES REMOVE
-*/
-void					remove_dead_ends(t_map *map, int *changed);
-// void					remove_sps_spe_conns(t_map *map);
-int						is_mutual_conn(t_room *curr, t_room *nb);
-void					rm_un_conn(t_triangle *tr, t_map *map, int *changed);
-ssize_t					remove_unnecessary_tubes(t_map *map, int *changed);
-/*
-** UNNECESSARY TUBES DUPLICATE PATHS
-*/
-void					remove_duplicate_paths(t_connection **conn, t_map *map,
-int *changed);
-/*
-** UNNECESSARY TUBES QUEUE SETUP
-*/
-ssize_t					un_add_start_nbs_to_q(t_room *start,
-											t_conn_wrap *qr,
-											t_map *map,
-											int *changed);
-/*
-** UNNECESSARY TUBES DELETE
-*/
-int						del_un_tubes(t_connection *q, int *changed, t_map *map);
-
-/*
-** UNNECESSARY TUBES QR UTILS
-*/
-ssize_t			setup_q_un(t_conn_wrap **qr, t_map *map);
-void			free_q_un(t_conn_wrap **qr);
-/*
-** UNNECESSARY TUBES REMOVE IF UN
-*/
-void					remove_if_un(t_triangle *tr, t_map *map, int *changed);
-/*
-** UNNECESSARY TUBES QUEUE UPDATE
-*/
-ssize_t					un_add_nbs_to_queue(t_room *start, t_conn_wrap *qr,
-												t_map *map, int *changed);
-int						solve_queue_conflict(t_conn_wrap *qr, t_connection *tmp,
-											t_map *map, size_t *added);
-ssize_t					update_queue_un(t_conn_wrap *qr, t_map *map,int *changed);
-/*
-** UNNECESSARY TUBES QUEUE EXECUTE
-*/
-ssize_t					execute_queue_un(t_conn_wrap *qr, t_map *map, int *changed);
 /*
 ** UNNECESSARY TUBES OPTION CHECKS
 */
-int		is_junction(t_room *curr, t_map *map);
-int						alt_opts_nb(t_triangle *curr,
-												t_map *map,
-												int *changed);
-int						alt_opts_side(t_connection *side_nb,
-												t_connection *src_side,
-												t_map *map,
-												int *changed);
-
-/*
-** UNNECESSARY TUBES NB CHECKS
-*/
-int						is_nb_of_src(t_triangle *curr,
-												t_map *map,
-												int *changed);
-int						is_nb_of_other(t_room *dst,
-												t_room *curr,
-												t_map *map,
-												int *changed);
-/*
-** UNNECESSARY TUBES SHORT CHECKS
-*/
-int						shrt_conn_dsts_side(t_connection *src_side,
-													t_connection *nb_src,
-													t_connection *side_nb);
-int						shrt_conn_dsts_nb(t_connection *src_side,
-													t_connection *nb_src,
-													t_connection *side_nb);
+int						is_junction(t_room *curr, t_map *map);
 
 /*
 ** UNNECESSARY TUBES UTILS
 */
-int						check_conn(t_connection *conn, ssize_t *ind, int *changed, t_map *map);
-size_t					handle_nowhere_to_go(t_room *src, t_room *nb, t_map *map);
-size_t					kill_conn(t_room *src, t_room *nb, t_map *map);
-size_t					remove_path(t_connection *conn, t_map *map);
-size_t					handle_loop(t_connection *conn, t_map *map, int *changed);
-void					set_conn(t_connection *conn, t_room *nb);
-int						check_dst_src(t_connection *dst, t_connection *src,
-										t_room *curr);
-int						check_src(t_connection *conn, t_room *curr);
-int						check_dest(t_connection *conn, t_room *curr);
-void					setup_conn(t_connection *conn, t_room *src);
-void					find_real_nb(t_connection *tmp);
-int						del_tube(t_room *from, t_room *to, t_map *map);
-t_connection			*new_connection(t_connection *item);
-int						has_conn_to(t_room *curr, t_room *nb);
-/*
-** UNNECESSARY TUBES QUEUE
-*/
-ssize_t					add_q_item_un(t_conn_wrap *qr, t_connection *item, size_t *added, BITFIELD_TYPE *atq);
-void					remove_q_item_un(t_conn_wrap *qr, t_connection *item);
+void					del_tube(t_room *from, t_room *to, t_map *map);
 /*
 ** ROUTE FINDING
 */
@@ -334,33 +232,11 @@ void					reset_dists(t_table *rooms, int to_start, int to_end);
 void					compare_candidate_best(t_map *map, t_best *candidate);
 ssize_t					remove_blockage(t_best *candidate, t_map *map);
 ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map);
-ssize_t					setup_in_paths(t_best *candidate, BITFIELD_TYPE **in_paths,
-										t_map *map);
 ssize_t					find_parallel_routes(t_best *candidate, t_map *map);
-// ssize_t					alloc_multiple_blank_routes(t_route ***dst,
-// 													const size_t route_num,
-// 													const size_t route_len,
-// 													const size_t bitroute_len);
-// ssize_t					alloc_single_blank_route(t_route **dst,
-// 													const size_t route_len,
-// 													const size_t bitroute_len);
-// size_t					better_eligible_candidate(const BITFIELD_TYPE *visited,
-// 													const t_room *best_so_far,
-// 													const t_room *candidate);
 ssize_t					set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths);
 size_t					calc_cost(size_t ants, const t_best *routes);
-// ssize_t					exec_find_routes_df(t_room *curr,
-// 											t_dfs_wrap *wrap);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_best *candidate, const t_map *map);
-// ssize_t					handle_err_route_finder(size_t err_code,
-// 												const char *line);
-// ssize_t					traverse_bf(t_room *room_to_begin_from,
-// 									const size_t call_code,
-// 									const t_map *map);
-// ssize_t					max_parallels(size_t *result, const t_map *map);
-// t_room					*select_next_room(const t_room *curr,
-// 											const t_dfs_wrap *wrap);
 
 /*
 ** BITFIELD-TOOLKIT
@@ -415,7 +291,7 @@ void					print_best(const t_best *best);
 void					print_rooms(const t_table *rooms);
 void					print_neighbours(const t_room *room);
 void					print_weight_queue(t_weight **q);
-void		print_troute(t_route *route);
-void	print_triangle(t_triangle *tr);
-void		print_in_paths(BITFIELD_TYPE *in_paths, t_map *map);
+void					print_troute(t_route *route);
+void					print_triangle(t_triangle *tr);
+void					print_in_paths(BITFIELD_TYPE *in_paths, t_map *map);
 #endif
