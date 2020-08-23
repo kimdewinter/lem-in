@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 19:20:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 19:51:04 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,11 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 {
 	size_t	i;
 	t_room	*next;
+	// int		test;
 
 	i = 0;
 	next = NULL;
+	// test = 0;
 	while (i < candidate->used)
 	{
 		if (room_in_bitfield(block, candidate->combi[i]->bitroute) == 1)
@@ -79,6 +81,8 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 			// printf("remove: %s %s\n", block->name, next->name);
 			del_tube(block, next, map);
 			del_tube(next, block, map);
+			set_sps_spe_rooms(map);
+			// remove_dead_ends(map, &test);
 			return (EXIT_SUCCESS);
 		}
 		i++;

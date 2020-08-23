@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 19:12:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 19:38:58 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -249,6 +249,10 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 			found = 0;
 			// printf("Commit\n");
 			ret = commit_route(candidate, &route, map);
+			for (size_t i = 0; i < map->bitfield_len; i++)
+			{
+				visited[i] = (BITFIELD_TYPE)0;
+			}
 			if (ret == EXIT_FAILURE || ret == PATHS_DONE)
 			{
 				free(route.route);
