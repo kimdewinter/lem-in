@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/04/13 13:13:44 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/29 15:33:45 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 11:19:18 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int		get_next_line(const int fd, char **line)
 	if (curr)
 	{
 		buff = ft_lstnew(((t_fd *)curr->content)->rest,
-((t_fd *)curr->content)->len);
+		((t_fd *)curr->content)->len);
 		p.len = &((t_fd *)curr->content)->len;
 	}
 	else

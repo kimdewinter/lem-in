@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/20 17:57:38 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/22 14:46:45 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 12:04:58 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,15 +149,12 @@ ssize_t		set_spe_rooms(t_map *map)
 	i = 0;
 	dist = 1;
 	moved = 0;
-	printf("SET SPE ROOMS\n");
 	if (bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	bite_add_room_to_bitfield(map->end, visited);
 	while ((size_t)i < map->end->neighbours_len)
 	{
 		moved = 0;
-		printf("i: %ld\n", i);
-		printf("NB OF END %s\n", map->end->neighbours[i]->name);
 		moved = set_spe(map->end, map->end->neighbours[i], dist, map);
 		if (moved == 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/18 11:17:22 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 11:25:48 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ ssize_t			find_routes(t_map *map)
 	t_best	candidate;
 	ssize_t	blocks_found;
 
+	print_map(map);
+	exit (0);
 	blocks_found = EXIT_SUCCESS;
 	while (blocks_found == EXIT_SUCCESS)
 	{

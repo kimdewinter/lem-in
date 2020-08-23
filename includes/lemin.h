@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/22 16:01:11 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 11:00:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ ssize_t					setup_room(t_room **dest,
 ** UNNECESSARY TUBES REMOVE
 */
 void					remove_dead_ends(t_map *map, int *changed);
-void					remove_sps_spe_conns(t_map *map);
+// void					remove_sps_spe_conns(t_map *map);
 int						is_mutual_conn(t_room *curr, t_room *nb);
 void					rm_un_conn(t_triangle *tr, t_map *map, int *changed);
 ssize_t					remove_unnecessary_tubes(t_map *map, int *changed);

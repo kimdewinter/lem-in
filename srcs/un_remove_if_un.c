@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/13 14:36:59 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/22 16:02:12 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 12:05:34 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void		remove_if_un(t_triangle *tr, t_map *map, int *changed)
 	add_opt_nb_side = alt_opts_nb(tr, map, changed);
 	add_opt_side_nb = alt_opts_side(&tr->side_nb, tr->src_side, map, changed);
 	// print_triangle(tr);
-	printf("Alt opt side %s %d\nAlt opt nb %s %d\n", tr->side_nb.src->name, add_opt_side_nb,
-	tr->side_nb.dst->name, add_opt_nb_side);
+	// printf("Alt opt side %s %d\nAlt opt nb %s %d\n", tr->side_nb.src->name, add_opt_side_nb,
+	// tr->side_nb.dst->name, add_opt_nb_side);
 	if (add_opt_nb_side == 0 && add_opt_side_nb == 0)
 		rm_un_conn(tr, map, changed);
 	else if (add_opt_nb_side == 0 &&

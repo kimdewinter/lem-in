@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 16:41:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/22 16:25:16 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/23 12:05:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,12 +137,10 @@ ssize_t				sanitize_input(t_map *map)
 		// 	print_map(map);
 		// 	exit (0);
 		// }
-		printf("\n\nAFTER DEAD ENDS %d\n\n", changed);
 		// printf("\n\nAfter dead ends %d\n\n", changed);
 		if (map->start->viable_nbs == 0 ||
 			map->end->viable_nbs == 0)
 		{
-			printf("No connections start end\n");
 			return (EXIT_FAILURE);
 		}
 		// flag_conj(map);
@@ -154,16 +152,15 @@ ssize_t				sanitize_input(t_map *map)
 		// }
 		// print_map(map);
 		// exit (0);
-		printf("\n\nAfter rm unnecessary %d\n\n", changed);
 		// flag_conj(map);
 		round++;
 		// printf("ROUND AFTER %d\n", round);
 	}
 	if (map->start->viable_nbs == 0 || map->end->viable_nbs == 0)
 		return (EXIT_FAILURE);
-	set_weights(map, -1);
-	set_weights(map, 1);
-	print_map(map);
-	exit (0);
+	// set_weights(map, -1);
+	// set_weights(map, 1);
+	// print_map(map);
+	// exit (0);
 	return (EXIT_SUCCESS);
 }

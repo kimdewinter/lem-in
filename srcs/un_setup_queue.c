@@ -17,7 +17,6 @@ t_map *map, ssize_t *i)
 {
 	t_connection	*iter;
 
-	printf("SOLVE QUEUE CONFLICT\n");
 	iter = *(qr->q);
 	while (iter)
 	{

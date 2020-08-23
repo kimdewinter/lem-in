@@ -22,7 +22,6 @@ ssize_t			update_queue_un(t_conn_wrap *qr, t_map *map, int *changed)
 	iter = *(qr->q);
 	len = qr->items;
 	i = 0;
-	// printf("UPDATE QUEUE\n");
 	while (i < len && iter)
 	{
 		if (room_in_bitfield(iter->dst, qr->visited) == 0
