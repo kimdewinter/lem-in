@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/24 12:58:41 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/24 14:49:03 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,15 @@ RAW=	main\
 		set_sps\
 		remove_dead_ends\
 		route_finder\
+		find_best_option_route\
+		route_finder_utils_1\
+		route_finder_utils_2\
 		biter1\
 		biter2\
 		calc_cost\
-		err_biter\
+		calc_cost_add_path\
 		calc_ants_routes\
+		err_biter\
 		outputter\
 		roundputter\
 		delete_rooms\

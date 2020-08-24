@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 12:19:08 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 14:04:20 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ ssize_t			find_routes(t_map *map)
 			return (EXIT_FAILURE);
 		if (set_weights(map, -1, NULL) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
+		setup_candidate(&candidate);
 		if (find_parallel_routes(&candidate, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		/* Needs a more elegant solution */

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   remove_blockage.c                                  :+:    :+:            */
+/*   remove_blockage_1.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/17 10:37:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 10:58:01 by lravier       ########   odam.nl         */
+/*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
+/*   Updated: 2020/08/24 14:55:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,8 +127,9 @@ ssize_t			remove_blockage(t_best *candidate, t_map *map)
 		if (i == -1)
 			return (EXIT_NO_BLOCKS);
 		tried++;
-		found = find_blockage(map->end->neighbours[i], visited, candidate->in_paths);
+		found = find_blockage(map->end->neighbours[i], visited,
+		candidate->in_paths);
 	}
-	free (visited);
+	free(visited);
 	return (handle_return(candidate, found, map));
 }

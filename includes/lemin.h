@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 12:58:20 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 14:48:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,18 +231,37 @@ void					del_tube(t_room *from, t_room *to, t_map *map);
 /*
 ** ROUTE FINDING
 */
-size_t					calc_cost_add_route(t_best *candidate, t_route *route,
+size_t					calc_cost_add_route(const t_best *candidate, t_route *route,
 												t_map *map);
 void					reset_dists(t_table *rooms, int to_start, int to_end);
 void					compare_candidate_best(t_map *map, t_best *candidate);
 ssize_t					remove_blockage(t_best *candidate, t_map *map);
 ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map);
 ssize_t					find_parallel_routes(t_best *candidate, t_map *map);
+void					find_best_option(t_room *start, BITFIELD_TYPE *visited,
+											ssize_t *i);
 ssize_t					set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths);
 size_t					calc_cost(size_t ants, const t_best *routes);
+size_t					ft_round_rest(long double rest);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_best *candidate, const t_map *map);
+/*
+** ROUTE FINDING UTILS
+*/
+void					set_route(t_best *candidate, t_route *route, t_map *map);
+ssize_t					init_route(t_best *candidate, t_map *map, t_route *route);
+ssize_t					init_combi(t_map *map, t_best **candidate);
+void					reset_route(t_route *route);
+ssize_t					setup_route(t_route *route, t_map *map);
+int						is_improvement(t_best *best, t_route *add, t_map *map);
+void					setup_candidate(t_best *candidate);
+ssize_t					free_find_parallel(BITFIELD_TYPE **visited,
+											t_route *route,
+											ssize_t	ret);
 
+ssize_t					setup_routefinder(BITFIELD_TYPE **visited,
+											t_route *route,
+											t_map *map);
 /*
 ** BITFIELD-TOOLKIT
 */
