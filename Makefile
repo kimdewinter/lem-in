@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/24 15:04:50 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/24 16:31:08 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ RAW=	main\
 		err_biter\
 		outputter\
 		roundputter\
+		delete_map\
 		delete_rooms\
 		remove_tube\
 		print\

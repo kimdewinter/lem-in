@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 13:49:38 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 14:18:49 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 16:19:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,27 +46,35 @@ ssize_t			init_combi(t_map *map, t_best **candidate)
 	else
 		num_routes = map->start->neighbours_len;
 	(*candidate)->combi = (t_route **)malloc(sizeof(t_route *) * num_routes);
-	if ((*candidate)->combi == NULL)
-		return (EXIT_FAILURE);
-	if (bite_alloc(&((*candidate)->in_paths), map) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	(*candidate)->len = num_routes;
-	return (EXIT_SUCCESS);
+	if ((*candidate)->combi != NULL)
+	{
+		if (bite_alloc(&((*candidate)->in_paths), map) == EXIT_SUCCESS)
+		{
+			(*candidate)->len = num_routes;
+			return (EXIT_SUCCESS);
+		}
+		free ((*candidate)->combi);
+	}
+	return (EXIT_FAILURE);
 }
 
 ssize_t			init_route(t_best *candidate, t_map *map, t_route *route)
 {
 	candidate->combi[candidate->used] = (t_route *)malloc(sizeof(t_route));
-	if (candidate->combi[candidate->used] == NULL)
-		return (EXIT_FAILURE);
-	candidate->combi[candidate->used]->route =
-	(t_room **)malloc(sizeof(t_room *) * route->used);
-	if (candidate->combi[candidate->used]->route == NULL)
-		return (EXIT_FAILURE);
-	if (bite_alloc(&candidate->combi[candidate->used]->bitroute, map)
-	== EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);	
+	if (candidate->combi[candidate->used] != NULL)
+	{
+		candidate->combi[candidate->used]->route =
+		(t_room **)malloc(sizeof(t_room *) * route->used);
+		if (candidate->combi[candidate->used]->route != NULL)
+		{
+			if (bite_alloc(&candidate->combi[candidate->used]->bitroute, map)
+			== EXIT_SUCCESS)
+				return (EXIT_SUCCESS);
+			free (candidate->combi[candidate->used]->route);
+		}
+		free (candidate->combi[candidate->used]);
+	}
+	return (EXIT_FAILURE);
 }
 
 void			set_route(t_best *candidate, t_route *route, t_map *map)

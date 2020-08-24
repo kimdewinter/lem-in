@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 14:55:30 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 16:33:47 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,7 @@ static ssize_t	handle_return(t_best *candidate, t_room *found, t_map *map)
 		return (EXIT_SUCCESS);
 	}
 	else
-	{
-		printf("NO BLOCKS\n");
 		return (EXIT_NO_BLOCKS);
-	}
 }
 
 ssize_t			remove_blockage(t_best *candidate, t_map *map)
@@ -125,7 +122,10 @@ ssize_t			remove_blockage(t_best *candidate, t_map *map)
 	{
 		find_most_promising_start(map->end, visited, candidate->in_paths, &i);
 		if (i == -1)
+		{
+			free (visited);
 			return (EXIT_NO_BLOCKS);
+		}
 		tried++;
 		found = find_blockage(map->end->neighbours[i], visited,
 		candidate->in_paths);

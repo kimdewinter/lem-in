@@ -6,25 +6,11 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 15:24:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/24 16:33:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
-
-// static t_room			*find_next_node(t_route *route, t_room *block)
-// {
-// 	size_t	i;
-
-// 	i = 0;
-// 	while (i < route->used)
-// 	{
-// 		if (route->route[i] == block)
-// 			return (route->route[i + 1]);
-// 		i++;
-// 	}
-// 	return (NULL);
-// }
 
 static void				find_block_in_path(t_route *route, t_room **from,
 t_room **to)
@@ -62,11 +48,9 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 {
 	size_t	i;
 	t_room	*next;
-	// int		test;
 
 	i = 0;
 	next = NULL;
-	// test = 0;
 	while (i < candidate->used)
 	{
 		if (room_in_bitfield(block, candidate->combi[i]->bitroute) == 1)

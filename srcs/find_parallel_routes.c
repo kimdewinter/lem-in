@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 14:50:08 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 16:36:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 	{
 		find_best_option(map->start, visited, &i);
 		if (i == -1)
-			return (EXIT_SUCCESS);
+			return (free_find_parallel(&visited, &route, EXIT_SUCCESS));
 		route.route[route.used] = map->start->neighbours[i];
 		route.used++;
 		if (find_route(map->start->neighbours[i], visited, &route, map) == 1)

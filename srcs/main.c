@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 15:24:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/24 16:20:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,10 @@ int				main(void)
 		output_result(&input, &map) == EXIT_SUCCESS)
 	{
 		delete_input(&input);
-		// delete_map(&map);
+		delete_map(&map);
 		return (EXIT_SUCCESS);
 	}
 	delete_input(&input);
-	// delete_map(&map);
+	delete_map(&map);
 	return (EXIT_FAILURE);
 }
