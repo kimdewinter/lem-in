@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/23 20:41:51 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 12:10:22 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ typedef struct			s_room
 {
 	char				*name;
 	int					spe;
+	int					sps;
 	int					is_junction;
 	ssize_t				xpos;
 	ssize_t				ypos;
@@ -151,6 +152,8 @@ typedef struct			s_room
 	ssize_t				dist_to_start;
 	size_t				spe_len;
 	struct s_room		*spe_start;
+	size_t				sps_len;
+	struct s_room		*sps_start;
 }						t_room;
 /*
 ** the structure of each room in the "ant hill"
@@ -209,6 +212,7 @@ ssize_t					parse_tubes(t_input_reader *input,
 ssize_t					purge_room(t_room **room);
 ssize_t					sanitize_input(t_map *map);
 ssize_t					set_spe_rooms(t_map *map);
+ssize_t					set_sps_rooms(t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
 									const ssize_t xpos,

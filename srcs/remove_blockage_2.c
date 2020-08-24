@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 20:24:09 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 12:24:58 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ t_room **to)
 
 	i = 0;
 	tmp = *from;
-	while ((size_t)i < route->used)
+	while ((size_t)i < route->used - 1)
 	{
 		if (route->route[i] == tmp)
 		{
@@ -44,13 +44,15 @@ t_room **to)
 		}
 		i++;
 	}
-	while (i > 0)
+	i--;
+	while (i >= 0)
 	{
-		if (route->route[i]->is_junction)
+		if (route->route[i]->is_junction
+		&& route->route[i]->neighbours_len >= (*from)->neighbours_len)
 		{
-			*to = route->route[i];
-			*from = route->route[i - 1];
-			break ;
+			*to = route->route[i + 1];
+			*from = route->route[i];
+			// break ;
 		}
 		i--;
 	}
@@ -82,6 +84,7 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 			del_tube(block, next, map);
 			del_tube(next, block, map);
 			set_spe_rooms(map);
+			set_sps_rooms(map);
 			// remove_dead_ends(map, &test);
 			return (EXIT_SUCCESS);
 		}

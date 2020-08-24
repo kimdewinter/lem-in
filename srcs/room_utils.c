@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/23 20:39:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 12:06:12 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ ssize_t			setup_room(t_room **dest,
 		room->room_i = *num_room;
 		room->is_junction = 0;
 		room->spe = 0;
+		room->sps = 0;
 		room->bitroom = NULL;
 		room->name = (char *)name;
 		room->xpos = xpos;
@@ -38,6 +39,8 @@ ssize_t			setup_room(t_room **dest,
 		*dest = room;
 		room->spe_len = 0;
 		room->spe_start = NULL;
+		room->sps_len = 0;
+		room->sps_start = NULL;
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
