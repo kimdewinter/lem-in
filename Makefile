@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/24 12:02:38 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/24 12:58:41 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ RAW=	main\
 		sanitize_input\
 		set_spe\
 		set_sps\
+		remove_dead_ends\
 		route_finder\
 		biter1\
 		biter2\

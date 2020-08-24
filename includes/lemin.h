@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 12:10:22 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 12:58:20 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -211,6 +211,7 @@ ssize_t					parse_tubes(t_input_reader *input,
 									size_t *i);
 ssize_t					purge_room(t_room **room);
 ssize_t					sanitize_input(t_map *map);
+void					remove_dead_ends(t_map *map);
 ssize_t					set_spe_rooms(t_map *map);
 ssize_t					set_sps_rooms(t_map *map);
 ssize_t					setup_room(t_room **dest,

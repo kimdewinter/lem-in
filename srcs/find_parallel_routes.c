@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 12:23:35 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 13:33:08 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,10 +161,7 @@ static void		find_best_option(t_room *start, BITFIELD_TYPE *visited, ssize_t *i)
 				== start->neighbours[best]->dist_to_end
 				&& start->neighbours[best]->sps == 1
 				&& start->neighbours[j]->sps == 0)
-				{
-					printf("Different choice\n");
 					best = j;
-				}
 			}
 			/* Make sure to choose the spe option if it exist and
 			it's len is not longer than the current best */
@@ -246,8 +243,6 @@ ssize_t			find_parallel_routes(t_best *candidate, t_map *map)
 		{
 			found = 0;
 			ret = commit_route(candidate, &route, map);
-			// for (size_t i = 0; i < map->bitfield_len; i++)
-			// 	visited[i] = (BITFIELD_TYPE)0;
 			if (ret == EXIT_FAILURE || ret == PATHS_DONE)
 			{
 				free(route.route);
