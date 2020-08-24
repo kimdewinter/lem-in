@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 14:54:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 15:05:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ size_t			is_tube(char *line)
 	words = ft_strsplit(line, '-');
 	while (words[i] != NULL)
 		i++;
-	return (is_tube_check(i, words));
+	return (is_tube_check(words, i));
 }
 
 size_t			is_comment(char *line)

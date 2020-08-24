@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/24 14:49:03 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/24 15:04:50 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ RAW=	main\
 		sanitize_input\
 		set_spe\
 		set_sps\
-		remove_dead_ends\
 		route_finder\
 		find_best_option_route\
 		route_finder_utils_1\
