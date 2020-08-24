@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/18 13:17:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 15:24:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static ssize_t	setup_map(t_map *map)
 		map->end = NULL;
 		map->solution.len = 0;
 		map->solution.combi = NULL;
+		map->solution.in_paths = NULL;
 		map->solution.used = 0;
 		map->solution.turns = 0;
 		map->rooms = create_ht(50);

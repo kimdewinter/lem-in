@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/06/29 19:39:55 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/24 15:05:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-size_t	is_antmount(char *line)
+size_t			is_antmount(char *line)
 {
 	if (*line != '\0' && ft_isdigit(*line) == 1)
 	{
@@ -26,7 +26,7 @@ size_t	is_antmount(char *line)
 	return (0);
 }
 
-size_t	is_room(char *line)
+size_t			is_room(char *line)
 {
 	if (*line >= '!' && *line <= '~' && *line != '#' && *line != 'L')
 	{
@@ -55,7 +55,23 @@ size_t	is_room(char *line)
 	return (0);
 }
 
-size_t	is_tube(char *line)
+static size_t	is_tube_check(char **words, int i)
+{
+	if (i != 2)
+	{
+		free_room_names(words);
+		return (0);
+	}
+	if (ft_strcmp(words[0], words[1]) == 0)
+	{
+		free_room_names(words);
+		return (0);
+	}
+	free_room_names(words);
+	return (1);
+}
+
+size_t			is_tube(char *line)
 {
 	int		i;
 	char	**words;
@@ -75,21 +91,10 @@ size_t	is_tube(char *line)
 	words = ft_strsplit(line, '-');
 	while (words[i] != NULL)
 		i++;
-	if (i != 2)
-	{
-		free_room_names(words);
-		return (0);
-	}
-	if (ft_strcmp(words[0], words[1]) == 0)
-	{
-		free_room_names(words);
-		return (0);
-	}
-	free_room_names(words);
-	return (1);
+	return (is_tube_check(words, i));
 }
 
-size_t	is_comment(char *line)
+size_t			is_comment(char *line)
 {
 	if (ft_strcmp(line, "##end") == 0)
 		return (3);

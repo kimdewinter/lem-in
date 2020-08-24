@@ -27,15 +27,22 @@ void	print_map(t_map *map)
 	{
 		if (table->entries[i] != NULL)
 		{
-			ft_printf("KEY: %s\nSPE %d\nSPS %d\nJUNCTION %d\nNbs: %lu\n", table->entries[i]->key
+			ft_printf("KEY: %s\nSPE %d\nDST START %ld\nDST END %ld\nJUNCTION %d\nNbs: %lu\n", table->entries[i]->key
 			, ((t_room *)table->entries[i]->val)->spe,
-			((t_room *)table->entries[i]->val)->sps,
+			((t_room *)table->entries[i]->val)->dist_to_start,
+			((t_room *)table->entries[i]->val)->dist_to_end,
 			((t_room *)table->entries[i]->val)->is_junction,
 			((t_room *)table->entries[i]->val)->neighbours_len);
 			tmp = (t_room *)table->entries[i]->val;
+			if (tmp->spe == 1 && tmp->spe_len != 0)
+			{
+				printf("spe conn %s\nspe dist %lu\n", tmp->spe_start->name, tmp->spe_len);
+			}
 			// printf("ID: %lu\nDead end: %d\n", tmp->room_i, tmp->dead_end);
 			for (size_t j = 0; j < tmp->neighbours_len; j++)
-				ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);
+			{
+					ft_printf("NEIGHBOUR: ID %d KEY %s\n", j, tmp->neighbours[j]->name);
+			}
 			printf("\n\n");
 		}
 	}
@@ -49,9 +56,10 @@ void		print_connection_queue(t_connection **q)
 	printf("QUEUE\n");
 	while (iter)
 	{
-		printf("\n\nSRC %s\nSRC NB: %s\nDST %s\nDST NB: %s\nDISTANCE %lu\n\n\n",
-		iter->src->name, iter->src_nb->name,
-		iter->dst->name, iter->dst_nb->name, iter->dist);
+		print_connection(iter);
+		// printf("\n\nSRC %s\nSRC NB: %s\nDST %s junction %d\nDST NB: %s\nDISTANCE %lu\n\n\n",
+		// iter->src->name, iter->src_nb->name,
+		// iter->dst->name, iter->dst->is_junction, iter->dst_nb->name, iter->dist);
 		iter = iter->next;
 	}
 }
@@ -93,6 +101,19 @@ void		print_best(const t_best *best)
 	printf("\nTOTAL ROUTES FOUND: %lu\n", best->used);
 }
 
+void		print_in_paths(BITFIELD_TYPE *in_paths, t_map *map)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < map->bitfield_len)
+	{
+		printf("%lu ", in_paths[i]);
+		i++;
+	}
+	printf("\n\n");
+}
+
 void		print_rooms(const t_table *rooms)
 {
 	size_t	i;
@@ -122,4 +143,39 @@ void		print_neighbours(const t_room *room)
 		i++;
 	}
 	printf("\n");
+}
+
+void		print_weight_queue(t_weight **q)
+{
+	t_weight *iter;
+
+	iter = *q;
+	while (iter)
+	{
+		printf("name %s\ndist %lu\n",iter->dst->name, iter->dist);
+		iter = iter->next;
+	}
+}
+
+void		print_troute(t_route *route)
+{
+	size_t	i;
+
+	i = 0;
+	while (i < route->used)
+	{
+		printf("%s -->", route->route[i]->name);
+		i++;
+	}
+	printf("\n\n");
+}
+
+void	print_triangle(t_triangle *tr)
+{
+	printf("SRC TO SIDE\n");
+	print_connection(tr->src_side);
+	printf("SIDE TO NB\n");
+	print_connection(&tr->side_nb);
+	printf("NB TO SRC\n");
+	print_connection(&tr->nb_src);
 }

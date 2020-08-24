@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   remove_blockage.c                                  :+:    :+:            */
+/*   remove_blockage_1.c                                :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2020/08/17 10:37:22 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/17 10:58:01 by lravier       ########   odam.nl         */
+/*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
+/*   Updated: 2020/08/24 14:55:30 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,14 @@ static ssize_t	handle_return(t_best *candidate, t_room *found, t_map *map)
 		return (EXIT_SUCCESS);
 	}
 	else
-		return (EXIT_SUCCESS);
+	{
+		printf("NO BLOCKS\n");
+		return (EXIT_NO_BLOCKS);
+	}
 }
 
 ssize_t			remove_blockage(t_best *candidate, t_map *map)
 {
-	BITFIELD_TYPE	*in_paths;
 	BITFIELD_TYPE	*visited;
 	t_room			*found;
 	size_t			tried;
@@ -116,17 +118,18 @@ ssize_t			remove_blockage(t_best *candidate, t_map *map)
 	i = 0;
 	tried = 0;
 	found = NULL;
-	if (setup_in_paths(candidate, &in_paths, map) == EXIT_FAILURE
-	|| bite_alloc(&visited, map) == EXIT_FAILURE)
+	if (bite_alloc(&visited, map) == EXIT_FAILURE)
 		return (EXIT_FAILURE);
 	bite_add_room_to_bitfield(map->end, visited);
 	while (found == NULL && tried < map->end->neighbours_len)
 	{
-		find_most_promising_start(map->end, visited, in_paths, &i);
+		find_most_promising_start(map->end, visited, candidate->in_paths, &i);
 		if (i == -1)
 			return (EXIT_NO_BLOCKS);
 		tried++;
-		found = find_blockage(map->end->neighbours[i], visited, in_paths);
+		found = find_blockage(map->end->neighbours[i], visited,
+		candidate->in_paths);
 	}
+	free(visited);
 	return (handle_return(candidate, found, map));
 }
