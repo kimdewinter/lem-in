@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 16:42:09 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 16:52:43 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -294,6 +294,7 @@ void					execute_route(t_routeput *route, const size_t new_ant);
 ssize_t					parse_error(size_t err_code);
 ssize_t					output_result(const t_input_reader *input,
 										const t_map *map);
+ssize_t					setup_all_routeputs(t_routeput ***routes, const t_map *map);
 
 /*
 ** CLEANER

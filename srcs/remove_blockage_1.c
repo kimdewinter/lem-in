@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:33:47 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 16:57:05 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ ssize_t			remove_blockage(t_best *candidate, t_map *map)
 		find_most_promising_start(map->end, visited, candidate->in_paths, &i);
 		if (i == -1)
 		{
-			free (visited);
+			free(visited);
 			return (EXIT_NO_BLOCKS);
 		}
 		tried++;

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/23 20:13:39 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 13:20:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 17:00:59 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int		rearrange_nbs(t_room *from, size_t i)
 	}
 }
 
-void				del_tube(t_room *from, t_room *to, t_map *map)
+void			del_tube(t_room *from, t_room *to, t_map *map)
 {
 	int		found;
 	size_t	i;

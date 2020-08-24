@@ -6,11 +6,27 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:33:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 17:00:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+static void				find_earlier_block(t_route *route, t_room **from,
+t_room **to, ssize_t i)
+{
+	while (i >= 0)
+	{
+		if (route->route[i]->is_junction
+		&& route->route[i]->neighbours_len >= (*from)->neighbours_len)
+		{
+			*to = route->route[i + 1];
+			*from = route->route[i];
+			break ;
+		}
+		i--;
+	}
+}
 
 static void				find_block_in_path(t_route *route, t_room **from,
 t_room **to)
@@ -31,20 +47,11 @@ t_room **to)
 		i++;
 	}
 	i--;
-	while (i >= 0)
-	{
-		if (route->route[i]->is_junction
-		&& route->route[i]->neighbours_len >= (*from)->neighbours_len)
-		{
-			*to = route->route[i + 1];
-			*from = route->route[i];
-			break ;
-		}
-		i--;
-	}
+	find_earlier_block(route, from, to, i);
 }
 
-ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
+ssize_t					remove_conn(t_best *candidate, t_room *block,
+t_map *map)
 {
 	size_t	i;
 	t_room	*next;
