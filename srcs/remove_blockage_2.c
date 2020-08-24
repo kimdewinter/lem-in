@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 10:47:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 14:56:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/24 15:07:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,6 @@ ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map)
 		if (room_in_bitfield(block, candidate->combi[i]->bitroute) == 1)
 		{
 			find_block_in_path(candidate->combi[i], &block, &next);
-			// printf("ROUTE FOUND\n");
-			// next = find_next_node(candidate->combi[i], block);
-			if (next == NULL)
-				return (EXIT_NO_BLOCKS);
 			del_tube(block, next, map);
 			del_tube(next, block, map);
 			set_spe_rooms(map);
