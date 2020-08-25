@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 17:13:56 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:44:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 struct s_room;
 struct s_route;
 
-typedef struct 			s_weight_wrap
+typedef struct			s_weight_wrap
 {
 	BITFIELD_TYPE		*visited;
 	BITFIELD_TYPE		*in_paths;
@@ -206,12 +206,14 @@ ssize_t					parse_input(t_map *map, t_input_reader *input);
 ssize_t					parse_rooms(t_input_reader *input,
 									t_map *map,
 									size_t *i);
-ssize_t					add_room(const char *line, t_map *map, size_t *num_room);
+ssize_t					add_room(const char *line, t_map *map,
+									size_t *num_room);
 ssize_t					add_special_room(t_input_reader *input,
 									t_map *map,
 									size_t *i,
 									size_t *num_room);
-ssize_t					check_duplicate_room(const char *room_name, const t_map *map);
+ssize_t					check_duplicate_room(const char *room_name,
+												const t_map *map);
 ssize_t					parse_tubes(t_input_reader *input,
 									t_map *map,
 									size_t *i);
@@ -233,16 +235,22 @@ void					del_tube(t_room *from, t_room *to, t_map *map);
 /*
 ** ROUTE FINDING
 */
-size_t					calc_cost_add_route(const t_best *candidate, t_route *route,
-												t_map *map);
+size_t					calc_cost_add_route(const t_best *candidate,
+											t_route *route,
+											t_map *map);
 void					reset_dists(t_table *rooms, int to_start, int to_end);
 void					compare_candidate_best(t_map *map, t_best *candidate);
 ssize_t					remove_blockage(t_best *candidate, t_map *map);
-ssize_t					remove_conn(t_best *candidate, t_room *block, t_map *map);
+ssize_t					remove_conn(t_best *candidate,
+									t_room *block,
+									t_map *map);
 ssize_t					find_parallel_routes(t_best *candidate, t_map *map);
-void					find_best_option(t_room *start, BITFIELD_TYPE *visited,
+void					find_best_option(t_room *start,
+											BITFIELD_TYPE *visited,
 											ssize_t *i);
-ssize_t					set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths);
+ssize_t					set_weights(t_map *map,
+									int flow,
+									BITFIELD_TYPE *in_paths);
 ssize_t					add_q_item(t_weight **q, size_t round, t_room *dst);
 void					remove_q_item(t_weight **q);
 ssize_t					create_q(t_weight_wrap **qr, BITFIELD_TYPE *in_paths,
@@ -254,8 +262,12 @@ ssize_t					find_routes_df(t_best *candidate, const t_map *map);
 /*
 ** ROUTE FINDING UTILS
 */
-void					set_route(t_best *candidate, t_route *route, t_map *map);
-ssize_t					init_route(t_best *candidate, t_map *map, t_route *route);
+void					set_route(t_best *candidate,
+									t_route *route,
+									t_map *map);
+ssize_t					init_route(t_best *candidate,
+									t_map *map,
+									t_route *route);
 ssize_t					init_combi(t_map *map, t_best **candidate);
 void					reset_route(t_route *route);
 ssize_t					setup_route(t_route *route, t_map *map);
@@ -303,7 +315,8 @@ void					execute_route(t_routeput *route, const size_t new_ant);
 ssize_t					parse_error(size_t err_code);
 ssize_t					output_result(const t_input_reader *input,
 										const t_map *map);
-ssize_t					setup_all_routeputs(t_routeput ***routes, const t_map *map);
+ssize_t					setup_all_routeputs(t_routeput ***routes,
+											const t_map *map);
 
 /*
 ** CLEANER
@@ -314,17 +327,4 @@ void					delete_all_rooms(t_table *rooms);
 void					delete_map(t_map *map);
 void					delete_solution(t_best *solution);
 
-/*
-** DEBUGGING
-*/
-void					print_connection_queue(t_connection **q);
-void					print_map(t_map *map);
-void					print_connection(t_connection *tmp);
-void					print_best(const t_best *best);
-void					print_rooms(const t_table *rooms);
-void					print_neighbours(const t_room *room);
-void					print_weight_queue(t_weight **q);
-void					print_troute(t_route *route);
-void					print_triangle(t_triangle *tr);
-void					print_in_paths(BITFIELD_TYPE *in_paths, t_map *map);
 #endif

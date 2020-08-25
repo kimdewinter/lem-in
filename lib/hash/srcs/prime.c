@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 12:01:12 by lravier       #+#    #+#                 */
-/*   Updated: 2020/04/29 18:08:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:23:23 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	is_prime(int n)
 	return (1);
 }
 
-int		next_prime(int n)
+int			next_prime(int n)
 {
 	while (!is_prime(n))
 		n++;

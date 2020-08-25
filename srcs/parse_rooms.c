@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 15:27:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 16:25:49 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ size_t *num_room)
 			return (EXIT_FAILURE);
 	}
 	else if (is_comment(input->lines[*i]) != 1)
-		return (EXIT_FAILURE);	
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/25 16:20:13 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/25 16:34:02 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,6 @@ RAW=	main\
 		delete_map\
 		delete_rooms\
 		remove_tube\
-		print\
 		remove_blockage_1\
 		remove_blockage_2\
 		compare_candidate_sol\

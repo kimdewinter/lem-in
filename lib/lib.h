@@ -6,12 +6,12 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 17:08:12 by lravier       #+#    #+#                 */
-/*   Updated: 2020/05/08 15:55:04 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/25 17:24:25 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIB_H
-#define LIB_H
+# define LIB_H
 # include <stdlib.h>
 # include <stdio.h>
 # include <stdarg.h>

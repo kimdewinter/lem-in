@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 11:06:46 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/13 13:55:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:18:19 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/hashing.h"
 
-static int		resize_table(t_table *ht, unsigned long long base_size)
+static int	resize_table(t_table *ht, unsigned long long base_size)
 {
 	t_table	*new_table;
 	int		i;
@@ -43,7 +43,7 @@ static int		resize_table(t_table *ht, unsigned long long base_size)
 	return (1);
 }
 
-int		resize_up(t_table *ht)
+int			resize_up(t_table *ht)
 {
 	int		new_size;
 
@@ -53,7 +53,7 @@ int		resize_up(t_table *ht)
 	return (1);
 }
 
-int		resize_down(t_table *ht)
+int			resize_down(t_table *ht)
 {
 	int		new_size;
 

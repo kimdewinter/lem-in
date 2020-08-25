@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/25 15:00:39 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 15:16:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 16:23:45 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,5 @@ ssize_t			main_error(size_t err_code)
 		ft_printf("Error: copy_input\nError reading input\n");
 	else if (err_code == 4)
 		ft_printf("Error: copy_input\nError reallocating memory\n");
-	// else if (err_code == 5)
-	// 	ft_printf("Error: parse_tubes\nError allocating memory\n");
-	// else if (err_code == 6)
-	// 	ft_printf("Error: parse_tubes\nError linking rooms\n");
-	// else if (err_code == 7)
-	// 	ft_printf("Error: parse_tubes\nNo links between rooms detected\n");
-	// else if (err_code == 8)
-	// 	ft_printf("Error: sanitize input\nNo rooms provided\n");
-	// else if (err_code == 9)
-	// 	ft_printf("Error: sanitize input\nNo start room provided\n");
 	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 19:51:36 by lravier       #+#    #+#                 */
-/*   Updated: 2020/07/15 14:50:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/25 17:29:58 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@
 # include "../../libft/libft.h"
 # include "../../libft/get_next_line.h"
 
-typedef struct 	s_entry
+typedef struct		s_entry
 {
 	char	*key;
 	void	*val;
-}				t_entry;
+}					t_entry;
 
-typedef struct	s_table
+typedef struct		s_table
 {
 	unsigned long long	base_size;
 	unsigned long long	size;
 	unsigned long long	count;
 	t_entry				**entries;
-}				t_table;
+}					t_table;
 
 t_table				*create_ht(size_t size);
 int					next_prime(int n);
