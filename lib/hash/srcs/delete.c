@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 21:20:00 by lravier       #+#    #+#                 */
-/*   Updated: 2020/06/12 16:35:54 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:13:28 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 static void	delete_entry(t_entry *entry)
 {
 	if (entry->key)
-		free (entry->key);
-	free (entry);
+		free(entry->key);
+	free(entry);
 	entry = NULL;
 }
 
-void	delete_ht(t_table *ht)
+void		delete_ht(t_table *ht)
 {
 	int	i;
 
@@ -31,6 +31,6 @@ void	delete_ht(t_table *ht)
 			delete_entry(ht->entries[i]);
 		i++;
 	}
-	free (ht->entries);
-	free (ht);
+	free(ht->entries);
+	free(ht);
 }
