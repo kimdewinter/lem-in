@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:36:38 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:26:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,10 @@ static ssize_t	commit_route(t_best *candidate, t_route *route, t_map *map)
 			return (PATHS_DONE);
 	}
 	if (init_route(candidate, map, route) == EXIT_FAILURE)
+	{
+		delete_solution(candidate);
 		return (EXIT_FAILURE);
+	}
 	set_route(candidate, route, map);
 	if (candidate->used == (size_t)map->antmount ||
 	candidate->used == map->start->neighbours_len ||

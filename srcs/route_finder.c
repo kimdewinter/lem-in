@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 13:02:49 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:31:51 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,16 @@ ssize_t			find_routes(t_map *map)
 		if (candidate.used == 0)
 			return (EXIT_SUCCESS);
 		if (set_weights(map, 1, NULL) == EXIT_FAILURE)
+		{
+			delete_solution(&candidate);
 			return (EXIT_FAILURE);
+		}
 		blocks_found = remove_blockage(&candidate, map);
 		if (blocks_found == EXIT_FAILURE)
+		{
+			delete_solution(&candidate);
 			return (EXIT_FAILURE);
+		}
 		compare_candidate_best(map, &candidate);
 		reset_dists(map->rooms, 1, 1);
 	}
