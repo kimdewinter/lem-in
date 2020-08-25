@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 15:49:13 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 17:05:48 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,21 +44,27 @@ static int		add_tubes(t_map *map, char **rooms)
 	return (1);
 }
 
-static size_t	parse_tube(char *line, t_map *map, size_t *tubes)
+static void		parse_tube_loop(int *dash, const char *line)
 {
-	char	**rooms;
-	int		dash;
-	int		i;
-	size_t	error;
+	size_t	i;
 
-	dash = 0;
+	*dash = 0;
 	i = 0;
 	while (line[i])
 	{
 		i++;
 		if (line[i] == '-')
-			dash += 1;
+			*dash += 1;
 	}
+}
+
+static size_t	parse_tube(char *line, t_map *map, size_t *tubes)
+{
+	char	**rooms;
+	int		dash;
+	size_t	error;
+
+	parse_tube_loop(&dash, line);
 	if (dash != 1)
 		return (4);
 	rooms = ft_strsplit(line, '-');
