@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 13:02:49 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 15:15:03 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-void			reset_dists(t_table *rooms, int to_start, int to_end)
+void			reset_dist_to_x(t_table *rooms)
 {
 	size_t	i;
 
@@ -21,10 +21,8 @@ void			reset_dists(t_table *rooms, int to_start, int to_end)
 	{
 		if (rooms->entries[i] != NULL)
 		{
-			if (to_start == 1)
-				((t_room *)rooms->entries[i]->val)->dist_to_start = -1;
-			if (to_end == 1)
-				((t_room *)rooms->entries[i]->val)->dist_to_end = -1;
+			((t_room *)rooms->entries[i]->val)->dist_to_start = -1;
+			((t_room *)rooms->entries[i]->val)->dist_to_end = -1;
 		}
 		i++;
 	}
@@ -40,20 +38,20 @@ ssize_t			find_routes(t_map *map)
 	{
 		if (map->start == NULL)
 			return (EXIT_FAILURE);
-		if (set_weights(map, -1, NULL) == EXIT_FAILURE)
+		if (traverse_bf(map->end, NULL, LVL_GRPH_E2S, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		setup_candidate(&candidate);
 		if (find_parallel_routes(&candidate, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		if (candidate.used == 0)
 			return (EXIT_SUCCESS);
-		if (set_weights(map, 1, NULL) == EXIT_FAILURE)
+		if (traverse_bf(map->start, NULL, LVL_GRPH_S2E, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		blocks_found = remove_blockage(&candidate, map);
 		if (blocks_found == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		compare_candidate_best(map, &candidate);
-		reset_dists(map->rooms, 1, 1);
+		reset_dist_to_x(map->rooms);
 	}
 	return (EXIT_SUCCESS);
 }

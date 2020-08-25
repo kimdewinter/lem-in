@@ -6,14 +6,16 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/14 18:46:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/25 15:13:44 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-int		room_in_bitfield(const t_room *curr, BITFIELD_TYPE *bitfield)
+ssize_t	room_in_bitfield(const t_room *curr, const BITFIELD_TYPE *bitfield)
 {
+	if (curr == NULL || bitfield == NULL)
+		return (-1);
 	if ((bitfield[curr->room_i / BITFIELD_SIZE] &
 	((BITFIELD_TYPE)1 << (63 - curr->room_i % BITFIELD_SIZE)))
 	!= (BITFIELD_TYPE)0)

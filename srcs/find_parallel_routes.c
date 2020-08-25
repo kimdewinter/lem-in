@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:36:38 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 15:15:15 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,10 @@ t_map *map)
 	ret = commit_route(candidate, route, map);
 	if (ret == EXIT_FAILURE || ret == PATHS_DONE)
 		return (ret);
-	reset_dists(map->rooms, 0, 1);
-	set_weights(map, -1, candidate->in_paths);
+	reset_dist_to_x(map->rooms);
+	if (traverse_bf(
+			map->end, candidate->in_paths , LVL_GRPH_E2S, map) == EXIT_FAILURE)
+		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
 }
 

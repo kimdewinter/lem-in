@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 13:12:52 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 15:14:02 by kim           ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,27 @@ typedef	struct			s_route
 ** the structure of each valid route from the start to the end room
 */
 
+typedef struct			s_dfs_wrap
+{
+	struct s_route		*route;
+	BITFIELD_TYPE		*visited;
+	t_best				*candidate;
+	const struct s_map	*map;
+}						t_dfs_wrap;
+
+typedef struct			s_qnode
+{
+	struct s_room		*room;
+	struct s_qnode		*next;
+	struct s_qnode		*prev;
+}						t_qnode;
+
+typedef struct			s_qwrap
+{
+	struct s_qnode		*head;
+	struct s_qnode		*tail;
+}						t_qwrap;
+
 typedef struct			s_room
 {
 	char				*name;
@@ -246,6 +267,22 @@ size_t					calc_cost(size_t ants, const t_best *routes);
 size_t					ft_round_rest(long double rest);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_best *candidate, const t_map *map);
+ssize_t					traverse_bf(t_room *room_to_begin_from,
+									const BITFIELD_TYPE *in_paths,
+									const size_t call_code,
+									const t_map *map);
+ssize_t					find_routes_df(t_best *candidate, const t_map *map);
+t_room					*select_next_room(const t_room *curr,
+											const t_dfs_wrap *wrap);
+ssize_t					exec_find_routes_df(t_room *curr,
+											t_dfs_wrap *wrap);
+ssize_t					handle_err_route_finder(size_t err_code,
+												const char *line);
+ssize_t					alloc_single_blank_route(t_route **dst,
+													const size_t route_len,
+													const size_t bitroute_len);
+void					reset_dist_to_x(t_table *rooms);
+
 /*
 ** ROUTE FINDING UTILS
 */
@@ -285,8 +322,8 @@ ssize_t					allocopy_bitfield(BITFIELD_TYPE **dst,
 											BITFIELD_TYPE *src,
 											t_map *map);
 ssize_t					handle_err_biter(size_t err_code, const char *line);
-int						room_in_bitfield(const t_room *curr,
-											BITFIELD_TYPE *bitfield);
+ssize_t					room_in_bitfield(const t_room *curr,
+											const BITFIELD_TYPE *bitfield);
 ssize_t					bite_room_new(t_room *room, const t_map *map);
 
 /*

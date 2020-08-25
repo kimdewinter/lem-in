@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/25 13:12:21 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/25 14:10:25 by kim           ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ RAW=	main\
 		find_best_option_route\
 		route_finder_utils_1\
 		route_finder_utils_2\
+		route_finder_utils_3\
 		biter1\
 		biter2\
 		calc_cost\
@@ -49,7 +50,11 @@ RAW=	main\
 		compare_candidate_sol\
 		set_weights\
 		set_weights_utils\
-		find_parallel_routes
+		find_parallel_routes\
+		traverse_bf\
+		df_routefinder\
+		df_rf_executor\
+		err_route_finder
 
 OBJ_DIR=obj/
 SRC_DIR=srcs/
