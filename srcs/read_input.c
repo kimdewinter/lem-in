@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/23 11:19:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 15:18:09 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,10 @@ static ssize_t	resize_buffer(t_input_reader *input)
 	input->size = input->size * 2;
 	new_lines = (char **)malloc(sizeof(char *) * input->size);
 	if (!new_lines)
+	{
+		delete_input(input);
 		return (EXIT_FAILURE);
+	}
 	while (i < input->size)
 	{
 		new_lines[i] = NULL;
@@ -48,17 +51,17 @@ static ssize_t	copy_input(t_input_reader *input)
 		if (input->num_lines == input->size - 1)
 		{
 			if (resize_buffer(input) == EXIT_FAILURE)
-				return (EXIT_FAILURE);
+				return (4);
 		}
 		read = get_next_line(STDIN_FILENO, &input->lines[input->num_lines]);
 		if (read < 0)
-			return (ft_error("Error reading input\n", EXIT_FAILURE));
+			return (3);
 		if (read > 0)
 			input->num_lines++;
 	}
 	if (read < 0)
-		return (ft_error("Error reading input\n", EXIT_FAILURE));
-	return (EXIT_SUCCESS);
+		return (3);
+	return (1);
 }
 
 static ssize_t	setup_input(t_input_reader *input)
@@ -81,8 +84,11 @@ static ssize_t	setup_input(t_input_reader *input)
 
 ssize_t			read_input(t_input_reader *input)
 {
-	if (setup_input(input) == EXIT_SUCCESS &&
-		copy_input(input) == EXIT_SUCCESS)
-		return (EXIT_SUCCESS);
-	return (EXIT_FAILURE);
+	ssize_t		ret;
+	if (setup_input(input) == EXIT_FAILURE)
+		return (main_error(2));
+	ret = copy_input(input);
+	if (ret != 1)
+		return (main_error(ret));
+	return (EXIT_SUCCESS);
 }

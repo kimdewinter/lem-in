@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:56:31 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 15:49:13 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ static size_t	parse_tube(char *line, t_map *map, size_t *tubes)
 		return (5);
 	error = add_tubes(map, rooms);
 	if (error != 1)
+	{
+		free_room_names(rooms);
 		return (error);
+	}
 	(*tubes)++;
 	free_room_names(rooms);
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 13:02:29 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 14:19:14 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 ssize_t			setup_room(t_room **dest,
 							const char *name,
-							const ssize_t xpos,
-							const ssize_t ypos,
 							size_t *num_room)
 {
 	t_room	*room;
@@ -29,8 +27,6 @@ ssize_t			setup_room(t_room **dest,
 		room->sps = 0;
 		room->bitroom = NULL;
 		room->name = (char *)name;
-		room->xpos = xpos;
-		room->ypos = ypos;
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
 		room->ant = 0;
@@ -107,34 +103,6 @@ ssize_t			add_neighbour(t_room *room, t_room *neighbour)
 			if (room->neighbours[room->neighbours_len - 1] != NULL)
 				return (EXIT_SUCCESS);
 		}
-	}
-	return (EXIT_FAILURE);
-}
-
-ssize_t			purge_room(t_room **room)
-{
-	if (*room != NULL)
-	{
-		if ((*room)->name != NULL)
-		{
-			free((*room)->name);
-			(*room)->name = NULL;
-		}
-		(*room)->xpos = -1;
-		(*room)->ypos = -1;
-		while ((*room)->neighbours_len > 0)
-		{
-			(*room)->neighbours_len--;
-			if ((*room)->neighbours[(*room)->neighbours_len] != NULL)
-			{
-				free((*room)->neighbours[(*room)->neighbours_len]);
-				(*room)->neighbours[(*room)->neighbours_len] = NULL;
-			}
-		}
-		(*room)->ant = -1;
-		free(*room);
-		*room = NULL;
-		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
 }

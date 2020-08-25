@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 13:12:52 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 15:17:07 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,6 @@ typedef struct			s_room
 	int					spe;
 	int					sps;
 	int					is_junction;
-	ssize_t				xpos;
-	ssize_t				ypos;
 	size_t				ant;
 	struct s_room		**neighbours;
 	size_t				neighbours_len;
@@ -180,6 +178,10 @@ typedef struct			s_input_reader
 ** standalone struct only used for reading and parsing input
 */
 /*
+** PARSER
+*/
+ssize_t					main_error(size_t err_code);
+/*
 ** READER
 */
 int						get_next_line(const int fd, char **line);
@@ -204,17 +206,20 @@ ssize_t					parse_input(t_map *map, t_input_reader *input);
 ssize_t					parse_rooms(t_input_reader *input,
 									t_map *map,
 									size_t *i);
+ssize_t					add_room(const char *line, t_map *map, size_t *num_room);
+ssize_t					add_special_room(t_input_reader *input,
+									t_map *map,
+									size_t *i,
+									size_t *num_room);
+ssize_t					check_duplicate_room(const char *room_name, const t_map *map);
 ssize_t					parse_tubes(t_input_reader *input,
 									t_map *map,
 									size_t *i);
-ssize_t					purge_room(t_room **room);
 ssize_t					sanitize_input(t_map *map);
 ssize_t					set_spe_rooms(t_map *map);
 ssize_t					set_sps_rooms(t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
-									const ssize_t xpos,
-									const ssize_t ypos,
 									size_t *num_room);
 /*
 ** UNNECESSARY TUBES OPTION CHECKS
@@ -303,6 +308,7 @@ ssize_t					setup_all_routeputs(t_routeput ***routes, const t_map *map);
 /*
 ** CLEANER
 */
+void					delete_input(t_input_reader *input);
 void					delete_all_routes(t_map *map);
 void					delete_all_rooms(t_table *rooms);
 void					delete_map(t_map *map);

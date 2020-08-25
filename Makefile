@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/25 13:12:21 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/25 16:20:13 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,13 @@ CC=gcc
 EXTRA=
 IFLAGS= -Wall -Wextra -Werror -O1 $(EXTRA)
 RAW=	main\
+		main_error\
 		parse_antmount\
 		parse_clean\
 		parse_input\
 		parse_error\
 		parse_rooms\
+		parse_rooms_add_room\
 		parse_tubes\
 		parse_utils\
 		read_input\
@@ -65,12 +67,12 @@ LIB=$(LIB_DIR)$(LIB_NAME)
 .PHONY: all clean fclean re
 
 all:$(NAME)
-	@echo "Compiling $(LIB_NAME)"
-	@make -s -C $(LIB_DIR)
-	@echo "Compiling $^ executable"
-	@$(CC) $(IFLAGS) -o $(NAME) $(OBJS) -I $(HEADER) $(LIB)
 
 $(NAME):$(OBJS)
+	@echo "Compiling $(LIB_NAME)"
+	@make -s -C $(LIB_DIR)
+	@echo "Compiling $@ executable"
+	@$(CC) $(IFLAGS) -o $(NAME) $(OBJS) -I $(HEADER) $(LIB)
 
 $(OBJ_DIR):
 	@mkdir $@
