@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:10:30 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 13:21:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 13:33:23 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,18 @@ static ssize_t		add_nbs_to_q(t_weight **q, BITFIELD_TYPE *visited)
 	return (EXIT_SUCCESS);
 }
 
+static void			free_weight_q(t_weight_wrap **qr)
+{
+	while (*(*qr)->q)
+		remove_q_item((*qr)->q);
+	free((*qr)->visited);
+	(*qr)->visited = NULL;
+	free((*qr)->q);
+	(*qr)->q = NULL;
+	free(*qr);
+	*qr = NULL;
+}
+
 static ssize_t		execute_q_weight_item(int flow, t_weight_wrap *qr,
 t_map *map)
 {
@@ -66,7 +78,10 @@ t_map *map)
 		|| room_in_bitfield((*(qr->q))->dst, qr->in_paths) == 0)
 		{
 			if (add_nbs_to_q(qr->q, qr->visited) == EXIT_FAILURE)
+			{
+				free_weight_q(&qr);
 				return (EXIT_FAILURE);
+			}
 		}
 	}
 	remove_q_item(qr->q);
@@ -96,8 +111,6 @@ ssize_t				set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths)
 		if (execute_q_weight_item(flow, qr, map) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	free(qr->q);
-	free(qr->visited);
-	free(qr);
+	free_weight_q(&qr);
 	return (EXIT_SUCCESS);
 }
