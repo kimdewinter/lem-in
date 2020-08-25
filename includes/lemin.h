@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 16:52:43 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 13:12:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -238,6 +238,10 @@ ssize_t					find_parallel_routes(t_best *candidate, t_map *map);
 void					find_best_option(t_room *start, BITFIELD_TYPE *visited,
 											ssize_t *i);
 ssize_t					set_weights(t_map *map, int flow, BITFIELD_TYPE *in_paths);
+ssize_t					add_q_item(t_weight **q, size_t round, t_room *dst);
+void					remove_q_item(t_weight **q);
+ssize_t					create_q(t_weight_wrap **qr, BITFIELD_TYPE *in_paths,
+t_map *map);
 size_t					calc_cost(size_t ants, const t_best *routes);
 size_t					ft_round_rest(long double rest);
 ssize_t					find_routes(t_map *map);

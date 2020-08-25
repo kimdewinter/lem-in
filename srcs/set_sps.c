@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 12:03:01 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 12:18:47 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 13:07:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-void		set_sps(t_room *prev, t_room *curr, size_t dist)
+void			set_sps(t_room *prev, t_room *curr, size_t dist)
 {
 	if (curr->sps == 1)
 	{
@@ -26,7 +26,7 @@ void		set_sps(t_room *prev, t_room *curr, size_t dist)
 	{
 		curr->sps = 1;
 		curr->sps_len = dist;
-		curr->sps_start = prev;		
+		curr->sps_start = prev;
 	}
 }
 
@@ -50,7 +50,7 @@ t_map *map)
 	}
 }
 
-ssize_t		set_sps_rooms(t_map *map)
+ssize_t			set_sps_rooms(t_map *map)
 {
 	BITFIELD_TYPE	*visited;
 	ssize_t			i;
@@ -67,6 +67,6 @@ ssize_t		set_sps_rooms(t_map *map)
 		continue_sps(map->start->neighbours[i], visited, dist + 1, map);
 		i++;
 	}
-	free (visited);
+	free(visited);
 	return (EXIT_SUCCESS);
 }

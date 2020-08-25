@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/20 17:57:38 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 12:17:45 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 13:07:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-void		set_spe(t_room *prev, t_room *curr, size_t dist)
+void			set_spe(t_room *prev, t_room *curr, size_t dist)
 {
 	if (curr->spe == 1)
 	{
@@ -26,7 +26,7 @@ void		set_spe(t_room *prev, t_room *curr, size_t dist)
 	{
 		curr->spe = 1;
 		curr->spe_len = dist;
-		curr->spe_start = prev;		
+		curr->spe_start = prev;
 	}
 }
 
@@ -50,7 +50,7 @@ t_map *map)
 	}
 }
 
-ssize_t		set_spe_rooms(t_map *map)
+ssize_t			set_spe_rooms(t_map *map)
 {
 	BITFIELD_TYPE	*visited;
 	ssize_t			i;
@@ -67,6 +67,6 @@ ssize_t		set_spe_rooms(t_map *map)
 		continue_spe(map->end->neighbours[i], visited, dist + 1, map);
 		i++;
 	}
-	free (visited);
-	return (EXIT_SUCCESS);	
+	free(visited);
+	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/08/24 16:52:13 by lravier       ########   odam.nl          #
+#    Updated: 2020/08/25 13:12:21 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ RAW=	main\
 		remove_blockage_2\
 		compare_candidate_sol\
 		set_weights\
+		set_weights_utils\
 		find_parallel_routes
 
 OBJ_DIR=obj/

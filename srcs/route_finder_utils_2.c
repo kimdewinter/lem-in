@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 13:52:42 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 14:46:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 13:06:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@ void			setup_candidate(t_best *candidate)
 	candidate->used = 0;
 }
 
-ssize_t		free_find_parallel(BITFIELD_TYPE **visited, t_route *route,
-ssize_t	ret)
+ssize_t			free_find_parallel(BITFIELD_TYPE **visited, t_route *route,
+ssize_t ret)
 {
 	free(*visited);
 	*visited = NULL;
@@ -42,8 +42,7 @@ ssize_t	ret)
 	return (ret);
 }
 
-
-ssize_t		setup_routefinder(BITFIELD_TYPE **visited, t_route *route,
+ssize_t			setup_routefinder(BITFIELD_TYPE **visited, t_route *route,
 t_map *map)
 {
 	if (bite_alloc(visited, map) == EXIT_FAILURE)

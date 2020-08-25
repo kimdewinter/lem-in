@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 13:49:38 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:19:15 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/25 13:03:33 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ ssize_t			init_combi(t_map *map, t_best **candidate)
 			(*candidate)->len = num_routes;
 			return (EXIT_SUCCESS);
 		}
-		free ((*candidate)->combi);
+		free((*candidate)->combi);
 	}
 	return (EXIT_FAILURE);
 }
@@ -70,9 +70,9 @@ ssize_t			init_route(t_best *candidate, t_map *map, t_route *route)
 			if (bite_alloc(&candidate->combi[candidate->used]->bitroute, map)
 			== EXIT_SUCCESS)
 				return (EXIT_SUCCESS);
-			free (candidate->combi[candidate->used]->route);
+			free(candidate->combi[candidate->used]->route);
 		}
-		free (candidate->combi[candidate->used]);
+		free(candidate->combi[candidate->used]);
 	}
 	return (EXIT_FAILURE);
 }
