@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/26 15:12:45 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 15:23:37 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,24 +65,6 @@ size_t			is_room(char *line)
 	}
 	return (0);
 }
-
-// static size_t	is_tube_check(char **words, int i)
-// {
-// 	printf("Check if tube\n");
-// 	exit (0);
-// 	if (i != 2)
-// 	{
-// 		free_room_names(words);
-// 		return (0);
-// 	}
-// 	if (ft_strcmp(words[0], words[1]) == 0)
-// 	{
-// 		free_room_names(words);
-// 		return (0);
-// 	}
-// 	free_room_names(words);
-// 	return (1);
-// }
 
 static size_t	starts_with_room_name(char *line, size_t *i, t_map *map)
 {

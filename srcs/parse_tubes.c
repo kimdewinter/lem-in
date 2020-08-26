@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:05:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/26 16:08:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,15 +26,8 @@ static int		check_duplicate_tube(t_room *room1, t_room *room2)
 	return (0);
 }
 
-static int		add_tubes(t_map *map, char **rooms)
+static int		add_tubes(t_room *room1, t_room *room2)
 {
-	t_room *room1;
-	t_room *room2;
-
-	room1 = (t_room *)search_ht(map->rooms, rooms[0]);
-	room2 = (t_room *)search_ht(map->rooms, rooms[1]);
-	if (room1 == NULL || room2 == NULL)
-		return (0);
 	if (check_duplicate_tube(room1, room2) == 1)
 		return (15);
 	if (add_neighbour(room1, room2) == EXIT_FAILURE)
@@ -44,40 +37,61 @@ static int		add_tubes(t_map *map, char **rooms)
 	return (1);
 }
 
-static void		parse_tube_loop(int *dash, const char *line)
+static t_room	*find_room_name(char *line, size_t *i, t_map *map)
 {
-	size_t	i;
+	size_t	len;
+	char	*tmp;
+	t_room	*room;
 
-	*dash = 0;
-	i = 0;
-	while (line[i])
+	len = ft_strlen(line);
+	tmp = NULL;
+	room = NULL;
+	while (*i <= len)
 	{
-		i++;
-		if (line[i] == '-')
-			*dash += 1;
+		if (*i != 0)
+			tmp = ft_strsub(line, 0, *i);
+		if (tmp != NULL)
+			room = search_ht(map->rooms, tmp);
+		if (room != NULL)
+		{
+			free(tmp);
+			return (room);
+		}
+		free(tmp);
+		tmp = NULL;
+		(*i)++;
 	}
+	return (room);
 }
 
 static size_t	parse_tube(char *line, t_map *map, size_t *tubes)
 {
-	char	**rooms;
-	int		dash;
+	t_room	*room1;
+	t_room 	*room2;
+	size_t	i;
+	size_t	j;
 	size_t	error;
 
-	parse_tube_loop(&dash, line);
-	if (dash != 1)
-		return (4);
-	rooms = ft_strsplit(line, '-');
-	if (!rooms)
-		return (5);
-	error = add_tubes(map, rooms);
+	i = 0;
+	j = 0;
+	room1 = find_room_name(line, &i, map);
+	if (room1 == NULL)
+		return (0);
+	if (line[i] != '-')
+		return (0);
+	else
+		i++;
+	room2 = find_room_name(&line[i], &j, map);
+	if (room2 == NULL)
+		return (0);
+	if (line[i + j] != '\0')
+		return (0);
+	if (room1 == room2)
+		return (0);
+	error = add_tubes(room1, room2);
 	if (error != 1)
-	{
-		free_room_names(rooms);
 		return (error);
-	}
 	(*tubes)++;
-	free_room_names(rooms);
 	return (1);
 }
 
