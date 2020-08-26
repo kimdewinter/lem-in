@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/26 13:45:04 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 14:12:53 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ size_t			is_tube(char *line)
 	dash = 0;
 	while (line[i])
 	{
+		if (line[i] == ' ')
+			return (0);
 		if (line[i] == '-')
 			dash += 1;
 		i++;
