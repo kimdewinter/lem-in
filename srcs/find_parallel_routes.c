@@ -6,11 +6,20 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/17 16:41:48 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:26:37 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 10:42:57 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+static ssize_t	check_exit_cond(t_best *candidate, t_map *map)
+{
+	if (candidate->used == (size_t)map->antmount ||
+	candidate->used == map->start->neighbours_len ||
+	candidate->used == map->end->neighbours_len)
+		return (PATHS_DONE);
+	return (EXIT_SUCCESS);
+}
 
 static ssize_t	commit_route(t_best *candidate, t_route *route, t_map *map)
 {
@@ -35,11 +44,7 @@ static ssize_t	commit_route(t_best *candidate, t_route *route, t_map *map)
 		return (EXIT_FAILURE);
 	}
 	set_route(candidate, route, map);
-	if (candidate->used == (size_t)map->antmount ||
-	candidate->used == map->start->neighbours_len ||
-	candidate->used == map->end->neighbours_len)
-		return (PATHS_DONE);
-	return (EXIT_SUCCESS);
+	return (check_exit_cond(candidate, map));
 }
 
 static int		find_route(t_room *start, BITFIELD_TYPE *visited,

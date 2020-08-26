@@ -6,11 +6,25 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 11:06:46 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:18:19 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/26 10:38:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/hashing.h"
+
+static void	set_new_values(t_table *ht, t_table *new_table,
+int tmp_size, t_entry **tmp_entr)
+{
+	ht->base_size = new_table->base_size;
+	ht->count = new_table->count;
+	tmp_size = ht->size;
+	ht->size = new_table->size;
+	new_table->size = tmp_size;
+	tmp_entr = ht->entries;
+	ht->entries = new_table->entries;
+	new_table->entries = tmp_entr;
+	delete_ht(new_table);
+}
 
 static int	resize_table(t_table *ht, unsigned long long base_size)
 {
@@ -31,15 +45,7 @@ static int	resize_table(t_table *ht, unsigned long long base_size)
 			insert_ht(new_table, ht->entries[i]->key, ht->entries[i]->val);
 		i++;
 	}
-	ht->base_size = new_table->base_size;
-	ht->count = new_table->count;
-	tmp_size = ht->size;
-	ht->size = new_table->size;
-	new_table->size = tmp_size;
-	tmp_entr = ht->entries;
-	ht->entries = new_table->entries;
-	new_table->entries = tmp_entr;
-	delete_ht(new_table);
+	set_new_values(ht, new_table, tmp_size, tmp_entr);
 	return (1);
 }
 

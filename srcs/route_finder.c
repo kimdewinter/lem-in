@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/15 14:33:23 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 17:31:51 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 10:47:32 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ void			reset_dists(t_table *rooms, int to_start, int to_end)
 	}
 }
 
+static ssize_t	free_and_ret(t_best *candidate, ssize_t ret)
+{
+	delete_solution(candidate);
+	return (ret);
+}
+
 ssize_t			find_routes(t_map *map)
 {
 	t_best	candidate;
@@ -38,8 +44,6 @@ ssize_t			find_routes(t_map *map)
 	blocks_found = EXIT_SUCCESS;
 	while (blocks_found == EXIT_SUCCESS)
 	{
-		if (map->start == NULL)
-			return (EXIT_FAILURE);
 		if (set_weights(map, -1, NULL) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		setup_candidate(&candidate);
@@ -48,16 +52,10 @@ ssize_t			find_routes(t_map *map)
 		if (candidate.used == 0)
 			return (EXIT_SUCCESS);
 		if (set_weights(map, 1, NULL) == EXIT_FAILURE)
-		{
-			delete_solution(&candidate);
-			return (EXIT_FAILURE);
-		}
+			free_and_ret(&candidate, EXIT_FAILURE);
 		blocks_found = remove_blockage(&candidate, map);
 		if (blocks_found == EXIT_FAILURE)
-		{
-			delete_solution(&candidate);
-			return (EXIT_FAILURE);
-		}
+			free_and_ret(&candidate, EXIT_FAILURE);
 		compare_candidate_best(map, &candidate);
 		reset_dists(map->rooms, 1, 1);
 	}

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/08 13:05:57 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:11:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/26 10:43:55 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		ft_handle_di(t_pf_arg *instr)
 		return (0);
 	if (instr->len != 0)
 	{
-		if (num == INT_MAX_MIN)
+		if (num == (-9223372036854775807LL - 1))
 			ft_strcpy(instr->tmp, "-9223372036854775808");
 		else
 		{

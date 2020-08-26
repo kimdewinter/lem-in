@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/05/22 10:55:17 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:11:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/26 10:44:03 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 # define BUFF_SIZE 100
 # define ARG_SIZE 12
 # define INT_MIN -2147483648
-# define INT_MAX_MIN -9223372036854775807LL - 1
 
 typedef struct		s_pf_arg
 {

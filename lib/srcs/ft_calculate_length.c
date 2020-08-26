@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/10/06 15:27:39 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:11:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/26 10:43:45 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			get_int_len(intmax_t num, t_pf_arg *instr, int base)
 
 	len = 0;
 	tmp = num;
-	if (num == INT_MAX_MIN)
+	if (num == (-9223372036854775807LL - 1))
 		return (20);
 	if (num == 0)
 		return (handle_zero(num, instr));

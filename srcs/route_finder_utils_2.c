@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 13:52:42 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:17:54 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 10:49:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ ssize_t ret)
 	route->route = NULL;
 	if (route->bitroute)
 	{
-		free (route->bitroute);
+		free(route->bitroute);
 		route->bitroute = NULL;
 	}
 	return (ret);
@@ -54,7 +54,7 @@ t_map *map)
 		return (EXIT_FAILURE);
 	if (setup_route(route, map) == EXIT_FAILURE)
 	{
-		free (visited);
+		free(visited);
 		return (EXIT_FAILURE);
 	}
 	bite_add_room_to_bitfield(map->start, *visited);
