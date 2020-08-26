@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 14:44:18 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 16:25:00 by kim           ########   odam.nl         */
+/*   Updated: 2020/08/26 13:21:19 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,8 @@ ssize_t			read_input(t_input_reader *input)
 	if (setup_input(input) == EXIT_FAILURE)
 		return (main_error(2));
 	ret = copy_input(input);
+	if (input->num_lines == 0)
+		return (main_error(5));
 	if (ret != 1)
 		return (main_error(ret));
 	return (EXIT_SUCCESS);

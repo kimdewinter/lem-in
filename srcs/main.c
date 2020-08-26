@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/26 11:11:36 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 13:21:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,8 @@ int				main(void)
 
 	if (setup_map(&map) == EXIT_FAILURE)
 		return (main_error(1));
-	if (read_input(&input) == EXIT_FAILURE)
-	{
-		delete_map(&map);
-		return (EXIT_FAILURE);
-	}
-	if (parse_input(&map, &input) == EXIT_SUCCESS &&
+	if (read_input(&input) == EXIT_SUCCESS &&
+		parse_input(&map, &input) == EXIT_SUCCESS &&
 		sanitize_input(&map) == EXIT_SUCCESS &&
 		find_routes(&map) == EXIT_SUCCESS &&
 		output_result(&input, &map) == EXIT_SUCCESS)

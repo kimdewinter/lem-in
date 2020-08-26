@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 15:05:21 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 13:45:04 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,21 @@ size_t			is_antmount(char *line)
 	return (0);
 }
 
+static size_t	is_coordinate(char *line)
+{
+	if (ft_isdigit(*line) == 0 && *line != '-')
+		return (0);
+	if (*line == '-')
+	{
+		line++;
+		if (ft_isdigit(*line) == 0)
+			return (0);
+	}
+	while (ft_isdigit(*line) == 1 && *line != ' ')
+		line++;
+	return (1);
+}
+
 size_t			is_room(char *line)
 {
 	if (*line >= '!' && *line <= '~' && *line != '#' && *line != 'L')
@@ -37,18 +52,14 @@ size_t			is_room(char *line)
 			line++;
 		else
 			return (0);
-		if (ft_isdigit(*line) == 0)
+		if (is_coordinate(line) == 0)
 			return (0);
-		while (ft_isdigit(*line) == 1 && *line != ' ')
-			line++;
 		if (*line == ' ')
 			line++;
 		else
 			return (0);
-		if (ft_isdigit(*line) == 0)
+		if (is_coordinate(line) == 0)
 			return (0);
-		while (ft_isdigit(*line) == 1)
-			line++;
 		if (*line == '\n' || *line == '\0')
 			return (1);
 	}

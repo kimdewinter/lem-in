@@ -6,20 +6,28 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 14:28:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 13:47:44 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-unsigned long long	ft_atoi_ll(char *line, size_t *overflow)
+long long			ft_atoi_ll(char *line, size_t *overflow)
 {
 	int			i;
 	long long	result;
 	long long	prev_result;
+	int 		polar;
+
 
 	result = 0;
 	i = 0;
+	polar = 1;
+	if (line[i] == '-')
+	{
+		polar = -1;
+		i++;
+	}
 	while (line[i])
 	{
 		prev_result = result;
@@ -31,7 +39,7 @@ unsigned long long	ft_atoi_ll(char *line, size_t *overflow)
 		}
 		i++;
 	}
-	return (result);
+	return (result * polar);
 }
 
 ssize_t				parse_antmount(t_input_reader *input, t_map *map, size_t *i)

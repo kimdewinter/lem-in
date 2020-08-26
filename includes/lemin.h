@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 17:44:17 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 13:48:29 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,7 +191,7 @@ ssize_t					read_input(t_input_reader *input);
 ** PARSER
 */
 ssize_t					add_neighbour(t_room *room, t_room *neighbour);
-unsigned long long		ft_atoi_ll(char *line, size_t *overflow);
+long long				ft_atoi_ll(char *line, size_t *overflow);
 void					free_room_names(char **rooms);
 size_t					is_antmount(char *line);
 size_t					is_command(char *line);
