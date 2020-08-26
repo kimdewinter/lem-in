@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/26 13:48:29 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 14:57:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define LVL_GRPH_S2E 1
 # define EXIT_ROUTEFOUND 2
 # define EXIT_NO_BLOCKS 2
+# define EXIT_IS_TUBE 2
 # define DEBUG 0
 # define PATHS_DONE 2
 
@@ -197,7 +198,7 @@ size_t					is_antmount(char *line);
 size_t					is_command(char *line);
 size_t					is_comment(char *line);
 size_t					is_room(char *line);
-size_t					is_tube(char *line);
+size_t					is_tube(char *line, t_map *map);
 ssize_t					link_rooms(t_room *alpha, t_room *omega);
 ssize_t					parse_antmount(t_input_reader *input,
 										t_map *map,

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/26 14:20:55 by lravier       ########   odam.nl         */
+/*   Updated: 2020/08/26 15:13:17 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,13 @@ size_t *num_room)
 		if (add_special_room(input, map, i, num_room) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
+	else if (is_tube(input->lines[*i], map) == 1)
+	{
+		map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
+		if (setup_bitrooms(map) == EXIT_SUCCESS)
+			return (EXIT_IS_TUBE);
+		return (parse_error(14));		
+	}
 	else if (is_comment(input->lines[*i]) != 1)
 		return (EXIT_FAILURE);
 	return (EXIT_SUCCESS);
@@ -70,24 +77,32 @@ size_t *num_room)
 ssize_t			parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 {
 	size_t	num_room;
+	size_t	is_tube;
 
 	num_room = 1;
+	is_tube = EXIT_SUCCESS;
 	if (input != NULL && map != NULL)
 	{
-		while (*i < input->num_lines && input->lines[*i] != NULL)
+		while (*i < input->num_lines && input->lines[*i] != NULL &&
+				is_tube == EXIT_SUCCESS)
 		{
-			if (is_tube(input->lines[*i]) == 1)
-			{
-				map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
-				if (setup_bitrooms(map) == EXIT_SUCCESS)
-					return (EXIT_SUCCESS);
-				return (parse_error(14));
-			}
-			else
-			{
-				if (parse_options(input, map, i, &num_room) == EXIT_FAILURE)
-					return (EXIT_FAILURE);
-			}
+			is_tube = parse_options(input, map, i, &num_room);
+			if (is_tube == EXIT_IS_TUBE)
+				return (EXIT_SUCCESS);
+			if (is_tube == EXIT_FAILURE)
+				return (EXIT_FAILURE);
+			// if (is_tube(input->lines[*i]) == 1)
+			// {
+			// 	map->bitfield_len = map->rooms->count / BITFIELD_SIZE + 1;
+			// 	if (setup_bitrooms(map) == EXIT_SUCCESS)
+			// 		return (EXIT_SUCCESS);
+			// 	return (parse_error(14));
+			// }
+			// else
+			// {
+			// 	if (parse_options(input, map, i, &num_room) == EXIT_FAILURE)
+			// 		return (EXIT_FAILURE);
+			// }
 			(*i)++;
 		}
 	}
