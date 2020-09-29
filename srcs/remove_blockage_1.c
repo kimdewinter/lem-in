@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/24 16:57:05 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/29 21:34:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,9 @@ size_t *i)
 	best = -1;
 	while (j < start->neighbours_len)
 	{
-		if (room_in_bitfield(start->neighbours[j], visited) == 0)
+		if (room_in_bitfield(start->neighbours[j], visited) == 0
+		&& start->neighbours[j]->dist_to_start >= 0
+		&& start->neighbours[j]->dist_to_start < start->dist_to_start)
 		{
 			if (best == -1)
 				best = j;
