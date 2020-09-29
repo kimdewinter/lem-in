@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/29 19:51:07 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/29 19:54:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ size_t			is_antmount(char *line)
 
 static size_t	is_coordinate(char **line)
 {
-	if (!(ft_isdigit(**line) == 1 || **line == '-'))
+	if (!(ft_isdigit(**line) == 1 || **line == '-' || **line == '+'))
 		return (0);
-	if (**line == '-')
+	if (**line == '-' || **line == '+')
 	{
 		(*line)++;
 		if (ft_isdigit(**line) == 0)
