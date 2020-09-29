@@ -6,53 +6,44 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/26 13:47:44 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/29 19:45:20 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-long long			ft_atoi_ll(char *line, size_t *overflow)
+uint64_t			ft_atoi_ul(char *line, size_t *overflow)
 {
 	int			i;
-	long long	result;
-	long long	prev_result;
-	int 		polar;
-
+	uint64_t	result;
 
 	result = 0;
 	i = 0;
-	polar = 1;
-	if (line[i] == '-')
-	{
-		polar = -1;
-		i++;
-	}
 	while (line[i])
 	{
-		prev_result = result;
-		result = (result * 10) + (line[i] - '0');
-		if ((result - (line[i] - '0')) / 10 != prev_result)
+		if (result > UINT64_MAX / 10
+		|| ((result == (UINT64_MAX / 10)) && ((line[i] - '0') > 5)))
 		{
 			*overflow = 1;
 			return (0);
 		}
+		result = (result * 10) + (line[i] - '0');
 		i++;
 	}
-	return (result * polar);
+	return (result);
 }
 
 ssize_t				parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 {
-	size_t	antmount;
-	size_t	overflow;
+	uint64_t	antmount;
+	size_t		overflow;
 
 	while (is_comment(input->lines[*i]) == 1)
 		(*i)++;
-	if (is_antmount(input->lines[*i]))
+	if (is_antmount(input->lines[*i]) == 1)
 	{
 		overflow = 0;
-		antmount = ft_atoi_ll(input->lines[*i], &overflow);
+		antmount = ft_atoi_ul(input->lines[*i], &overflow);
 		if (overflow == 1)
 			return (parse_error(1));
 		if (antmount == 0)

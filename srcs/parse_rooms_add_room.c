@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/25 13:43:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 16:26:08 by kim           ########   odam.nl         */
+/*   Updated: 2020/09/29 19:33:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,20 @@
 
 static ssize_t	get_coords(char *wordx, char *wordy)
 {
-	size_t	overflow;
+	int			overflow;
+	int			result;
 
 	overflow = 0;
-	ft_atoi_ll(wordx, &overflow);
-	if (overflow == 0)
+	result = atoi_overflow(wordx, &overflow);
+	if (overflow == 0 && (result >= INT_MIN && result <= INT_MAX))
 	{
-		ft_atoi_ll(wordy, &overflow);
-		if (overflow == 0)
+		result = atoi_overflow(wordy, &overflow);
+		if (overflow == 0 && (result >= INT_MIN && result <= INT_MAX))
 		{
 			return (EXIT_SUCCESS);
 		}
 	}
-	return (EXIT_FAILURE);
+	return (parse_error(16));
 }
 
 static ssize_t	free_and_return(char ***words, ssize_t ret)

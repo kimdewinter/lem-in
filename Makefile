@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/09/29 14:21:54 by simoncleerd   ########   odam.nl          #
+#    Updated: 2020/09/29 17:28:29 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,7 @@ CC=gcc
 EXTRA=
 IFLAGS= -Wall -Wextra -Werror -O1 $(EXTRA)
 RAW=	main\
+		atoi_overflow \
 		main_error\
 		parse_antmount\
 		parse_clean\
