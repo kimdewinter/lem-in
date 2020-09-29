@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/26 13:14:25 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/29 17:33:11 by kde-wint      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static ssize_t	parse_error_cont(size_t err_code)
 	else if (err_code == 15)
 		ft_printf("Error: parse_tubes\nConnection between rooms specified\
 			twice\n");
+	else if (err_code == 16)
+		ft_printf("Error: invalid input\n");
 	return (EXIT_FAILURE);
 }
 

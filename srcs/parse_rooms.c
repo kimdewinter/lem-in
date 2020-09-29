@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/29 14:06:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/29 17:32:23 by kde-wint      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ ssize_t			parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 			else
 			{
 				if (parse_options(input, map, i, &num_room) == EXIT_FAILURE)
-					return (EXIT_FAILURE);
+					return (parse_error(16));
 			}
 			(*i)++;
 		}

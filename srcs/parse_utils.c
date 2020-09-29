@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/29 14:06:52 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/29 17:33:05 by kde-wint      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,12 @@ size_t			is_room(char *line)
 {
 	if (*line >= '!' && *line <= '~' && *line != '#' && *line != 'L')
 	{
-		line++;
 		while (*line >= '!' && *line <= '~')
+		{
+			if (*line == '-')
+				return (0);
 			line++;
+		}
 		if (*line == ' ')
 			line++;
 		else
