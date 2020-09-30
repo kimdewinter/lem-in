@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/29 19:33:20 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 13:01:21 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,10 @@ rooms specified twice\n");
 	else if (err_code == 16)
 		ft_dprintf(STDERR_FILENO, "Error: parse_rooms\nCoordinate specified \
 too large to be represented in integer\n");
+	else if (err_code == 17)
+		ft_dprintf(STDERR_FILENO, "Error: parse_rooms\nInvalid line found\n");
+	else if (err_code == 18)
+		ft_dprintf(STDERR_FILENO, "Error: parse_rooms\nDuplicate room names\n");
 	return (EXIT_FAILURE);
 }
 

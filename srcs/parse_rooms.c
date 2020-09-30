@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/29 14:06:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 13:01:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,7 @@ ssize_t			check_duplicate_room(const char *room_name, const t_map *map)
 	if (search_ht(map->rooms, (char *)room_name) == NULL)
 		return (EXIT_SUCCESS);
 	else
-	{
-		ft_printf("Error: duplicate room name.\n");
-		return (EXIT_FAILURE);
-	}
+		return (parse_error(18));
 }
 
 static size_t	setup_bitrooms(t_map *map)
@@ -63,7 +60,7 @@ size_t *num_room)
 			return (EXIT_FAILURE);
 	}
 	else if (is_comment(input->lines[*i]) != 1)
-		return (EXIT_FAILURE);
+		return (parse_error(17));
 	return (EXIT_SUCCESS);
 }
 

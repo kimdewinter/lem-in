@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:27 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/29 19:58:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 12:53:28 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ static size_t	is_coordinate(char **line)
 
 size_t			is_room(char *line)
 {
-	if (*line >= '!' && *line <= '~' && *line != '#' && *line != 'L')
+	if (*line >= '!' && *line <= '~' && *line != '#' && *line != 'L'
+	&& *line != '-')
 	{
 		line++;
-		while (*line >= '!' && *line <= '~')
+		while (*line >= '!' && *line <= '~' && *line != '-')
 			line++;
 		if (*line == ' ')
 			line++;
