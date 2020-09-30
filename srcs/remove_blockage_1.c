@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/29 21:34:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 17:03:12 by simoncleerd   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ BITFIELD_TYPE *in_paths, ssize_t *i)
 	*i = best;
 }
 
-static int		find_most_promising(t_room *start, BITFIELD_TYPE *visited,
-size_t *i)
+static int		find_most_promising(t_room *start, BITFIELD_TYPE *visited, size_t *i)
 {
 	ssize_t	best;
 	size_t	j;
