@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/20 10:54:55 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:11:20 by kim           ########   odam.nl         */
+/*   Updated: 2020/09/30 13:19:11 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,6 @@
 
 int	ft_error(char *str, int n)
 {
-	ft_putstr_fd(str, 2);
+	ft_putstr_fd(str, STDERR_FILENO);
 	return (n);
 }

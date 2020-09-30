@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/30 15:19:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/24 16:46:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 13:33:54 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ static void			delete_single_room(t_room *room)
 {
 	if (room->name != NULL)
 		delete_ptr((void **)&room->name);
-	if (room->bitroom != NULL)
-		delete_ptr((void **)&room->bitroom);
+	// if (room->bitroom != NULL)
+	// 	delete_ptr((void **)&room->bitroom);
 	if (room->neighbours != NULL)
 		delete_ptr((void **)&room->neighbours);
 }

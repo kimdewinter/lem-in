@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/25 14:19:14 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 13:34:38 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ ssize_t			setup_room(t_room **dest,
 		room->is_junction = 0;
 		room->spe = 0;
 		room->sps = 0;
-		room->bitroom = NULL;
+		// room->bitroom = NULL;
 		room->name = (char *)name;
 		room->neighbours_len = 0;
 		room->neighbours = NULL;

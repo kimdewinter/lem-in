@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/20 15:13:42 by kim           #+#    #+#                 */
-/*   Updated: 2020/08/14 18:46:11 by kim           ########   odam.nl         */
+/*   Updated: 2020/09/30 13:35:01 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,23 @@ ssize_t	bite_alloc_noval(BITFIELD_TYPE **dst, const t_map *map)
 	return (EXIT_SUCCESS);
 }
 
-ssize_t	bite_room_new(t_room *room, const t_map *map)
-{
-	size_t	i;
+// ssize_t	bite_room_new(t_room *room, const t_map *map)
+// {
+// 	size_t	i;
 
-	i = room->room_i / BITFIELD_SIZE;
-	if (room != NULL && room->bitroom == NULL &&
-		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
-	{
-		if (room != map->start && room != map->end)
-		{
-			room->bitroom[i] = (BITFIELD_TYPE)1 <<
-			((BITFIELD_SIZE - 1) - room->room_i % BITFIELD_SIZE);
-		}
-		return (EXIT_SUCCESS);
-	}
-	return (EXIT_FAILURE);
-}
+// 	i = room->room_i / BITFIELD_SIZE;
+// 	if (room != NULL && room->bitroom == NULL &&
+// 		bite_alloc(&(room->bitroom), map) == EXIT_SUCCESS)
+// 	{
+// 		if (room != map->start && room != map->end)
+// 		{
+// 			room->bitroom[i] = (BITFIELD_TYPE)1 <<
+// 			((BITFIELD_SIZE - 1) - room->room_i % BITFIELD_SIZE);
+// 		}
+// 		return (EXIT_SUCCESS);
+// 	}
+// 	return (EXIT_FAILURE);
+// }
 /*
 ** takes a room and stores it's bitfield-form in room->bitroom
 */
