@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 14:52:59 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 15:39:46 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,47 +54,6 @@ typedef struct			s_conn_wrap
 	struct s_connection	**q;
 	BITFIELD_TYPE		*visited;
 }						t_conn_wrap;
-
-typedef	struct			s_connection
-{
-	int					add;
-	struct s_room		*src;
-	struct s_room		*src_nb;
-	struct s_room		*dst_nb;
-	struct s_room		*dst;
-	size_t				dist;
-	struct s_connection	*next;
-	struct s_connection	*prev;
-}						t_connection;
-
-typedef struct			s_dupl
-{
-	struct s_connection	curr;
-	struct s_connection	other;
-	ssize_t				i;
-	ssize_t				j;
-}						t_dupl;
-
-typedef struct			s_triangle
-{
-	struct s_connection	*src_side;
-	struct s_connection	nb_src;
-	struct s_connection	side_nb;
-}						t_triangle;
-
-typedef	struct			s_diamond
-{
-	int					common_dst_found;
-	size_t				nb_improved_by_side;
-	size_t				side_improved_by_nb;
-	struct s_connection	*src_side;
-	struct s_connection	*nb_src;
-	struct s_connection	*side_nb;
-	struct s_connection	side_dst;
-	struct s_connection	nb_dst;
-	struct s_room		*curr_nb_nb;
-	struct s_room		*curr_nb_side;
-}						t_diamond;
 
 typedef struct			s_routeput
 {
