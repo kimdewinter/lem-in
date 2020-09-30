@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 13:01:21 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 14:03:32 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,19 @@ too large to be represented in integer\n");
 		ft_dprintf(STDERR_FILENO, "Error: parse_rooms\nInvalid line found\n");
 	else if (err_code == 18)
 		ft_dprintf(STDERR_FILENO, "Error: parse_rooms\nDuplicate room names\n");
+	else if (err_code == 19)
+		ft_dprintf(STDERR_FILENO, "Error: parse_tubes\nRoom specified in link \
+doesn't exist\n");
+	else if (err_code == 20)
+		ft_dprintf(STDERR_FILENO, "Error: parse_rooms_add_room\nLine after \
+start or end comment does not specify valid room\n");
 	return (EXIT_FAILURE);
 }
 
 ssize_t			parse_error(size_t err_code)
 {
+	if (err_code == 0)
+		ft_dprintf(STDERR_FILENO, "Error: allocation error\n");
 	if (err_code == 1)
 		ft_dprintf(STDERR_FILENO, "Error: parse_antmount\nNumber of ants too \
 large to be represented in memory\n");

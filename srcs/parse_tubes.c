@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:05:48 by kim           ########   odam.nl         */
+/*   Updated: 2020/09/30 13:55:39 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int		check_duplicate_tube(t_room *room1, t_room *room2)
 	return (0);
 }
 
-static int		add_tubes(t_map *map, char **rooms)
+static ssize_t		add_tubes(t_map *map, char **rooms)
 {
 	t_room *room1;
 	t_room *room2;
@@ -34,14 +34,14 @@ static int		add_tubes(t_map *map, char **rooms)
 	room1 = (t_room *)search_ht(map->rooms, rooms[0]);
 	room2 = (t_room *)search_ht(map->rooms, rooms[1]);
 	if (room1 == NULL || room2 == NULL)
-		return (0);
+		return (parse_error(19));
 	if (check_duplicate_tube(room1, room2) == 1)
-		return (15);
+		return (parse_error(15));
 	if (add_neighbour(room1, room2) == EXIT_FAILURE)
-		return (0);
+		return (parse_error(0));
 	if (add_neighbour(room2, room1) == EXIT_FAILURE)
-		return (0);
-	return (1);
+		return (parse_error(0));
+	return (EXIT_SUCCESS);
 }
 
 static void		parse_tube_loop(int *dash, const char *line)
@@ -92,8 +92,8 @@ ssize_t			parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 		if (is_comment(input->lines[*i]) == 0)
 		{
 			error = parse_tube(input->lines[*i], map, &tubes);
-			if (error != 1)
-				return (parse_error(error));
+			if (error != EXIT_SUCCESS)
+				return (EXIT_FAILURE);
 		}
 		(*i)++;
 	}

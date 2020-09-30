@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/25 13:43:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/29 19:33:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 14:06:02 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ ssize_t			add_special_room(t_input_reader *input,
 							return (free_and_return(&words, EXIT_SUCCESS));
 						}
 	}
-	return (free_and_return(&words, EXIT_FAILURE));
+	return (free_and_return(&words, parse_error(20)));
 }
 
 ssize_t			add_room(const char *line, t_map *map, size_t *num_room)
