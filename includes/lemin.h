@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 13:33:43 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 14:52:59 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,12 +207,11 @@ ssize_t					parse_input(t_map *map, t_input_reader *input);
 ssize_t					parse_rooms(t_input_reader *input,
 									t_map *map,
 									size_t *i);
-ssize_t					add_room(const char *line, t_map *map,
-									size_t *num_room);
+ssize_t					add_room(t_input_reader *input, size_t *i, t_map *map,
+									int special);
 ssize_t					add_special_room(t_input_reader *input,
 									t_map *map,
-									size_t *i,
-									size_t *num_room);
+									size_t *i);
 ssize_t					check_duplicate_room(const char *room_name,
 												const t_map *map);
 ssize_t					parse_tubes(t_input_reader *input,
@@ -223,7 +222,7 @@ ssize_t					set_spe_rooms(t_map *map);
 ssize_t					set_sps_rooms(t_map *map);
 ssize_t					setup_room(t_room **dest,
 									const char *name,
-									size_t *num_room);
+									size_t num_room);
 /*
 ** UNNECESSARY TUBES OPTION CHECKS
 */

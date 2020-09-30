@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 17:39:21 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/29 19:45:20 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 15:21:00 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ ssize_t				parse_antmount(t_input_reader *input, t_map *map, size_t *i)
 		overflow = 0;
 		antmount = ft_atoi_ul(input->lines[*i], &overflow);
 		if (overflow == 1)
-			return (parse_error(1));
+			return (parse_error(24));
 		if (antmount == 0)
 			return (parse_error(2));
 		map->antmount = antmount;

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/04 19:01:29 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 14:03:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 15:20:36 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,20 @@ doesn't exist\n");
 	else if (err_code == 20)
 		ft_dprintf(STDERR_FILENO, "Error: parse_rooms_add_room\nLine after \
 start or end comment does not specify valid room\n");
+	else if (err_code == 21)
+		ft_dprintf(STDERR_FILENO, "Error: parse_rooms_add_room\nStart room \
+specified more than once\n");
+	else if (err_code == 22)
+		ft_dprintf(STDERR_FILENO, "Error: parse_rooms_add_room\nEnd room \
+specified more than once\n");
 	return (EXIT_FAILURE);
 }
 
 ssize_t			parse_error(size_t err_code)
 {
-	if (err_code == 0)
+	if (err_code == 23)
 		ft_dprintf(STDERR_FILENO, "Error: allocation error\n");
-	if (err_code == 1)
+	if (err_code == 24)
 		ft_dprintf(STDERR_FILENO, "Error: parse_antmount\nNumber of ants too \
 large to be represented in memory\n");
 	else if (err_code == 2)

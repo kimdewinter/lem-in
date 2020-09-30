@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/25 13:43:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 14:06:02 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 15:20:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,66 +44,76 @@ static ssize_t	free_and_return(char ***words, ssize_t ret)
 	return (ret);
 }
 
-static void		set_start_end_room(size_t *i, t_room *room, t_input_reader
+static ssize_t		set_start_end_room(size_t *i, t_room *room, t_input_reader
 *input, t_map *map)
 {
 	if (is_comment(input->lines[*i]) == 2)
 	{
+		if (map->start != NULL)
+			return (parse_error(21));
 		map->start = search_ht(map->rooms, room->name);
 		map->start->dist_to_start = 0;
 	}
 	else if (is_comment(input->lines[*i]) == 3)
 	{
+		if (map->end != NULL)
+			return (parse_error(22));
 		map->end = search_ht(map->rooms, room->name);
 		map->end->dist_to_end = 0;
 	}
 	(*i)++;
+	return (EXIT_SUCCESS);
 }
 
 ssize_t			add_special_room(t_input_reader *input,
 									t_map *map,
-									size_t *i,
-									size_t *num_room)
+									size_t *i)
 {
-	char	**words;
-	t_room	*room;
-
-	words = NULL;
 	if (is_room(input->lines[*i + 1]) == 1)
 	{
-		words = ft_strsplit(input->lines[*i + 1], ' ');
-		if (words[0] != NULL && words[1] != NULL && words[2] != NULL)
-			if (check_duplicate_room(words[0], map) == EXIT_SUCCESS)
-				if (get_coords(words[1], words[2]) ==
-					EXIT_SUCCESS)
-					if (setup_room(&room, words[0], num_room) ==
-						EXIT_SUCCESS)
-						if (insert_ht(map->rooms, room->name, room) ==
-							EXIT_SUCCESS)
-						{
-							set_start_end_room(i, room, input, map);
-							(*num_room)++;
-							return (free_and_return(&words, EXIT_SUCCESS));
-						}
+		if (add_room(input, i, map, 1) == EXIT_FAILURE)
+			return (EXIT_FAILURE);
+		return (EXIT_SUCCESS);
 	}
-	return (free_and_return(&words, parse_error(20)));
+	return (parse_error(20));
 }
 
-ssize_t			add_room(const char *line, t_map *map, size_t *num_room)
+ssize_t			add_room(t_input_reader *input, size_t *i, t_map *map, int special)
 {
 	char	**words;
 	t_room	*room;
 
-	words = ft_strsplit(line, ' ');
-	if (words[0] != NULL && words[1] != NULL && words[2] != NULL)
+	room = NULL;
+	if (special == 1)
+		words = ft_strsplit(input->lines[*i + 1], ' ');
+	else
+		words = ft_strsplit(input->lines[*i], ' ');
+	if (words != NULL && words[0] != NULL && words[1] != NULL && words[2] != NULL)
+	{
 		if (check_duplicate_room(words[0], map) == EXIT_SUCCESS)
+		{
 			if (get_coords(words[1], words[2]) == EXIT_SUCCESS)
-				if (setup_room(&room, words[0], num_room) ==
-					EXIT_SUCCESS)
+			{
+				if (setup_room(&room, words[0], map->rooms->count + 1) ==
+				EXIT_SUCCESS)
+				{
 					if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
 					{
-						(*num_room)++;
+						if (special == 1)
+						{
+							if (set_start_end_room(i, room, input, map) == EXIT_SUCCESS)
+								return (free_and_return(&words, EXIT_SUCCESS));
+							return (EXIT_FAILURE);
+						}
 						return (free_and_return(&words, EXIT_SUCCESS));
 					}
-	return (free_and_return(&words, EXIT_FAILURE));
+					return (parse_error(23));
+				}
+				return (parse_error(23));
+			}
+			return (EXIT_FAILURE);
+		}
+		return (EXIT_FAILURE);
+	}
+	return (free_and_return(&words, parse_error(23)));
 }

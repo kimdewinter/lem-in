@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 17:46:14 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 14:04:32 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 15:26:16 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,17 @@ ssize_t			check_duplicate_room(const char *room_name, const t_map *map)
 // 	return (EXIT_SUCCESS);
 // }
 
-static ssize_t	parse_options(t_input_reader *input, t_map *map, size_t *i,
-size_t *num_room)
+static ssize_t	parse_options(t_input_reader *input, t_map *map, size_t *i)
 {
 	if (is_room(input->lines[*i]) == 1)
 	{
-		if (add_room(input->lines[*i], map, num_room) == EXIT_FAILURE)
+		if (add_room(input, i, map, 0) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
-	else if (is_comment(input->lines[*i]) == 3)
+	else if (is_comment(input->lines[*i]) == 3 ||
+	is_comment(input->lines[*i]) == 2)
 	{
-		if (add_special_room(input, map, i, num_room) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-	}
-	else if (is_comment(input->lines[*i]) == 2)
-	{
-		if (add_special_room(input, map, i, num_room) == EXIT_FAILURE)
+		if (add_special_room(input, map, i) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 	}
 	else if (is_comment(input->lines[*i]) != 1)
@@ -66,9 +61,9 @@ size_t *num_room)
 
 ssize_t			parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 {
-	size_t	num_room;
+	// size_t	num_room;
 
-	num_room = 1;
+	// num_room = 1;
 	if (input != NULL && map != NULL)
 	{
 		while (*i < input->num_lines && input->lines[*i] != NULL)
@@ -82,7 +77,7 @@ ssize_t			parse_rooms(t_input_reader *input, t_map *map, size_t *i)
 			}
 			else
 			{
-				if (parse_options(input, map, i, &num_room) == EXIT_FAILURE)
+				if (parse_options(input, map, i) == EXIT_FAILURE)
 					return (EXIT_FAILURE);
 			}
 			(*i)++;

@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 13:55:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 15:25:52 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	if (check_duplicate_tube(room1, room2) == 1)
 		return (parse_error(15));
 	if (add_neighbour(room1, room2) == EXIT_FAILURE)
-		return (parse_error(0));
+		return (parse_error(23));
 	if (add_neighbour(room2, room1) == EXIT_FAILURE)
-		return (parse_error(0));
+		return (parse_error(23));
 	return (EXIT_SUCCESS);
 }
 
@@ -58,27 +58,27 @@ static void		parse_tube_loop(int *dash, const char *line)
 	}
 }
 
-static size_t	parse_tube(char *line, t_map *map, size_t *tubes)
+static ssize_t	parse_tube(char *line, t_map *map, size_t *tubes)
 {
 	char	**rooms;
 	int		dash;
-	size_t	error;
+	ssize_t	error;
 
 	parse_tube_loop(&dash, line);
 	if (dash != 1)
-		return (4);
+		return (parse_error(4));
 	rooms = ft_strsplit(line, '-');
 	if (!rooms)
-		return (5);
+		return (parse_error(5));
 	error = add_tubes(map, rooms);
-	if (error != 1)
+	if (error == EXIT_FAILURE)
 	{
 		free_room_names(rooms);
 		return (error);
 	}
 	(*tubes)++;
 	free_room_names(rooms);
-	return (1);
+	return (EXIT_SUCCESS);
 }
 
 ssize_t			parse_tubes(t_input_reader *input, t_map *map, size_t *i)
