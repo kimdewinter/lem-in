@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/25 13:43:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 16:09:12 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 16:40:34 by simoncleerd   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ ssize_t			add_special_room(t_input_reader *input,
 	return (parse_error(20));
 }
 
-ssize_t			add_room(t_input_reader *input, size_t *i, t_map *map, int special)
+ssize_t			add_room(t_input_reader *input, size_t *i, t_map *map, int sp)
 {
 	char	**words;
 	t_room	*room;
 
 	room = NULL;
-	if (special == 1)
+	if (sp == 1)
 		words = ft_strsplit(input->lines[*i + 1], ' ');
 	else
 		words = ft_strsplit(input->lines[*i], ' ');
@@ -98,7 +98,7 @@ ssize_t			add_room(t_input_reader *input, size_t *i, t_map *map, int special)
 				{
 					if (insert_ht(map->rooms, room->name, room) == EXIT_SUCCESS)
 					{
-						if (special == 1)
+						if (sp == 1)
 						{
 							if (set_start_end_room(i, room, input, map) == EXIT_FAILURE)
 								return (free_and_return(&words, EXIT_FAILURE));
