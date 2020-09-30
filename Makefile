@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/09/30 17:20:42 by lravier       ########   odam.nl          #
+#    Updated: 2020/09/30 17:27:07 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,8 @@ RAW=	main\
 		parse_rooms\
 		parse_rooms_add_room\
 		parse_tubes\
-		parse_utils\
+		parse_utils1\
+		parse_utils2\
 		read_input\
 		room_utils\
 		sanitize_input\

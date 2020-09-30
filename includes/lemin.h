@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 17:22:10 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 17:27:31 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct			s_room
 	struct s_room		**neighbours;
 	size_t				neighbours_len;
 	size_t				room_i;
-	// BITFIELD_TYPE		*bitroom;
 	ssize_t				dist_to_end;
 	ssize_t				dist_to_start;
 	size_t				spe_len;
