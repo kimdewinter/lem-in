@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 14:52:45 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 16:08:41 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,13 @@ ssize_t			setup_room(t_room **dest,
 		room->spe = 0;
 		room->sps = 0;
 		// room->bitroom = NULL;
-		room->name = (char *)name;
+		room->name = ft_strdup((char *)name);
+		if (room->name == NULL)
+		{
+			free (room);
+			room = NULL;
+			return (EXIT_FAILURE);
+		}
 		room->neighbours_len = 0;
 		room->neighbours = NULL;
 		room->ant = 0;

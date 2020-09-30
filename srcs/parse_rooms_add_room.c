@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/25 13:43:23 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 15:20:15 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 16:09:12 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ static ssize_t	free_and_return(char ***words, ssize_t ret)
 {
 	if (*words != NULL)
 	{
-		if (ret == EXIT_FAILURE)
-			free((*words)[0]);
+		free((*words)[0]);
 		free((*words)[1]);
 		free((*words)[2]);
 		free(*words);
@@ -101,9 +100,8 @@ ssize_t			add_room(t_input_reader *input, size_t *i, t_map *map, int special)
 					{
 						if (special == 1)
 						{
-							if (set_start_end_room(i, room, input, map) == EXIT_SUCCESS)
-								return (free_and_return(&words, EXIT_SUCCESS));
-							return (EXIT_FAILURE);
+							if (set_start_end_room(i, room, input, map) == EXIT_FAILURE)
+								return (free_and_return(&words, EXIT_FAILURE));
 						}
 						return (free_and_return(&words, EXIT_SUCCESS));
 					}
