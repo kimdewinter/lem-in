@@ -6,13 +6,13 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 15:39:25 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/30 15:25:52 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 16:42:19 by simoncleerd   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
 
-static int		check_duplicate_tube(t_room *room1, t_room *room2)
+static int			check_duplicate_tube(t_room *room1, t_room *room2)
 {
 	size_t	i;
 
@@ -44,7 +44,7 @@ static ssize_t		add_tubes(t_map *map, char **rooms)
 	return (EXIT_SUCCESS);
 }
 
-static void		parse_tube_loop(int *dash, const char *line)
+static void			parse_tube_loop(int *dash, const char *line)
 {
 	size_t	i;
 
@@ -58,7 +58,7 @@ static void		parse_tube_loop(int *dash, const char *line)
 	}
 }
 
-static ssize_t	parse_tube(char *line, t_map *map, size_t *tubes)
+static ssize_t		parse_tube(char *line, t_map *map, size_t *tubes)
 {
 	char	**rooms;
 	int		dash;
@@ -81,7 +81,7 @@ static ssize_t	parse_tube(char *line, t_map *map, size_t *tubes)
 	return (EXIT_SUCCESS);
 }
 
-ssize_t			parse_tubes(t_input_reader *input, t_map *map, size_t *i)
+ssize_t				parse_tubes(t_input_reader *input, t_map *map, size_t *i)
 {
 	size_t		tubes;
 	size_t		error;

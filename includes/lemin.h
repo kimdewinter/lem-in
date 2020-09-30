@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 15:39:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 16:51:01 by simoncleerd   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ typedef struct			s_room
 	struct s_room		**neighbours;
 	size_t				neighbours_len;
 	size_t				room_i;
-	// BITFIELD_TYPE		*bitroom;
 	ssize_t				dist_to_end;
 	ssize_t				dist_to_start;
 	size_t				spe_len;
@@ -263,7 +262,6 @@ ssize_t					allocopy_bitfield(BITFIELD_TYPE **dst,
 ssize_t					handle_err_biter(size_t err_code, const char *line);
 int						room_in_bitfield(const t_room *curr,
 											BITFIELD_TYPE *bitfield);
-// ssize_t					bite_room_new(t_room *room, const t_map *map);
 
 /*
 ** OUTPUTTER

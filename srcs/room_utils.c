@@ -6,11 +6,25 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 15:44:56 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 16:08:41 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 16:47:56 by simoncleerd   ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/lemin.h"
+
+void			setup_append(t_room *room, t_room **dest)
+{
+	room->neighbours_len = 0;
+	room->neighbours = NULL;
+	room->ant = 0;
+	room->dist_to_end = -1;
+	room->dist_to_start = -1;
+	*dest = room;
+	room->spe_len = 0;
+	room->spe_start = NULL;
+	room->sps_len = 0;
+	room->sps_start = NULL;
+}
 
 ssize_t			setup_room(t_room **dest,
 							const char *name,
@@ -25,24 +39,14 @@ ssize_t			setup_room(t_room **dest,
 		room->is_junction = 0;
 		room->spe = 0;
 		room->sps = 0;
-		// room->bitroom = NULL;
 		room->name = ft_strdup((char *)name);
 		if (room->name == NULL)
 		{
-			free (room);
+			free(room);
 			room = NULL;
 			return (EXIT_FAILURE);
 		}
-		room->neighbours_len = 0;
-		room->neighbours = NULL;
-		room->ant = 0;
-		room->dist_to_end = -1;
-		room->dist_to_start = -1;
-		*dest = room;
-		room->spe_len = 0;
-		room->spe_start = NULL;
-		room->sps_len = 0;
-		room->sps_start = NULL;
+		setup_append(room, dest);
 		return (EXIT_SUCCESS);
 	}
 	return (EXIT_FAILURE);
