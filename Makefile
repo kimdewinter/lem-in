@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/09/29 17:28:29 by lravier       ########   odam.nl          #
+#    Updated: 2020/09/30 17:20:42 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,6 +48,7 @@ RAW=	main\
 		remove_tube\
 		remove_blockage_1\
 		remove_blockage_2\
+		remove_blockage_utils\
 		compare_candidate_sol\
 		set_weights\
 		set_weights_utils\

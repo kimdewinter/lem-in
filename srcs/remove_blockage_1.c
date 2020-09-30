@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/08/24 14:55:10 by lravier       #+#    #+#                 */
-/*   Updated: 2020/09/29 21:34:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 17:18:55 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ size_t *i)
 	best = -1;
 	while (j < start->neighbours_len)
 	{
-		if (room_in_bitfield(start->neighbours[j], visited) == 0
-		&& start->neighbours[j]->dist_to_start >= 0
-		&& start->neighbours[j]->dist_to_start < start->dist_to_start)
+		if (check_valid_candidate_block(start, j, visited) == 1)
 		{
 			if (best == -1)
 				best = j;
@@ -95,18 +93,6 @@ BITFIELD_TYPE *in_paths)
 	return (found);
 }
 
-static ssize_t	handle_return(t_best *candidate, t_room *found, t_map *map)
-{
-	if (found != NULL)
-	{
-		if (remove_conn(candidate, found, map) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
-	}
-	else
-		return (EXIT_NO_BLOCKS);
-}
-
 ssize_t			remove_blockage(t_best *candidate, t_map *map)
 {
 	BITFIELD_TYPE	*visited;
@@ -133,5 +119,5 @@ ssize_t			remove_blockage(t_best *candidate, t_map *map)
 		candidate->in_paths);
 	}
 	free(visited);
-	return (handle_return(candidate, found, map));
+	return (handle_return_block(candidate, found, map));
 }

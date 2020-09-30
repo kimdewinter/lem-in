@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 15:39:46 by lravier       ########   odam.nl         */
+/*   Updated: 2020/09/30 17:22:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,10 @@ size_t					calc_cost_add_route(const t_best *candidate,
 void					reset_dists(t_table *rooms, int to_start, int to_end);
 void					compare_candidate_best(t_map *map, t_best *candidate);
 ssize_t					remove_blockage(t_best *candidate, t_map *map);
+ssize_t					handle_return_block(t_best *candidate, t_room *found,
+											t_map *map);
+int						check_valid_candidate_block(t_room *start, size_t j,
+														BITFIELD_TYPE *visited);
 ssize_t					remove_conn(t_best *candidate,
 									t_room *block,
 									t_map *map);
@@ -263,7 +267,6 @@ ssize_t					allocopy_bitfield(BITFIELD_TYPE **dst,
 ssize_t					handle_err_biter(size_t err_code, const char *line);
 int						room_in_bitfield(const t_room *curr,
 											BITFIELD_TYPE *bitfield);
-// ssize_t					bite_room_new(t_room *room, const t_map *map);
 
 /*
 ** OUTPUTTER
