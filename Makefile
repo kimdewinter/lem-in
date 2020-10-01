@@ -6,7 +6,7 @@
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/04/28 11:20:14 by lravier       #+#    #+#                  #
-#    Updated: 2020/10/01 13:09:29 by lravier       ########   odam.nl          #
+#    Updated: 2020/10/01 14:26:17 by kde-wint      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ RAW=	main\
 		compare_candidate_sol\
 		set_weights\
 		set_weights_utils\
-		find_parallel_routes
+		find_parallel_routes\
+		dir_start_to_end
 
 OBJ_DIR=obj
 SRC_DIR=srcs
@@ -94,9 +95,10 @@ fclean: clean
 	@echo "Removing $(NAME)"
 	@echo "Removing $(LIB)"
 	@make fclean -s -C lib
-	@rm -f $(NAME)
+	@rm -rf $(NAME) $(NAME).dSYM
 
 re: fclean all
 
 debug: all
-	@$(CC) -Wall -Wextra -Werror $(EXTRA) -g -o $(NAME) $(SRCS) -I $(HEADER) $(LIB)
+	@$(CC) -Wall -Wextra -Werror $(EXTRA) -g -o $(NAME) $(SRCS) -I $(HEADER) \
+	$(LIB)

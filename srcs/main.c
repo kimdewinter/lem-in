@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/05/06 14:06:51 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/29 14:06:34 by lravier       ########   odam.nl         */
+/*   Updated: 2020/10/01 14:13:10 by kde-wint      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,19 @@ static ssize_t	setup_map(t_map *map)
 	return (EXIT_FAILURE);
 }
 
+static ssize_t	execute_algorithm(t_map *map, const t_input_reader *input)
+{
+	if (start_dir_conn_to_end(map) == 1)
+		return (output_dir_conn(map, input));
+	else
+	{
+		if (find_routes(map) == EXIT_SUCCESS &&
+			output_result(input, map) == EXIT_SUCCESS)
+			return (EXIT_SUCCESS);
+	}
+	return (EXIT_FAILURE);
+}
+
 int				main(void)
 {
 	t_input_reader	input;
@@ -63,8 +76,7 @@ int				main(void)
 	if (read_input(&input) == EXIT_SUCCESS &&
 		parse_input(&map, &input) == EXIT_SUCCESS &&
 		sanitize_input(&map) == EXIT_SUCCESS &&
-		find_routes(&map) == EXIT_SUCCESS &&
-		output_result(&input, &map) == EXIT_SUCCESS)
+		execute_algorithm(&map, &input) == EXIT_SUCCESS)
 	{
 		delete_input(&input);
 		delete_map(&map);

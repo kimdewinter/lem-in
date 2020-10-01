@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/06/23 19:24:52 by kim           #+#    #+#                 */
-/*   Updated: 2020/09/30 17:27:31 by lravier       ########   odam.nl         */
+/*   Updated: 2020/10/01 14:16:31 by kde-wint      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ size_t					calc_cost(size_t ants, const t_best *routes);
 size_t					ft_round_rest(long double rest);
 ssize_t					find_routes(t_map *map);
 ssize_t					find_routes_df(t_best *candidate, const t_map *map);
+size_t					start_dir_conn_to_end(const t_map *map);
 /*
 ** ROUTE FINDING UTILS
 */
@@ -278,6 +279,9 @@ ssize_t					output_result(const t_input_reader *input,
 										const t_map *map);
 ssize_t					setup_all_routeputs(t_routeput ***routes,
 											const t_map *map);
+ssize_t					output_dir_conn(const t_map *map,
+										const t_input_reader *input);
+void					print_input(const t_input_reader *input);
 
 /*
 ** CLEANER
