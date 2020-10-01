@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/29 11:06:46 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/26 10:38:39 by lravier       ########   odam.nl         */
+/*   Updated: 2020/10/01 12:10:10 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,12 @@ int tmp_size, t_entry **tmp_entr)
 static int	resize_table(t_table *ht, unsigned long long base_size)
 {
 	t_table	*new_table;
-	int		i;
-	int		tmp_size;
+	size_t	i;
+	size_t	tmp_size;
 	t_entry	**tmp_entr;
 
+	tmp_size = 0;
+	tmp_entr = NULL;
 	if (base_size < BASE_SIZE)
 		return (1);
 	new_table = create_ht(base_size);

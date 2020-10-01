@@ -6,7 +6,7 @@
 /*   By: lravier <lravier@student.codam.nl>           +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2020/04/28 21:20:00 by lravier       #+#    #+#                 */
-/*   Updated: 2020/08/25 17:13:28 by kim           ########   odam.nl         */
+/*   Updated: 2020/10/01 12:04:47 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	delete_entry(t_entry *entry)
 
 void		delete_ht(t_table *ht)
 {
-	int	i;
+	size_t	i;
 
 	i = 0;
 	while (i < ht->size)
