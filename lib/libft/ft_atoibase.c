@@ -6,7 +6,7 @@
 /*   By: lravier <marvin@codam.nl>                    +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/03/28 15:13:50 by lravier       #+#    #+#                 */
-/*   Updated: 2019/03/29 11:39:28 by lravier       ########   odam.nl         */
+/*   Updated: 2020/10/01 14:57:15 by lravier       ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char		*ft_strsubatoi(char *s, int base)
 base > 10))
 		j++;
 	if (i >= j)
-		return (res = ft_strdup(""));
+		return (ft_strdup(""));
 	size = j - i;
 	res = ft_strnew(size + neg);
 	if (!res)
