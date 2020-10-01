@@ -5,8 +5,8 @@
 #                                                      +:+                     #
 #    By: lravier <lravier@student.codam.nl>           +#+                      #
 #                                                    +#+                       #
-#    Created: 2020/04/28 20:59:39 by lravier       #+#    #+#                  #
-#    Updated: 2020/06/12 17:07:44 by lravier       ########   odam.nl          #
+#    Created: 2020/10/01 14:53:21 by lravier       #+#    #+#                  #
+#    Updated: 2020/10/01 14:59:57 by lravier       ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -90,7 +90,8 @@ obj/%.o: srcs/%.c $(HEADER) | $(OBJ_DIR)
 libft/obj/%.o: libft/%.c $(LIBFT_HEADER) | $(LIBFT_OBJ_DIR)
 	$(CC) $(IFLAGS) -o $@ -c $<
 
-libft/obj/get_next_line.o: libft/get_next_line.c $(GNL_HEADER) | $(LIBFT_OBJ_DIR)
+libft/obj/get_next_line.o: libft/get_next_line.c $(GNL_HEADER) \
+| $(LIBFT_OBJ_DIR)
 	$(CC) $(IFLAGS) -o $@ -c $<
 
 floats/obj/%.o: floats/%.c $(FLOATS_HEADER) | $(FLOATS_OBJ_DIR)
